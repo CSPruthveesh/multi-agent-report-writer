@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "frozen": true,
+  "note": "Frozen before the first Phase 0 run. Both systems see identical strings. Do not edit, reorder, or substitute topics after baseline generation — the comparison depends on it. Add new topics only as v2 with a separate results directory.",
+  "report_spec": "800-1200 words. Inline citations to finding IDs. Sections chosen by the system, not prescribed.",
+  "topics": [
+    {
+      "id": "t1",
+      "shape": "abundant-sources",
+      "topic": "The commercial viability of sodium-ion batteries for grid-scale energy storage compared with lithium iron phosphate: current cost per kWh, cycle life, and which deployment niches sodium-ion is actually winning.",
+      "why_in_set": "Dense, high-quality, recent coverage with hard numbers. Both systems should find plenty. This is the control condition — if multi-agent does not beat the baseline here, its advantage is narrower than claimed.",
+      "watch_for": "Whether either system distinguishes announced pilot capacity from deployed capacity. Most sources conflate them."
+    },
+    {
+      "id": "t2",
+      "shape": "abundant-sources",
+      "topic": "How the shift to hybrid work has changed office vacancy rates and valuations in major US metros, and whether conversion to residential use is a meaningful response or a marginal one.",
+      "why_in_set": "Heavily covered, numerically rich, and long enough running that trend data exists. Tests whether extra agents add anything when evidence is not the constraint.",
+      "watch_for": "Averaging across metros. The story in San Francisco and the story in Miami are opposite; a report that reports a national average has failed criterion 3."
+    },
+    {
+      "id": "t3",
+      "shape": "thin-evidence",
+      "topic": "Adoption and measured outcomes of digital public infrastructure — digital ID, instant payments, data exchange layers — in Sub-Saharan African countries other than Nigeria, Kenya, and South Africa.",
+      "why_in_set": "The exclusion is deliberate. Sources overwhelmingly cover the three excluded countries, so a system that does not notice its own evidence gap will quietly write about them anyway or pad with generalities. This is the sharpest test of criterion 1.",
+      "watch_for": "Drift back to the excluded countries. Also: does the report state plainly that outcome data is scarce, or does it manufacture confidence? Honest scarcity reporting scores high here."
+    },
+    {
+      "id": "t4",
+      "shape": "contested",
+      "topic": "Whether minimum wage increases reduce employment: what the strongest evidence on each side actually shows, why credible economists still disagree, and what the disagreement turns on methodologically.",
+      "why_in_set": "A genuine, decades-old empirical dispute with high-quality work on both sides. Tests whether a report can hold disagreement open instead of resolving it into false consensus.",
+      "watch_for": "Flattening. 'Studies show mixed results' is a criterion 3 failure. The report should name what the disagreement turns on — regional controls, monopsony assumptions, the size of the increase relative to the local median."
+    },
+    {
+      "id": "t5",
+      "shape": "cross-domain",
+      "topic": "How antimicrobial resistance arising from antibiotic use in aquaculture propagates into human health risk, and what that implies for seafood import standards and trade policy.",
+      "why_in_set": "Requires joining microbiology, food systems, and trade regulation — three literatures that rarely cite each other. Synthesis cannot be lifted from any single source.",
+      "watch_for": "Whether the report actually bridges the domains or writes three disconnected mini-reports. The bridge is the test."
+    },
+    {
+      "id": "t6",
+      "shape": "cross-domain",
+      "topic": "The effect of semiconductor export controls on academic AI research: measurable changes in compute access, publication output, and international collaboration patterns at universities outside the US.",
+      "why_in_set": "Joins trade policy to research bibliometrics. Evidence is real but scattered across policy analysis and scientometrics, and the causal link is contestable.",
+      "watch_for": "Confident causal claims from correlational bibliometric data. A report that flags the identification problem is doing criterion 1 correctly."
+    }
+  ]
+}
