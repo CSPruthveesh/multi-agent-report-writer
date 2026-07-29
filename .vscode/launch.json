@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run baseline",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.run",
+      "args": ["--system", "baseline", "--topic-id", "t1"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Run multiagent",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.run",
+      "args": ["--system", "multiagent", "--topic-id", "t1"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}
