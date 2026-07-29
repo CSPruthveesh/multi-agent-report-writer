@@ -16,7 +16,7 @@ load_dotenv()
 
 log = logging.getLogger(__name__)
 
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
 CRITIC_MODEL = os.getenv("GEMINI_CRITIC_MODEL", MODEL)
 
 _client: genai.Client | None = None
