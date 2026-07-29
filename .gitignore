@@ -1,10 +1,15 @@
-# Python-generated files
+.venv/
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.sqlite
+*.db
+checkpoints/
+results/**/*.json
+results/**/*.md
+!results/**/.gitkeep
+.pytest_cache/
+.ruff_cache/
+.vscode/settings.json
