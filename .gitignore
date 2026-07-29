@@ -10,6 +10,7 @@ checkpoints/
 results/**/*.json
 results/**/*.md
 !results/**/.gitkeep
+analysis/
 .pytest_cache/
 .ruff_cache/
 .vscode/settings.json
