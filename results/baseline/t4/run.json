@@ -1,0 +1,337 @@
+{
+  "system": "baseline",
+  "topic_id": "t4",
+  "generated_at": "2026-07-29T16:53:54.398263+00:00",
+  "word_count": 1053,
+  "findings_count": 35,
+  "citations": {
+    "cited_count": 35,
+    "valid_count": 35,
+    "broken": [],
+    "broken_count": 0,
+    "uncited_findings": [],
+    "coverage": 1.0
+  },
+  "wall_ms": 38972,
+  "tokens": {
+    "calls": 9,
+    "total_in": 13871,
+    "total_out": 6956,
+    "total": 20827,
+    "by_node": {
+      "agent": {
+        "calls": 9,
+        "in": 13871,
+        "out": 6956,
+        "total": 20827,
+        "ms": 30194
+      }
+    },
+    "records": [
+      {
+        "node": "agent",
+        "call_type": "plan",
+        "in_tokens": 104,
+        "out_tokens": 95,
+        "total_tokens": 199,
+        "latency_ms": 1168,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 2433,
+        "out_tokens": 538,
+        "total_tokens": 2971,
+        "latency_ms": 2984,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 978,
+        "out_tokens": 728,
+        "total_tokens": 1706,
+        "latency_ms": 2595,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 1961,
+        "out_tokens": 811,
+        "total_tokens": 2772,
+        "latency_ms": 3522,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 1179,
+        "out_tokens": 1243,
+        "total_tokens": 2422,
+        "latency_ms": 3761,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 2232,
+        "out_tokens": 668,
+        "total_tokens": 2900,
+        "latency_ms": 3663,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 1131,
+        "out_tokens": 1378,
+        "total_tokens": 2509,
+        "latency_ms": 4054,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "assess",
+        "in_tokens": 1300,
+        "out_tokens": 24,
+        "total_tokens": 1324,
+        "latency_ms": 1248,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "write",
+        "in_tokens": 2553,
+        "out_tokens": 1471,
+        "total_tokens": 4024,
+        "latency_ms": 7199,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "F001",
+      "claim": "Until the early 1990s, economists held a consensus that minimum wage increases had negative employment effects.",
+      "source_url": "https://mpra.ub.uni-muenchen.de/61321/1/MPRA_paper_61321.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F002",
+      "claim": "A 1982 review in the Journal of Economic Literature estimated that a 10% increase in the minimum wage reduced teenage employment by 1% to 3%.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F003",
+      "claim": "Research by Card, Katz, and Krueger in the early 1990s found insignificant or negligible employment effects from minimum wage increases.",
+      "source_url": "https://mpra.ub.uni-muenchen.de/61321/1/MPRA_paper_61321.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F004",
+      "claim": "Economists currently disagree on the direction and magnitude of minimum wage impacts on employment.",
+      "source_url": "https://mpra.ub.uni-muenchen.de/61321/1/MPRA_paper_61321.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F005",
+      "claim": "Some research finds disemployment effects for young or unskilled workers with elasticities ranging from -0.1 to -0.3.",
+      "source_url": "https://wol.iza.org/uploads/articles/464/pdfs/employment-effects-of-minimum-wages.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F006",
+      "claim": "Meta-analyses have identified evidence of publication bias where studies finding statistically significant negative employment effects were more likely to be published.",
+      "source_url": "https://mpra.ub.uni-muenchen.de/61321/1/MPRA_paper_61321.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F007",
+      "claim": "Meta-regression analysis is used to model the effects of econometric specifications and study design heterogeneity on reported employment effects.",
+      "source_url": "https://assets.publishing.service.gov.uk/media/5a8207f340f0b6230269a765/The_impact_of_the_NMW_on_employment_-_a_meta-analysis.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F008",
+      "claim": "Card and Krueger (1994) used survey data on the number of workers to measure labor input.",
+      "source_url": "https://www.levyinstitute.org/wp-content/uploads/2024/02/wp271.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F009",
+      "claim": "Neumark and Wascher (1995, 1998) used payroll hours data to measure labor input.",
+      "source_url": "https://www.levyinstitute.org/wp-content/uploads/2024/02/wp271.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F010",
+      "claim": "Neumark and Wascher argue that Card and Krueger's results are influenced by the exclusion of federal minimum wage variation.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F011",
+      "claim": "Neumark and Wascher contend that omitting federal minimum wage variation leads to an understatement of disemployment effects.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F012",
+      "claim": "Critics of Neumark and Wascher argue that Neumark and Wascher used inadequate statistical controls to account for employment trends in the absence of a minimum wage increase.",
+      "source_url": "https://www.cato.org/regulation/fall-2015/working-papers",
+      "confidence": "medium"
+    },
+    {
+      "id": "F013",
+      "claim": "Card and Krueger (2000) alleged that the administrative payroll data used by Neumark and Wascher (2000) suffered from selection bias.",
+      "source_url": "https://www.epi.org/publication/importance-study-design-minimum-wage-debate",
+      "confidence": "high"
+    },
+    {
+      "id": "F014",
+      "claim": "Card and Krueger (2000) noted that the payroll data used by Neumark and Wascher was provided by a public affairs executive representing the food and beverage industry.",
+      "source_url": "https://www.epi.org/publication/importance-study-design-minimum-wage-debate",
+      "confidence": "high"
+    },
+    {
+      "id": "F015",
+      "claim": "Neumark and Wascher argued that Card and Krueger's original findings were sensitive to the inclusion of average firm size as an instrument.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F016",
+      "claim": "Neumark and Wascher (1992) estimated that a 10% increase in the minimum wage reduced teenage employment by 1\u20132%.",
+      "source_url": "https://www.epi.org/publication/importance-study-design-minimum-wage-debate",
+      "confidence": "high"
+    },
+    {
+      "id": "F017",
+      "claim": "Neumark and Wascher (1992) estimated that a 10% increase in the minimum wage reduced young adult employment by 1.5\u20132%.",
+      "source_url": "https://www.epi.org/publication/importance-study-design-minimum-wage-debate",
+      "confidence": "high"
+    },
+    {
+      "id": "F018",
+      "claim": "Card and Krueger (1994) found no adverse employment impact from the minimum wage increase in the New Jersey fast-food industry.",
+      "source_url": "https://davidcard.berkeley.edu/papers/njmin-aer.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F019",
+      "claim": "Neumark and Wascher (1998) argued that the decline in estimated disemployment effects is due to parameter instability.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F020",
+      "claim": "The debate between Card and Krueger and Neumark and Wascher is cited as a methodological cautionary tale regarding study design and data selection.",
+      "source_url": "https://atticusli.com/replication-crisis/card-krueger-minimum-wage",
+      "confidence": "medium"
+    },
+    {
+      "id": "F021",
+      "claim": "An employer possesses monopsony power if the labor supply to their firm is not infinitely elastic.",
+      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2023/09/Minimum-Wage-E%E2%80%82ects-and-Monopsony-Explanations-Revised-December-2024.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F022",
+      "claim": "Firms with monopsony power face an upward-sloping labor supply curve.",
+      "source_url": "https://maxkasy.github.io/home/files/teaching/Labor_Oxford_2021/4-Labor-Demand.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F023",
+      "claim": "In a monopsonistic market, firms mark down wages below workers' marginal productivity.",
+      "source_url": "https://docs.iza.org/dp17357.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F024",
+      "claim": "A minimum wage can counteract monopsony power by relaxing labor supply constraints.",
+      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2023/09/Minimum-Wage-E%E2%80%82ects-and-Monopsony-Explanations-Revised-December-2024.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F025",
+      "claim": "Minimum wage increases may initially boost employment by counteracting monopsony power.",
+      "source_url": "https://docs.iza.org/dp17357.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F026",
+      "claim": "Excessively high minimum wages can result in negative employment effects.",
+      "source_url": "https://maxkasy.github.io/home/files/teaching/Labor_Oxford_2021/4-Labor-Demand.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F027",
+      "claim": "Some research finds larger positive employment effects from minimum wage increases when labor supply schedules are flatter.",
+      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2023/09/Minimum-Wage-E%E2%80%82ects-and-Monopsony-Explanations-Revised-December-2024.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F028",
+      "claim": "Many difference-in-differences studies across U.S. states find no significant effect of minimum wages on employment.",
+      "source_url": "https://maxkasy.github.io/home/files/teaching/Labor_Oxford_2021/4-Labor-Demand.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F029",
+      "claim": "In markets with high concentration, minimum wage elasticities of employment become more negative as the Kaitz Index intensifies.",
+      "source_url": "https://docs.iza.org/dp17357.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F030",
+      "claim": "Systematic empirical support for the monopsony argument is considered scarce by some researchers.",
+      "source_url": "https://docs.iza.org/dp17357.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F031",
+      "claim": "One study found that monopsony power does not have the predicted moderating effect on minimum wage employment responses.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w33862/w33862.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F032",
+      "claim": "Researchers distinguish between fluidity-based measures and concentration-based measures of monopsony power.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w33862/w33862.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F033",
+      "claim": "Failing to account for the interaction between city size and the minimum wage can bias elasticity estimates toward zero.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w33862/w33862.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F034",
+      "claim": "Quit elasticity is a common metric used to measure monopsony power.",
+      "source_url": "https://www.epi.org/unequalpower/publications/pervasive-monopsony-power-and-freedom-in-the-labor-market",
+      "confidence": "high"
+    },
+    {
+      "id": "F035",
+      "claim": "Experimental and quasi-experimental variations in wages have yielded quit elasticities in the 2\u20133 range.",
+      "source_url": "https://www.epi.org/unequalpower/publications/pervasive-monopsony-power-and-freedom-in-the-labor-market",
+      "confidence": "high"
+    }
+  ],
+  "search_rounds": 3,
+  "unclosed_gaps": []
+}

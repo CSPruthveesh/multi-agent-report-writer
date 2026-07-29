@@ -7,9 +7,6 @@ __pycache__/
 *.sqlite
 *.db
 checkpoints/
-results/**/*.json
-results/**/*.md
-!results/**/.gitkeep
 analysis/
 .pytest_cache/
 .ruff_cache/

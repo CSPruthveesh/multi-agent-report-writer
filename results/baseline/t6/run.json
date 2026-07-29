@@ -1,0 +1,404 @@
+{
+  "system": "baseline",
+  "topic_id": "t6",
+  "generated_at": "2026-07-29T16:55:34.977626+00:00",
+  "word_count": 826,
+  "findings_count": 37,
+  "citations": {
+    "cited_count": 27,
+    "valid_count": 37,
+    "broken": [],
+    "broken_count": 0,
+    "uncited_findings": [
+      "F002",
+      "F003",
+      "F004",
+      "F006",
+      "F012",
+      "F023",
+      "F026",
+      "F027",
+      "F032",
+      "F033"
+    ],
+    "coverage": 0.73
+  },
+  "wall_ms": 47943,
+  "tokens": {
+    "calls": 13,
+    "total_in": 18642,
+    "total_out": 7089,
+    "total": 25731,
+    "by_node": {
+      "agent": {
+        "calls": 13,
+        "in": 18642,
+        "out": 7089,
+        "total": 25731,
+        "ms": 33600
+      }
+    },
+    "records": [
+      {
+        "node": "agent",
+        "call_type": "plan",
+        "in_tokens": 102,
+        "out_tokens": 100,
+        "total_tokens": 202,
+        "latency_ms": 1322,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 2200,
+        "out_tokens": 236,
+        "total_tokens": 2436,
+        "latency_ms": 2050,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 698,
+        "out_tokens": 547,
+        "total_tokens": 1245,
+        "latency_ms": 2100,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 1999,
+        "out_tokens": 422,
+        "total_tokens": 2421,
+        "latency_ms": 2474,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 827,
+        "out_tokens": 781,
+        "total_tokens": 1608,
+        "latency_ms": 2541,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 2034,
+        "out_tokens": 649,
+        "total_tokens": 2683,
+        "latency_ms": 2929,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 1138,
+        "out_tokens": 768,
+        "total_tokens": 1906,
+        "latency_ms": 2599,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "assess",
+        "in_tokens": 829,
+        "out_tokens": 169,
+        "total_tokens": 998,
+        "latency_ms": 1523,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 2287,
+        "out_tokens": 289,
+        "total_tokens": 2576,
+        "latency_ms": 2449,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 733,
+        "out_tokens": 575,
+        "total_tokens": 1308,
+        "latency_ms": 2135,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "search",
+        "in_tokens": 2039,
+        "out_tokens": 539,
+        "total_tokens": 2578,
+        "latency_ms": 2893,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "extract",
+        "in_tokens": 998,
+        "out_tokens": 846,
+        "total_tokens": 1844,
+        "latency_ms": 2813,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "agent",
+        "call_type": "write",
+        "in_tokens": 2758,
+        "out_tokens": 1168,
+        "total_tokens": 3926,
+        "latency_ms": 5772,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "F001",
+      "claim": "US export controls aim to restrict PRC access to advanced chips, AI computing power, and EDA tools.",
+      "source_url": "https://www.congress.gov/crs-product/R48642",
+      "confidence": "high"
+    },
+    {
+      "id": "F002",
+      "claim": "US export controls include restrictions on access through third-party countries and cloud computing services.",
+      "source_url": "https://www.congress.gov/crs-product/R48642",
+      "confidence": "high"
+    },
+    {
+      "id": "F003",
+      "claim": "Chinese entities may seek overseas cloud services if the performance gap between locally available and foreign AI chips grows.",
+      "source_url": "https://cset.georgetown.edu/article/controlling-access-to-advanced-compute-via-the-cloud",
+      "confidence": "high"
+    },
+    {
+      "id": "F004",
+      "claim": "Current US export controls do not explicitly regulate the provision of cloud computing services to prevent access to controlled chips.",
+      "source_url": "https://cset.georgetown.edu/article/controlling-access-to-advanced-compute-via-the-cloud",
+      "confidence": "high"
+    },
+    {
+      "id": "F005",
+      "claim": "Restricting foreign access to US technology may incentivize other nations to build technology infrastructure using non-American components.",
+      "source_url": "https://s3.us-east-1.amazonaws.com/media.hudson.org/Nury+Turkel+AI+National+Security+and+the+Global+Technology+Race+How+US+Export+Controls+Define+the+Future+of+Innovation.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F006",
+      "claim": "US graduate programs have a high percentage of foreign nationals.",
+      "source_url": "https://www.brookings.edu/articles/the-tension-between-ai-export-control-and-u-s-ai-innovation",
+      "confidence": "high"
+    },
+    {
+      "id": "F007",
+      "claim": "Research papers co-authored by researchers from the U.S. and China receive more citations than those that do not.",
+      "source_url": "https://www.nature.com/articles/s41598-024-79863-5",
+      "confidence": "high"
+    },
+    {
+      "id": "F008",
+      "claim": "The AI diffusion framework categorizes the U.S. and 18 partners as Tier 1 nations with unrestricted access.",
+      "source_url": "https://www.rand.org/pubs/perspectives/PEA3776-1.html",
+      "confidence": "high"
+    },
+    {
+      "id": "F009",
+      "claim": "The AI diffusion framework categorizes most nations as Tier 2 with controlled access via licensing.",
+      "source_url": "https://www.rand.org/pubs/perspectives/PEA3776-1.html",
+      "confidence": "high"
+    },
+    {
+      "id": "F010",
+      "claim": "The AI diffusion framework categorizes strategic competitors as Tier 3 nations facing restrictions.",
+      "source_url": "https://www.rand.org/pubs/perspectives/PEA3776-1.html",
+      "confidence": "high"
+    },
+    {
+      "id": "F011",
+      "claim": "Semiconductors are increasingly subject to non-tariff measures including export restrictions.",
+      "source_url": "https://www.wto.org/english/res_e/booksp_e/wtr25_e.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F012",
+      "claim": "Export restrictions on AI-enabling goods may jeopardize the global dissemination of AI.",
+      "source_url": "https://www.wto.org/english/res_e/booksp_e/wtr25_e.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F013",
+      "claim": "Geopolitical restrictions act as a barrier to international data-sharing and collaboration in healthcare AI.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12455834",
+      "confidence": "high"
+    },
+    {
+      "id": "F014",
+      "claim": "Data silos resulting from restricted collaboration may limit innovation and generalizability in healthcare AI.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12455834",
+      "confidence": "medium"
+    },
+    {
+      "id": "F015",
+      "claim": "There is an ongoing debate regarding the balance between technological sovereignty and the necessity of international collaboration for innovation and skills development.",
+      "source_url": "https://www.gov.uk/government/publications/artificial-intelligence-sector-study-2024/artificial-intelligence-sector-study-2024",
+      "confidence": "high"
+    },
+    {
+      "id": "F016",
+      "claim": "The U.S. Bureau of Industry and Security implemented controls on the export, re-export, and in-country transfer of weights for closed-weight AI models trained with 10^26 computational operations or more.",
+      "source_url": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
+      "confidence": "high"
+    },
+    {
+      "id": "F017",
+      "claim": "The Foreign Direct Product Rule extends controls to model weights produced abroad using advanced computing chips manufactured with U.S. technology or equipment.",
+      "source_url": "https://www.gtlaw.com/en/insights/2025/12/navigating-gpu-export-controls-and-ai-use-restrictions-in-data-center-operations",
+      "confidence": "high"
+    },
+    {
+      "id": "F018",
+      "claim": "U.S. Infrastructure as a Service providers are subject to Know Your Customer guidance to identify if they are providing compute clusters to train advanced AI models for foreign entities or their U.S. subsidiaries.",
+      "source_url": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
+      "confidence": "high"
+    },
+    {
+      "id": "F019",
+      "claim": "Chinese companies like Alibaba and Baidu have begun training AI models using internally designed chips.",
+      "source_url": "https://www.linkedin.com/posts/fciucci_the-usa-first-forbade-nvidia-from-selling-activity-7374085016005390336-Pba8",
+      "confidence": "medium"
+    },
+    {
+      "id": "F020",
+      "claim": "Baidu uses the Kunlun P800 chip for training AI models.",
+      "source_url": "https://www.linkedin.com/posts/fciucci_the-usa-first-forbade-nvidia-from-selling-activity-7374085016005390336-Pba8",
+      "confidence": "medium"
+    },
+    {
+      "id": "F021",
+      "claim": "U.S. export controls were estimated to provide the U.S. with a four-year hardware lead in training frontier models as of October 2023.",
+      "source_url": "https://epoch.ai/gradient-updates/us-export-controls-china-ai",
+      "confidence": "high"
+    },
+    {
+      "id": "F022",
+      "claim": "There is reportedly little to no U.S. hardware lead over China in model inference.",
+      "source_url": "https://epoch.ai/gradient-updates/us-export-controls-china-ai",
+      "confidence": "medium"
+    },
+    {
+      "id": "F023",
+      "claim": "China produces twice as many research papers as the United States on the topics of chip design and production.",
+      "source_url": "https://www.csis.org/analysis/limits-chip-export-controls-meeting-china-challenge",
+      "confidence": "high"
+    },
+    {
+      "id": "F024",
+      "claim": "Chinese researchers continue to participate in international AI research conferences.",
+      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
+      "confidence": "high"
+    },
+    {
+      "id": "F025",
+      "claim": "Chinese researchers maintain access to open-source models developed by Western firms.",
+      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
+      "confidence": "high"
+    },
+    {
+      "id": "F026",
+      "claim": "The Chinese government has committed massive resources to indigenous semiconductor research.",
+      "source_url": "https://www.csis.org/analysis/limits-chip-export-controls-meeting-china-challenge",
+      "confidence": "high"
+    },
+    {
+      "id": "F027",
+      "claim": "The Chinese government has increased subsidized development efforts for semiconductors.",
+      "source_url": "https://www.csis.org/analysis/limits-chip-export-controls-meeting-china-challenge",
+      "confidence": "high"
+    },
+    {
+      "id": "F028",
+      "claim": "Chinese AI developers face challenges in transitioning Large Language Model development to domestic hardware ecosystems.",
+      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
+      "confidence": "high"
+    },
+    {
+      "id": "F029",
+      "claim": "TSMC will suspend the production of AI semiconductors at the 7-nanometer node or smaller for Chinese clients.",
+      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
+      "confidence": "high"
+    },
+    {
+      "id": "F030",
+      "claim": "Research organizations outside the U.S. face challenges regarding the extraterritorial application of U.S. export controls.",
+      "source_url": "https://eecaro.eu/publish/pages/6178/eecaro_ttc_input_wg7_export_controls.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F031",
+      "claim": "The U.S. deemed re-export rule complicates collaborations between non-U.S. research organizations and researchers affiliated with other companies or universities.",
+      "source_url": "https://eecaro.eu/publish/pages/6178/eecaro_ttc_input_wg7_export_controls.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F032",
+      "claim": "Students and researchers at non-U.S. institutions may require access to U.S.-origin technology or software to conduct research.",
+      "source_url": "https://eecaro.eu/publish/pages/6178/eecaro_ttc_input_wg7_export_controls.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F033",
+      "claim": "Compliance with U.S. regulations regarding U.S.-origin technology is a challenge for non-U.S. research organizations.",
+      "source_url": "https://eecaro.eu/publish/pages/6178/eecaro_ttc_input_wg7_export_controls.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F034",
+      "claim": "U.S. export regulations define an export to include the disclosure of technology, software source code, or technical data to a foreign national anywhere in the world.",
+      "source_url": "https://researchservices.cornell.edu/sites/default/files/2019-06/2017-07_Roundtable_PPT.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F035",
+      "claim": "The Fundamental Research Exclusion does not apply to export-controlled items, technology, or technical data received from third parties.",
+      "source_url": "https://policy.brown.edu/policy/export-control-and-us-economic-sanctions-policy",
+      "confidence": "high"
+    },
+    {
+      "id": "F036",
+      "claim": "The release of controlled technical data to non-U.S. nationals can be deemed an export to their home jurisdiction.",
+      "source_url": "https://globalinvestigationsreview.com/guide/the-guide-sanctions-archived/sixth-edition/article/key-us-sanctions-and-export-control-considerations-higher-education-and-research-institutions",
+      "confidence": "high"
+    },
+    {
+      "id": "F037",
+      "claim": "Releasing controlled technical data to non-U.S. nationals may require authorization from the Bureau of Industry and Security.",
+      "source_url": "https://globalinvestigationsreview.com/guide/the-guide-sanctions-archived/sixth-edition/article/key-us-sanctions-and-export-control-considerations-higher-education-and-research-institutions",
+      "confidence": "high"
+    }
+  ],
+  "search_rounds": 5,
+  "unclosed_gaps": [
+    "Empirical data or case studies specifically documenting changes in academic publication output from universities outside the US (e.g., in China or Tier 2/3 nations) directly attributable to export controls.",
+    "Specific evidence on how academic researchers outside the US have altered their research agendas or collaboration patterns due to compute access limitations.",
+    "Quantitative metrics or surveys regarding the actual impact of export controls on the ability of non-US academic institutions to secure high-performance computing resources for AI research."
+  ]
+}
