@@ -11,3 +11,4 @@ analysis/
 .pytest_cache/
 .ruff_cache/
 .vscode/settings.json
+docs/*.png
