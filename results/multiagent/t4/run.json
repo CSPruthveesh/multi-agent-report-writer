@@ -1,59 +1,58 @@
 {
   "system": "multiagent",
   "topic_id": "t4",
-  "generated_at": "2026-07-31T13:22:28.685230+00:00",
-  "word_count": 1059,
-  "findings_count": 40,
+  "generated_at": "2026-07-31T12:43:41.913722+00:00",
+  "word_count": 1035,
+  "findings_count": 41,
   "citations": {
-    "cited_count": 33,
-    "valid_count": 40,
+    "cited_count": 35,
+    "valid_count": 41,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F008",
-      "F010",
-      "F014",
-      "F015",
       "F016",
-      "F033",
-      "F036"
+      "F025",
+      "F027",
+      "F028",
+      "F032",
+      "F041"
     ],
-    "coverage": 0.825
+    "coverage": 0.854
   },
-  "wall_ms": 80563,
+  "wall_ms": 76678,
   "tokens": {
-    "calls": 21,
-    "total_in": 48257,
-    "total_out": 12162,
-    "total": 60419,
+    "calls": 18,
+    "total_in": 35145,
+    "total_out": 9878,
+    "total": 45023,
     "by_node": {
       "researcher": {
-        "calls": 12,
-        "in": 19249,
-        "out": 7030,
-        "total": 26279,
-        "ms": 33847
+        "calls": 13,
+        "in": 20112,
+        "out": 7211,
+        "total": 27323,
+        "ms": 43116
       },
       "analyst": {
         "calls": 3,
-        "in": 10115,
-        "out": 1011,
-        "total": 11126,
-        "ms": 7394
+        "in": 9029,
+        "out": 996,
+        "total": 10025,
+        "ms": 8127
       },
       "writer": {
-        "calls": 3,
-        "in": 7157,
-        "out": 3151,
-        "total": 10308,
-        "ms": 16340
+        "calls": 1,
+        "in": 2082,
+        "out": 1457,
+        "total": 3539,
+        "ms": 7261
       },
       "critic": {
-        "calls": 3,
-        "in": 11736,
-        "out": 970,
-        "total": 12706,
-        "ms": 7669
+        "calls": 1,
+        "in": 3922,
+        "out": 214,
+        "total": 4136,
+        "ms": 2562
       }
     },
     "records": [
@@ -63,207 +62,177 @@
         "in_tokens": 104,
         "out_tokens": 59,
         "total_tokens": 163,
-        "latency_ms": 1126,
+        "latency_ms": 1478,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2434,
-        "out_tokens": 593,
-        "total_tokens": 3027,
-        "latency_ms": 4267,
+        "in_tokens": 2548,
+        "out_tokens": 628,
+        "total_tokens": 3176,
+        "latency_ms": 3624,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1394,
-        "out_tokens": 832,
-        "total_tokens": 2226,
-        "latency_ms": 2742,
+        "in_tokens": 1477,
+        "out_tokens": 1327,
+        "total_tokens": 2804,
+        "latency_ms": 4859,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1961,
-        "out_tokens": 573,
-        "total_tokens": 2534,
-        "latency_ms": 3306,
+        "in_tokens": 2276,
+        "out_tokens": 537,
+        "total_tokens": 2813,
+        "latency_ms": 3568,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1514,
-        "out_tokens": 1242,
-        "total_tokens": 2756,
-        "latency_ms": 4033,
+        "in_tokens": 1403,
+        "out_tokens": 645,
+        "total_tokens": 2048,
+        "latency_ms": 4207,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2213,
-        "out_tokens": 599,
-        "total_tokens": 2812,
-        "latency_ms": 3451,
+        "in_tokens": 1741,
+        "out_tokens": 863,
+        "total_tokens": 2604,
+        "latency_ms": 4023,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1407,
-        "out_tokens": 949,
-        "total_tokens": 2356,
-        "latency_ms": 3182,
+        "in_tokens": 1669,
+        "out_tokens": 853,
+        "total_tokens": 2522,
+        "latency_ms": 3400,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 2745,
-        "out_tokens": 391,
-        "total_tokens": 3136,
-        "latency_ms": 2736,
+        "in_tokens": 2544,
+        "out_tokens": 300,
+        "total_tokens": 2844,
+        "latency_ms": 2897,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "gap_plan",
-        "in_tokens": 678,
-        "out_tokens": 56,
-        "total_tokens": 734,
-        "latency_ms": 1256,
+        "in_tokens": 695,
+        "out_tokens": 34,
+        "total_tokens": 729,
+        "latency_ms": 1319,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2539,
-        "out_tokens": 572,
-        "total_tokens": 3111,
-        "latency_ms": 3266,
+        "in_tokens": 3304,
+        "out_tokens": 323,
+        "total_tokens": 3627,
+        "latency_ms": 2841,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1396,
-        "out_tokens": 707,
-        "total_tokens": 2103,
-        "latency_ms": 2821,
+        "in_tokens": 1122,
+        "out_tokens": 571,
+        "total_tokens": 1693,
+        "latency_ms": 2637,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "analyst",
+        "call_type": "analyze",
+        "in_tokens": 2964,
+        "out_tokens": 336,
+        "total_tokens": 3300,
+        "latency_ms": 2658,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "researcher",
+        "call_type": "gap_plan",
+        "in_tokens": 708,
+        "out_tokens": 34,
+        "total_tokens": 742,
+        "latency_ms": 1340,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2520,
-        "out_tokens": 255,
-        "total_tokens": 2775,
-        "latency_ms": 2039,
+        "in_tokens": 1746,
+        "out_tokens": 544,
+        "total_tokens": 2290,
+        "latency_ms": 3460,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1089,
-        "out_tokens": 593,
-        "total_tokens": 1682,
-        "latency_ms": 2358,
+        "in_tokens": 1319,
+        "out_tokens": 793,
+        "total_tokens": 2112,
+        "latency_ms": 6360,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3685,
-        "out_tokens": 274,
-        "total_tokens": 3959,
-        "latency_ms": 2125,
+        "in_tokens": 3521,
+        "out_tokens": 360,
+        "total_tokens": 3881,
+        "latency_ms": 2572,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 1980,
-        "out_tokens": 1572,
-        "total_tokens": 3552,
-        "latency_ms": 7501,
+        "in_tokens": 2082,
+        "out_tokens": 1457,
+        "total_tokens": 3539,
+        "latency_ms": 7261,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 3935,
-        "out_tokens": 541,
-        "total_tokens": 4476,
-        "latency_ms": 3134,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 3685,
-        "out_tokens": 346,
-        "total_tokens": 4031,
-        "latency_ms": 2533,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "writer",
-        "call_type": "write",
-        "in_tokens": 2050,
-        "out_tokens": 1456,
-        "total_tokens": 3506,
-        "latency_ms": 7067,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "critic",
-        "call_type": "critique",
-        "in_tokens": 3889,
-        "out_tokens": 205,
-        "total_tokens": 4094,
-        "latency_ms": 2372,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "writer",
-        "call_type": "revise",
-        "in_tokens": 3127,
-        "out_tokens": 123,
-        "total_tokens": 3250,
-        "latency_ms": 1772,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "critic",
-        "call_type": "critique",
-        "in_tokens": 3912,
-        "out_tokens": 224,
+        "in_tokens": 3922,
+        "out_tokens": 214,
         "total_tokens": 4136,
-        "latency_ms": 2163,
+        "latency_ms": 2562,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -272,249 +241,255 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "Dube et al. (2024) argue that analyses including data from the 1980s and 1990s are biased due to employment shocks that predated minimum wage increases.",
+      "claim": "Dube et al. (2024) and Cengiz et al. (2019) argue that employment shocks in the 1980s and 1990s bias estimates of minimum wage employment effects.",
       "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
       "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "Dube et al. (2024) contend that starting analyses in 2000 avoids bias from employment shocks that predated minimum wage increases.",
+      "claim": "Dube et al. (2024) and Cengiz et al. (2019) contend that starting minimum wage employment analyses in the year 2000 avoids bias from pre-existing trends.",
       "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
       "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "Neumark and Wascher (2007) argue that studies focusing on specific, low-skill groups provide more convincing evidence of job loss.",
+      "claim": "Dube, Lester, and Reich (2010) utilized contiguous county comparisons to control for regional economic influences and business cycles.",
       "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
       "confidence": "high"
     },
     {
       "id": "F004",
-      "claim": "Dube, Lester, and Reich (2010) utilize contiguous county comparisons to isolate minimum wage effects from broader business cycle influences.",
-      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
+      "claim": "Neumark and Wascher (2007) argue that meta-analyses should be sharply focused rather than simply averaging studies.",
+      "source_url": "https://sites.socsci.uci.edu/~dneumark/MW%20US%20literature.05.pdf",
       "confidence": "high"
     },
     {
       "id": "F005",
+      "claim": "Neumark argues that research designs that demand more of the data often result in larger standard errors.",
+      "source_url": "https://sites.socsci.uci.edu/~dneumark/MW%20US%20literature.05.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F006",
+      "claim": "Neumark and Wascher (2007) concluded that nearly two-thirds of newer studies found evidence of job loss.",
+      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
+      "confidence": "high"
+    },
+    {
+      "id": "F007",
       "claim": "Neumark and Wascher (2007) concluded that 85% of studies they deemed most convincing found evidence of job loss.",
       "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
       "confidence": "high"
     },
     {
-      "id": "F006",
-      "claim": "Neumark and Kala (2025) find that job loss effects from minimum wage increases are more evident for Black workers.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
-      "confidence": "high"
-    },
-    {
-      "id": "F007",
-      "claim": "Neumark and Kala (2025) find that minimum wage increases may reduce the total earnings of low-skilled Black workers.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
-      "confidence": "high"
-    },
-    {
       "id": "F008",
-      "claim": "Card and Krueger (1995) examined publication selection bias regarding minimum wage research.",
-      "source_url": "https://eml.berkeley.edu/~card/papers/time%20minwage.pdf",
+      "claim": "Neumark and Kala (2025) indicate that minimum wage job loss effects are more evident for Black men.",
+      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
       "confidence": "high"
     },
     {
       "id": "F009",
-      "claim": "Traditional approaches using state-level controls often fail to account for spatial heterogeneity.",
-      "source_url": "https://irle.berkeley.edu/publications/working-papers/spatial-heterogeneity-and-minimum-wages-employment-estimates-for-teens-using-cross-state-commuting-zones",
+      "claim": "Neumark and Kala (2025) do not find minimum wage job loss effects for Black females.",
+      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "Allegretto, Dube, and Reich use census division-specific time effects to control for regional economic trends.",
-      "source_url": "https://irle.berkeley.edu/publications/working-papers/spatial-heterogeneity-and-minimum-wages-employment-estimates-for-teens-using-cross-state-commuting-zones",
+      "claim": "Cengiz et al. (2019) found that minimum wage increases lead to a reduction in jobs paying below the new minimum.",
+      "source_url": "https://assets.publishing.service.gov.uk/media/6960e4e656321405090869aa/impacts_of_minimum_wages_review_of_the_international_evidence_Arindrajit_Dube_web.pdf",
       "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "Border-county designs compare counties in close geographic proximity that share a border but have different minimum wage policies.",
-      "source_url": "https://irle.berkeley.edu/publications/working-papers/spatial-heterogeneity-and-minimum-wages-employment-estimates-for-teens-using-cross-state-commuting-zones",
+      "claim": "Cengiz et al. (2019) found that job reductions below the new minimum wage are balanced by increases in jobs at higher wage levels.",
+      "source_url": "https://assets.publishing.service.gov.uk/media/6960e4e656321405090869aa/impacts_of_minimum_wages_review_of_the_international_evidence_Arindrajit_Dube_web.pdf",
       "confidence": "high"
     },
     {
       "id": "F012",
-      "claim": "Border-county designs exploit state-level wage differences across borders to construct counterfactuals.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S1757780223001129",
+      "claim": "Doucouliagos and Stanley (2009) investigated publication selection bias in minimum wage research.",
+      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
       "confidence": "high"
     },
     {
       "id": "F013",
-      "claim": "Adding excessive region-specific fixed effects, trends, and controls can absorb useful variation in the data.",
-      "source_url": "https://grcmlesydpcd.objectstorage.sa-saopaulo-1.oci.customer-oci.com/p/OQwcvnO-c63O08Gc2Kv4OTbJttj5ik60dguiDIyyQ0wuo5SWn-jHOLW9wNbylNqI/n/grcmlesydpcd/b/dtysppobjmntbkp01/o/media/doity/submissoes/artigo-0213c039f46dfcd1a1633304270fab14dded3677-arquivo.pdf",
-      "confidence": "medium"
+      "claim": "Traditional minimum wage studies use national-level panel data with state and period fixed effects.",
+      "source_url": "https://onlabor.org/wp-content/uploads/2017/05/Spatial-Heterogeneity-and-Minimum-Wages.pdf",
+      "confidence": "high"
     },
     {
       "id": "F014",
-      "claim": "Some models use dummy variables to test whether federal minimum wage changes produce different employment effects than state-level changes.",
-      "source_url": "https://crei.cat/wp-content/uploads/2020/06/11-minimum-w-1.pdf",
-      "confidence": "medium"
+      "claim": "Traditional models often yield a negative employment elasticity of -0.165 for teenagers.",
+      "source_url": "https://sites.socsci.uci.edu/~dneumark/Neumark%20et%20al%20MW%20evaluation%20May%202013%20ILRR%20final%20rev.pdf",
+      "confidence": "high"
     },
     {
       "id": "F015",
-      "claim": "The fraction affected design relies on the heterogeneity in the bindingness of minimum wages across different states to identify employment effects.",
-      "source_url": "https://grcmlesydpcd.objectstorage.sa-saopaulo-1.oci.customer-oci.com/p/OQwcvnO-c63O08Gc2Kv4OTbJttj5ik60dguiDIyyQ0wuo5SWn-jHOLW9wNbylNqI/n/grcmlesydpcd/b/dtysppobjmntbkp01/o/media/doity/submissoes/artigo-0213c039f46dfcd1a1633304270fab14dded3677-arquivo.pdf",
-      "confidence": "medium"
+      "claim": "Newer research methods include using census division-specific time effects to control for regional economic shocks.",
+      "source_url": "https://onlabor.org/wp-content/uploads/2017/05/Spatial-Heterogeneity-and-Minimum-Wages.pdf",
+      "confidence": "high"
     },
     {
       "id": "F016",
-      "claim": "The use of instrumental variables is a method cited to mitigate biases in estimating the effects of minimum wages.",
-      "source_url": "https://grcmlesydpcd.objectstorage.sa-saopaulo-1.oci.customer-oci.com/p/OQwcvnO-c63O08Gc2Kv4OTbJttj5ik60dguiDIyyQ0wuo5SWn-jHOLW9wNbylNqI/n/grcmlesydpcd/b/dtysppobjmntbkp01/o/media/doity/submissoes/artigo-0213c039f46dfcd1a1633304270fab14dded3677-arquivo.pdf",
-      "confidence": "medium"
+      "claim": "Newer research methods include comparing contiguous counties that straddle state borders.",
+      "source_url": "https://escholarship.org/content/qt86w5m90m/qt86w5m90m_noSplash_477de9e826d71c581169a0c3c81f2040.pdf",
+      "confidence": "high"
     },
     {
       "id": "F017",
-      "claim": "Research increasingly utilizes county-level data and county-pair designs to capture local labor market dynamics.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S1757780223001129",
+      "claim": "Newer research methods include using commuting zones to define local labor markets.",
+      "source_url": "https://escholarship.org/content/qt86w5m90m/qt86w5m90m_noSplash_477de9e826d71c581169a0c3c81f2040.pdf",
       "confidence": "high"
     },
     {
       "id": "F018",
-      "claim": "Prior to the late 1980s, economists reached a consensus that the elasticity of teenage employment with respect to the minimum wage was between -0.1 and -0.3.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
-      "confidence": "high"
+      "claim": "Estimated employment effects often move toward zero or become positive when spatial heterogeneity controls are applied.",
+      "source_url": "https://onlabor.org/wp-content/uploads/2017/05/Spatial-Heterogeneity-and-Minimum-Wages.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F019",
-      "claim": "The 1982 Minimum Wage Study Commission concluded that a 10% increase in the minimum wage typically reduced teenage employment by 1% to 3%.",
+      "claim": "A 1982 review by Brown et al. established a consensus range for the elasticity of teenage employment with respect to the minimum wage of -0.1 to -0.3.",
       "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
       "confidence": "high"
     },
     {
       "id": "F020",
-      "claim": "Modern research lacks a consensus regarding the overall effects of minimum wage increases on low-wage employment.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "claim": "Sabia, Burkhauser, and Hansen (2012) found a median elasticity of approximately -0.7 in New York.",
+      "source_url": "https://issuelab.org/resources/14701/14701.pdf",
       "confidence": "high"
     },
     {
       "id": "F021",
-      "claim": "Some recent meta-studies report little or no negative employment outcomes from minimum wage increases.",
-      "source_url": "https://cepr.net/documents/publications/min-wage-2013-02.pdf",
-      "confidence": "medium"
+      "claim": "Some studies report an elasticity of -4.6 for men aged 25\u201329 caught by the minimum wage.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "confidence": "high"
     },
     {
       "id": "F022",
-      "claim": "Some research supports the view that minimum wage increases reduce employment for low-skilled workers.",
-      "source_url": "https://aier.org/article/the-economics-of-the-minimum-wage-myths-facts-and-consequences",
-      "confidence": "medium"
+      "claim": "A survey of U.S. economists found that 74% oppose a $15 federal minimum wage.",
+      "source_url": "https://epionline.org/studies/survey-of-us-economists-on-a-15-federal-minimum-wage-2",
+      "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "A 2019 survey of 197 U.S. economists regarding a $15 federal minimum wage had a 22% response rate.",
+      "claim": "A survey of U.S. economists found that 84% believe a $15 federal minimum wage would have negative effects on youth employment.",
       "source_url": "https://epionline.org/studies/survey-of-us-economists-on-a-15-federal-minimum-wage-2",
       "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "Critics of studies showing no employment loss argue that such results require implausibly low elasticity of demand from customers.",
-      "source_url": "https://econbrowser.com/archives/2015/03/23316",
+      "claim": "Researchers sometimes conflate the employment elasticity with respect to the minimum wage with the own-wage elasticity.",
+      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/10/24025.pdf",
       "confidence": "medium"
     },
     {
       "id": "F025",
-      "claim": "Critics of studies showing no employment loss argue that such results require limited ability for firms to substitute away from low-skill labor.",
-      "source_url": "https://econbrowser.com/archives/2015/03/23316",
-      "confidence": "medium"
+      "claim": "Focusing on teenagers for minimum wage studies reduces external validity.",
+      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/10/24025.pdf",
+      "confidence": "low"
     },
     {
       "id": "F026",
-      "claim": "Some critics argue that certain time-series studies produce non-zero estimates due to the regression of unrelated random walks with drift.",
-      "source_url": "https://econbrowser.com/archives/2015/03/23316",
+      "claim": "Firms may respond to wage floors through automation, price increases, or other operational changes.",
+      "source_url": "https://issuelab.org/resources/14701/14701.pdf",
       "confidence": "medium"
     },
     {
       "id": "F027",
-      "claim": "Some researchers argue that employers may respond to wage floors through price increases, automation, or reduced passthrough rather than employment adjustments.",
+      "claim": "Some researchers argue that the size and frequency of wage jumps influence whether employment reductions are observed.",
       "source_url": "https://aier.org/article/the-economics-of-the-minimum-wage-myths-facts-and-consequences",
       "confidence": "medium"
     },
     {
       "id": "F028",
-      "claim": "Dube, Lester, and Reich (2010) estimated an employment elasticity of 0.217 using a traditional specification with county and time fixed effects.",
-      "source_url": "https://escholarship.org/content/qt86w5m90m/qt86w5m90m_noSplash_477de9e826d71c581169a0c3c81f2040.pdf",
+      "claim": "Minimum wage effect findings vary based on the analysis sample and the magnitude of the minimum wage changes considered.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w30668/w30668.pdf",
       "confidence": "high"
     },
     {
       "id": "F029",
-      "claim": "Dube, Lester, and Reich (2010) estimated an employment elasticity of 0.188 using a local specification comparing contiguous border counties.",
-      "source_url": "https://escholarship.org/content/qt86w5m90m/qt86w5m90m_noSplash_477de9e826d71c581169a0c3c81f2040.pdf",
-      "confidence": "high"
+      "claim": "Commuting spillovers suggest larger minimum wage effects in narrow bands near state borders.",
+      "source_url": "https://jorgeperezperez.com/files/Jorge_Perez_JMP.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F030",
-      "claim": "Neumark et al. report a four-year cumulative employment elasticity of -0.593 using a county-level sample.",
-      "source_url": "https://docs.iza.org/dp15282.pdf",
+      "claim": "Dube et al. (2010) did not find significant county spillover effects using their methods.",
+      "source_url": "https://jorgeperezperez.com/files/Jorge_Perez_JMP.pdf",
       "confidence": "high"
     },
     {
       "id": "F031",
-      "claim": "Neumark et al. report a four-year cumulative employment elasticity of -0.559 using a commuting zone-state sample.",
-      "source_url": "https://docs.iza.org/dp15282.pdf",
+      "claim": "Spatial equilibrium models suggest that commuting and migration responses to relative minimum wage changes are significant.",
+      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
       "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "Analyses using multi-state commuting zones have produced a four-year cumulative employment elasticity of -0.689.",
-      "source_url": "https://docs.iza.org/dp15282.pdf",
+      "claim": "State-level panel regressions report employment effect coefficients for teens and all workers with p-values ranging from .343 to .758.",
+      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2019/07/Minimum-Wage-Effects-in-Low-Wage-Areas.pdf",
       "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "Cross-border design estimates are often less precise than other methods.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
-      "confidence": "low"
+      "claim": "Models incorporating spatial equilibrium factors report implied local labor demand elasticities ranging from -1.138 to -1.471.",
+      "source_url": "https://crei.cat/wp-content/uploads/2020/06/11-minimum-w-1.pdf",
+      "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "The border-county design incorporates county-pair-by-time fixed effects into the two-way fixed effects framework.",
-      "source_url": "https://jorgeperezperez.com/files/PerezMinimumWagePricesMetaanalysis.pdf",
-      "confidence": "medium"
+      "claim": "Standard state-level panel regressions yield a teen employment elasticity of -0.3 when state-specific year trends are excluded.",
+      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
+      "confidence": "high"
     },
     {
       "id": "F035",
-      "claim": "Minimum wage increases lower the employment rate in heavily Black areas by 3.5 percentage points relative to white areas.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w33167/w33167.pdf",
+      "claim": "Standard state-level panel regressions yield an employment elasticity of 0 for older low-skilled workers when state-specific year trends are excluded.",
+      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
       "confidence": "high"
     },
     {
       "id": "F036",
-      "claim": "The model used by Neumark and Kala includes an interaction term between the natural log of the minimum wage and an indicator for Black PUMA cell means.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w33167/w33167.pdf",
+      "claim": "Joan Monras's spatial equilibrium model reports implied local labor demand elasticities ranging from -1.138 to -1.471 in one model version.",
+      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
       "confidence": "high"
     },
     {
       "id": "F037",
-      "claim": "The Black minimum wage-employment elasticity ranges between -0.286 and -0.401.",
-      "source_url": "https://www.hoover.org/sites/default/files/2024-12/Neumark%20Seminar%20Hoover.pdf",
+      "claim": "Joan Monras's spatial equilibrium model reports implied local labor demand elasticities ranging from 2.582 to 2.873 in an alternative model version.",
+      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
       "confidence": "high"
     },
     {
       "id": "F038",
-      "claim": "The white minimum wage-employment elasticity ranges between -0.008 and -0.095.",
-      "source_url": "https://www.hoover.org/sites/default/files/2024-12/Neumark%20Seminar%20Hoover.pdf",
+      "claim": "The employment elasticity for male teens is -0.398 in heavily black areas.",
+      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
       "confidence": "high"
     },
     {
       "id": "F039",
-      "claim": "Job loss effects from higher minimum wages are more evident for Black men than for other demographic groups.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w33167/w33167.pdf",
-      "confidence": "medium"
+      "claim": "The employment elasticity for male teens is -0.116 in white areas.",
+      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
+      "confidence": "high"
     },
     {
       "id": "F040",
-      "claim": "Minimum wage-related job loss effects extend beyond the teenage demographic to include broader low-skill groups.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w33167/w33167.pdf",
+      "claim": "A 10% minimum wage increase is associated with a 0.3% to 1.1% increase in prices.",
+      "source_url": "https://jorgeperezperez.com/sitemap",
       "confidence": "medium"
+    },
+    {
+      "id": "F041",
+      "claim": "There is no observable difference in employment effects between federal and state-level minimum wage increases in the spatial equilibrium framework.",
+      "source_url": "https://crei.cat/wp-content/uploads/2020/06/11-minimum-w-1.pdf",
+      "confidence": "high"
     }
   ],
-  "revisions": 2,
-  "research_loops": 1,
+  "revisions": 0,
+  "research_loops": 2,
   "searches_used": 5,
-  "write_attempts": 2,
+  "write_attempts": 1,
   "unclosed_gaps": [],
   "final_critique": {
     "scores": {
@@ -524,17 +499,17 @@
       "citation_integrity": 5,
       "absence_of_filler": 4
     },
-    "verdict": "revise",
+    "verdict": "pass",
     "target": "writer",
     "issues": [
       {
-        "span": "Ultimately, the persistence of this debate reflects a fundamental trade-off: researchers must choose between models that risk absorbing meaningful variation through excessive controls and those that may fail to isolate policy effects from pre-existing regional economic trends.",
+        "span": "While the textbook model of supply and demand suggests that price floors must inevitably reduce the quantity of labor demanded, empirical research has struggled to provide a unified estimate of this effect.",
         "criterion": "absence_of_filler",
-        "problem": "This sentence is a redundant summary that repeats the core tension already established in the preceding paragraphs, adding no new information.",
-        "fix": "Delete the final sentence of the report."
+        "problem": "This sentence provides general economic context not supported by the provided evidence, serving as introductory filler.",
+        "fix": "Remove the sentence and begin the paragraph with the thesis statement."
       }
     ],
-    "summary": "The report is exceptionally well-grounded and synthesizes complex methodological debates effectively, though it suffers from a minor instance of redundant summary in the final paragraph.",
+    "summary": "The report is exceptionally well-grounded and synthesizes the provided evidence with high structural integrity, though it includes a brief introductory sentence that lacks specific evidentiary support.",
     "broken_citations": [],
     "citation_cap_applied": false,
     "citation_cap_reason": ""
@@ -550,9 +525,9 @@
       "kept": 27,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h17/m10/l0",
+      "confidence": "h21/m5/l1",
       "budget": "3/5",
-      "tokens": 15874,
+      "tokens": 16130,
       "sent": [
         "meta-analysis of minimum wage employment effects Dube Neumark",
         "methodological differences in minimum wage research spatial heterogene",
@@ -563,20 +538,20 @@
       "node": "analyst",
       "action": "outlined",
       "sections": 3,
-      "tensions": 2,
-      "gaps_raw": 2,
-      "gaps_kept": 2,
+      "tensions": 1,
+      "gaps_raw": 1,
+      "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3136
+      "tokens": 2844
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "researcher",
       "why": "evidence gaps",
-      "gaps": 2,
+      "gaps": 1,
       "loop": "1/2",
       "searches": "3/5"
     },
@@ -584,30 +559,66 @@
       "node": "researcher",
       "action": "searched",
       "mode": "gap-driven",
-      "queries": 2,
-      "found": 13,
-      "kept": 13,
+      "queries": 1,
+      "found": 6,
+      "kept": 6,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h9/m3/l1",
-      "budget": "5/5",
-      "tokens": 10405,
+      "confidence": "h5/m1/l0",
+      "budget": "4/5",
+      "tokens": 6049,
       "sent": [
-        "meta-analysis minimum wage employment elasticity estimates comparison ",
-        "Neumark Kala 2025 minimum wage employment rate percentage change Black"
+        "meta-analysis minimum wage employment effects spatial controls versus "
+      ]
+    },
+    {
+      "node": "analyst",
+      "action": "outlined",
+      "sections": 3,
+      "tensions": 1,
+      "gaps_raw": 1,
+      "gaps_kept": 1,
+      "dropped_unblocking": 0,
+      "dropped_repeat": 0,
+      "revision": false,
+      "tokens": 3300
+    },
+    {
+      "node": "supervisor",
+      "action": "route",
+      "to": "researcher",
+      "why": "evidence gaps",
+      "gaps": 1,
+      "loop": "2/2",
+      "searches": "4/5"
+    },
+    {
+      "node": "researcher",
+      "action": "searched",
+      "mode": "gap-driven",
+      "queries": 1,
+      "found": 8,
+      "kept": 8,
+      "dropped_dupes": 0,
+      "unaddressed": 0,
+      "confidence": "h7/m1/l0",
+      "budget": "5/5",
+      "tokens": 5144,
+      "sent": [
+        "meta-analysis employment elasticity difference state-level panel model"
       ]
     },
     {
       "node": "analyst",
       "action": "outlined",
       "sections": 4,
-      "tensions": 2,
+      "tensions": 3,
       "gaps_raw": 0,
       "gaps_kept": 0,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3959
+      "tokens": 3881
     },
     {
       "node": "supervisor",
@@ -620,122 +631,25 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 1092,
+      "words": 1035,
       "in_range": true,
       "cited": 35,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3552
+      "tokens": 3539
     },
     {
       "node": "critic",
       "action": "scored",
-      "verdict": "revise",
-      "target": "researcher",
-      "worst": "factual_grounding=4",
-      "mean": 4.4,
-      "issues_raw": 3,
-      "issues_kept": 3,
+      "verdict": "pass",
+      "target": "-",
+      "worst": "absence_of_filler=4",
+      "mean": 4.8,
+      "issues_raw": 1,
+      "issues_kept": 1,
       "dropped_ungrounded": 0,
       "broken_cites": 0,
       "cites": 35,
-      "cite_cap": false,
-      "tokens": 4476
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "critic requested revision",
-      "revision": "1/2"
-    },
-    {
-      "node": "researcher",
-      "action": "skipped",
-      "why": "search budget exhausted",
-      "used": 5,
-      "left_for_supervisor": 0
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 4,
-      "tensions": 3,
-      "gaps_raw": 0,
-      "gaps_kept": 0,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 4031
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "draft awaiting fresh critique",
-      "attempt": "2/2"
-    },
-    {
-      "node": "writer",
-      "action": "drafted",
-      "revision": 1,
-      "words": 1012,
-      "in_range": true,
-      "cited": 33,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3506
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "writer",
-      "worst": "absence_of_filler=4",
-      "mean": 4.8,
-      "issues_raw": 1,
-      "issues_kept": 1,
-      "dropped_ungrounded": 0,
-      "broken_cites": 0,
-      "cites": 33,
-      "cite_cap": false,
-      "tokens": 4094
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "critic requested revision",
-      "revision": "2/2"
-    },
-    {
-      "node": "writer",
-      "action": "revised",
-      "revision": 2,
-      "words": 1030,
-      "in_range": true,
-      "cited": 33,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3250,
-      "edits_returned": 1,
-      "edits_applied": 1,
-      "fallback": false,
-      "changed_pct": 2.6,
-      "issues_addressed": 1
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "writer",
-      "worst": "absence_of_filler=4",
-      "mean": 4.8,
-      "issues_raw": 1,
-      "issues_kept": 1,
-      "dropped_ungrounded": 0,
-      "broken_cites": 0,
-      "cites": 33,
       "cite_cap": false,
       "tokens": 4136
     },
@@ -743,15 +657,15 @@
       "node": "supervisor",
       "action": "route",
       "to": "finalize",
-      "why": "revision budget exhausted",
-      "degraded": true
+      "why": "critic passed",
+      "min_score": 4
     },
     {
       "node": "finalize",
       "action": "shipped",
-      "degraded": true,
+      "degraded": false,
       "unclosed_gaps": 0,
-      "words": 1059
+      "words": 1035
     }
   ]
 }

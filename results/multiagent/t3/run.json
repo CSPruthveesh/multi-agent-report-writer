@@ -1,60 +1,60 @@
 {
   "system": "multiagent",
   "topic_id": "t3",
-  "generated_at": "2026-07-31T13:21:08.080560+00:00",
-  "word_count": 1078,
-  "findings_count": 52,
+  "generated_at": "2026-07-31T12:42:25.185348+00:00",
+  "word_count": 1007,
+  "findings_count": 53,
   "citations": {
-    "cited_count": 44,
-    "valid_count": 52,
+    "cited_count": 45,
+    "valid_count": 53,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F003",
-      "F005",
       "F007",
+      "F022",
       "F026",
       "F029",
-      "F033",
-      "F036",
-      "F050"
+      "F030",
+      "F031",
+      "F032",
+      "F051"
     ],
-    "coverage": 0.846
+    "coverage": 0.849
   },
-  "wall_ms": 81182,
+  "wall_ms": 69898,
   "tokens": {
-    "calls": 22,
-    "total_in": 51391,
-    "total_out": 12921,
-    "total": 64312,
+    "calls": 18,
+    "total_in": 36796,
+    "total_out": 10259,
+    "total": 47055,
     "by_node": {
       "researcher": {
         "calls": 13,
-        "in": 18575,
-        "out": 7860,
-        "total": 26435,
-        "ms": 35947
+        "in": 19480,
+        "out": 7785,
+        "total": 27265,
+        "ms": 38578
       },
       "analyst": {
-        "calls": 5,
-        "in": 20947,
-        "out": 1384,
-        "total": 22331,
-        "ms": 11299
+        "calls": 3,
+        "in": 11206,
+        "out": 844,
+        "total": 12050,
+        "ms": 7155
       },
       "writer": {
-        "calls": 2,
-        "in": 4090,
-        "out": 2931,
-        "total": 7021,
-        "ms": 13630
+        "calls": 1,
+        "in": 2185,
+        "out": 1424,
+        "total": 3609,
+        "ms": 6705
       },
       "critic": {
-        "calls": 2,
-        "in": 7779,
-        "out": 746,
-        "total": 8525,
-        "ms": 5308
+        "calls": 1,
+        "in": 3925,
+        "out": 206,
+        "total": 4131,
+        "ms": 2350
       }
     },
     "records": [
@@ -64,77 +64,77 @@
         "in_tokens": 108,
         "out_tokens": 64,
         "total_tokens": 172,
-        "latency_ms": 1288,
+        "latency_ms": 1491,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2003,
-        "out_tokens": 540,
-        "total_tokens": 2543,
-        "latency_ms": 3277,
+        "in_tokens": 2325,
+        "out_tokens": 559,
+        "total_tokens": 2884,
+        "latency_ms": 3581,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1317,
-        "out_tokens": 1041,
-        "total_tokens": 2358,
-        "latency_ms": 3584,
+        "in_tokens": 1399,
+        "out_tokens": 1021,
+        "total_tokens": 2420,
+        "latency_ms": 3368,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2263,
-        "out_tokens": 645,
-        "total_tokens": 2908,
-        "latency_ms": 3307,
+        "in_tokens": 2361,
+        "out_tokens": 575,
+        "total_tokens": 2936,
+        "latency_ms": 3600,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1542,
-        "out_tokens": 1814,
-        "total_tokens": 3356,
-        "latency_ms": 5253,
+        "in_tokens": 1476,
+        "out_tokens": 1434,
+        "total_tokens": 2910,
+        "latency_ms": 4453,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2256,
-        "out_tokens": 455,
-        "total_tokens": 2711,
-        "latency_ms": 2795,
+        "in_tokens": 2293,
+        "out_tokens": 460,
+        "total_tokens": 2753,
+        "latency_ms": 2941,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1326,
-        "out_tokens": 1147,
-        "total_tokens": 2473,
-        "latency_ms": 3760,
+        "in_tokens": 1318,
+        "out_tokens": 1282,
+        "total_tokens": 2600,
+        "latency_ms": 4680,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3384,
-        "out_tokens": 256,
-        "total_tokens": 3640,
-        "latency_ms": 2294,
+        "in_tokens": 3170,
+        "out_tokens": 261,
+        "total_tokens": 3431,
+        "latency_ms": 2332,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
@@ -144,137 +144,97 @@
         "in_tokens": 580,
         "out_tokens": 39,
         "total_tokens": 619,
-        "latency_ms": 1066,
+        "latency_ms": 1424,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2179,
-        "out_tokens": 327,
-        "total_tokens": 2506,
-        "latency_ms": 2439,
+        "in_tokens": 2296,
+        "out_tokens": 494,
+        "total_tokens": 2790,
+        "latency_ms": 2947,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1246,
-        "out_tokens": 919,
-        "total_tokens": 2165,
-        "latency_ms": 3118,
+        "in_tokens": 1291,
+        "out_tokens": 866,
+        "total_tokens": 2157,
+        "latency_ms": 3236,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 4096,
-        "out_tokens": 254,
-        "total_tokens": 4350,
-        "latency_ms": 2019,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "writer",
-        "call_type": "write",
-        "in_tokens": 1964,
-        "out_tokens": 1440,
-        "total_tokens": 3404,
-        "latency_ms": 6923,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "critic",
-        "call_type": "critique",
-        "in_tokens": 3783,
-        "out_tokens": 355,
-        "total_tokens": 4138,
-        "latency_ms": 2672,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 4230,
-        "out_tokens": 311,
-        "total_tokens": 4541,
-        "latency_ms": 2473,
+        "in_tokens": 3801,
+        "out_tokens": 302,
+        "total_tokens": 4103,
+        "latency_ms": 2545,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "gap_plan",
-        "in_tokens": 580,
-        "out_tokens": 36,
-        "total_tokens": 616,
-        "latency_ms": 1208,
+        "in_tokens": 591,
+        "out_tokens": 40,
+        "total_tokens": 631,
+        "latency_ms": 1407,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2019,
-        "out_tokens": 306,
-        "total_tokens": 2325,
-        "latency_ms": 2402,
+        "in_tokens": 2324,
+        "out_tokens": 308,
+        "total_tokens": 2632,
+        "latency_ms": 2459,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1156,
-        "out_tokens": 527,
-        "total_tokens": 1683,
-        "latency_ms": 2450,
+        "in_tokens": 1118,
+        "out_tokens": 643,
+        "total_tokens": 1761,
+        "latency_ms": 2991,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 4605,
-        "out_tokens": 262,
-        "total_tokens": 4867,
-        "latency_ms": 2231,
+        "in_tokens": 4235,
+        "out_tokens": 281,
+        "total_tokens": 4516,
+        "latency_ms": 2278,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 2126,
-        "out_tokens": 1491,
-        "total_tokens": 3617,
-        "latency_ms": 6707,
+        "in_tokens": 2185,
+        "out_tokens": 1424,
+        "total_tokens": 3609,
+        "latency_ms": 6705,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 3996,
-        "out_tokens": 391,
-        "total_tokens": 4387,
-        "latency_ms": 2636,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 4632,
-        "out_tokens": 301,
-        "total_tokens": 4933,
-        "latency_ms": 2282,
+        "in_tokens": 3925,
+        "out_tokens": 206,
+        "total_tokens": 4131,
+        "latency_ms": 2350,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -283,325 +243,353 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "The Ghana Interbank Payment and Settlement Systems Limited was established in 2007 by the Bank of Ghana.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "claim": "Ghana, Ethiopia, and Rwanda are early adopters of the Digital Public Infrastructure approach.",
+      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
       "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "The Ghana Interbank Payment and Settlement Systems Limited is not integrated into a government-wide data exchange platform.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "medium"
+      "claim": "Ghana formalized its digital vision through the Digital Economy Policy Strategy (2024).",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "Ghana utilizes the Ghana Card, mobile money, and GhanaPay for financial inclusion and public service delivery.",
-      "source_url": "https://www.centerforfinancialinclusion.org/research/global-dpi-insights-community",
+      "claim": "The Ghana Interbank Payment and Settlement Systems Limited was established in 2007.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
       "id": "F004",
-      "claim": "Rural women, informal sector workers, and persons with disabilities in Ghana face risks related to digital fraud and data privacy.",
-      "source_url": "https://www.centerforfinancialinclusion.org/research/global-dpi-insights-community",
-      "confidence": "medium"
+      "claim": "Ghana's GHIPSS Instant Pay and Mobile Money Interoperability are categorized as progressed systems in a 2024 assessment of thirty-one African instant payment systems.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "high"
     },
     {
       "id": "F005",
-      "claim": "Private sector fintech companies participate in government payment gateways in Ghana.",
-      "source_url": "https://acetforafrica.org/research-and-analysis/insights-ideas/digital-public-infrastructure-dpi-will-drive-ai-for-africas-economic-transformation",
+      "claim": "CybAfrique is researching critical failure points of Digital Public Infrastructure in Ghana.",
+      "source_url": "https://www.centerforfinancialinclusion.org/research/global-dpi-insights-community",
       "confidence": "medium"
     },
     {
       "id": "F006",
-      "claim": "Ethiopia, Ghana, and Rwanda are early adopters of the Digital Public Infrastructure approach.",
-      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
+      "claim": "Rwanda articulated its commitment to digital infrastructure in the ICT Sector Strategic Plan (2024\u20132029).",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F007",
-      "claim": "Ethiopia's Digital Public Infrastructure strategy focuses on health, agriculture, finance, and social protection.",
-      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
-      "confidence": "high"
+      "claim": "Rwanda is advancing financial inclusion through its Digital Public Infrastructure implementation.",
+      "source_url": "https://www.dpi-safeguards.org/countriesshowcase",
+      "confidence": "medium"
     },
     {
       "id": "F008",
-      "claim": "The Ministry of Innovation and Technology, the Ethiopian Artificial Intelligence Institute, and the National ID Program anchor Digital Public Infrastructure governance in Ethiopia.",
+      "claim": "Ethiopia follows an innovation-led approach to Digital Public Infrastructure using a mix of policy, regulation, and technology.",
       "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
-      "confidence": "high"
+      "confidence": "medium"
     },
     {
       "id": "F009",
-      "claim": "Research teams supported by the Global Development Network and Co-Develop have conducted pilot studies on the socioeconomic impacts of Digital Public Infrastructure in Ethiopia.",
-      "source_url": "https://gdn.int/digitalisation",
-      "confidence": "high"
+      "claim": "Digital Public Infrastructure implementation across Africa is under-financed and fragmented.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F010",
-      "claim": "Current research in Ethiopia examines trust, adoption, and grievances related to Public Key Infrastructure and Instant Payment Systems.",
-      "source_url": "https://www.centerforfinancialinclusion.org/research/global-dpi-insights-community",
-      "confidence": "medium"
+      "claim": "A 2024 assessment of thirty-one African instant payment systems found that none had reached a mature level of inclusivity.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "Ethiopia requires clearer mandates and cross-sector regulatory alignment for its Digital Public Infrastructure systems.",
-      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
-      "confidence": "medium"
-    },
-    {
-      "id": "F012",
-      "claim": "In 2024, 36 instant payment systems across 31 African countries processed 64 billion transactions.",
-      "source_url": "https://cioafrica.co/new-siips-report-shows-rapid-growth-in-instant-payments",
-      "confidence": "high"
-    },
-    {
-      "id": "F013",
-      "claim": "The total value of transactions processed by instant payment systems in 31 African countries in 2024 was nearly $2 trillion.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "high"
-    },
-    {
-      "id": "F014",
-      "claim": "Transaction volumes for instant payment systems in Africa have grown at an average annual rate of 35% since 2020.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "high"
-    },
-    {
-      "id": "F015",
-      "claim": "40% of adults in Sub-Saharan Africa own a mobile money account.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F016",
       "claim": "E-money growth in 47 African countries is associated with stronger monetary policy transmission.",
       "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
       "confidence": "high"
     },
     {
-      "id": "F017",
-      "claim": "E-money growth in 47 African countries is associated with increased bank deposits and credit.",
+      "id": "F012",
+      "claim": "E-money growth in 47 African countries is associated with growth in bank deposits and credit.",
       "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F013",
+      "claim": "E-money growth in 47 African countries is associated with increased efficiency in financial intermediation.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F014",
+      "claim": "Consumers in Angola, C\u00f4te d\u2019Ivoire, Madagascar, and Tunisia are adopting digital payments faster than merchants.",
+      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
+      "confidence": "medium"
+    },
+    {
+      "id": "F015",
+      "claim": "Adults over 30 and those with regular income are the most active digital payment users in Angola, C\u00f4te d\u2019Ivoire, Madagascar, and Tunisia.",
+      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
+      "confidence": "medium"
+    },
+    {
+      "id": "F016",
+      "claim": "40% of adults in Sub-Saharan Africa own a mobile money account.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F017",
+      "claim": "36 African countries operate instant payment systems as of 2025.",
+      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
       "confidence": "high"
     },
     {
       "id": "F018",
-      "claim": "E-money growth in 47 African countries is associated with improved efficiency in financial intermediation.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "claim": "Angola operates the IPN instant payment system.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
       "confidence": "high"
     },
     {
       "id": "F019",
-      "claim": "In Angola, C\u00f4te d\u2019Ivoire, Madagascar, and Tunisia, consumers are adopting digital payments faster than merchants.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
+      "claim": "Eswatini operates the Fast Payment Module instant payment system.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F020",
-      "claim": "Active digital payment users in Angola, C\u00f4te d\u2019Ivoire, Madagascar, and Tunisia are primarily adults over 30 with regular incomes.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
+      "claim": "Ghana operates the MMI instant payment system.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F021",
-      "claim": "Young adults and women in emerging and early-stage markets face barriers to using digital payment systems due to fraud concerns.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
+      "claim": "Lesotho operates the LeSwitch instant payment system.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F022",
-      "claim": "Young adults and women in emerging and early-stage markets face barriers to using digital payment systems due to lack of identification.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
+      "claim": "Madagascar operates a mobile money instant payment system.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "Young adults and women in emerging and early-stage markets face barriers to using digital payment systems due to limited access to agents.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
+      "claim": "Mauritius operates the MauCAS instant payment system.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "Implementation of instant payment systems is hindered by high compliance costs.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
-      "confidence": "medium"
+      "claim": "Morocco operates the SWAM and Virement Instantan\u00e9 instant payment systems.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F025",
-      "claim": "Implementation of instant payment systems is hindered by regulatory barriers.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
-      "confidence": "medium"
+      "claim": "Digital ID enables end-to-end digital onboarding and verification.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F026",
-      "claim": "36 African countries currently have live instant payment systems, digital ID systems, and data protection frameworks.",
-      "source_url": "https://cioafrica.co/new-siips-report-shows-rapid-growth-in-instant-payments",
-      "confidence": "high"
-    },
-    {
-      "id": "F027",
-      "claim": "Angola has a national instant payment system called IPN.",
-      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F028",
-      "claim": "Mauritius has a national instant payment system called MauCAS.",
-      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F029",
-      "claim": "Formal financial access in Tanzania was 62% in 2017.",
+      "claim": "In 2017, 62% of the population in Tanzania accessed financial services through formal channels.",
       "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
       "confidence": "high"
     },
     {
+      "id": "F027",
+      "claim": "In Tanzania, 36% of farmers use mobile financial service providers.",
+      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F028",
+      "claim": "In Tanzania, 5% of farmers use banks for financial services.",
+      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F029",
+      "claim": "In Tanzania, 24% of farmers use informal mechanisms for financial services.",
+      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
+      "confidence": "high"
+    },
+    {
       "id": "F030",
-      "claim": "36% of farmers in Tanzania use mobile financial service providers.",
+      "claim": "In 2018, 53% of the population in Uganda accessed financial services through formal channels.",
       "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
       "confidence": "high"
     },
     {
       "id": "F031",
-      "claim": "5% of farmers in Tanzania use banks.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
+      "claim": "In 2016, Uganda recorded 7.6 million registered mobile money users.",
+      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
       "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "24% of farmers in Tanzania use informal financial mechanisms.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
+      "claim": "In 2016, Uganda recorded US$ 9 billion in mobile money transactions.",
+      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
       "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "Formal financial access in Uganda was 53% in 2018.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
+      "claim": "Senegal is one of eight economies in Sub-Saharan Africa where at least 20% of adults have a mobile money account.",
+      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
       "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "Uganda had 7.6 million registered non-bank digital financial services users as of 2016.",
-      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
-      "confidence": "high"
+      "claim": "Interoperability in the Tanzanian mobile money market has increased transactions across networks.",
+      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
+      "confidence": "medium"
     },
     {
       "id": "F035",
-      "claim": "Mobile money transactions in Uganda totaled US$ 9 billion as of 2016.",
-      "source_url": "https://www.ifc.org/content/dam/ifc/doc/mgrt/201805-digital-access-the-future-of-financial-inclusion-in-africa-v1.pdf",
+      "claim": "Uganda has implemented a shared agent system that allows 19 banks to utilize a shared network.",
+      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
       "confidence": "high"
     },
     {
       "id": "F036",
-      "claim": "Senegal is one of eight economies in Sub-Saharan Africa where 20% or more of adults have a mobile money account.",
-      "source_url": "https://migrantmoney.uncdf.org/wp-content/uploads/2023/02/Senegal-Country-Assessment-English-1.pdf",
+      "claim": "Data exchange is a component of Digital Public Infrastructure intended to facilitate secure, consensual data sharing between entities.",
+      "source_url": "https://www.gpfi.org/sites/default/files/GPFI_Paper_240704_P.pdf",
       "confidence": "high"
     },
     {
       "id": "F037",
-      "claim": "Tanzania has implemented interoperability for mobile money.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
-      "confidence": "high"
-    },
-    {
-      "id": "F038",
-      "claim": "Mobile money interoperability in Tanzania has increased transactions across networks.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
+      "claim": "The implementation of data exchange layers faces challenges including securing the participation of large incumbent banks.",
+      "source_url": "https://www.centerforfinancialinclusion.org/wp-content/uploads/2024/10/The-Role-of-Data-Exchange-in-Financial-Inclusion.pdf",
       "confidence": "medium"
     },
     {
+      "id": "F038",
+      "claim": "The annual infrastructure financing gap for Africa is estimated between $68 billion and $108 billion.",
+      "source_url": "https://mohacafrica.org/infrastructure-gap-in-africa",
+      "confidence": "high"
+    },
+    {
       "id": "F039",
-      "claim": "Uganda has implemented a shared agent system allowing 19 banks to utilize a shared network of agents.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/bdb1c138-714f-4e56-aebe-d7558e20afcb/download",
+      "claim": "Total annual investment requirements to meet development goals in Africa are estimated between $130 billion and $170 billion.",
+      "source_url": "https://mohacafrica.org/infrastructure-gap-in-africa",
       "confidence": "high"
     },
     {
       "id": "F040",
-      "claim": "Recurring compliance checks mandated by central banks or payment authorities account for 20\u201330% of total compliance expenses for payment service providers in Africa.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
+      "claim": "The annual investment requirement to achieve productive transformation through digital infrastructure in Africa is estimated at approximately $36 billion.",
+      "source_url": "https://futures.issafrica.org/thematic/11-large-infrastructure",
       "confidence": "high"
     },
     {
       "id": "F041",
-      "claim": "Compliance costs for payment service providers are driven by audit and certification, technology and infrastructure, human capital, and regulatory reporting.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
+      "claim": "The International Telecommunication Union estimates a global digital infrastructure investment gap of at least $1.6 trillion to reach connectivity targets by 2030.",
+      "source_url": "https://www.itu.int/hub/2025/01/digital-infrastructure-investment-usd-1-6-trillion-to-close-the-gap",
       "confidence": "high"
     },
     {
       "id": "F042",
-      "claim": "Fragmented regulatory structures requiring payment service providers to report separately to financial, data, and telecom authorities lead to duplication and inefficiency.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
+      "claim": "In 2023, the private sector invested $3.5 billion across 66 infrastructure projects in Sub-Saharan Africa.",
+      "source_url": "https://back.africaeuropefoundation.org/uploads/AEF_NEPAD_Technical_Paper_2487fc9068.pdf",
       "confidence": "high"
     },
     {
       "id": "F043",
-      "claim": "Nearly half of African Union member states have implemented instant payment systems.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
+      "claim": "Private sector infrastructure investment in Sub-Saharan Africa decreased by 24% year-on-year in 2023.",
+      "source_url": "https://back.africaeuropefoundation.org/uploads/AEF_NEPAD_Technical_Paper_2487fc9068.pdf",
       "confidence": "high"
     },
     {
       "id": "F044",
-      "claim": "Regional instant payment systems in Africa include PAPSS, GIMACPAY, TCIB, and the WAEMU regional PI-SPI.",
-      "source_url": "https://africanenda.org/wp-content/uploads/260520-RFP-Mapping-the-Costs-of-Intra-African-Cross-Border-Digital-Retail-Payments.pdf",
+      "claim": "A 2024 assessment of 31 instant payment systems across Africa found that none had reached a mature level of inclusivity.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
       "id": "F045",
-      "claim": "Instant payment transaction volumes across Africa reached 64 billion in 2024.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
+      "claim": "Nine instant payment systems in Africa are categorized as progressed, including Ghana\u2019s GHIPSS Instant Pay and Mobile Money Interoperability and Tanzania\u2019s Instant Payment System.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
       "id": "F046",
-      "claim": "Instant payment transaction volumes in Africa have grown at an average annual rate of 35% since 2020.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
+      "claim": "The African Union launched a Digital Transformation Strategy for Africa in July 2024.",
+      "source_url": "https://back.africaeuropefoundation.org/uploads/AEF_NEPAD_Technical_Paper_2487fc9068.pdf",
       "confidence": "high"
     },
     {
       "id": "F047",
-      "claim": "High compliance costs and regulatory barriers are challenges to the expansion of instant payment systems in Africa.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
-      "confidence": "medium"
+      "claim": "Instant payment systems in Africa reached over 64 billion in total transaction volume in 2024.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
+      "confidence": "high"
     },
     {
       "id": "F048",
-      "claim": "Policymakers in Ghana and Rwanda have utilized regulatory sandboxes to test innovations and inform regulatory decisions.",
-      "source_url": "https://carnegieendowment.org/research/2024/03/security-and-trust-in-africas-digital-financial-inclusion-landscape",
+      "claim": "Instant payment systems in Africa experienced an average annual growth rate of 35% between 2020 and 2024.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
       "confidence": "high"
     },
     {
       "id": "F049",
-      "claim": "Regulatory responsibility for digital financial services in Ghana is divided between banking and telecommunications regulators.",
-      "source_url": "https://carnegieendowment.org/research/2024/03/security-and-trust-in-africas-digital-financial-inclusion-landscape",
+      "claim": "Men initiated the majority of transaction volumes and values on Rwanda's eKash system in 2024.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
       "confidence": "high"
     },
     {
       "id": "F050",
-      "claim": "Inadequate infrastructure and regulatory obstacles are barriers to financial inclusion for underserved populations in Sub-Saharan Africa.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S0040162524001355",
+      "claim": "Women's average transaction sizes on Rwanda's eKash system were lower than men's in 2024.",
+      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
       "confidence": "high"
     },
     {
       "id": "F051",
-      "claim": "A study using FinScope 2020 survey data identified a gender divide in financial inclusion in Rwanda.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/8ddfb789-f718-49b1-9943-7f8313239411/download",
-      "confidence": "high"
+      "claim": "Ghana's GhIPSS Instant Pay has experienced growth in transaction volume since its introduction in 2015.",
+      "source_url": "https://www.lightspark.com/knowledge/ghana-instant-payments",
+      "confidence": "medium"
     },
     {
       "id": "F052",
-      "claim": "Lack of policy and regulatory support in Rwanda exacerbates barriers such as long distances to service points and high transportation costs for rural communities.",
-      "source_url": "https://publication.aercafricalibrary.org/bitstreams/8ddfb789-f718-49b1-9943-7f8313239411/download",
+      "claim": "The introduction of an e-levy tax has affected growth in Ghana's GhIPSS Instant Pay system.",
+      "source_url": "https://www.lightspark.com/knowledge/ghana-instant-payments",
+      "confidence": "medium"
+    },
+    {
+      "id": "F053",
+      "claim": "Rural internet connectivity constraints have limited growth in Ghana's GhIPSS Instant Pay system.",
+      "source_url": "https://www.lightspark.com/knowledge/ghana-instant-payments",
       "confidence": "medium"
     }
   ],
-  "revisions": 2,
+  "revisions": 0,
   "research_loops": 2,
   "searches_used": 5,
-  "write_attempts": 2,
+  "write_attempts": 1,
   "unclosed_gaps": [
-    "Quantitative data linking specific regulatory compliance costs to the reduction of service points or agent network expansion in rural areas."
+    "Quantitative data on the specific impact of the e-levy tax and rural connectivity constraints on transaction volume growth rates in Ghana."
   ],
-  "final_critique": null,
+  "final_critique": {
+    "scores": {
+      "factual_grounding": 5,
+      "structural_coherence": 5,
+      "depth_of_analysis": 4,
+      "citation_integrity": 5,
+      "absence_of_filler": 4
+    },
+    "verdict": "pass",
+    "target": "analyst",
+    "issues": [
+      {
+        "span": "The path forward for African nations involves navigating the duality of high-growth payment systems and the underlying structural fragility of the infrastructure supporting them.",
+        "criterion": "absence_of_filler",
+        "problem": "This sentence is a rhetorical summary that adds no new information or analysis to the report.",
+        "fix": "Remove the sentence and conclude directly with the policy implications mentioned in the final paragraph."
+      }
+    ],
+    "summary": "The report is exceptionally well-grounded and structured, though it occasionally relies on rhetorical flourishes in the conclusion that do not add substantive value.",
+    "broken_citations": [],
+    "citation_cap_applied": false,
+    "citation_cap_reason": ""
+  },
   "hitl": false,
   "trace": [
     {
@@ -609,13 +597,13 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 39,
-      "kept": 39,
+      "found": 37,
+      "kept": 37,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h26/m13/l0",
+      "confidence": "h29/m8/l0",
       "budget": "3/5",
-      "tokens": 16521,
+      "tokens": 16675,
       "sent": [
         "digital public infrastructure adoption impact assessment Ghana Ethiopi",
         "economic outcomes of instant payment systems and digital ID in Sub-Sah",
@@ -625,14 +613,14 @@
     {
       "node": "analyst",
       "action": "outlined",
-      "sections": 4,
+      "sections": 3,
       "tensions": 1,
       "gaps_raw": 1,
       "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3640
+      "tokens": 3431
     },
     {
       "node": "supervisor",
@@ -648,68 +636,16 @@
       "action": "searched",
       "mode": "gap-driven",
       "queries": 1,
-      "found": 8,
-      "kept": 8,
+      "found": 9,
+      "kept": 9,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h7/m1/l0",
+      "confidence": "h9/m0/l0",
       "budget": "4/5",
-      "tokens": 5290,
+      "tokens": 5566,
       "sent": [
-        "impact of regulatory compliance costs on transaction volume of instant"
+        "investment gap analysis digital public infrastructure Sub-Saharan Afri"
       ]
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 4,
-      "tensions": 1,
-      "gaps_raw": 0,
-      "gaps_kept": 0,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 4350
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "no draft",
-      "attempt": "1/2"
-    },
-    {
-      "node": "writer",
-      "action": "drafted",
-      "revision": 0,
-      "words": 1007,
-      "in_range": true,
-      "cited": 40,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3404
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "analyst",
-      "worst": "depth_of_analysis=4",
-      "mean": 4.6,
-      "issues_raw": 2,
-      "issues_kept": 2,
-      "dropped_ungrounded": 0,
-      "broken_cites": 0,
-      "cites": 40,
-      "cite_cap": false,
-      "tokens": 4138
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "analyst",
-      "why": "critic requested revision",
-      "revision": "1/2"
     },
     {
       "node": "analyst",
@@ -720,8 +656,8 @@
       "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
-      "revision": true,
-      "tokens": 4541
+      "revision": false,
+      "tokens": 4103
     },
     {
       "node": "supervisor",
@@ -737,15 +673,15 @@
       "action": "searched",
       "mode": "gap-driven",
       "queries": 1,
-      "found": 5,
-      "kept": 5,
+      "found": 7,
+      "kept": 7,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h4/m1/l0",
+      "confidence": "h4/m3/l0",
       "budget": "5/5",
-      "tokens": 4624,
+      "tokens": 5024,
       "sent": [
-        "impact of regulatory interventions on digital financial service adopti"
+        "transaction volume and adoption rate statistics for Ghana GHIPSS Insta"
       ]
     },
     {
@@ -753,64 +689,12 @@
       "action": "outlined",
       "sections": 4,
       "tensions": 1,
-      "gaps_raw": 0,
-      "gaps_kept": 0,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": true,
-      "tokens": 4867
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "draft awaiting fresh critique",
-      "attempt": "2/2"
-    },
-    {
-      "node": "writer",
-      "action": "drafted",
-      "revision": 1,
-      "words": 1045,
-      "in_range": true,
-      "cited": 44,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3617
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "analyst",
-      "worst": "depth_of_analysis=4",
-      "mean": 4.6,
-      "issues_raw": 2,
-      "issues_kept": 2,
-      "dropped_ungrounded": 0,
-      "broken_cites": 0,
-      "cites": 44,
-      "cite_cap": false,
-      "tokens": 4387
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "analyst",
-      "why": "critic requested revision",
-      "revision": "2/2"
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 3,
-      "tensions": 1,
       "gaps_raw": 1,
       "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
-      "revision": true,
-      "tokens": 4933
+      "revision": false,
+      "tokens": 4516
     },
     {
       "node": "supervisor",
@@ -823,16 +707,49 @@
     {
       "node": "supervisor",
       "action": "route",
+      "to": "writer",
+      "why": "no draft",
+      "attempt": "1/2"
+    },
+    {
+      "node": "writer",
+      "action": "drafted",
+      "revision": 0,
+      "words": 953,
+      "in_range": true,
+      "cited": 45,
+      "broken_cites": 0,
+      "cite_repair": false,
+      "tokens": 3609
+    },
+    {
+      "node": "critic",
+      "action": "scored",
+      "verdict": "pass",
+      "target": "-",
+      "worst": "depth_of_analysis=4",
+      "mean": 4.6,
+      "issues_raw": 1,
+      "issues_kept": 1,
+      "dropped_ungrounded": 0,
+      "broken_cites": 0,
+      "cites": 45,
+      "cite_cap": false,
+      "tokens": 4131
+    },
+    {
+      "node": "supervisor",
+      "action": "route",
       "to": "finalize",
-      "why": "write attempts exhausted",
-      "degraded": true
+      "why": "critic passed",
+      "min_score": 4
     },
     {
       "node": "finalize",
       "action": "shipped",
       "degraded": false,
       "unclosed_gaps": 1,
-      "words": 1078
+      "words": 1007
     }
   ]
 }

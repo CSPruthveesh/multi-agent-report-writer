@@ -1,66 +1,51 @@
 {
   "system": "multiagent",
   "topic_id": "t1",
-  "generated_at": "2026-07-31T13:18:24.138084+00:00",
-  "word_count": 927,
-  "findings_count": 53,
+  "generated_at": "2026-07-31T12:39:54.760359+00:00",
+  "word_count": 880,
+  "findings_count": 30,
   "citations": {
-    "cited_count": 39,
-    "valid_count": 53,
+    "cited_count": 30,
+    "valid_count": 30,
     "broken": [],
     "broken_count": 0,
-    "uncited_findings": [
-      "F002",
-      "F003",
-      "F005",
-      "F010",
-      "F011",
-      "F020",
-      "F025",
-      "F026",
-      "F027",
-      "F039",
-      "F040",
-      "F044",
-      "F048",
-      "F049"
-    ],
-    "coverage": 0.736
+    "uncited_findings": [],
+    "coverage": 1.0
   },
-  "wall_ms": 89597,
+  "wall_ms": 46885,
   "tokens": {
-    "calls": 22,
-    "total_in": 52489,
-    "total_out": 13650,
-    "total": 66139,
+    "calls": 10,
+    "total_in": 18478,
+    "total_out": 6570,
+    "total": 25048,
     "by_node": {
       "researcher": {
-        "calls": 13,
-        "in": 20463,
-        "out": 8159,
-        "total": 28622,
-        "ms": 38183
+        "calls": 7,
+        "in": 11316,
+        "out": 4682,
+        "total": 15998,
+        "ms": 24524
       },
       "analyst": {
-        "calls": 5,
-        "in": 19319,
-        "out": 1582,
-        "total": 20901,
-        "ms": 11811
+        "calls": 1,
+        "in": 2367,
+        "out": 297,
+        "total": 2664,
+        "ms": 2414
       },
       "writer": {
-        "calls": 2,
-        "in": 4725,
-        "out": 2727,
-        "total": 7452,
-        "ms": 12474
+        "calls": 1,
+        "in": 1525,
+        "out": 1369,
+        "total": 2894,
+        "ms": 7048
       },
       "critic": {
-        "calls": 2,
-        "in": 7982,
-        "out": 1182,
-        "total": 9164,
-        "ms": 6627
+        "calls": 1,
+        "in": 3270,
+        "out": 222,
+        "total": 3492,
+        "ms": 1936
       }
     },
     "records": [
@@ -70,217 +55,97 @@
         "in_tokens": 111,
         "out_tokens": 73,
         "total_tokens": 184,
-        "latency_ms": 2171,
+        "latency_ms": 2403,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2674,
-        "out_tokens": 582,
-        "total_tokens": 3256,
-        "latency_ms": 3237,
+        "in_tokens": 2570,
+        "out_tokens": 695,
+        "total_tokens": 3265,
+        "latency_ms": 3947,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1444,
-        "out_tokens": 1595,
-        "total_tokens": 3039,
-        "latency_ms": 4647,
+        "in_tokens": 1535,
+        "out_tokens": 972,
+        "total_tokens": 2507,
+        "latency_ms": 3814,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1957,
-        "out_tokens": 677,
-        "total_tokens": 2634,
-        "latency_ms": 3561,
+        "in_tokens": 1841,
+        "out_tokens": 489,
+        "total_tokens": 2330,
+        "latency_ms": 3038,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1495,
-        "out_tokens": 1072,
-        "total_tokens": 2567,
-        "latency_ms": 3655,
+        "in_tokens": 1269,
+        "out_tokens": 944,
+        "total_tokens": 2213,
+        "latency_ms": 3479,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2421,
-        "out_tokens": 666,
-        "total_tokens": 3087,
-        "latency_ms": 3474,
+        "in_tokens": 2415,
+        "out_tokens": 695,
+        "total_tokens": 3110,
+        "latency_ms": 4169,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1552,
-        "out_tokens": 881,
-        "total_tokens": 2433,
-        "latency_ms": 3243,
+        "in_tokens": 1575,
+        "out_tokens": 814,
+        "total_tokens": 2389,
+        "latency_ms": 3674,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 2960,
-        "out_tokens": 319,
-        "total_tokens": 3279,
-        "latency_ms": 2305,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "gap_plan",
-        "in_tokens": 627,
-        "out_tokens": 38,
-        "total_tokens": 665,
-        "latency_ms": 1122,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "search",
-        "in_tokens": 2628,
-        "out_tokens": 460,
-        "total_tokens": 3088,
-        "latency_ms": 2780,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1333,
-        "out_tokens": 969,
-        "total_tokens": 2302,
-        "latency_ms": 3209,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 3693,
-        "out_tokens": 374,
-        "total_tokens": 4067,
-        "latency_ms": 2846,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "gap_plan",
-        "in_tokens": 666,
-        "out_tokens": 61,
-        "total_tokens": 727,
-        "latency_ms": 1296,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "search",
-        "in_tokens": 2231,
-        "out_tokens": 454,
-        "total_tokens": 2685,
-        "latency_ms": 2876,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1324,
-        "out_tokens": 631,
-        "total_tokens": 1955,
-        "latency_ms": 2912,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 4144,
-        "out_tokens": 364,
-        "total_tokens": 4508,
-        "latency_ms": 2483,
+        "in_tokens": 2367,
+        "out_tokens": 297,
+        "total_tokens": 2664,
+        "latency_ms": 2414,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 2388,
-        "out_tokens": 1378,
-        "total_tokens": 3766,
-        "latency_ms": 6142,
+        "in_tokens": 1525,
+        "out_tokens": 1369,
+        "total_tokens": 2894,
+        "latency_ms": 7048,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 4031,
-        "out_tokens": 761,
-        "total_tokens": 4792,
-        "latency_ms": 3941,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 4261,
-        "out_tokens": 248,
-        "total_tokens": 4509,
-        "latency_ms": 1987,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "writer",
-        "call_type": "write",
-        "in_tokens": 2337,
-        "out_tokens": 1349,
-        "total_tokens": 3686,
-        "latency_ms": 6332,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "critic",
-        "call_type": "critique",
-        "in_tokens": 3951,
-        "out_tokens": 421,
-        "total_tokens": 4372,
-        "latency_ms": 2686,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 4261,
-        "out_tokens": 277,
-        "total_tokens": 4538,
-        "latency_ms": 2190,
+        "in_tokens": 3270,
+        "out_tokens": 222,
+        "total_tokens": 3492,
+        "latency_ms": 1936,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -289,333 +154,213 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "Sodium-ion battery cells are estimated at $59/kWh in 2025.",
-      "source_url": "https://www.ess-news.com/2026/05/19/sodium-ion-vs-lithium-ion-bess-cost-parity-not-before-2031",
+      "claim": "LFP battery costs range from $50/kWh to $80/kWh.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
       "confidence": "medium"
     },
     {
       "id": "F002",
-      "claim": "Lithium iron phosphate cells are estimated at $52/kWh in 2025.",
-      "source_url": "https://www.ess-news.com/2026/05/19/sodium-ion-vs-lithium-ion-bess-cost-parity-not-before-2031",
+      "claim": "Sodium-ion battery costs range from $55/kWh to over $100/kWh.",
+      "source_url": "https://korapower.com/blogs/education/lfp-vs-sodium-ion-home-battery-2026-homeowners-guide",
       "confidence": "medium"
     },
     {
       "id": "F003",
-      "claim": "One source reports production costs of $70/kWh for sodium-ion batteries.",
+      "claim": "One source reports LFP and sodium-ion production costs are nearly identical.",
       "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
       "confidence": "low"
     },
     {
       "id": "F004",
-      "claim": "One source reports production costs of $50/kWh for lithium iron phosphate batteries.",
-      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "claim": "One source reports sodium-ion cells cost $59/kWh and LFP cells cost $52/kWh.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
       "confidence": "low"
     },
     {
       "id": "F005",
-      "claim": "One source estimates sodium-ion production costs at over $100/kWh for 2026.",
-      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
-      "confidence": "low"
+      "claim": "Sodium carbonate raw material costs are $600\u2013$650 per ton.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "confidence": "medium"
     },
     {
       "id": "F006",
-      "claim": "One source estimates lithium-ion production costs at $80/kWh for 2026.",
-      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
-      "confidence": "low"
+      "claim": "Lithium carbonate raw material costs are $10,000\u2013$11,000 per ton.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "confidence": "medium"
     },
     {
       "id": "F007",
-      "claim": "Sodium carbonate costs between $600 and $650 per ton.",
+      "claim": "LFP battery cycle life is reported between 3,000 and 10,000+ cycles.",
       "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
       "confidence": "medium"
     },
     {
       "id": "F008",
-      "claim": "Lithium carbonate costs between $10,000 and $11,000 per ton.",
+      "claim": "Sodium-ion battery cycle life is reported between 1,000 and 10,000 cycles.",
       "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
       "confidence": "medium"
     },
     {
       "id": "F009",
-      "claim": "Cost parity between sodium-ion and lithium iron phosphate is not expected before 2031.",
-      "source_url": "https://www.ess-news.com/2026/05/19/sodium-ion-vs-lithium-ion-bess-cost-parity-not-before-2031",
+      "claim": "Sodium-ion batteries retain 85\u201390% capacity at -20\u00b0C.",
+      "source_url": "https://korapower.com/blogs/education/lfp-vs-sodium-ion-home-battery-2026-homeowners-guide",
       "confidence": "medium"
     },
     {
       "id": "F010",
-      "claim": "Lithium iron phosphate cycle life is reported between 5,000 and 10,000+ cycles.",
-      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "claim": "LFP batteries retain 60\u201380% capacity at -20\u00b0C.",
+      "source_url": "https://korapower.com/blogs/education/lfp-vs-sodium-ion-home-battery-2026-homeowners-guide",
       "confidence": "medium"
     },
     {
       "id": "F011",
-      "claim": "IRENA data indicates a lithium iron phosphate cycle life range of 2,500 to 10,000 cycles.",
-      "source_url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2017/Oct/IRENA_DAT_Cost-of-service_Tool_2025.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F012",
-      "claim": "One source cites a sodium-ion cycle life of 8,000 to 10,000 cycles.",
+      "claim": "Sodium-ion batteries currently hold approximately 5% of the market.",
       "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
-      "confidence": "low"
-    },
-    {
-      "id": "F013",
-      "claim": "One source cites a sodium-ion cycle life of 4,000 to 6,000 cycles.",
-      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
-      "confidence": "low"
-    },
-    {
-      "id": "F014",
-      "claim": "One source cites a sodium-ion cycle life of 1,000 to 4,000 cycles.",
-      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
-      "confidence": "low"
-    },
-    {
-      "id": "F015",
-      "claim": "Some manufacturers claim a sodium-ion cycle life of 15,000+ cycles.",
-      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
-      "confidence": "low"
-    },
-    {
-      "id": "F016",
-      "claim": "Sodium-ion battery market share is approximately 5%.",
-      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
-      "confidence": "low"
-    },
-    {
-      "id": "F017",
-      "claim": "CATL, BYD, and Huawei are commercializing sodium-ion battery products.",
-      "source_url": "https://www.ess-news.com/2026/05/19/sodium-ion-vs-lithium-ion-bess-cost-parity-not-before-2031",
       "confidence": "medium"
     },
     {
-      "id": "F018",
+      "id": "F012",
       "claim": "Sodium-ion batteries are deployed in 5G base stations, communication towers, remote telecom equipment, and edge computing stations.",
       "source_url": "https://vekenindustry.com/sodium-ion-battery-applications-8-fast-growing-markets",
       "confidence": "medium"
     },
     {
+      "id": "F013",
+      "claim": "Sodium-ion batteries are used in office buildings, retail centers, and factories for peak load shaving, energy cost savings, and industrial backup power.",
+      "source_url": "https://dataintelo.com/report/sodium-ion-stationary-storage-market",
+      "confidence": "medium"
+    },
+    {
+      "id": "F014",
+      "claim": "Sodium-ion batteries are deployed for buffering solar and wind power, microgrids, and grid support.",
+      "source_url": "https://dataintelo.com/report/sodium-ion-stationary-storage-market",
+      "confidence": "medium"
+    },
+    {
+      "id": "F015",
+      "claim": "Sodium-ion batteries are utilized in data centers and uninterruptible power supply systems.",
+      "source_url": "https://dataintelo.com/report/sodium-ion-stationary-storage-market",
+      "confidence": "medium"
+    },
+    {
+      "id": "F016",
+      "claim": "Sodium-ion batteries operate in temperatures ranging from -40\u00b0C to +80\u00b0C.",
+      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
+      "confidence": "medium"
+    },
+    {
+      "id": "F017",
+      "claim": "Sodium-ion batteries are used by public sector organizations and community energy projects.",
+      "source_url": "https://dataintelo.com/report/sodium-ion-stationary-storage-market",
+      "confidence": "medium"
+    },
+    {
+      "id": "F018",
+      "claim": "Advanced commercial sodium-ion cells reach up to 10,000+ cycles.",
+      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
+      "confidence": "medium"
+    },
+    {
       "id": "F019",
-      "claim": "Sodium-ion batteries are used in data centers and UPS systems for backup power.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "claim": "Lithium-ion batteries reach 2,000\u20136,000 cycles depending on the specific chemistry.",
+      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
       "confidence": "medium"
     },
     {
       "id": "F020",
-      "claim": "Sodium-ion batteries are positioned as a replacement for lithium iron phosphate in commercial, industrial, and residential storage sectors.",
-      "source_url": "https://batterycouncil.org/battery-facts-and-applications/essential-applications/stationary-energy-storage",
-      "confidence": "medium"
-    },
-    {
-      "id": "F021",
-      "claim": "Sodium-ion batteries are used for buffering solar and wind power and peak shaving.",
+      "claim": "Sodium-ion batteries are less prone to thermal runaway than many lithium-ion systems.",
       "source_url": "https://www.ess-news.com/2026/01/28/sodium-ion-batteries-now-competitive-in-niche-markets",
       "confidence": "medium"
     },
     {
+      "id": "F021",
+      "claim": "Sodium-ion batteries have an energy density of approximately 175 Wh/kg.",
+      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
+      "confidence": "medium"
+    },
+    {
       "id": "F022",
-      "claim": "Sodium-sulfur batteries hold a 48% revenue share of the sodium-ion energy storage market as of 2026.",
-      "source_url": "https://www.futuremarketinsights.com/reports/energy-storage-sodium-ion-battery-market",
+      "claim": "CATL plans to scale sodium-ion battery production by 2026.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
       "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "Sodium-ion batteries operate in temperatures between -40\u00b0C and +80\u00b0C.",
-      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
-      "confidence": "medium"
-    },
-    {
-      "id": "F024",
-      "claim": "Sodium-ion systems can reduce cooling energy consumption by up to 90% compared to lithium iron phosphate systems.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "medium"
-    },
-    {
-      "id": "F025",
-      "claim": "One source projects a 143% ROI for end users with sodium-ion systems compared to 22% for lithium iron phosphate.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "low"
-    },
-    {
-      "id": "F026",
-      "claim": "Natron Energy\u2019s Prussian blue electrode technology offers enhanced cycle life.",
-      "source_url": "https://www.futuremarketinsights.com/reports/energy-storage-sodium-ion-battery-market",
-      "confidence": "medium"
-    },
-    {
-      "id": "F027",
-      "claim": "Sodium-sulfur batteries are recognized for long cycle life.",
-      "source_url": "https://www.futuremarketinsights.com/reports/energy-storage-sodium-ion-battery-market",
-      "confidence": "medium"
-    },
-    {
-      "id": "F028",
-      "claim": "One source states sodium-ion is uniquely positioned to replace lithium iron phosphate in battery energy storage system markets.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "low"
-    },
-    {
-      "id": "F029",
-      "claim": "One source argues sodium-ion is more likely to complement lithium-ion technology than replace it.",
-      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
-      "confidence": "low"
-    },
-    {
-      "id": "F030",
-      "claim": "The current average cost for sodium-ion cells is approximately US$87/kWh.",
+      "claim": "The current average cell cost for sodium-ion batteries is approximately US$87/kWh.",
       "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
       "confidence": "high"
     },
     {
-      "id": "F031",
-      "claim": "Future projections suggest sodium-ion cell costs could decrease to US$40/kWh.",
+      "id": "F024",
+      "claim": "Future production costs for sodium-ion batteries are projected to decrease toward US$40/kWh at the cell level.",
       "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
       "confidence": "medium"
     },
     {
-      "id": "F032",
-      "claim": "Future projections suggest sodium-ion pack costs could decrease to US$50/kWh.",
-      "source_url": "https://www.latitudemedia.com/news/catalyst-promise-and-perils-of-sodium-ion-batteries",
+      "id": "F025",
+      "claim": "Future production costs for sodium-ion batteries are projected to decrease toward US$50/kWh at the pack level.",
+      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
       "confidence": "medium"
     },
     {
-      "id": "F033",
+      "id": "F026",
+      "claim": "Anode-free sodium-ion cell technology could reach price points of US$40\u2013$50/kWh.",
+      "source_url": "https://www.latitudemedia.com/news/catalyst-promise-and-perils-of-sodium-ion-batteries",
+      "confidence": "low"
+    },
+    {
+      "id": "F027",
       "claim": "LFP is currently considered a best-in-class performer in terms of price per kWh.",
       "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-48359-2_14",
       "confidence": "medium"
     },
     {
-      "id": "F034",
-      "claim": "Sodium-ion batteries exhibit slower capacity fade compared to LFP.",
+      "id": "F028",
+      "claim": "Sodium-ion battery systems can utilize passive or air cooling.",
       "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "medium"
-    },
-    {
-      "id": "F035",
-      "claim": "Sodium-ion systems can reduce cooling energy consumption by up to 90% compared to LFP.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "medium"
-    },
-    {
-      "id": "F036",
-      "claim": "Most global manufacturing capacity for sodium-ion is currently located in China.",
-      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
       "confidence": "high"
     },
     {
-      "id": "F037",
-      "claim": "Anode-free sodium-ion cell designs eliminate the cost of negative electrode materials.",
+      "id": "F029",
+      "claim": "Passive cooling in sodium-ion systems can reduce cooling energy consumption by up to 90%.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "confidence": "high"
+    },
+    {
+      "id": "F030",
+      "claim": "CATL\u2019s CEO has suggested that sodium-ion could capture up to 50% of LFP\u2019s market share.",
       "source_url": "https://www.latitudemedia.com/news/catalyst-promise-and-perils-of-sodium-ion-batteries",
-      "confidence": "medium"
-    },
-    {
-      "id": "F038",
-      "claim": "CATL\u2019s CEO has suggested that sodium-ion could eventually capture up to 50% of LFP\u2019s market share.",
-      "source_url": "https://www.latitudemedia.com/news/catalyst-promise-and-perils-of-sodium-ion-batteries",
-      "confidence": "medium"
-    },
-    {
-      "id": "F039",
-      "claim": "Sodium-ion batteries offer advantages in cost, safety, and low-temperature performance compared to other chemistries.",
-      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
-      "confidence": "medium"
-    },
-    {
-      "id": "F040",
-      "claim": "Sodium-ion batteries face trade-offs in energy density and cycle life compared to other chemistries.",
-      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
-      "confidence": "medium"
-    },
-    {
-      "id": "F041",
-      "claim": "Sodium-ion batteries can utilize aluminum current collectors for both the anode and cathode.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "medium"
-    },
-    {
-      "id": "F042",
-      "claim": "Sodium-ion batteries allow for zero-volt discharge without the mechanical degradation associated with lithium-ion batteries.",
-      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
-      "confidence": "medium"
-    },
-    {
-      "id": "F043",
-      "claim": "Sodium-ion technology is in the market validation stage as of 2024.",
-      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
-      "confidence": "medium"
-    },
-    {
-      "id": "F044",
-      "claim": "Prospective life cycle assessments model sodium-ion batteries reaching TRL 9 and MRL 10 between 2025 and 2030.",
-      "source_url": "https://research.chalmers.se/publication/538534/file/538534_Fulltext.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F045",
-      "claim": "CATL announced the Freevoy Dual-Power Battery system including a sodium-LFP dual-power option in 2025.",
-      "source_url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Nov/IRENA_TEC_Sodium-ion_batteries_2025.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F046",
-      "claim": "Yadea launched sodium-battery-powered electric two-wheelers in 2025.",
-      "source_url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Nov/IRENA_TEC_Sodium-ion_batteries_2025.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F047",
-      "claim": "Global demand for sodium-ion batteries is forecast to grow from 4 GWh in 2024 to over 90 GWh in 2035.",
-      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
-      "confidence": "medium"
-    },
-    {
-      "id": "F048",
-      "claim": "NaNi1/3Fe1/3Mn1/3O2 pouch cells using localized high concentration electrolytes achieved 70% energy retention after 400 cycles.",
-      "source_url": "https://www.batterypoweronline.com/news/sodium-ion-at-the-2025-solid-state-and-sodium-ion-battery-conference",
-      "confidence": "high"
-    },
-    {
-      "id": "F049",
-      "claim": "NaNi1/3Fe1/3Mn1/3O2 pouch cells using standard carbonate electrolytes achieved 71% energy retention after 200 cycles.",
-      "source_url": "https://www.batterypoweronline.com/news/sodium-ion-at-the-2025-solid-state-and-sodium-ion-battery-conference",
-      "confidence": "high"
-    },
-    {
-      "id": "F050",
-      "claim": "Composite micrometric tin/hard carbon electrodes mitigate volume expansion through a porous tin network.",
-      "source_url": "https://www.batterypoweronline.com/news/sodium-ion-at-the-2025-solid-state-and-sodium-ion-battery-conference",
-      "confidence": "medium"
-    },
-    {
-      "id": "F051",
-      "claim": "IDTechEx reports that sodium-ion batteries are in the market validation stage.",
-      "source_url": "https://www.idtechex.com/en/research-report/sodium-ion-batteries-2025-2035-technology-players-markets-and-forecasts/1082",
-      "confidence": "high"
-    },
-    {
-      "id": "F052",
-      "claim": "Unigrid and UC San Diego are measuring degradation rates for cylindrical sodium-ion cells with a final report expected by December 2025.",
-      "source_url": "https://www.energystorage.ucsd.edu/projects/performance-testing-of-unigrids-sodium-ion-battery-cells",
-      "confidence": "high"
-    },
-    {
-      "id": "F053",
-      "claim": "Mineral price floors for sodium-ion batteries are expected to decrease through 2035.",
-      "source_url": "https://www.nature.com/articles/s41560-024-01701-9",
       "confidence": "medium"
     }
   ],
-  "revisions": 2,
-  "research_loops": 2,
-  "searches_used": 5,
-  "write_attempts": 2,
-  "unclosed_gaps": [
-    "Consolidated, industry-wide production cost data for 2025-2026 to resolve the discrepancy between $59/kWh and $87/kWh estimates.",
-    "Standardized testing protocols or independent benchmarking data to resolve the wide variance in reported cycle life (1,000 to 15,000+ cycles).",
-    "Independent, standardized performance benchmarking data comparing energy density and degradation rates across manufacturers to validate the claims of competitive viability."
-  ],
-  "final_critique": null,
+  "revisions": 0,
+  "research_loops": 0,
+  "searches_used": 3,
+  "write_attempts": 1,
+  "unclosed_gaps": [],
+  "final_critique": {
+    "scores": {
+      "factual_grounding": 5,
+      "structural_coherence": 5,
+      "depth_of_analysis": 5,
+      "citation_integrity": 5,
+      "absence_of_filler": 4
+    },
+    "verdict": "pass",
+    "target": "writer",
+    "issues": [
+      {
+        "span": "As the global energy transition accelerates, the limitations of lithium-based supply chains have shifted industry focus toward sodium-ion, which offers a more abundant and geographically diverse resource base.",
+        "criterion": "absence_of_filler",
+        "problem": "This sentence provides context that is not supported by the provided evidence, functioning as rhetorical filler.",
+        "fix": "Remove the sentence or replace it with a statement directly supported by the provided evidence regarding material costs or availability."
+      }
+    ],
+    "summary": "The report is exceptionally well-grounded and maintains the required tensions, though it includes a brief introductory sentence that lacks direct support from the provided evidence.",
+    "broken_citations": [],
+    "citation_cap_applied": false,
+    "citation_cap_reason": ""
+  },
   "hitl": false,
   "trace": [
     {
@@ -623,13 +368,13 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 38,
-      "kept": 38,
+      "found": 30,
+      "kept": 30,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h4/m22/l12",
+      "confidence": "h4/m23/l3",
       "budget": "3/5",
-      "tokens": 17200,
+      "tokens": 15998,
       "sent": [
         "sodium-ion vs lithium iron phosphate grid-scale cost per kWh and cycle",
         "commercial deployment niches for sodium-ion batteries in stationary en",
@@ -641,101 +386,12 @@
       "action": "outlined",
       "sections": 3,
       "tensions": 2,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
+      "gaps_raw": 0,
+      "gaps_kept": 0,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3279
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "evidence gaps",
-      "gaps": 1,
-      "loop": "1/2",
-      "searches": "3/5"
-    },
-    {
-      "node": "researcher",
-      "action": "searched",
-      "mode": "gap-driven",
-      "queries": 1,
-      "found": 9,
-      "kept": 9,
-      "dropped_dupes": 0,
-      "unaddressed": 0,
-      "confidence": "h3/m6/l0",
-      "budget": "4/5",
-      "tokens": 6055,
-      "sent": [
-        "sodium-ion battery cycle life standardized testing results 2024 2025 p"
-      ]
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 3,
-      "tensions": 2,
-      "gaps_raw": 2,
-      "gaps_kept": 2,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 4067
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "evidence gaps",
-      "gaps": 2,
-      "loop": "2/2",
-      "searches": "4/5"
-    },
-    {
-      "node": "researcher",
-      "action": "searched",
-      "mode": "gap-driven",
-      "queries": 1,
-      "found": 6,
-      "kept": 6,
-      "dropped_dupes": 0,
-      "unaddressed": 1,
-      "confidence": "h4/m2/l0",
-      "budget": "5/5",
-      "tokens": 5367,
-      "sent": [
-        "sodium-ion battery cycle life standardized testing results 2024 2025"
-      ]
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 4,
-      "tensions": 2,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 4508
-    },
-    {
-      "node": "supervisor",
-      "action": "retire_gaps",
-      "count": 1,
-      "why": "researcher had no search budget left",
-      "searches": "5/5"
-    },
-    {
-      "node": "supervisor",
-      "action": "retire_gaps",
-      "count": 1,
-      "why": "search budget spent",
-      "loops": "2/2",
-      "searches": "5/5"
+      "tokens": 2664
     },
     {
       "node": "supervisor",
@@ -748,134 +404,41 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 857,
+      "words": 880,
       "in_range": true,
-      "cited": 41,
+      "cited": 30,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3766
+      "tokens": 2894
     },
     {
       "node": "critic",
       "action": "scored",
-      "verdict": "revise",
-      "target": "researcher",
-      "worst": "factual_grounding=4",
-      "mean": 4.2,
-      "issues_raw": 4,
-      "issues_kept": 4,
+      "verdict": "pass",
+      "target": "-",
+      "worst": "absence_of_filler=4",
+      "mean": 4.8,
+      "issues_raw": 1,
+      "issues_kept": 1,
       "dropped_ungrounded": 0,
       "broken_cites": 0,
-      "cites": 41,
+      "cites": 30,
       "cite_cap": false,
-      "tokens": 4792
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "critic requested revision",
-      "revision": "1/2"
-    },
-    {
-      "node": "researcher",
-      "action": "skipped",
-      "why": "search budget exhausted",
-      "used": 5,
-      "left_for_supervisor": 0
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 4,
-      "tensions": 1,
-      "gaps_raw": 0,
-      "gaps_kept": 0,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 4509
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "draft awaiting fresh critique",
-      "attempt": "2/2"
-    },
-    {
-      "node": "writer",
-      "action": "drafted",
-      "revision": 1,
-      "words": 840,
-      "in_range": true,
-      "cited": 39,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3686
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "researcher",
-      "worst": "factual_grounding=4",
-      "mean": 4.6,
-      "issues_raw": 2,
-      "issues_kept": 2,
-      "dropped_ungrounded": 0,
-      "broken_cites": 0,
-      "cites": 39,
-      "cite_cap": false,
-      "tokens": 4372
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "critic requested revision",
-      "revision": "2/2"
-    },
-    {
-      "node": "researcher",
-      "action": "skipped",
-      "why": "search budget exhausted",
-      "used": 5,
-      "left_for_supervisor": 0
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 3,
-      "tensions": 1,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 4538
-    },
-    {
-      "node": "supervisor",
-      "action": "retire_gaps",
-      "count": 1,
-      "why": "search budget spent",
-      "loops": "2/2",
-      "searches": "5/5"
+      "tokens": 3492
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "finalize",
-      "why": "write attempts exhausted",
-      "degraded": true
+      "why": "critic passed",
+      "min_score": 4
     },
     {
       "node": "finalize",
       "action": "shipped",
       "degraded": false,
-      "unclosed_gaps": 3,
-      "words": 927
+      "unclosed_gaps": 0,
+      "words": 880
     }
   ]
 }

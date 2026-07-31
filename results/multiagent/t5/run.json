@@ -1,58 +1,53 @@
 {
   "system": "multiagent",
   "topic_id": "t5",
-  "generated_at": "2026-07-31T13:23:42.643092+00:00",
-  "word_count": 1001,
-  "findings_count": 45,
+  "generated_at": "2026-07-31T12:44:51.427707+00:00",
+  "word_count": 1111,
+  "findings_count": 48,
   "citations": {
-    "cited_count": 39,
-    "valid_count": 45,
+    "cited_count": 47,
+    "valid_count": 48,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F008",
-      "F013",
-      "F029",
-      "F031",
-      "F041",
-      "F044"
+      "F047"
     ],
-    "coverage": 0.867
+    "coverage": 0.979
   },
-  "wall_ms": 73918,
+  "wall_ms": 69474,
   "tokens": {
-    "calls": 20,
-    "total_in": 42417,
-    "total_out": 10338,
-    "total": 52755,
+    "calls": 16,
+    "total_in": 28618,
+    "total_out": 10538,
+    "total": 39156,
     "by_node": {
       "researcher": {
         "calls": 12,
-        "in": 18000,
-        "out": 7354,
-        "total": 25354,
-        "ms": 37503
+        "in": 16448,
+        "out": 8110,
+        "total": 24558,
+        "ms": 37922
       },
       "analyst": {
         "calls": 2,
-        "in": 5764,
-        "out": 679,
-        "total": 6443,
-        "ms": 4952
+        "in": 6037,
+        "out": 830,
+        "total": 6867,
+        "ms": 6856
       },
       "writer": {
-        "calls": 3,
-        "in": 7821,
-        "out": 1517,
-        "total": 9338,
-        "ms": 9148
+        "calls": 1,
+        "in": 2166,
+        "out": 1492,
+        "total": 3658,
+        "ms": 7452
       },
       "critic": {
-        "calls": 3,
-        "in": 10832,
-        "out": 788,
-        "total": 11620,
-        "ms": 6264
+        "calls": 1,
+        "in": 3967,
+        "out": 106,
+        "total": 4073,
+        "ms": 2128
       }
     },
     "records": [
@@ -62,77 +57,77 @@
         "in_tokens": 99,
         "out_tokens": 56,
         "total_tokens": 155,
-        "latency_ms": 1609,
+        "latency_ms": 1360,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2002,
-        "out_tokens": 497,
-        "total_tokens": 2499,
-        "latency_ms": 2975,
+        "in_tokens": 1865,
+        "out_tokens": 880,
+        "total_tokens": 2745,
+        "latency_ms": 3802,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1343,
-        "out_tokens": 1116,
-        "total_tokens": 2459,
-        "latency_ms": 3835,
+        "in_tokens": 1691,
+        "out_tokens": 981,
+        "total_tokens": 2672,
+        "latency_ms": 3726,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1920,
-        "out_tokens": 926,
-        "total_tokens": 2846,
-        "latency_ms": 3976,
+        "in_tokens": 2009,
+        "out_tokens": 888,
+        "total_tokens": 2897,
+        "latency_ms": 3985,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1744,
-        "out_tokens": 1094,
-        "total_tokens": 2838,
-        "latency_ms": 3795,
+        "in_tokens": 1714,
+        "out_tokens": 796,
+        "total_tokens": 2510,
+        "latency_ms": 3771,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2158,
-        "out_tokens": 564,
+        "in_tokens": 1299,
+        "out_tokens": 788,
+        "total_tokens": 2087,
+        "latency_ms": 3883,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite"
+      },
+      {
+        "node": "researcher",
+        "call_type": "extract",
+        "in_tokens": 1579,
+        "out_tokens": 1143,
         "total_tokens": 2722,
-        "latency_ms": 6018,
-        "attempts": 2,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1369,
-        "out_tokens": 706,
-        "total_tokens": 2075,
-        "latency_ms": 2871,
+        "latency_ms": 3759,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 2464,
-        "out_tokens": 329,
-        "total_tokens": 2793,
-        "latency_ms": 2403,
+        "in_tokens": 2503,
+        "out_tokens": 408,
+        "total_tokens": 2911,
+        "latency_ms": 2893,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
@@ -140,119 +135,79 @@
         "node": "researcher",
         "call_type": "gap_plan",
         "in_tokens": 555,
-        "out_tokens": 45,
-        "total_tokens": 600,
-        "latency_ms": 1252,
+        "out_tokens": 51,
+        "total_tokens": 606,
+        "latency_ms": 1383,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2242,
-        "out_tokens": 488,
-        "total_tokens": 2730,
-        "latency_ms": 2694,
+        "in_tokens": 1748,
+        "out_tokens": 536,
+        "total_tokens": 2284,
+        "latency_ms": 3114,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1293,
-        "out_tokens": 595,
-        "total_tokens": 1888,
-        "latency_ms": 2443,
+        "in_tokens": 1379,
+        "out_tokens": 690,
+        "total_tokens": 2069,
+        "latency_ms": 2807,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1751,
-        "out_tokens": 692,
-        "total_tokens": 2443,
-        "latency_ms": 3516,
+        "in_tokens": 1201,
+        "out_tokens": 513,
+        "total_tokens": 1714,
+        "latency_ms": 3150,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1524,
-        "out_tokens": 575,
-        "total_tokens": 2099,
-        "latency_ms": 2519,
+        "in_tokens": 1309,
+        "out_tokens": 788,
+        "total_tokens": 2097,
+        "latency_ms": 3182,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3300,
-        "out_tokens": 350,
-        "total_tokens": 3650,
-        "latency_ms": 2549,
+        "in_tokens": 3534,
+        "out_tokens": 422,
+        "total_tokens": 3956,
+        "latency_ms": 3963,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 1975,
-        "out_tokens": 1315,
-        "total_tokens": 3290,
-        "latency_ms": 6096,
+        "in_tokens": 2166,
+        "out_tokens": 1492,
+        "total_tokens": 3658,
+        "latency_ms": 7452,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 3607,
-        "out_tokens": 213,
-        "total_tokens": 3820,
-        "latency_ms": 1887,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "writer",
-        "call_type": "revise",
-        "in_tokens": 2926,
-        "out_tokens": 92,
-        "total_tokens": 3018,
-        "latency_ms": 1483,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "critic",
-        "call_type": "critique",
-        "in_tokens": 3598,
-        "out_tokens": 225,
-        "total_tokens": 3823,
-        "latency_ms": 2045,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "writer",
-        "call_type": "revise",
-        "in_tokens": 2920,
-        "out_tokens": 110,
-        "total_tokens": 3030,
-        "latency_ms": 1569,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "critic",
-        "call_type": "critique",
-        "in_tokens": 3627,
-        "out_tokens": 350,
-        "total_tokens": 3977,
-        "latency_ms": 2332,
+        "in_tokens": 3967,
+        "out_tokens": 106,
+        "total_tokens": 4073,
+        "latency_ms": 2128,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -261,302 +216,313 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "Resistant bacteria in aquatic environments harbor intracellular antibiotic resistance genes.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "Bacteria in aquaculture environments develop resistance through spontaneous genetic mutations.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
       "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "Antibiotic resistance genes are transmitted between bacteria through conjugation, transformation, and transduction.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "Bacteria in aquaculture environments develop resistance by acquiring resistance genes from other microorganisms.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
       "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "Plasmids act as vectors for the dissemination of resistance within microbial networks in aquaculture systems.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12808178",
+      "claim": "Horizontal gene transfer occurs through conjugation, which is the transfer of genetic material between bacteria.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
       "confidence": "high"
     },
     {
       "id": "F004",
-      "claim": "Humans ingest resistant bacteria through the consumption of contaminated seafood.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "Horizontal gene transfer occurs through transduction, which is the transfer of genes via bacteriophages.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
       "confidence": "high"
     },
     {
       "id": "F005",
-      "claim": "Resistant bacteria from aquaculture products can colonize the human gut.",
-      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
-      "confidence": "medium"
+      "claim": "Horizontal gene transfer occurs through transformation, which is the uptake of free DNA from the environment.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
+      "confidence": "high"
     },
     {
       "id": "F006",
-      "claim": "Bacteria colonizing the human gut from aquaculture products can transfer resistance genes to resident human microbiota.",
-      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
-      "confidence": "medium"
+      "claim": "Sub-lethal concentrations of antimicrobial residues in water select for resistant aquatic bacteria.",
+      "source_url": "https://www.was.org/articles/editors-note-antimicrobial-resistance-and-aquaculture.aspx",
+      "confidence": "high"
     },
     {
       "id": "F007",
-      "claim": "The aquatic food animal supply chain acts as a conduit for the transmission of resistant bacteria and antibiotic resistance genes to humans.",
-      "source_url": "https://www.nature.com/articles/s41467-021-25655-8",
+      "claim": "Humans are exposed to zoonotic antibiotic-resistant bacteria and resistance genes through the consumption of contaminated aquatic food products.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
       "confidence": "high"
     },
     {
       "id": "F008",
-      "claim": "Global commerce in aquaculture products facilitates the cross-border spread of resistant bacteria and resistance genes.",
+      "claim": "Ingested resistant bacteria can colonize the human gut microbiota.",
       "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
-      "confidence": "medium"
+      "confidence": "high"
     },
     {
       "id": "F009",
-      "claim": "Aquaculture systems are interconnected with terrestrial environments and the food processing industry.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "Aquatic environments act as reservoirs for resistant bacteria and resistance genes.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "The relative contribution of specific horizontal gene transfer mechanisms to the dissemination of resistance in aquaculture is poorly defined.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "Global commerce and the aquatic food supply chain facilitate the cross-border spread of resistant bacteria and resistance genes.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
       "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "Foodborne transmission of resistant bacteria involves Campylobacter spp., Clostridium botulinum, C. perfringens, Salmonella spp., Shigella spp., S. aureus, L. monocytogenes, and Yersinia spp.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "The body of evidence confirming the direct transference of antimicrobial resistance between aquatic animals and humans remains very limited.",
+      "source_url": "https://www.nature.com/articles/s41467-021-25655-8",
       "confidence": "high"
     },
     {
       "id": "F012",
-      "claim": "Campylobacter and Salmonella account for the majority of global foodborne disease cases.",
-      "source_url": "https://www.sciencedirect.com/science/article/pii/S2213343726026989",
+      "claim": "The World Health Organization and the Food and Agriculture Organization facilitate international cooperation on antibiotic residues and resistance in aquaculture.",
+      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
       "confidence": "high"
     },
     {
       "id": "F013",
-      "claim": "International cooperation and the harmonization of standards are necessary to address global food safety challenges regarding antibiotic use.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
-      "confidence": "medium"
-    },
-    {
-      "id": "F014",
-      "claim": "The Codex Committee on Fish and Fishery Products provides international guidance documents for aquaculture products.",
+      "claim": "The WTO Sanitary and Phytosanitary Agreement uses risk analysis to manage foodborne hazards in international trade.",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
-      "id": "F015",
-      "claim": "The World Health Organization and the Food and Agriculture Organization develop international food safety standards regarding antimicrobial use and residues.",
-      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
-      "confidence": "high"
+      "id": "F014",
+      "claim": "Maximum Residue Limits for antibiotics act as a disincentive for antibiotic use in aquaculture products intended for export to markets with strong regulatory systems.",
+      "source_url": "https://www.was.org/articles/editors-note-antimicrobial-resistance-and-aquaculture.aspx",
+      "confidence": "medium"
     },
     {
-      "id": "F016",
-      "claim": "The Aquaculture Stewardship Council and Best Aquaculture Practices provide standards that require minimal antibiotic use.",
+      "id": "F015",
+      "claim": "Private certification programs including the Aquaculture Stewardship Council and Best Aquaculture Practices set standards for responsible antibiotic use.",
       "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
       "confidence": "high"
     },
     {
-      "id": "F017",
-      "claim": "Trade agreements like the Trans-Pacific Partnership raise concerns regarding the ability of corporations to challenge food safety laws as illegal trade barriers.",
+      "id": "F016",
+      "claim": "Prophylactic antibiotic use in aquaculture promotes the development of antibiotic-resistant bacteria in fish and the surrounding environment.",
       "source_url": "https://foodandwaterwatch.org/wp-content/uploads/2021/03/ib_1604_aquaculture-web_0.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F017",
+      "claim": "Up to 75% of antibiotics used in aquaculture may be released into the environment.",
+      "source_url": "https://www.was.org/articles/editors-note-antimicrobial-resistance-and-aquaculture.aspx",
       "confidence": "medium"
     },
     {
       "id": "F018",
-      "claim": "Trade agreements may force countries to accept foreign food safety standards as equivalent to their own.",
-      "source_url": "https://foodandwaterwatch.org/wp-content/uploads/2021/03/ib_1604_aquaculture-web_0.pdf",
+      "claim": "Antibiotic release into the environment increases the risk of horizontal gene transfer to potential human pathogens.",
+      "source_url": "https://www.was.org/articles/editors-note-antimicrobial-resistance-and-aquaculture.aspx",
       "confidence": "medium"
     },
     {
       "id": "F019",
-      "claim": "Antibiotic use in aquaculture for prophylactic purposes leads to the development of antibiotic-resistant bacteria in fish and the surrounding environment.",
-      "source_url": "https://foodandwaterwatch.org/wp-content/uploads/2021/03/ib_1604_aquaculture-web_0.pdf",
+      "claim": "Consumption of seafood containing antibiotic residues is linked to drug hypersensitivity and disruption of intestinal flora.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F020",
-      "claim": "Antibiotic residues in seafood are linked to potential human health risks including drug hypersensitivity and disruption of intestinal flora.",
+      "claim": "Consumption of seafood containing antibiotic residues is linked to potential carcinogenic, mutagenic, or teratogenic effects.",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F021",
-      "claim": "Antibiotic residues in seafood are linked to potential carcinogenic, mutagenic, or teratogenic effects.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
+      "claim": "Antibiotics used in aquaculture disperse through water currents, mixing, and sediment flows.",
+      "source_url": "https://www.reactgroup.org/news-and-views/news-and-opinions/year-2026/antibiotic-resistance-and-aquaculture-why-it-matters-for-one-health",
       "confidence": "high"
     },
     {
       "id": "F022",
-      "claim": "Global antimicrobial use in aquaculture was 10,259 tons in 2017.",
-      "source_url": "https://onehealthtrust.org/publications/infographics/aquaculture-antimicrobial-resistance",
+      "claim": "Environmental dispersal of antibiotics in aquaculture exposes microbial communities to low levels of antibiotics.",
+      "source_url": "https://www.reactgroup.org/news-and-views/news-and-opinions/year-2026/antibiotic-resistance-and-aquaculture-why-it-matters-for-one-health",
       "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "Global antimicrobial use in aquaculture is projected to increase by 33% to 13,600 tons annually by 2030.",
-      "source_url": "https://onehealthtrust.org/publications/infographics/aquaculture-antimicrobial-resistance",
+      "claim": "The presence of E. coli in aquaculture environments raises concerns for human health.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12189707",
       "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "The Asia-Pacific region accounts for 93.8% of global antimicrobial use in aquaculture.",
-      "source_url": "https://onehealthtrust.org/publications/infographics/aquaculture-antimicrobial-resistance",
+      "claim": "Listeria monocytogenes is increasingly observed in aquatic products.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12189707",
       "confidence": "high"
     },
     {
       "id": "F025",
-      "claim": "Importing countries utilize Maximum Residue Levels for antibiotic residues in fishery products.",
-      "source_url": "https://digitalcommons.bard.edu/bcep/12",
-      "confidence": "high"
+      "claim": "Listeria monocytogenes serves as a direct human pathogen and an indicator of antimicrobial selection pressure in aquatic systems.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12189707",
+      "confidence": "medium"
     },
     {
       "id": "F026",
-      "claim": "Shipments of fishery products exceeding Maximum Residue Levels are subject to refusal.",
-      "source_url": "https://digitalcommons.bard.edu/bcep/12",
+      "claim": "The FDA has established a scientific relationship between the use of antimicrobials in food-producing animals, antibiotic resistance in humans, and adverse health outcomes.",
+      "source_url": "https://nationalaglawcenter.org/wp-content/uploads/assets/crs/R41047.pdf",
       "confidence": "high"
     },
     {
       "id": "F027",
-      "claim": "The European Union prohibits the use of antibiotics for growth promotion in aquaculture.",
-      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "claim": "Addressing AMR in aquaculture is a component of the One Health agenda.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12189707",
       "confidence": "high"
     },
     {
       "id": "F028",
-      "claim": "There is a lack of international harmonization in the reporting and use of antibiotics in aquaculture.",
-      "source_url": "https://www.nature.com/articles/s41467-020-15735-6",
+      "claim": "The EU, New Zealand, and South Korea have implemented restrictions or prohibitions on the use of certain antimicrobials for subtherapeutic or nontherapeutic purposes in animal production.",
+      "source_url": "https://nationalaglawcenter.org/wp-content/uploads/assets/crs/R41047.pdf",
       "confidence": "high"
     },
     {
       "id": "F029",
-      "claim": "Imported aquaculture products can carry antibiotic residues and resistant bacteria.",
-      "source_url": "https://digitalcommons.bard.edu/bcep/12",
-      "confidence": "high"
+      "claim": "U.S. lawmakers with poultry and meat industry constituents monitor import policy changes regarding antimicrobial use among trading partners.",
+      "source_url": "https://nationalaglawcenter.org/wp-content/uploads/assets/crs/R41047.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F030",
-      "claim": "Seafood is the second-largest trade deficit for the United States.",
-      "source_url": "https://digitalcommons.bard.edu/bcep/12",
-      "confidence": "high"
+      "claim": "There is a recognized need for international monitoring frameworks and a globally coordinated approach to combat antibiotic-resistant bacteria in aquaculture.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12189707",
+      "confidence": "medium"
     },
     {
       "id": "F031",
-      "claim": "Antimicrobial resistance in aquaculture can lead to recurring disease and slow therapeutic responses in the aquaculture sector.",
-      "source_url": "https://digitalcommons.bard.edu/bcep/12",
+      "claim": "The UN AMR Declaration 2024 set a target to decrease antibiotic use across the agri-food sector.",
+      "source_url": "https://www.reactgroup.org/news-and-views/news-and-opinions/year-2026/antibiotic-resistance-and-aquaculture-why-it-matters-for-one-health",
       "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "The role of environmental factors in the propagation of antimicrobial resistance is not well understood.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6473514",
+      "claim": "The year 2026 is a critical checkpoint for UN AMR Declaration 2024 commitments.",
+      "source_url": "https://www.reactgroup.org/news-and-views/news-and-opinions/year-2026/antibiotic-resistance-and-aquaculture-why-it-matters-for-one-health",
       "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "It is difficult to establish a direct correlation between drug use and resistance levels in aquaculture at a global scale due to inconsistent reporting.",
-      "source_url": "https://www.nature.com/articles/s41467-020-15735-6",
+      "claim": "Antibiotic resistance indices in aquaculture are correlated with those of human clinical bacteria, temperature, and climate vulnerability.",
+      "source_url": "https://www.researchgate.net/publication/351887870_Antibiotic-Resistant_Bacteria_in_Aquaculture_and_Climate_Change_A_Challenge_for_Health_in_the_Mediterranean_Area",
       "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "Global antimicrobial use in aquatic food-producing animals is projected to reach 13,600 tons annually by 2030.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7736322",
+      "claim": "The global mean Multi-Antibiotic Resistance (MAR) index of aquaculture-derived bacteria is 0.25.",
+      "source_url": "https://www.nature.com/articles/s41467-021-25655-8",
       "confidence": "high"
     },
     {
       "id": "F035",
-      "claim": "Antimicrobial use in aquatic food-producing animals is projected to represent 5.7% of total global antimicrobial consumption by 2030.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7736322",
+      "claim": "The MAR index of aquaculture-derived bacteria exceeds 0.35 in low- and middle-income countries in Asia.",
+      "source_url": "https://www.nature.com/articles/s41467-021-25655-8",
       "confidence": "high"
     },
     {
       "id": "F036",
-      "claim": "Chilean salmon farming reports antimicrobial consumption rates up to 1,400 mg per population correction unit.",
-      "source_url": "https://www.pnas.org/doi/10.1073/pnas.1503141112",
+      "claim": "Between 2000 and 2018, the percentage of antimicrobial compounds with resistance exceeding 50% in cultured aquatic animals remained at 33%.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
       "confidence": "high"
     },
     {
       "id": "F037",
-      "claim": "Studies in terrestrial livestock show a close association between the prevalence of livestock-associated antibiotic-resistant bacteria in animals and humans.",
-      "source_url": "https://www.pnas.org/doi/10.1073/pnas.1503141112",
+      "claim": "Bacteria carrying resistance genes of human clinical significance including Vibrio, Aeromonas, Enterococcus, and E. coli are associated with aquaculture environments.",
+      "source_url": "https://www.nature.com/articles/s41467-021-25655-8",
       "confidence": "high"
     },
     {
       "id": "F038",
-      "claim": "Studies in terrestrial livestock show an association between antimicrobial use levels in animals and the prevalence of antibiotic-resistant bacteria in both animals and humans.",
-      "source_url": "https://www.pnas.org/doi/10.1073/pnas.1503141112",
-      "confidence": "high"
+      "claim": "Aquatic products have a higher risk of pathogen transmission compared to other animal source foods because they are more likely to be consumed raw.",
+      "source_url": "https://www.nature.com/articles/s41467-021-25655-8",
+      "confidence": "medium"
     },
     {
       "id": "F039",
-      "claim": "Meta-analyses exist examining the global prevalence of antibiotic-resistant foodborne pathogens in aquatic products including fish, shrimp, and crab.",
-      "source_url": "https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2022.906490/full",
+      "claim": "Data on clinical breakpoints for resistant bacteria in commercial fisheries are scarce.",
+      "source_url": "https://www.mdpi.com/2304-8158/13/15/2448",
       "confidence": "high"
     },
     {
       "id": "F040",
-      "claim": "There is no single, aquaculture-specific global reporting metric for antibiotic use or resistance.",
-      "source_url": "https://www.reactgroup.org/news-and-views/news-and-opinions/year-2026/antibiotic-resistance-and-aquaculture-why-it-matters-for-one-health",
-      "confidence": "medium"
+      "claim": "The Aquaculture Stewardship Council and Best Aquaculture Practices certification programs require farms to adhere to minimal antibiotic use.",
+      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "confidence": "high"
     },
     {
       "id": "F041",
-      "claim": "The WHO GLASS system provides manuals for setting up national antimicrobial resistance surveillance systems.",
-      "source_url": "https://www.who.int/publications/i/item/9789240116337",
+      "claim": "The Best Aquaculture Practices program sets standards for environmental impact, food safety, and animal welfare.",
+      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
       "confidence": "high"
     },
     {
       "id": "F042",
-      "claim": "The Quadripartite Strategic Framework was published in 2022 by the FAO, WHO, WOAH, and UNEP.",
-      "source_url": "https://www.woah.org/en/what-we-do/global-initiatives/antimicrobial-resistance",
+      "claim": "National regulatory frameworks manage antibiotic use through Maximum Residue Limits to prevent residues from exceeding safety levels.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F043",
-      "claim": "The Quadripartite Strategic Framework provides a vision for collaboration on antimicrobial resistance across human, animal, and environmental sectors.",
-      "source_url": "https://www.woah.org/en/what-we-do/global-initiatives/antimicrobial-resistance",
+      "claim": "National regulatory frameworks prohibit the use of unapproved drugs in aquaculture.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F044",
-      "claim": "The World Organisation for Animal Health collects and analyzes data on antimicrobial use in aquatic animals.",
-      "source_url": "https://www.woah.org/en/what-we-do/global-initiatives/antimicrobial-resistance",
+      "claim": "The European Union is the only regulatory body that permits the use of fluoroquinolones in fish.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F045",
-      "claim": "Aquaculture is an under-addressed sector in global antimicrobial resistance discussions.",
-      "source_url": "https://www.reactgroup.org/news-and-views/news-and-opinions/year-2026/antibiotic-resistance-and-aquaculture-why-it-matters-for-one-health",
+      "claim": "The European Union and Chile set the Maximum Residue Limit for tetracycline at 100 \u03bcg kg\u22121.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
+      "confidence": "high"
+    },
+    {
+      "id": "F046",
+      "claim": "Some regulatory agencies set the Maximum Residue Limit for tetracycline at 200 \u03bcg kg\u22121.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "low"
+    },
+    {
+      "id": "F047",
+      "claim": "The Codex Alimentarius Commission and the Chilean Ministry of Health have established a Maximum Residue Limit for flumequine in trout of 500 \u03bcg kg\u22121.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
+      "confidence": "high"
+    },
+    {
+      "id": "F048",
+      "claim": "Precise statistics regarding antibiotic usage in the freshwater aquaculture sector are difficult to determine due to high regional specificity and inadequate monitoring.",
+      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "confidence": "medium"
     }
   ],
-  "revisions": 2,
+  "revisions": 0,
   "research_loops": 1,
   "searches_used": 5,
   "write_attempts": 1,
   "unclosed_gaps": [
-    "Quantitative data linking specific aquaculture antibiotic usage levels to human clinical infection rates.",
-    "Standardized global metrics for reporting antibiotic use in aquaculture to resolve inconsistencies in current data."
+    "Quantitative data on the actual rate of clinical human infections directly attributable to the consumption of aquaculture products.",
+    "Comprehensive global data on antibiotic usage volumes in the aquaculture sector to validate the effectiveness of current regulatory frameworks."
   ],
   "final_critique": {
     "scores": {
       "factual_grounding": 5,
       "structural_coherence": 5,
-      "depth_of_analysis": 4,
+      "depth_of_analysis": 5,
       "citation_integrity": 5,
-      "absence_of_filler": 4
+      "absence_of_filler": 5
     },
-    "verdict": "revise",
-    "target": "analyst",
-    "issues": [
-      {
-        "span": "This practice creates a reservoir of resistant bacteria that transcends national borders, posing a complex challenge to public health and international trade policy.",
-        "criterion": "depth_of_analysis",
-        "problem": "This sentence is a broad, rhetorical summary that adds little analytical value beyond what is already established in the subsequent sections.",
-        "fix": "Remove this sentence to allow the introduction to move more directly into the specific mechanisms of resistance."
-      }
-    ],
-    "summary": "The report is well-grounded and structured, though it occasionally relies on broad rhetorical flourishes that do not deepen the analysis of the provided evidence.",
+    "verdict": "pass",
+    "target": "researcher",
+    "issues": [],
+    "summary": "The report is exceptionally well-grounded, maintains structural integrity, and successfully synthesizes the provided evidence while preserving the requested tensions.",
     "broken_citations": [],
     "citation_cap_applied": false,
     "citation_cap_reason": ""
@@ -568,13 +534,13 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 33,
-      "kept": 33,
+      "found": 32,
+      "kept": 32,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h27/m6/l0",
+      "confidence": "h25/m7/l0",
       "budget": "3/5",
-      "tokens": 15594,
+      "tokens": 15788,
       "sent": [
         "mechanisms of antimicrobial resistance transmission from aquaculture t",
         "impact of antibiotic use in aquaculture on international seafood safet",
@@ -591,7 +557,7 @@
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 2793
+      "tokens": 2911
     },
     {
       "node": "supervisor",
@@ -607,29 +573,29 @@
       "action": "searched",
       "mode": "gap-driven",
       "queries": 2,
-      "found": 12,
-      "kept": 12,
+      "found": 16,
+      "kept": 16,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h10/m1/l1",
+      "confidence": "h13/m2/l1",
       "budget": "5/5",
-      "tokens": 9760,
+      "tokens": 8770,
       "sent": [
-        "quantitative correlation aquaculture antibiotic consumption volume hum",
-        "standardized global reporting metrics antibiotic use aquaculture resis"
+        "quantitative attribution of human clinical antibiotic resistance cases",
+        "comparative analysis of environmental antibiotic residue levels in aqu"
       ]
     },
     {
       "node": "analyst",
       "action": "outlined",
-      "sections": 4,
-      "tensions": 1,
+      "sections": 3,
+      "tensions": 2,
       "gaps_raw": 2,
       "gaps_kept": 2,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3650
+      "tokens": 3956
     },
     {
       "node": "supervisor",
@@ -650,117 +616,41 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 923,
+      "words": 1052,
       "in_range": true,
-      "cited": 39,
+      "cited": 47,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3290
+      "tokens": 3658
     },
     {
       "node": "critic",
       "action": "scored",
-      "verdict": "revise",
-      "target": "writer",
-      "worst": "absence_of_filler=4",
-      "mean": 4.8,
-      "issues_raw": 1,
-      "issues_kept": 1,
+      "verdict": "pass",
+      "target": "-",
+      "worst": "factual_grounding=5",
+      "mean": 5.0,
+      "issues_raw": 0,
+      "issues_kept": 0,
       "dropped_ungrounded": 0,
       "broken_cites": 0,
-      "cites": 39,
+      "cites": 47,
       "cite_cap": false,
-      "tokens": 3820
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "critic requested revision",
-      "revision": "1/2"
-    },
-    {
-      "node": "writer",
-      "action": "revised",
-      "revision": 1,
-      "words": 917,
-      "in_range": true,
-      "cited": 39,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3018,
-      "edits_returned": 1,
-      "edits_applied": 1,
-      "fallback": false,
-      "changed_pct": 0.4,
-      "issues_addressed": 1
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "writer",
-      "worst": "absence_of_filler=4",
-      "mean": 4.8,
-      "issues_raw": 1,
-      "issues_kept": 1,
-      "dropped_ungrounded": 0,
-      "broken_cites": 0,
-      "cites": 39,
-      "cite_cap": false,
-      "tokens": 3823
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "writer",
-      "why": "critic requested revision",
-      "revision": "2/2"
-    },
-    {
-      "node": "writer",
-      "action": "revised",
-      "revision": 2,
-      "words": 926,
-      "in_range": true,
-      "cited": 39,
-      "broken_cites": 0,
-      "cite_repair": false,
-      "tokens": 3030,
-      "edits_returned": 1,
-      "edits_applied": 1,
-      "fallback": false,
-      "changed_pct": 1.8,
-      "issues_addressed": 1
-    },
-    {
-      "node": "critic",
-      "action": "scored",
-      "verdict": "revise",
-      "target": "analyst",
-      "worst": "depth_of_analysis=4",
-      "mean": 4.6,
-      "issues_raw": 2,
-      "issues_kept": 1,
-      "dropped_ungrounded": 1,
-      "broken_cites": 0,
-      "cites": 39,
-      "cite_cap": false,
-      "tokens": 3977
+      "tokens": 4073
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "finalize",
-      "why": "revision budget exhausted",
-      "degraded": true
+      "why": "critic passed",
+      "min_score": 5
     },
     {
       "node": "finalize",
       "action": "shipped",
-      "degraded": true,
+      "degraded": false,
       "unclosed_gaps": 2,
-      "words": 1001
+      "words": 1111
     }
   ]
 }
