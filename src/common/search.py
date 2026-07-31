@@ -69,10 +69,13 @@ sufficient for high.
            forum or unattributed source, or contradicted elsewhere in the notes.
 
 If two sources give different values for the same quantity, record each value as its own
-finding attributed to its own source, set both to low, and say inside each claim that
-sources disagree. Do not emit a separate finding whose subject is the disagreement: a
-finding is one assertion about the world, attributable to one URL, and a claim about the
-state of the evidence cannot be cited by anything.
+finding, attributed to its own source and set to low. Write each one as a plain assertion
+of what that source reports, naming the source inside the claim where the notes identify
+it. Do not describe the disagreement in the claim text. Wording like "sources disagree",
+"one source reports" or "estimates vary" makes the sentence a statement about the evidence
+rather than about the world, and a report citing it would attribute a claim about the
+state of the literature to a single URL. That both findings exist, and that both are low,
+is what records the conflict.
 
 Expect a spread of confidence values. If every finding comes out "high", the rule above
 was not applied."""
