@@ -123,6 +123,10 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     #    against the new outline or evidence. This cannot loop: writer -> critic
     #    always produces a critique.
     if crit is None:
+        # The upstream node has run by now, so its brief has been consumed. Clearing
+        # it here rather than in the reader keeps one writer on the field.
+        if state.get("revision_brief"):
+            updates["revision_brief"] = None
         return out("writer", "draft awaiting fresh critique")
 
     # 5. Critic passed.
@@ -163,8 +167,25 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     #
     # Clearing it means rule 4 catches the return trip and sends it to the Writer,
     # which is the only node that can turn a better plan into a better draft.
+    #
+    # But clearing it also deleted the criticism before the Analyst could read it —
+    # its revision branch keys off critique["target"], so it re-planned from the same
+    # findings and never learned what was wrong. Measured end to end: two full loops,
+    # structural_coherence stuck at 1, section counts wandering 4-3-4-3, the run
+    # shipped degraded. The same "ran, cost tokens, changed nothing" this clearing
+    # was introduced to prevent, recreated from the other side.
+    #
+    # So the message travels on its own field and the routing signal travels on
+    # `critique`. Same shape as the unaddressed_gaps fix: the thing that kept getting
+    # wiped gets a field nobody else writes.
     if target in ("analyst", "researcher"):
         res["critique"] = None
+        res["revision_brief"] = {
+            "target": target,
+            "issues": crit.get("issues") or [],
+            "summary": crit.get("summary", ""),
+            "scores": crit.get("scores") or {},
+        }
     return res
 
 

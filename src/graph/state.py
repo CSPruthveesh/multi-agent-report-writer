@@ -29,6 +29,12 @@ class ReportState(TypedDict, total=False):
     gaps: list[str]
     draft: str | None
     critique: dict[str, Any] | None
+    # What the Critic said, carried to an upstream node the supervisor routed to.
+    # It cannot travel on `critique`: routing upstream has to clear that field, or
+    # the stale verdict routes upstream again on the return trip. Clearing it also
+    # deleted the message before the recipient read it, so the criticism gets a field
+    # of its own — written by the supervisor, read by the Analyst, wiped by nobody.
+    revision_brief: dict[str, Any] | None
 
     revision_count: int
     route: str
@@ -49,6 +55,7 @@ def initial_state(topic: str) -> ReportState:
         gaps=[],
         draft=None,
         critique=None,
+        revision_brief=None,
         revision_count=0,
         route="",
         token_log=[],

@@ -9,6 +9,7 @@ dependencies = [
     "fastapi>=0.140.13",
     "google-genai>=2.14.0",
     "langgraph>=1.2.10",
+    "langgraph-checkpoint-sqlite>=3.1.1",
     "pydantic>=2.13.4",
     "python-dotenv>=1.2.2",
     "sse-starlette>=3.4.6",

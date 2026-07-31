@@ -141,7 +141,10 @@ def _render_outline(a: Analysis) -> str:
 def analyst(state: ReportState) -> dict[str, Any]:
     ledger = TokenLedger()
     findings = list(state.get("findings") or [])
-    crit = state.get("critique")
+    # Not `critique`: the supervisor must clear that when it routes here, or the stale
+    # verdict routes upstream again on the return trip. The criticism arrives on its
+    # own field instead. See the comment in supervisor.py rule 7.
+    brief = state.get("revision_brief")
     already_unclosed = list(state.get("unclosed_gaps") or [])
     loops = state.get("research_loops", 0)
 
@@ -160,8 +163,8 @@ def analyst(state: ReportState) -> dict[str, Any]:
     # the problem is the plan, not the prose. Feed it the criticism, not the draft —
     # the Analyst does not need to see prose to fix a structure.
     revision_note = ""
-    if crit and crit.get("target") == "analyst":
-        issues = crit.get("issues") or []
+    if brief and brief.get("target") == "analyst":
+        issues = brief.get("issues") or []
         listed = "\n".join(
             f"- {i.get('problem', '')} → {i.get('fix', '')}"
             for i in issues

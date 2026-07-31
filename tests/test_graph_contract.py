@@ -102,6 +102,96 @@ def test_finalize_leaves_a_clean_pass_untouched():
     assert nodes.finalize(state)["draft"] == "# R\n\nbody."
 
 
+def test_routing_upstream_leaves_a_brief_the_analyst_can_read():
+    """Clearing the critique must not delete the criticism along with it.
+
+    The Analyst's revision branch keyed off critique["target"], and the supervisor
+    clears `critique` when it routes upstream — so the message was deleted before the
+    recipient read it. Measured end to end before the fix: the Analyst re-planned
+    twice with revision=False, structural_coherence stayed at 1, and the run shipped
+    degraded having spent both revisions.
+    """
+    issue = {"span": "s", "criterion": "structural_coherence",
+             "problem": "sections do not connect", "fix": "add the causal link"}
+    state = initial_state("t")
+    state.update(draft="d",
+                 critique={**REVISE, "target": "analyst", "issues": [issue]})
+
+    out = nodes.supervisor(state)
+    assert out["route"] == "analyst"
+    assert out["critique"] is None
+    assert out["revision_brief"]["target"] == "analyst"
+    assert out["revision_brief"]["issues"] == [issue]
+
+
+def test_the_analyst_acts_on_the_brief(offline_nodes):
+    state = initial_state("t")
+    state.update(
+        findings=[FINDING],
+        revision_brief={
+            "target": "analyst",
+            "issues": [{"span": "s", "criterion": "structural_coherence",
+                        "problem": "sections do not connect", "fix": "add the link"}],
+        },
+    )
+    ev = nodes.analyst(state)["trace"][0]
+    assert ev["revision"] is True, "the Analyst did not see the brief it was sent"
+
+
+def test_the_brief_reaches_the_analyst_through_the_graph():
+    """The two tests above cover the halves. This covers the join.
+
+    Every defect in this project that survived to a live run lived between
+    components while both sides passed in isolation, so a criticism that leaves the
+    supervisor and a node that reads one are not together evidence that the message
+    arrives.
+    """
+    seen = []
+
+    def researcher(state):
+        return {"findings": [FINDING], "searches_used": MAX_SEARCHES, "gaps": [],
+                "unaddressed_gaps": [], "trace": []}
+
+    def analyst(state):
+        seen.append(state.get("revision_brief"))
+        return {"outline": "## A [F001]", "gaps": [], "trace": []}
+
+    def writer(state):
+        return {"draft": "# R\n\nbody [F001].", "trace": []}
+
+    def critic(state):
+        first = state.get("critique") is None
+        return {
+            "critique": {
+                "scores": {"structural_coherence": 1},
+                "verdict": "revise" if first else "pass",
+                "target": "analyst",
+                "issues": [{"span": "body", "criterion": "structural_coherence",
+                            "problem": "no argument", "fix": "connect the sections"}],
+                "summary": "structure",
+            },
+            "trace": [],
+        }
+
+    app = build(overrides={"researcher": researcher, "analyst": analyst,
+                           "writer": writer, "critic": critic})
+    app.invoke(initial_state("t"), config={"recursion_limit": 40})
+
+    assert len(seen) >= 2, "the analyst was never re-run"
+    assert seen[0] is None, "a brief existed before any criticism"
+    assert seen[1], "the analyst was routed to and received nothing"
+    assert seen[1]["issues"][0]["problem"] == "no argument"
+
+
+def test_the_brief_is_cleared_once_consumed():
+    """It exists only between routing upstream and the supervisor seeing the result."""
+    state = initial_state("t")
+    state.update(draft="d", revision_brief={"target": "analyst", "issues": []})
+    out = nodes.supervisor(state)
+    assert out["route"] == "writer"
+    assert out["revision_brief"] is None
+
+
 def test_routing_upstream_clears_the_critique():
     """Otherwise the stale verdict sends the run upstream twice and ships the original.
 
