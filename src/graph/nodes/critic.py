@@ -75,22 +75,29 @@ CRITERION_OWNER = {
     "absence_of_filler": "writer",
 }
 
-# Revise if any criterion is at or below this.
+# Revise if any criterion is at or below this. Both values have now been measured
+# across all six topics and neither is right.
 #
-# Was 3. Across six live topics nothing ever scored below 4, so the revision loop
-# never fired once — the Writer/Critic half of the architecture was idle in
-# production while being fully built and tested. Thirty criterion scores came back
-# as twenty-two 5s and eight 4s.
+#   3   the loop never fires. Thirty criterion scores came back as twenty-two 5s
+#       and eight 4s, so nothing ever tripped it. Cost +26% against the baseline
+#       for a Writer/Critic loop that is idle in production.
+#   4   the loop never stops. A 4 is a good score and there is always one, so
+#       revise is permanent: every topic spent both revisions and none reached
+#       pass. Cost +70%, t1 alone going 25,048 -> 66,139, for zero resolved topics.
 #
-# 4 is the level at which the Critic is already writing real, grounded criticism:
-# "this sentence is a rhetorical summary that adds no new information". Those issues
-# were being computed, span-checked, stored, and then discarded because the verdict
-# came out pass. Raising the bar spends roughly 7,500 tokens per affected topic to
-# find out what acting on them is worth, which is the number Phase 9 needs — "we
-# built it and it never fired" is a weaker result than either outcome of measuring it.
+# Back to 3, because paying 26% for an idle loop beats paying 70% for one that
+# settles nothing. This is not the fix — it is the cheaper of two known-wrong
+# settings, recorded as such.
+#
+# The real problem is that a single threshold on the minimum score cannot express
+# "this draft is good but improvable". Options, none tried: revise only when a
+# criterion is at 4 AND the Critic raised a grounded issue for that specific
+# criterion; or allow one revision at 4 and require 3 for a second; or drop the
+# threshold idea and let the Critic ask for a revision explicitly, with the code
+# still deciding the target and the cap.
 #
 # ISSUE_RULES below has to agree with this number. See the note there.
-PASS_THRESHOLD = 4
+PASS_THRESHOLD = 3
 
 PERSONA = """You are a demanding editor reviewing a research report before publication. You
 are not the author and you owe them nothing. You have the evidence the report was written
@@ -149,7 +156,7 @@ Issue rules — this is the part that matters:
   criticism is lost.
 - Make the span long enough to be unique — a full sentence, not a phrase.
 - One issue per real problem. Do not pad the list.
-- Only raise issues for criteria you scored 4 or below. If everything scored 5, return
+- Only raise issues for criteria you scored 3 or below. If everything scored 4+, return
   an empty list — that is a valid and complete response.
 - `fix` must be actionable and achievable with the evidence available. Do not ask for
   claims the evidence cannot support."""

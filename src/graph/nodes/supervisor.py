@@ -216,10 +216,39 @@ def finalize(state: ReportState) -> dict[str, Any]:
     draft = (state.get("draft") or "").rstrip()
     crit = state.get("critique") or {}
     unclosed = state.get("unclosed_gaps") or []
-    degraded = crit.get("verdict") == "revise"
+    failures = [e for e in (state.get("trace") or []) if e.get("action") == "degraded"]
+
+    # Three separate reasons a run is degraded, and the first two were the only ones
+    # being checked. A run that produced no report at all was reporting degraded=False
+    # — because degraded was derived solely from the critique, and the catastrophic
+    # case is exactly the one where no critique exists: the Critic declines to review
+    # an empty draft, so `crit` is {}, so the verdict is not "revise", so the run
+    # records itself as clean with zero words and no explanation.
+    #
+    # Observed on t6, where two nodes degraded on real 429s, the Analyst's degradation
+    # cleared the outline, and the Writer skipped for want of one. The supervisor knew
+    # — it routed here with degraded=True — and finalize recomputed the flag and
+    # disagreed with it.
+    #
+    # That inverts the mechanism this project is built on. unclosed_gaps reaching
+    # Known limitations exists so abandonment is never silent; a total loss reporting
+    # clean is the loudest possible version of the thing it prevents.
+    unresolved = crit.get("verdict") == "revise"
+    empty = not draft
+    degraded = unresolved or empty or bool(failures)
 
     if degraded or unclosed:
         lines = ["", "", "---", "", "## Known limitations", ""]
+        if empty:
+            lines.append(
+                "- This run produced no report. The nodes below failed and the run was "
+                "stopped rather than retried indefinitely."
+            )
+        for f in failures:
+            lines.append(
+                f"- The {f.get('node')} node failed and was degraded "
+                f"({f.get('error', 'unknown error')})."
+            )
         for issue in crit.get("issues", []):
             problem = (issue.get("problem") or "").strip()
             name = (issue.get("criterion") or "").replace("_", " ")
@@ -234,6 +263,10 @@ def finalize(state: ReportState) -> dict[str, Any]:
         "route": "done",
         "trace": [
             trace_event("finalize", "shipped", degraded=degraded,
+                        why=("no report produced" if empty else
+                             "nodes failed" if failures else
+                             "criticism unresolved" if unresolved else "-"),
+                        node_failures=len(failures),
                         unclosed_gaps=len(unclosed), words=len(draft.split()))
         ],
     }

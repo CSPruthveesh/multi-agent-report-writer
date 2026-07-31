@@ -101,6 +101,39 @@ def test_finalize_declares_unclosed_gaps_and_ignores_stale_ones():
     assert "stale" not in draft
 
 
+def test_a_run_that_produced_nothing_cannot_report_clean():
+    """The catastrophic case was the one that recorded itself as healthy.
+
+    degraded was derived only from the critique, and a run that produces no report
+    has no critique — the Critic declines to review an empty draft. So `crit` is {},
+    the verdict is not "revise", and finalize wrote degraded=false with zero words
+    and no explanation. Observed live on t6: two nodes degraded on real 429s, the
+    Analyst's degradation cleared the outline, the Writer skipped for want of one.
+    The supervisor routed here with degraded=True and finalize disagreed with it.
+    """
+    state = initial_state("t")
+    state.update(draft="", trace=[
+        {"node": "analyst", "action": "degraded", "error": "ClientError"},
+    ])
+    out = nodes.finalize(state)
+    ev = out["trace"][0]
+    assert ev["degraded"] is True, "a run with no report reported itself clean"
+    assert ev["node_failures"] == 1
+    assert "Known limitations" in out["draft"], "nothing explained the empty report"
+    assert "analyst" in out["draft"], "the failed node was not named"
+
+
+def test_a_node_failure_is_declared_even_when_the_report_is_fine():
+    """A degraded node means part of the run did not happen. The reader is told."""
+    state = initial_state("t")
+    state.update(draft="# R\n\nbody.", critique=PASSED, trace=[
+        {"node": "researcher", "action": "degraded", "error": "ClientError"},
+    ])
+    out = nodes.finalize(state)
+    assert out["trace"][0]["degraded"] is True
+    assert "researcher" in out["draft"]
+
+
 def test_finalize_leaves_a_clean_pass_untouched():
     state = initial_state("t")
     state.update(draft="# R\n\nbody.", critique=PASSED)
