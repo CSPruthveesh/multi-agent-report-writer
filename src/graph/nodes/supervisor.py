@@ -36,11 +36,16 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     # Analyst overwrites gaps on the way here, and they are retired rather than retried:
     # the budget that would have paid for them is already gone.
     unaddressed = list(state.get("unaddressed_gaps") or [])
-    # Empty string counts as no draft. A Writer that degraded returns "", and
+    # A blank draft counts as no draft. A Writer that degraded returns "", and
     # treating that as a real draft sends it to the Critic, which skips, which
-    # returns no critique, which routes back to the Writer — a spin. The
-    # write-attempt bound below is what makes the retry terminate.
-    draft = state.get("draft") or None
+    # returns no critique, which routes back to the Writer — a spin.
+    #
+    # .strip() rather than a plain truthiness test: "   " is truthy and is not a
+    # draft. MAX_WRITE_ATTEMPTS bounds the spin either way, so what this decides is
+    # which rule fires and therefore what the trace says — and "draft awaiting fresh
+    # critique" is false when there is no draft. The trace is the artifact every
+    # failure in this project has been diagnosed from, so it has to be true.
+    draft = (state.get("draft") or "").strip() or None
     crit = state.get("critique")
     loops = state.get("research_loops", 0)
     revs = state.get("revision_count", 0)

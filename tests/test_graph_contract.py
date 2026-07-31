@@ -220,6 +220,25 @@ def test_routing_to_the_writer_keeps_the_critique():
     assert "critique" not in out
 
 
+def test_an_empty_draft_is_reported_as_no_draft():
+    """`"" or None` is about the record, not about termination.
+
+    MAX_WRITE_ATTEMPTS bounds the spin on its own: without the empty-string check an
+    empty draft falls past rule 3 to rule 4, which carries the same bound, so the run
+    still ends. Verified by removing the check — chaos stayed 12/12 and the suite
+    stayed green.
+
+    What changes is what the trace says. Rule 4's reason is "draft awaiting fresh
+    critique", which is false when there is no draft at all, and the trace is the
+    artifact every failure in this project was diagnosed from.
+    """
+    state = initial_state("t")
+    state.update(draft="   ")
+    out = nodes.supervisor(state)
+    reasons = [e.get("why") for e in out["trace"] if e.get("action") == "route"]
+    assert reasons == ["no draft"], f"empty draft mis-reported as {reasons}"
+
+
 def test_a_writer_that_never_produces_a_draft_terminates():
     """Routing back to a Writer that returns nothing must be bounded.
 
