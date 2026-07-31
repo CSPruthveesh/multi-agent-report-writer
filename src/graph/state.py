@@ -78,5 +78,40 @@ def trace_event(node: str, action: str, **detail: Any) -> dict[str, Any]:
     return {"node": node, "action": action, **detail}
 
 
-def log_entries(ledger: Any) -> list[dict[str, Any]]:
-    return [r.as_dict() for r in ledger.records]
+def log_entries(ledger: Any, state: ReportState | None = None) -> list[dict[str, Any]]:
+    """TokenLedger -> plain dicts for the token_log reducer, tagged with loop context.
+
+    Nodes build a local ledger and dump it into shared state. Keeping the live ledger
+    object out of state matters: state is checkpointed and serialised, and an
+    arbitrary Python object in a checkpointed field is a problem discovered when a
+    resumed run cannot be resumed.
+
+    The loop tags are what make the cost analysis possible. Without them the project
+    can say "multi-agent cost 26% more" and cannot say "the gap loop was 31% of the
+    run" — and the second sentence is the one that attributes cost to a mechanism.
+
+    Tags are read from the state the node SAW on entry, so a call made during the
+    second research loop is attributed to loop 2 even though the supervisor moves the
+    counter afterwards. state is optional so existing callers keep working; they just
+    get everything filed under first_pass, which is wrong quietly rather than loudly
+    and is why every caller passes it.
+    """
+    st = state or {}
+    research_loop = st.get("research_loops", 0)
+    revision = st.get("revision_count", 0)
+    out = []
+    for r in ledger.records:
+        d = r.as_dict()
+        d["research_loop"] = research_loop
+        d["revision"] = revision
+        # Coarse phase for the summary table. Evidence work and quality retries are
+        # different products and adding them together destroys the only comparison
+        # worth making.
+        if research_loop > 0 and d["node"] in ("researcher", "analyst"):
+            d["phase"] = "gap_loop"
+        elif revision > 0:
+            d["phase"] = "revision_loop"
+        else:
+            d["phase"] = "first_pass"
+        out.append(d)
+    return out

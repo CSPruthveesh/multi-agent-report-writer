@@ -255,7 +255,7 @@ def critic(state: ReportState) -> dict[str, Any]:
                 "issues": [],
                 "parse_failed": True,
             },
-            "token_log": log_entries(ledger),
+            "token_log": log_entries(ledger, state),
             "trace": [trace_event(NODE, "parse_failed", why="structured output unusable")],
         }
 
@@ -356,7 +356,7 @@ def critic(state: ReportState) -> dict[str, Any]:
 
     return {
         "critique": critique,
-        "token_log": log_entries(ledger),
+        "token_log": log_entries(ledger, state),
         "trace": [
             trace_event(
                 NODE,

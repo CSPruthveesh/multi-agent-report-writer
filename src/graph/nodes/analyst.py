@@ -209,7 +209,7 @@ def analyst(state: ReportState) -> dict[str, Any]:
         return {
             "outline": None,
             "gaps": [],
-            "token_log": log_entries(ledger),
+            "token_log": log_entries(ledger, state),
             "trace": [trace_event(NODE, "parse_failed", why="structured output unusable")],
         }
 
@@ -238,7 +238,7 @@ def analyst(state: ReportState) -> dict[str, Any]:
     return {
         "outline": _render_outline(parsed),
         "gaps": kept,
-        "token_log": log_entries(ledger),
+        "token_log": log_entries(ledger, state),
         "trace": [
             trace_event(
                 NODE,

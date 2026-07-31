@@ -1,0 +1,121 @@
+{
+  "pricing_note": "Verify PRICE_IN_PER_M / PRICE_OUT_PER_M against current rates.",
+  "price_in_per_m": 0.3,
+  "price_out_per_m": 2.5,
+  "baseline": {
+    "totals": {
+      "runs": 6,
+      "in": 138494,
+      "out": 56124,
+      "total": 194618,
+      "calls": 78,
+      "ms": 534989,
+      "words": 5492,
+      "usd": 0.1819,
+      "usd_per_report": 0.0303
+    },
+    "by_node": {
+      "agent": {
+        "calls": 78,
+        "in": 138494,
+        "out": 56124,
+        "total": 194618,
+        "ms": 421637
+      }
+    }
+  },
+  "multiagent": {
+    "totals": {
+      "runs": 6,
+      "in": 185446,
+      "out": 59637,
+      "total": 245083,
+      "calls": 94,
+      "ms": 409901,
+      "words": 6199,
+      "usd": 0.2047,
+      "usd_per_report": 0.0341
+    },
+    "by_node": {
+      "researcher": {
+        "calls": 69,
+        "in": 105061,
+        "out": 44832,
+        "total": 149893,
+        "ms": 227478
+      },
+      "analyst": {
+        "calls": 13,
+        "in": 43206,
+        "out": 4667,
+        "total": 47873,
+        "ms": 36630
+      },
+      "writer": {
+        "calls": 6,
+        "in": 13168,
+        "out": 8849,
+        "total": 22017,
+        "ms": 43141
+      },
+      "critic": {
+        "calls": 6,
+        "in": 24011,
+        "out": 1289,
+        "total": 25300,
+        "ms": 13791
+      }
+    },
+    "by_phase": {
+      "first_pass": {
+        "calls": 94,
+        "in": 185446,
+        "out": 59637,
+        "total": 245083
+      }
+    },
+    "phase_tagged_share": 0.0,
+    "by_call_type": {
+      "plan": {
+        "calls": 6,
+        "total": 1027
+      },
+      "search": {
+        "calls": 28,
+        "total": 76785
+      },
+      "extract": {
+        "calls": 28,
+        "total": 67381
+      },
+      "analyze": {
+        "calls": 13,
+        "total": 47873
+      },
+      "write": {
+        "calls": 6,
+        "total": 22017
+      },
+      "critique": {
+        "calls": 6,
+        "total": 25300
+      },
+      "gap_plan": {
+        "calls": 7,
+        "total": 4700
+      }
+    },
+    "retries": {
+      "transport_retries": 0,
+      "parse_retries": 0,
+      "parse_retry_tokens": 0,
+      "parse_retry_pct": 0.0
+    }
+  },
+  "multiples": {
+    "tokens": 1.26,
+    "calls": 1.21,
+    "latency": 0.77,
+    "cost": 1.13
+  }
+}

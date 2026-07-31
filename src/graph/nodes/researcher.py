@@ -144,7 +144,7 @@ def researcher(state: ReportState) -> dict[str, Any]:
         # Not through gaps: the Analyst runs next on every path and overwrites it.
         "gaps": [],
         "unaddressed_gaps": unaddressed,
-        "token_log": log_entries(ledger),
+        "token_log": log_entries(ledger, state),
         "trace": [
             trace_event(
                 NODE,

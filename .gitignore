@@ -7,7 +7,11 @@ __pycache__/
 *.sqlite
 *.db
 checkpoints/
-analysis/
+# Leading slash: the phase write-ups at the repo root, and nothing else. Without it
+# this pattern matches any directory named analysis at any depth, which silently
+# excluded src/analysis/ — the cost module would never have been committed and a
+# fresh clone could not have run the report.
+/analysis/
 .pytest_cache/
 .ruff_cache/
 .vscode/settings.json

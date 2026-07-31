@@ -300,7 +300,7 @@ def writer(state: ReportState) -> dict[str, Any]:
     words = len(new_draft.split())
     return {
         "draft": new_draft,
-        "token_log": log_entries(ledger),
+        "token_log": log_entries(ledger, state),
         "trace": [
             trace_event(
                 NODE,
