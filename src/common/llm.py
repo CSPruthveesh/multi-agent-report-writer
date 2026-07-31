@@ -153,6 +153,44 @@ def generate(
     )
     latency_ms = int((time.perf_counter() - t0) * 1000)
 
+    # Structured-output parse failure is a THIRD failure class, distinct from both a
+    # 429 and a critic saying "revise". The model returned 200 OK with text that does
+    # not fit the schema. Backoff cannot help — the fix is to show it the error and
+    # ask again. One attempt, at temperature 0, logged under its own call_type so
+    # Phase 8 can price it separately rather than hiding it inside the parent call.
+    if schema is not None and getattr(resp, "parsed", None) is None:
+        raw = (getattr(resp, "text", "") or "")[:1500]
+        log.warning("[%s] structured output did not parse; re-prompting once", node)
+        retry_cfg = dict(cfg)
+        retry_cfg["temperature"] = 0.0
+        fixed, _ = with_backoff(
+            lambda: client().models.generate_content(
+                model=mdl,
+                contents=(
+                    f"{prompt}\n\n---\nYour previous response could not be parsed into "
+                    f"the required schema. Here is what you returned:\n{raw}\n\n"
+                    f"Return ONLY valid JSON matching the schema. No prose, no markdown "
+                    f"fences."
+                ),
+                config=types.GenerateContentConfig(**retry_cfg),
+            )
+        )
+        um2 = getattr(fixed, "usage_metadata", None)
+        ledger.add(
+            CallRecord(
+                node=node,
+                call_type=f"{call_type}:parse_retry",
+                in_tokens=(getattr(um2, "prompt_token_count", 0) or 0),
+                out_tokens=(getattr(um2, "candidates_token_count", 0) or 0),
+                total_tokens=(getattr(um2, "total_token_count", 0) or 0),
+                latency_ms=0,
+                attempts=1,
+                model=mdl,
+            )
+        )
+        if getattr(fixed, "parsed", None) is not None:
+            resp = fixed
+
     um = getattr(resp, "usage_metadata", None)
     in_tok = getattr(um, "prompt_token_count", 0) or 0
     out_tok = getattr(um, "candidates_token_count", 0) or 0

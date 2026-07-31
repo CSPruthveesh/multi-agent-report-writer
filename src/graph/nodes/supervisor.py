@@ -22,6 +22,7 @@ from src.graph.state import (
     MAX_RESEARCH_LOOPS,
     MAX_REVISIONS,
     MAX_SEARCHES,
+    MAX_WRITE_ATTEMPTS,
     ReportState,
     trace_event,
 )
@@ -35,11 +36,16 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     # Analyst overwrites gaps on the way here, and they are retired rather than retried:
     # the budget that would have paid for them is already gone.
     unaddressed = list(state.get("unaddressed_gaps") or [])
-    draft = state.get("draft")
+    # Empty string counts as no draft. A Writer that degraded returns "", and
+    # treating that as a real draft sends it to the Critic, which skips, which
+    # returns no critique, which routes back to the Writer — a spin. The
+    # write-attempt bound below is what makes the retry terminate.
+    draft = state.get("draft") or None
     crit = state.get("critique")
     loops = state.get("research_loops", 0)
     revs = state.get("revision_count", 0)
     searches = state.get("searches_used", 0)
+    writes = state.get("write_attempts", 0)
 
     updates: dict[str, Any] = {}
     trace: list[dict[str, Any]] = []
@@ -102,20 +108,19 @@ def supervisor(state: ReportState) -> dict[str, Any]:
             "trace": trace + [trace_event(NODE, "route", to=route, why=why, **detail)],
         }
 
-    # 3. No draft yet.
-    if draft is None:
-        return out("writer", "no draft")
-
-    # 3b. The Writer ran and produced nothing — no findings, or no outline. draft is
-    #     None before it runs and "" after it declines, so the two are distinguishable
-    #     and only this one is terminal.
+    # 3. No draft yet, or the Writer returned an empty one. Bounded: a Writer that
+    #    keeps failing must not spin the graph.
     #
-    #     Without this, rule 4 spins: empty draft -> Critic returns no critique ->
-    #     rule 4 routes back to the Writer -> same empty draft, until the recursion
-    #     limit kills the run. Found by the contract suite rather than in production,
-    #     which is the first time that has happened in this project.
-    if not draft.strip():
-        return out("finalize", "writer produced no draft", degraded=True)
+    #    Without a bound this loops — empty draft, Critic skips, no critique, rule 4
+    #    routes back to the Writer, same empty draft, until the recursion limit kills
+    #    the run. Found by the contract suite rather than in production, which is the
+    #    first time that has happened in this project.
+    if draft is None:
+        if writes >= MAX_WRITE_ATTEMPTS:
+            return out("finalize", "writer produced no draft", degraded=True)
+        res = out("writer", "no draft", attempt=f"{writes + 1}/{MAX_WRITE_ATTEMPTS}")
+        res["write_attempts"] = writes + 1
+        return res
 
     # 4. Draft exists but no critique. Two ways to get here: a Critic parse failure,
     #    or an upstream revision just completed (see rule 7, which clears the stale
@@ -127,7 +132,12 @@ def supervisor(state: ReportState) -> dict[str, Any]:
         # it here rather than in the reader keeps one writer on the field.
         if state.get("revision_brief"):
             updates["revision_brief"] = None
-        return out("writer", "draft awaiting fresh critique")
+        if writes >= MAX_WRITE_ATTEMPTS:
+            return out("finalize", "write attempts exhausted", degraded=True)
+        res = out("writer", "draft awaiting fresh critique",
+                  attempt=f"{writes + 1}/{MAX_WRITE_ATTEMPTS}")
+        res["write_attempts"] = writes + 1
+        return res
 
     # 5. Critic passed.
     if crit.get("verdict") == "pass":

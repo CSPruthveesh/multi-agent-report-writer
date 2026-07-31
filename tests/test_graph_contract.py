@@ -13,6 +13,7 @@ from src.graph.state import (
     MAX_RESEARCH_LOOPS,
     MAX_REVISIONS,
     MAX_SEARCHES,
+    MAX_WRITE_ATTEMPTS,
     ROUTES,
     ReportState,
     initial_state,
@@ -61,8 +62,10 @@ def test_run_refuses_to_write_results_while_nodes_are_stubbed():
         # clears the critique, and the Writer is the only node that turns a better
         # plan into a better draft.
         ({"draft": "d"}, "writer"),
-        # ...but an empty draft means the Writer already declined. Terminal.
-        ({"draft": "   "}, "finalize"),
+        # An empty draft means the Writer declined. Retry it once...
+        ({"draft": "   "}, "writer"),
+        # ...but not forever.
+        ({"draft": "   ", "write_attempts": MAX_WRITE_ATTEMPTS}, "finalize"),
         ({"draft": "d", "critique": PASSED}, "finalize"),
         ({"draft": "d", "critique": REVISE}, "writer"),
         ({"draft": "d", "critique": REVISE, "revision_count": MAX_REVISIONS}, "finalize"),
@@ -217,16 +220,23 @@ def test_routing_to_the_writer_keeps_the_critique():
     assert "critique" not in out
 
 
-def test_an_empty_draft_terminates_instead_of_looping():
-    """The Writer declined; routing back produces the same nothing.
+def test_a_writer_that_never_produces_a_draft_terminates():
+    """Routing back to a Writer that returns nothing must be bounded.
 
-    draft is None before the Writer runs and "" after it returns without one, so the
-    two are distinguishable. Conflating them spins the graph to its recursion limit.
+    Without a bound this spins: empty draft -> Critic skips -> no critique -> route
+    back to the Writer -> same empty draft, until the recursion limit kills the run.
+    The property is termination, not any particular number of attempts, so the test
+    asserts the loop ends rather than asserting where.
     """
     state = initial_state("t")
-    state.update(draft="")
-    out = nodes.supervisor(state)
-    assert out["route"] == "finalize"
+    for step in range(MAX_WRITE_ATTEMPTS + 2):
+        out = nodes.supervisor(state)
+        if out["route"] == "finalize":
+            assert step <= MAX_WRITE_ATTEMPTS, "took longer than the budget allows"
+            return
+        assert out["route"] == "writer"
+        state.update(draft="", write_attempts=out["write_attempts"])
+    raise AssertionError("supervisor never stopped routing to a failing Writer")
 
 
 def test_supervisor_retires_unaddressed_gaps():

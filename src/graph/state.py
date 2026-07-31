@@ -6,6 +6,11 @@ from typing import Annotated, Any, TypedDict
 MAX_RESEARCH_LOOPS = 2
 MAX_REVISIONS = 2
 
+# Guard against a failing Writer spinning the graph. Distinct from MAX_REVISIONS:
+# that bounds how many times the Critic may ask for changes, this bounds how many
+# times the supervisor will send a run to a Writer that keeps coming back empty.
+MAX_WRITE_ATTEMPTS = 2
+
 MAX_SEARCHES = 5
 
 ROUTES = ("researcher", "analyst", "writer", "finalize")
@@ -19,6 +24,10 @@ class ReportState(TypedDict, total=False):
     findings: Annotated[list[dict[str, Any]], operator.add]
     searches_used: int
     research_loops: int
+    write_attempts: int
+    # Off by default so Phase 9 can batch six topics unattended. An approval gate
+    # that cannot be turned off is an approval gate that blocks the evaluation.
+    hitl: bool
     # Gaps the Researcher could not afford to search. It cannot write unclosed_gaps —
     # that field belongs to the supervisor — and it cannot hand them back through gaps,
     # because the Analyst sits between them on every path and overwrites that field.
@@ -43,12 +52,14 @@ class ReportState(TypedDict, total=False):
     trace: Annotated[list[dict[str, Any]], operator.add]
 
 
-def initial_state(topic: str) -> ReportState:
+def initial_state(topic: str, *, hitl: bool = False) -> ReportState:
     return ReportState(
         topic=topic,
+        hitl=hitl,
         findings=[],
         searches_used=0,
         research_loops=0,
+        write_attempts=0,
         unaddressed_gaps=[],
         unclosed_gaps=[],
         outline=None,
