@@ -7,7 +7,7 @@ from types import SimpleNamespace
 import pytest
 
 from src.graph import nodes
-from src.graph.build import GRAPH, build, run
+from src.graph.build import FREE_OVERRIDES, GRAPH, build, run
 from src.graph.state import (
     CRITIC_TARGETS,
     MAX_RESEARCH_LOOPS,
@@ -218,6 +218,29 @@ def test_routing_to_the_writer_keeps_the_critique():
     out = nodes.supervisor(state)
     assert out["route"] == "writer"
     assert "critique" not in out
+
+
+def test_the_free_routing_check_is_actually_free():
+    """`python -m src.graph.build` is documented as free and has gone paid five times.
+
+    Once per node that became real: the Researcher in Phase 2, the Analyst in 3, the
+    Writer in 4, the Critic in 5. Each time the command kept printing "no API calls"
+    while making them, and each time the remedy was to add one more double. _fake.py
+    has carried a docstring telling the next person to do that since Phase 3, and it
+    has not worked once — a written reminder is not a mechanism.
+
+    conftest blocks llm.client(), so a node reaching the API fails here rather than on
+    an invoice. FREE_OVERRIDES is imported rather than rebuilt, so this cannot pass
+    while the command it describes does something else.
+    """
+    app = build(overrides=FREE_OVERRIDES)
+    final = app.invoke(initial_state("t"), config={"recursion_limit": 40})
+
+    assert final["route"] == "done", "the free path did not reach the end"
+    models = {r.get("model") for r in (final.get("token_log") or [])}
+    assert models <= {"fake"}, f"a real model was called on the free path: {models}"
+    assert all(e.get("fake") or e["node"] in ("supervisor", "finalize")
+               for e in final["trace"]), "a real node ran on the free path"
 
 
 def test_an_empty_draft_is_reported_as_no_draft():

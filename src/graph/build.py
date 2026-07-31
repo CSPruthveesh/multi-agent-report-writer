@@ -66,6 +66,24 @@ def build(checkpointer: Any = None, overrides: dict[str, Any] | None = None):
 
 GRAPH = build()
 
+# The free routing check swaps every model-calling node for its offline double.
+#
+# Named here rather than written inline in __main__ so the test that asserts this
+# path spends nothing reads the same definition the command actually uses. A test
+# with its own copy would drift, and drift between one definition and two consumers
+# is how the STUB rename, the extraction prompt, the ROUTES tuple and the criticism
+# field all broke.
+#
+# Add an entry whenever a node becomes real. That instruction has been in _fake.py
+# since Phase 3 and has been missed every phase since, which is why it is now a test
+# rather than a sentence.
+FREE_OVERRIDES: dict[str, Any] = {
+    "researcher": _fake.researcher,
+    "analyst": _fake.analyst,
+    "writer": _fake.writer,
+    "critic": _fake.critic,
+}
+
 
 def _ledger_dict(records: list[dict[str, Any]]) -> dict[str, Any]:
     by_node: dict[str, dict[str, int]] = {}
@@ -230,8 +248,7 @@ if __name__ == "__main__":
     else:
         print("routing check with fake nodes throughout — no API calls. "
               "Pass --live for the real ones.")
-        app = build(overrides={"researcher": _fake.researcher, "analyst": _fake.analyst,
-                               "writer": _fake.writer, "critic": _fake.critic})
+        app = build(overrides=FREE_OVERRIDES)
 
     state = cast(ReportState, app.invoke(initial_state("stub topic"), config={"recursion_limit": 40}))
     print("\n--- trace ---")
