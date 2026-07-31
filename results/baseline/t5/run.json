@@ -1,40 +1,46 @@
 {
   "system": "baseline",
   "topic_id": "t5",
-  "generated_at": "2026-07-29T16:54:47.015821+00:00",
-  "word_count": 944,
-  "findings_count": 51,
+  "generated_at": "2026-07-31T08:37:02.937980+00:00",
+  "word_count": 898,
+  "findings_count": 57,
   "citations": {
     "cited_count": 42,
-    "valid_count": 51,
+    "valid_count": 57,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
       "F008",
+      "F010",
       "F019",
       "F020",
+      "F021",
+      "F022",
+      "F025",
+      "F026",
       "F027",
-      "F035",
-      "F036",
+      "F029",
       "F037",
       "F038",
-      "F046"
+      "F047",
+      "F048",
+      "F053"
     ],
-    "coverage": 0.824
+    "coverage": 0.737
   },
-  "wall_ms": 52599,
+  "wall_ms": 100138,
   "tokens": {
     "calls": 13,
-    "total_in": 19447,
-    "total_out": 8770,
-    "total": 28217,
+    "total_in": 22278,
+    "total_out": 9451,
+    "total": 31729,
     "by_node": {
       "agent": {
         "calls": 13,
-        "in": 19447,
-        "out": 8770,
-        "total": 28217,
-        "ms": 38656
+        "in": 22278,
+        "out": 9451,
+        "total": 31729,
+        "ms": 81726
       }
     },
     "records": [
@@ -42,129 +48,129 @@
         "node": "agent",
         "call_type": "plan",
         "in_tokens": 99,
-        "out_tokens": 91,
-        "total_tokens": 190,
-        "latency_ms": 1221,
+        "out_tokens": 89,
+        "total_tokens": 188,
+        "latency_ms": 9333,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 1455,
-        "out_tokens": 483,
-        "total_tokens": 1938,
-        "latency_ms": 2477,
+        "in_tokens": 1671,
+        "out_tokens": 616,
+        "total_tokens": 2287,
+        "latency_ms": 25723,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 906,
-        "out_tokens": 1049,
-        "total_tokens": 1955,
-        "latency_ms": 3242,
+        "in_tokens": 1454,
+        "out_tokens": 1242,
+        "total_tokens": 2696,
+        "latency_ms": 8793,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 1563,
-        "out_tokens": 593,
-        "total_tokens": 2156,
-        "latency_ms": 2839,
+        "in_tokens": 1143,
+        "out_tokens": 455,
+        "total_tokens": 1598,
+        "latency_ms": 2770,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 998,
-        "out_tokens": 1104,
-        "total_tokens": 2102,
-        "latency_ms": 3450,
+        "in_tokens": 1255,
+        "out_tokens": 1513,
+        "total_tokens": 2768,
+        "latency_ms": 4605,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 1388,
-        "out_tokens": 408,
-        "total_tokens": 1796,
-        "latency_ms": 2543,
+        "in_tokens": 2153,
+        "out_tokens": 579,
+        "total_tokens": 2732,
+        "latency_ms": 3228,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 840,
-        "out_tokens": 1278,
-        "total_tokens": 2118,
-        "latency_ms": 3702,
+        "in_tokens": 1413,
+        "out_tokens": 1127,
+        "total_tokens": 2540,
+        "latency_ms": 4073,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "assess",
-        "in_tokens": 1149,
-        "out_tokens": 174,
-        "total_tokens": 1323,
-        "latency_ms": 1837,
+        "in_tokens": 1313,
+        "out_tokens": 160,
+        "total_tokens": 1473,
+        "latency_ms": 5262,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 3293,
-        "out_tokens": 496,
-        "total_tokens": 3789,
-        "latency_ms": 3280,
+        "in_tokens": 3510,
+        "out_tokens": 321,
+        "total_tokens": 3831,
+        "latency_ms": 2710,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1071,
-        "out_tokens": 766,
-        "total_tokens": 1837,
-        "latency_ms": 2824,
+        "in_tokens": 1225,
+        "out_tokens": 549,
+        "total_tokens": 1774,
+        "latency_ms": 2655,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2203,
-        "out_tokens": 426,
-        "total_tokens": 2629,
-        "latency_ms": 2626,
+        "in_tokens": 1591,
+        "out_tokens": 610,
+        "total_tokens": 2201,
+        "latency_ms": 3205,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 895,
-        "out_tokens": 564,
-        "total_tokens": 1459,
-        "latency_ms": 2133,
+        "in_tokens": 1488,
+        "out_tokens": 898,
+        "total_tokens": 2386,
+        "latency_ms": 3288,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "write",
-        "in_tokens": 3587,
-        "out_tokens": 1338,
-        "total_tokens": 4925,
-        "latency_ms": 6482,
+        "in_tokens": 3963,
+        "out_tokens": 1292,
+        "total_tokens": 5255,
+        "latency_ms": 6081,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -173,315 +179,350 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "Horizontal gene transfer is a primary mechanism for the dissemination of antibiotic resistance genes within aquatic bacterial populations.",
+      "claim": "Horizontal gene transfer is the primary mechanism for the spread of antibiotic resistance genes among aquatic bacterial populations.",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "Conjugation is a pathway for horizontal gene transfer involving the transfer of genetic material between bacteria.",
+      "claim": "Horizontal gene transfer occurs through conjugation, transduction, and transformation.",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "Transduction is a bacteriophage-mediated process that transfers bacterial DNA to another bacterium.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
-      "confidence": "high"
+      "claim": "Bacteria develop resistance through spontaneous mutations within their chromosomal DNA.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "confidence": "medium"
     },
     {
       "id": "F004",
-      "claim": "Transformation is a pathway for horizontal gene transfer involving the uptake of genetic material by bacteria.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
-      "confidence": "high"
+      "claim": "Antibiotic use in aquaculture creates selective pressure that facilitates the proliferation of resistant bacterial strains.",
+      "source_url": "https://www.mdpi.com/2079-6382/14/6/598",
+      "confidence": "medium"
     },
     {
       "id": "F005",
-      "claim": "Aquaculture systems act as reservoirs for antibiotic resistance genes and resistant bacterial strains.",
-      "source_url": "https://www.mdpi.com/2079-6382/14/6/598",
-      "confidence": "high"
+      "claim": "Humans are exposed to antibiotic-resistant bacteria through the consumption of raw or undercooked aquaculture products.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "confidence": "medium"
     },
     {
       "id": "F006",
-      "claim": "The use of antibiotics in aquaculture exerts selective pressure that promotes the proliferation of resistant bacterial populations.",
-      "source_url": "https://www.mdpi.com/2079-6382/14/6/598",
-      "confidence": "high"
+      "claim": "Humans are exposed to antibiotic-resistant bacteria through direct contact with contaminated water.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "confidence": "medium"
     },
     {
       "id": "F007",
-      "claim": "Fish and aquacultured animals can act as vectors for transferring resistant genes to human pathogens.",
-      "source_url": "https://www.mdpi.com/2079-6382/14/6/598",
-      "confidence": "high"
+      "claim": "Resistant bacteria spread to natural environments via wastewater discharge, runoff, or direct discharge from aquaculture facilities.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "confidence": "medium"
     },
     {
       "id": "F008",
-      "claim": "The detection of Staphylococcus aureus in aquatic environments indicates cross-sectoral contamination.",
-      "source_url": "https://www.mdpi.com/2079-6382/14/6/598",
-      "confidence": "high"
+      "claim": "Aquaculture workers and residents living near facilities are at higher risk of exposure to resistant bacteria.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "confidence": "medium"
     },
     {
       "id": "F009",
-      "claim": "Resistant strains can be transmitted to human pathogenic microbes through the food chain or direct environmental exposure.",
-      "source_url": "https://uniquescientificpublishers.com/pdf-files/HH/Holistic-Health-and-Antimicrobial-Resistance/73-81.pdf",
+      "claim": "The transfer of resistance from aquaculture to humans is associated with increased severity and duration of infections and higher rates of treatment failure.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "Resistance can arise as a response to external stimuli such as antibiotic use in aquaculture.",
-      "source_url": "https://uniquescientificpublishers.com/pdf-files/HH/Holistic-Health-and-Antimicrobial-Resistance/73-81.pdf",
-      "confidence": "high"
+      "claim": "Vibrio, Aeromonas, Edwardsiella, and Pseudomonas species are common aquaculture pathogens that can spread to humans.",
+      "source_url": "https://link.springer.com/article/10.1007/s44274-026-00773-6",
+      "confidence": "medium"
     },
     {
       "id": "F011",
-      "claim": "The therapeutic use of oxytetracycline in catfish production is associated with genetic shifts in bacterial populations.",
-      "source_url": "https://www.mdpi.com/2079-6382/14/6/598",
+      "claim": "There is a scarcity of information and a lack of direct research connecting specific antibiotic usage in aquaculture to human health outcomes.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F012",
-      "claim": "The propagation of resistant genes and strains into human pathogens lowers the efficacy of antimicrobial therapeutics used in human medicine.",
-      "source_url": "https://uniquescientificpublishers.com/pdf-files/HH/Holistic-Health-and-Antimicrobial-Resistance/73-81.pdf",
+      "claim": "Governments should strengthen regulations based on antimicrobial categorization frameworks provided by the EMA, WHO, and WOAH.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F013",
-      "claim": "The EU, USA, and Japan maintain strict regulations regarding antibiotic residues in imported seafood.",
-      "source_url": "https://link.springer.com/article/10.1007/s10499-024-01614-0",
+      "claim": "Recommended management strategies include establishing antimicrobial usage thresholds and mandatory record-keeping of antimicrobial class and duration.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F014",
-      "claim": "Seafood products are detained and destroyed at border controls due to antibiotic residue regulations.",
-      "source_url": "https://link.springer.com/article/10.1007/s10499-024-01614-0",
+      "claim": "Recommended management strategies include monitoring water quality and feed standards.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11311770",
       "confidence": "high"
     },
     {
       "id": "F015",
-      "claim": "Detention and destruction of seafood products result in economic losses for exporting countries.",
-      "source_url": "https://link.springer.com/article/10.1007/s10499-024-01614-0",
+      "claim": "Antimicrobial residues in seafood are linked to the development of antimicrobial resistance in humans.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F016",
-      "claim": "Most countries with export-oriented aquaculture industries maintain lists of compounds banned for aquaculture use.",
-      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
+      "claim": "Antimicrobial residues in seafood are linked to drug hypersensitivity reactions in humans.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F017",
-      "claim": "Full regional harmonization of governance and regulations for aquaculture antibiotics has not been achieved.",
-      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
+      "claim": "Antimicrobial residues in seafood are linked to the disruption of normal intestinal flora in humans.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F018",
-      "claim": "Antibiotic use in aquaculture is associated with potential impacts on the marine ecosystem and human health.",
-      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/wp-antibiotics-summary-2022.pdf",
+      "claim": "Residues of certain antibiotics used in aquaculture are associated with carcinogenic, mutagenic, and teratogenic effects.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F019",
-      "claim": "Antibiotic use in aquaculture can disrupt ecological functions in water columns.",
-      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
-      "confidence": "high"
+      "claim": "Specific risks of antibiotic residues in seafood include aplastic anemia and deadly forms of cancer.",
+      "source_url": "https://shrimpalliance.com/banned-antibiotics-on-imported-shrimp-addressed-on-world-food-safety-day",
+      "confidence": "low"
     },
     {
       "id": "F020",
-      "claim": "Antibiotic use in aquaculture impacts bacteria and cyanobacteria in sediments.",
-      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
-      "confidence": "high"
+      "claim": "Antibiotics used in aquatic environments are often slow to biodegrade.",
+      "source_url": "https://amrls.umn.edu/aquaculture",
+      "confidence": "medium"
     },
     {
       "id": "F021",
-      "claim": "Global antimicrobial use in aquaculture remains largely undocumented.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7736322",
+      "claim": "Antibiotic use in aquaculture affects bacteria and cyanobacteria in sediments.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F022",
-      "claim": "There is a lack of consensus on the extent of the impact of aquaculture antibiotic use on the development of antimicrobial resistance.",
-      "source_url": "https://amrls.umn.edu/aquaculture",
+      "claim": "Antibiotic use in aquaculture disrupts ecological processes in the water column.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "Aquaculture-associated antimicrobial consumption currently represents a minority share of total global consumption.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7736322",
+      "claim": "The World Health Organization is responsible for developing international food safety standards regarding antimicrobial use and residues.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "High industry growth rates and intensified production could drive increased antimicrobial usage in aquaculture by 2030.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7736322",
-      "confidence": "medium"
+      "claim": "The implementation of Hazard Analysis and Critical Control Point systems is recommended to assist regulatory authorities in controlling residues.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
+      "confidence": "high"
     },
     {
       "id": "F025",
-      "claim": "Consumption of antibiotic residues can lead to allergic reactions and hypersensitivity.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "claim": "Some countries maintain separate Maximum Residue Limit programs for domestic versus international markets.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F026",
-      "claim": "Consumption of antibiotic residues can lead to bone marrow suppression.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "claim": "Chile utilizes regulated authorization and registration procedures for pharmaceutical use in aquaculture.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F027",
-      "claim": "Consumption of antibiotic residues can disrupt intestinal microbiota.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "claim": "China has implemented the Shining Sword campaign to enforce regulatory compliance regarding pharmaceutical use in aquaculture.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F028",
-      "claim": "Consumption of antibiotic residues can have carcinogenic, mutagenic, or teratogenic effects.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
-      "confidence": "high"
+      "claim": "Concerns exist that the Trans-Pacific Partnership could be utilized to challenge U.S. food safety regulations prohibiting the import of seafood raised with banned antibiotics.",
+      "source_url": "https://foodandwaterwatch.org/wp-content/uploads/2021/03/ib_1604_aquaculture-web_0.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F029",
-      "claim": "Chloramphenicol and nitrofurans are linked to toxicity and carcinogenicity.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "claim": "There is a lack of comprehensive data regarding antibiotic consumption in Indonesia.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F030",
-      "claim": "Consumption of contaminated aquatic products may lead to the acquisition of antibiotic-resistant bacteria.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "claim": "Methodologies for regulating and reporting antibiotic use in aquaculture remain inconsistent globally.",
+      "source_url": "https://www.seafoodwatch.org/globalassets/sfw/pdf/projects/antibiotics-in-aquaculture/seafood-watch-antibiotics-in-aquaculture-state-of-affairs.pdf",
       "confidence": "high"
     },
     {
       "id": "F031",
-      "claim": "Consumption of contaminated aquatic products may lead to the development of antibiotic resistance in humans.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
+      "claim": "The FDA sets the permissible residue level for chloramphenicol in imported seafood at 0.15 ppb.",
+      "source_url": "https://certified-laboratories.com/blog/antibiotic-residue-testing-for-seafood-avoiding-fda-detention",
       "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "A study of cultured fish from 19 Chinese provinces found Hazard Quotient and Hazard Index values for antibiotic classes were less than 1.",
-      "source_url": "https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2022.964283/full",
+      "claim": "The FDA sets the permissible residue level for nitrofurans in imported seafood at 0.5 ppb.",
+      "source_url": "https://certified-laboratories.com/blog/antibiotic-residue-testing-for-seafood-avoiding-fda-detention",
       "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "Estimated Daily Intake values for antibiotics in cultured fish from 19 Chinese provinces were lower than the Acceptable Daily Intake proposed by the WHO.",
-      "source_url": "https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2022.964283/full",
+      "claim": "The FDA sets the permissible residue level for malachite green and gentian violet in imported seafood at 0.5 ppb.",
+      "source_url": "https://certified-laboratories.com/blog/antibiotic-residue-testing-for-seafood-avoiding-fda-detention",
       "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "Low concentrations of antibiotic residues can pose risks to susceptible individuals or those with compromised health.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
-      "confidence": "high"
+      "claim": "The EU, USA, and Japan enforce stricter regulations on antibiotic residues in seafood than many exporting nations.",
+      "source_url": "https://link.springer.com/article/10.1007/s10499-024-01614-0",
+      "confidence": "medium"
     },
     {
       "id": "F035",
-      "claim": "The Maximum Residue Limit for doxycycline in fish is 100 \u00b5g/kg.",
-      "source_url": "https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2022.964283/full",
+      "claim": "The WTO Sanitary and Phytosanitary Agreement uses risk analysis to protect public health and facilitate international trade.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F036",
-      "claim": "The Maximum Residue Limit for erythromycin in fish is 200 \u00b5g/kg.",
-      "source_url": "https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2022.964283/full",
+      "claim": "Antimicrobial residues in food are linked to antimicrobial drug resistance, hypersensitivity, carcinogenicity, mutagenicity, teratogenicity, and bone marrow depression.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6081861",
       "confidence": "high"
     },
     {
       "id": "F037",
-      "claim": "The presence of unapproved antibiotics in imported seafood is a documented concern.",
-      "source_url": "https://www.nal.usda.gov/research-tools/food-safety-research-projects/survey-and-education-detection-and-health-hazards",
-      "confidence": "high"
+      "claim": "Aquaculture farmers in developing nations use veterinary drugs and fungicides unapproved in the U.S. to manage disease in overcrowded pens.",
+      "source_url": "https://foodandwaterwatch.org/wp-content/uploads/2021/03/ib_1604_aquaculture-web_0.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F038",
-      "claim": "Lack of effective monitoring and regulation in certain regions exacerbates public health risks.",
-      "source_url": "https://www.mdpi.com/2410-3888/9/12/484",
-      "confidence": "high"
+      "claim": "Chloramphenicol is an unapproved antibiotic residue frequently found in imported seafood.",
+      "source_url": "https://www.nal.usda.gov/research-tools/food-safety-research-projects/survey-and-education-detection-and-health-hazards",
+      "confidence": "medium"
     },
     {
       "id": "F039",
-      "claim": "In November 2024, the WTO\u2019s Sanitary and Phytosanitary Committee identified antimicrobial resistance as an emerging risk.",
-      "source_url": "https://www.wto.org/english/tratop_e/sps_e/sps_1606202510_e/sps_1606202510_e.htm",
-      "confidence": "high"
+      "claim": "Approximately 2% of imported fish and seafood shipments in the United States undergo physical inspection or laboratory testing.",
+      "source_url": "https://foodandwaterwatch.org/wp-content/uploads/2021/03/ib_1604_aquaculture-web_0.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F040",
-      "claim": "The WTO SPS Committee held a thematic session to discuss addressing antimicrobial resistance-related risks through SPS measures.",
-      "source_url": "https://www.wto.org/english/tratop_e/sps_e/sps_1606202510_e/sps_1606202510_e.htm",
+      "claim": "The FDA has increased foreign site inspections and established permanent staff posts in strategic international locations.",
+      "source_url": "https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program",
       "confidence": "high"
     },
     {
       "id": "F041",
-      "claim": "Existing food-safety regulations primarily rely on Maximum Residue Limits set by CODEX.",
-      "source_url": "https://www.was.org/articles/editors-note-antimicrobial-resistance-and-aquaculture.aspx",
+      "claim": "The FDA is implementing Food Safety Modernization Act authorities to establish programs for testing food via accredited laboratories.",
+      "source_url": "https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program",
       "confidence": "high"
     },
     {
       "id": "F042",
-      "claim": "27% of tested aquaculture samples in Cameroon exceeded CODEX Maximum Residue Limits for common antimicrobials.",
-      "source_url": "https://www.worldaquacultureconference.com/program/scientific-program/2026/antimicrobial-residues-resistance-and-aquaculture-product-safety-in-cameroon-a-national-diagnostic-and-regulatory-perspective",
-      "confidence": "high"
+      "claim": "Monitoring for chloramphenicol residues requires expensive instrumentation.",
+      "source_url": "https://www.nal.usda.gov/research-tools/food-safety-research-projects/survey-and-education-detection-and-health-hazards",
+      "confidence": "medium"
     },
     {
       "id": "F043",
-      "claim": "Aquaculture samples in Cameroon contained antimicrobial resistance genes including tetA, sul1, and blaCTX-M.",
-      "source_url": "https://www.worldaquacultureconference.com/program/scientific-program/2026/antimicrobial-residues-resistance-and-aquaculture-product-safety-in-cameroon-a-national-diagnostic-and-regulatory-perspective",
+      "claim": "The development and spread of antimicrobial resistance genes into human pathogens is documented as a consequence of antibiotic use in aquaculture.",
+      "source_url": "https://www.globalseafood.org/advocate/antibiotic-resistant-bacteria-part-2",
       "confidence": "high"
     },
     {
       "id": "F044",
-      "claim": "There is a need for harmonized surveillance protocols that integrate antimicrobial residue monitoring with antimicrobial resistance gene tracking.",
-      "source_url": "https://www.worldaquacultureconference.com/program/scientific-program/2026/antimicrobial-residues-resistance-and-aquaculture-product-safety-in-cameroon-a-national-diagnostic-and-regulatory-perspective",
+      "claim": "There is a lack of published reports confirming the transmission of resistant strains from aquaculture production into food and subsequently to the human population.",
+      "source_url": "https://www.globalseafood.org/advocate/antibiotic-resistant-bacteria-part-2",
       "confidence": "high"
     },
     {
       "id": "F045",
-      "claim": "Many major aquaculture-producing nations face fragmented monitoring and weak enforcement of antibiotic use.",
-      "source_url": "https://www.was.org/articles/editors-note-antimicrobial-resistance-and-aquaculture.aspx",
+      "claim": "The transfer of antibacterial resistance genes from live bacteria to other bacteria in food or the human intestine can occur via conjugation.",
+      "source_url": "https://www.globalseafood.org/advocate/antibiotic-resistant-bacteria-part-2",
       "confidence": "high"
     },
     {
       "id": "F046",
-      "claim": "The WWF-led shrimp aquaculture dialogue developed standards addressing antibiotic use, wetland conversion, and biodiversity.",
-      "source_url": "https://www.worldwildlife.org/our-work/oceans/sustainable-seafood/farmed-shrimp",
+      "claim": "Aquaculture wastewater serves as a reservoir for resistant bacteria.",
+      "source_url": "https://www.the-microbiologist.com/news/peanut-shell-biochar-composite-shows-promise-for-removing-antibiotic-resistant-bacteria-from-aquaculture-wastewater/6683.article",
       "confidence": "high"
     },
     {
       "id": "F047",
-      "claim": "The U.S. government directed the U.S. Trade Representative to examine foreign seafood trade practices regarding illegal, unreported, and unregulated fishing and forced labor.",
-      "source_url": "https://www.whitehouse.gov/presidential-actions/2025/04/restoring-american-seafood-competitiveness",
+      "claim": "The EMBARGO systematic review protocol focuses on mapping epidemiological characteristics and infection control measures in healthcare and community settings.",
+      "source_url": "http://bmjopen.bmj.com/content/7/1/e013634",
       "confidence": "high"
     },
     {
       "id": "F048",
-      "claim": "The U.S. Marine Mammal Protection Act import rule requires foreign fisheries to meet U.S. standards starting January 1, 2026.",
-      "source_url": "https://www.youtube.com/watch?v=O7hptOJvaFg",
+      "claim": "Clinical reports on Klebsiella pneumoniae outbreaks focus on hospital-based transmission and antibiotic stewardship.",
+      "source_url": "https://www.nejm.org/doi/full/10.1056/NEJMp1212370",
       "confidence": "high"
     },
     {
       "id": "F049",
-      "claim": "The WTO Agreement on Fisheries Subsidies entered into force in 2025.",
-      "source_url": "https://www.wto.org/english/news_e/news25_e/fish_15sep25_e.htm",
+      "claim": "WTO members have the right to implement sanitary and phytosanitary measures to protect human, animal, or plant life or health.",
+      "source_url": "https://www.wto.org/english/tratop_e/sps_e/spsagr_e.htm",
       "confidence": "high"
     },
     {
       "id": "F050",
-      "claim": "The WTO established a Fish Fund to provide technical assistance and capacity-building to developing and least-developed countries.",
-      "source_url": "https://www.wto.org/english/news_e/news25_e/fish_15sep25_e.htm",
+      "claim": "WTO sanitary and phytosanitary measures must be based on an assessment of risks to life or health.",
+      "source_url": "https://www.wto.org/english/tratop_e/sps_e/spsagr_e.htm",
       "confidence": "high"
     },
     {
       "id": "F051",
-      "claim": "Environmental oversight, carbon-related levies, and anti-dumping duties are increasing cost structures for seafood imports from Asia and South America.",
-      "source_url": "https://www.youtube.com/watch?v=O7hptOJvaFg",
+      "claim": "WTO members are required to accept the measures of other members as equivalent if the exporting member demonstrates their measures achieve the importing member's appropriate level of protection.",
+      "source_url": "https://www.wto.org/english/tratop_e/sps_e/spsagr_e.htm",
+      "confidence": "high"
+    },
+    {
+      "id": "F052",
+      "claim": "WTO members that do not apply international standards as a condition for import should provide a reason for doing so.",
+      "source_url": "https://www.wto.org/english/tratop_e/sps_e/spsagr_e.htm",
+      "confidence": "high"
+    },
+    {
+      "id": "F053",
+      "claim": "WTO jurists may be required to define the criteria for an acceptable risk assessment for SPS measures in the context of China's ban on Japanese seafood.",
+      "source_url": "https://www.cato.org/commentary/wto-case-over-chinas-ban-japanese-seafood-would-reverberate-beyond-fukushima",
+      "confidence": "medium"
+    },
+    {
+      "id": "F054",
+      "claim": "Some WTO members argue that the European Union's processes for determining maximum residue levels for plant protection products create additional trade restrictions.",
+      "source_url": "https://aduananews.com/en/estados-unidos-planteo-cuatro-cuestiones-en-la-reunion-msf-de-omc-7",
+      "confidence": "medium"
+    },
+    {
+      "id": "F055",
+      "claim": "The United States utilizes the Marine Mammal Protection Act to impose import prohibitions on seafood from fisheries that do not meet U.S. standards.",
+      "source_url": "https://www.fisheries.noaa.gov/foreign/marine-mammal-protection/seafood-import-prohibitions-under-marine-mammal-protection-act",
+      "confidence": "high"
+    },
+    {
+      "id": "F056",
+      "claim": "The U.S. Marine Mammal Protection Act requires comparability findings for seafood imports.",
+      "source_url": "https://www.fisheries.noaa.gov/foreign/marine-mammal-protection/seafood-import-prohibitions-under-marine-mammal-protection-act",
+      "confidence": "high"
+    },
+    {
+      "id": "F057",
+      "claim": "The FDA refuses entry to specific shrimp shipments due to the presence of veterinary drug residues, including antibiotics and fungicides.",
+      "source_url": "https://shrimpalliance.com/june-2026-fda-antibiotic-contaminated-shrimp-import-refusal-report",
       "confidence": "high"
     }
   ],
   "search_rounds": 5,
   "unclosed_gaps": [
-    "Specific examples or case studies of how current trade policies (e.g., WTO agreements or specific bilateral trade deals) are being adapted to address antimicrobial resistance (AMR) specifically, rather than just antibiotic residues.",
-    "Evidence linking the economic impact of trade restrictions to actual changes in aquaculture production practices or antibiotic usage patterns in exporting nations.",
-    "Information on the effectiveness of current surveillance systems in detecting resistance genes (as opposed to chemical residues) in international seafood trade."
+    "Empirical data or case studies directly linking specific aquaculture antibiotic usage patterns in major exporting nations to clinical human health outcomes (e.g., epidemiological studies tracking resistant infections back to specific seafood supply chains).",
+    "Detailed analysis of how current international trade law (specifically WTO SPS Agreement jurisprudence) balances public health protection against claims of 'disguised trade barriers' when countries impose stricter antibiotic residue standards than international codex standards."
   ]
 }

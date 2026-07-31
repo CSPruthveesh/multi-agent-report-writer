@@ -1,39 +1,49 @@
 {
   "system": "baseline",
   "topic_id": "t3",
-  "generated_at": "2026-07-29T16:53:15.387873+00:00",
-  "word_count": 951,
-  "findings_count": 52,
+  "generated_at": "2026-07-31T08:33:34.056909+00:00",
+  "word_count": 884,
+  "findings_count": 48,
   "citations": {
-    "cited_count": 44,
-    "valid_count": 52,
+    "cited_count": 30,
+    "valid_count": 48,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F004",
-      "F011",
+      "F003",
+      "F010",
       "F015",
-      "F017",
-      "F022",
-      "F023",
+      "F016",
+      "F019",
+      "F026",
+      "F027",
+      "F030",
+      "F032",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
       "F038",
-      "F042"
+      "F039",
+      "F040",
+      "F042",
+      "F043"
     ],
-    "coverage": 0.846
+    "coverage": 0.625
   },
-  "wall_ms": 57108,
+  "wall_ms": 80541,
   "tokens": {
     "calls": 13,
-    "total_in": 21295,
-    "total_out": 9489,
-    "total": 30784,
+    "total_in": 23181,
+    "total_out": 8809,
+    "total": 31990,
     "by_node": {
       "agent": {
         "calls": 13,
-        "in": 21295,
-        "out": 9489,
-        "total": 30784,
-        "ms": 39262
+        "in": 23181,
+        "out": 8809,
+        "total": 31990,
+        "ms": 59493
       }
     },
     "records": [
@@ -41,129 +51,129 @@
         "node": "agent",
         "call_type": "plan",
         "in_tokens": 108,
-        "out_tokens": 99,
-        "total_tokens": 207,
-        "latency_ms": 1256,
+        "out_tokens": 106,
+        "total_tokens": 214,
+        "latency_ms": 1718,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 1773,
-        "out_tokens": 862,
-        "total_tokens": 2635,
-        "latency_ms": 3785,
+        "in_tokens": 2233,
+        "out_tokens": 593,
+        "total_tokens": 2826,
+        "latency_ms": 2849,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1294,
-        "out_tokens": 1424,
-        "total_tokens": 2718,
-        "latency_ms": 3876,
+        "in_tokens": 1455,
+        "out_tokens": 965,
+        "total_tokens": 2420,
+        "latency_ms": 4300,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2094,
-        "out_tokens": 562,
-        "total_tokens": 2656,
-        "latency_ms": 2988,
+        "in_tokens": 2162,
+        "out_tokens": 570,
+        "total_tokens": 2732,
+        "latency_ms": 3273,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1029,
-        "out_tokens": 1151,
-        "total_tokens": 2180,
-        "latency_ms": 3406,
+        "in_tokens": 1456,
+        "out_tokens": 914,
+        "total_tokens": 2370,
+        "latency_ms": 3485,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2333,
-        "out_tokens": 550,
-        "total_tokens": 2883,
-        "latency_ms": 2833,
+        "in_tokens": 1928,
+        "out_tokens": 554,
+        "total_tokens": 2482,
+        "latency_ms": 3413,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1096,
-        "out_tokens": 1289,
-        "total_tokens": 2385,
-        "latency_ms": 3833,
+        "in_tokens": 1405,
+        "out_tokens": 1124,
+        "total_tokens": 2529,
+        "latency_ms": 11843,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "assess",
-        "in_tokens": 1220,
+        "in_tokens": 1081,
         "out_tokens": 177,
-        "total_tokens": 1397,
-        "latency_ms": 1469,
+        "total_tokens": 1258,
+        "latency_ms": 1972,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2286,
-        "out_tokens": 258,
-        "total_tokens": 2544,
-        "latency_ms": 2138,
+        "in_tokens": 2914,
+        "out_tokens": 143,
+        "total_tokens": 3057,
+        "latency_ms": 2068,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 719,
-        "out_tokens": 363,
-        "total_tokens": 1082,
-        "latency_ms": 1804,
+        "in_tokens": 1007,
+        "out_tokens": 115,
+        "total_tokens": 1122,
+        "latency_ms": 1349,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2468,
-        "out_tokens": 405,
-        "total_tokens": 2873,
-        "latency_ms": 2595,
+        "in_tokens": 2213,
+        "out_tokens": 508,
+        "total_tokens": 2721,
+        "latency_ms": 10998,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 854,
-        "out_tokens": 999,
-        "total_tokens": 1853,
-        "latency_ms": 3132,
+        "in_tokens": 1396,
+        "out_tokens": 1804,
+        "total_tokens": 3200,
+        "latency_ms": 5093,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "write",
-        "in_tokens": 4021,
-        "out_tokens": 1350,
-        "total_tokens": 5371,
-        "latency_ms": 6147,
+        "in_tokens": 3823,
+        "out_tokens": 1236,
+        "total_tokens": 5059,
+        "latency_ms": 7132,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -172,321 +182,297 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "The Ghana Interbank Payment and Settlement Systems Limited was established by the Bank of Ghana in 2007.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "claim": "Ghana has rolled out at least two different types of DPI systems.",
+      "source_url": "https://odi.org/en/insights/what-do-we-know-about-digital-public-infrastructure-dpi-in-africa",
       "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "The Ghana Interbank Payment and Settlement Systems Limited serves as the foundational framework for financial data exchange and digital payments in Ghana.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "claim": "Ghana's Digital Economy Policy Strategy (2024) supports digital infrastructure as foundational to economic transformation.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "The fintech ecosystem in Ghana has driven the adoption of digital payments and created opportunities for data exchange mechanisms.",
+      "claim": "The Ghana Interbank Payment and Settlement Systems Limited was established in 2007 by the Bank of Ghana.",
       "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
       "id": "F004",
-      "claim": "Collaborative, private-sector-led initiatives are a key factor in the success of Ghana's digital ID systems.",
-      "source_url": "https://acetforafrica.org/research-and-analysis/insights-ideas/digital-public-infrastructure-dpi-will-drive-ai-for-africas-economic-transformation",
+      "claim": "Rwanda has rolled out at least two different types of DPI systems.",
+      "source_url": "https://odi.org/en/insights/what-do-we-know-about-digital-public-infrastructure-dpi-in-africa",
       "confidence": "high"
     },
     {
       "id": "F005",
-      "claim": "Ghana is at an advanced stage of digital public infrastructure implementation.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "claim": "Rwanda's ICT Sector Strategic Plan (2024\u20132029) positions digital infrastructure as foundational to economic transformation.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F006",
-      "claim": "Rwanda\u2019s Irembo platform was developed as a public-private partnership.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "claim": "Rwanda has established a Center for Digital Public Infrastructure.",
+      "source_url": "https://www.digitalpublicgoods.net/dpgs-for-dpi-building-open-digital-states.pdf",
       "confidence": "high"
     },
     {
       "id": "F007",
-      "claim": "Rwanda\u2019s Irembo platform processed over 30 million service requests by 2025.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "claim": "Rwanda policymakers estimated that using the Mojaloop platform saved approximately two years of implementation time compared to a proprietary platform.",
+      "source_url": "https://www.digitalpublicgoods.net/dpgs-for-dpi-building-open-digital-states.pdf",
       "confidence": "high"
     },
     {
       "id": "F008",
-      "claim": "The Irembo platform enables rural populations to initiate services from mobile devices or local agents.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "claim": "Rwanda has endorsed the Digital Public Goods Charter.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
       "id": "F009",
-      "claim": "The Irembo platform reduces the need for multiple trips to urban centers for service requests.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "claim": "Ethiopia has rolled out at least two different types of DPI systems.",
+      "source_url": "https://odi.org/en/insights/what-do-we-know-about-digital-public-infrastructure-dpi-in-africa",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "Rwanda is at an advanced stage of digital public infrastructure implementation.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "claim": "Ethiopia has signed on to the 50-in-5 campaign\u2019s commitment to share DPI learnings, best practices, and technologies.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "Rwanda is recognized for advancing financial inclusion through digital public infrastructure.",
-      "source_url": "https://www.dpi-safeguards.org/countriesshowcase",
+      "claim": "Account ownership in Sub-Saharan Africa increased from 34% to 58% between 2014 and 2024.",
+      "source_url": "https://www.linkedin.com/posts/africanenda_globalfindex2025-siipsreport-activity-7362102018141843456-1Eee",
       "confidence": "high"
     },
     {
       "id": "F012",
-      "claim": "The Rwandan government has endorsed the Digital Public Goods Charter.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
+      "claim": "Digital public infrastructure including digital ID, instant payments, and consent-based data exchange is a driver for financial inclusion for the 42% of Africans who remain unbanked.",
+      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F013",
-      "claim": "Ethiopia is at an advanced stage of digital public infrastructure implementation.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
-      "confidence": "high"
+      "claim": "Instant payment systems contribute to national policy goals by reducing digital service costs, streamlining cross-border trade, and expanding credit access.",
+      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F014",
-      "claim": "The Ethiopian government has signed on to the 50-in-5 campaign.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
+      "claim": "Government-backed instant payment systems help de-risk market entry and solve the cold start problem for digital payments.",
+      "source_url": "https://www.linkedin.com/posts/africanenda_globalfindex2025-siipsreport-activity-7362102018141843456-1Eee",
+      "confidence": "medium"
     },
     {
       "id": "F015",
-      "claim": "Account ownership in Sub-Saharan Africa increased from 34% to 58% of adults between 2014 and 2024.",
-      "source_url": "https://www.resbank.co.za/content/dam/sarb/what-we-do/payments-and-settlements/cross-border-payments-conference/documents/paper-retail-payments-evolution.pdf",
+      "claim": "The Central Bank of West African States is in the pilot phase of an interoperable instant payment system designed to operate 24/7.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
       "confidence": "high"
     },
     {
       "id": "F016",
-      "claim": "Mobile money is a primary driver of financial inclusion in the West African Economic and Monetary Union.",
+      "claim": "Mobile money is a primary driver of financial inclusion in West African Economic and Monetary Union member states.",
       "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
       "confidence": "high"
     },
     {
       "id": "F017",
-      "claim": "42% of the African population remains unbanked.",
-      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F018",
-      "claim": "African policymakers are adopting instant payment systems to increase financial inclusion and economic growth.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F019",
-      "claim": "There is a lack of peer-reviewed evidence regarding the impact of digital payment and ID systems on wages, employment, and market-level equilibrium.",
-      "source_url": "https://www.povertyactionlab.org/initiative/digital-identification-and-finance-initiative-africa-digifi-africa",
-      "confidence": "high"
-    },
-    {
-      "id": "F020",
-      "claim": "The Central Bank of West African States is piloting an interoperable instant payment system.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F021",
-      "claim": "Digital public infrastructure integrating digital ID, payments, and data exchange can reduce service costs and expand credit access.",
-      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F022",
-      "claim": "36 African nations issue digital IDs as of 2025.",
-      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F023",
-      "claim": "African countries spend an average of 1.2% of GDP on social safety net programs.",
-      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F024",
       "claim": "Nearly half of African Union member states have implemented instant payment systems.",
       "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
       "confidence": "high"
     },
     {
-      "id": "F025",
-      "claim": "High compliance costs act as a barrier to the expansion of instant payment systems.",
-      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
+      "id": "F018",
+      "claim": "36 nations in Africa currently issue digital IDs.",
+      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
       "confidence": "high"
     },
     {
-      "id": "F026",
-      "claim": "Interventions that compete directly with market actors may create distortions that inhibit effective market solutions.",
-      "source_url": "https://laweconcenter.org/resources/digital-payments-and-financial-inclusion",
+      "id": "F019",
+      "claim": "African countries spend an average of 1.2% of GDP on social safety net programs.",
+      "source_url": "https://africanenda.org/wp-content/uploads/siips_2025_KeyTakeaways_en.pdf",
       "confidence": "high"
     },
     {
-      "id": "F027",
-      "claim": "Policy frameworks across Africa often fail to adequately address interoperability standards.",
-      "source_url": "https://ict.go.ke/sites/default/files/2026-05/Draft%20Final%20National%20Data%20Governance%20Policy%20May%2025%202026.pdf",
+      "id": "F020",
+      "claim": "Most African countries lack the structures and policy direction for the coordination and integration of digital ID, digital payment, and data exchange systems.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "medium"
+    },
+    {
+      "id": "F021",
+      "claim": "There is no unified continental governance framework in Africa to support interoperability and data sharing.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12958898",
       "confidence": "high"
     },
     {
-      "id": "F028",
-      "claim": "Government entities in many African countries operate in silos by investing in parallel, isolated data centers and storage solutions.",
-      "source_url": "https://ict.go.ke/sites/default/files/2026-05/Draft%20Final%20National%20Data%20Governance%20Policy%20May%2025%202026.pdf",
+      "id": "F022",
+      "claim": "Many African countries utilize multiple digital health platforms that lack standard interfaces and exchange protocols.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12958898",
       "confidence": "high"
     },
     {
-      "id": "F029",
-      "claim": "Integration between government systems in many African countries is minimal.",
-      "source_url": "https://ict.go.ke/sites/default/files/2026-05/Draft%20Final%20National%20Data%20Governance%20Policy%20May%2025%202026.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F030",
-      "claim": "The African Union has established an Interoperability Framework for Digital ID to define requirements and standards for digital ID systems.",
+      "id": "F023",
+      "claim": "The African Union has developed an Interoperability Framework for Digital ID defining common requirements, minimum standards, and governance mechanisms.",
       "source_url": "https://au.int/sites/default/files/documents/43393-doc-AU_Interoperability_framework_for_D_ID_English.pdf",
       "confidence": "high"
     },
     {
-      "id": "F031",
-      "claim": "The AU Digital Transformation Strategy for Africa identifies digital ID as a cross-cutting theme for digital stacks.",
+      "id": "F024",
+      "claim": "The AU Interoperability Framework for Digital ID requires member states to endorse governance mechanisms to set and maintain Trust Framework rules.",
+      "source_url": "https://au.int/sites/default/files/documents/43393-doc-AU_Interoperability_framework_for_D_ID_English.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F025",
+      "claim": "The African Union\u2019s Digital Health Strategy serves as a basis for coordinated governance and cross-border data exchange.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12958898",
+      "confidence": "medium"
+    },
+    {
+      "id": "F026",
+      "claim": "Public-private partnerships are mechanisms to address technical and financial constraints in governance and interoperability.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12958898",
+      "confidence": "medium"
+    },
+    {
+      "id": "F027",
+      "claim": "The Ghana Interbank Payment and Settlement Systems provides a technological and governance foundation for potential expansion to broader government services.",
       "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "medium"
+    },
+    {
+      "id": "F028",
+      "claim": "The implementation of federated data exchange layers is primarily a legal and organizational challenge.",
+      "source_url": "http://x-road-document-library.s3.amazonaws.com/attachments/Advancing_interoperability_of_data%20exchange_in_Europe.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F029",
+      "claim": "Effective governance for scaling interoperability requires multi-party agreements on data usage rules.",
+      "source_url": "http://x-road-document-library.s3.amazonaws.com/attachments/Advancing_interoperability_of_data%20exchange_in_Europe.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F030",
+      "claim": "Ontology-based approaches are a method to harmonize data-sharing protocols and align systems across institutions.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12958898",
+      "confidence": "low"
+    },
+    {
+      "id": "F031",
+      "claim": "X-Road is a data exchange layer solution that provides a standardized, secure, and centrally managed but distributed channel for service consumption and production.",
+      "source_url": "http://x-road-document-library.s3.amazonaws.com/attachments/Advancing_interoperability_of_data%20exchange_in_Europe.pdf",
       "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "The Africa CDC\u2019s Health Data Governance and the AU\u2019s Data Policy Framework serve as regional blueprints for harmonized standards and cross-border data collaboration.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12816509",
+      "claim": "The University of Ghana and the Ghana Health Service are participants in a digital diagnostic research project.",
+      "source_url": "https://ukcdr.org.uk/wp-content/uploads/2024/09/tableau_projects_tidied_toedit_230924_dwnld.csv",
       "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "Ghana has the potential to expand the frameworks of the Ghana Interbank Payment and Settlement Systems beyond the financial sector.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "claim": "Angola has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "Rwanda has operationalized digital health councils or interoperability frameworks that domesticate regional commitments.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12816509",
+      "claim": "Benin has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F035",
-      "claim": "Uganda is developing a strategy for digital health data systems to align with global and continental standards.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12816509",
+      "claim": "Botswana has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F036",
-      "claim": "Digital Public Infrastructure interoperability is achieved through open APIs based on microservices.",
-      "source_url": "https://documents1.worldbank.org/curated/en/099031025172027713/pdf/P505739-84c5073b-9d40-4b83-a211-98b2263e87dd.pdf",
+      "claim": "Burkina Faso has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F037",
-      "claim": "Data-sharing frameworks must be adaptable to specific use cases rather than using a one-size-fits-all approach.",
-      "source_url": "https://documents1.worldbank.org/curated/en/099031025172027713/pdf/P505739-84c5073b-9d40-4b83-a211-98b2263e87dd.pdf",
+      "claim": "Lesotho has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F038",
-      "claim": "The operationalization of an African data exchange framework is a requirement for unlocking the economic and social potential of data.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "claim": "Liberia has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F039",
-      "claim": "Ethiopia is currently rolling out the FAYDA digital ID system.",
-      "source_url": "https://dial.global/work/strengthening-ethiopias-national-data-governance-ecosystem",
+      "claim": "Madagascar has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F040",
-      "claim": "Ethiopia is currently rolling out instant payment systems.",
-      "source_url": "https://www.youtube.com/watch?v=8gLYoRn8cig",
+      "claim": "Mauritius has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F041",
-      "claim": "Ethiopia expects a validated governance model and technical design for priority DPI use cases by the end of 2026.",
-      "source_url": "https://dial.global/work/strengthening-ethiopias-national-data-governance-ecosystem",
+      "claim": "Namibia has an active DPI-like data exchange system.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F042",
-      "claim": "The West Africa Unique Identification for Regional Integration and Inclusion program is active in the WAEMU region.",
-      "source_url": "https://ecdpm.org/application/files/5217/7685/8488/Digital-public-infrastructure-East-African-Community-ECDPM-Discussion-Paper-404-2026.pdf",
-      "confidence": "high"
+      "claim": "Uganda demonstrates innovation and design in data exchange platforms that meet local needs.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "medium"
     },
     {
       "id": "F043",
-      "claim": "Many Sub-Saharan African countries experience an uneven pace of digital transformation.",
-      "source_url": "https://www.diplomacy.edu/resource/report-stronger-digital-voices-from-africa/digital-identification-africa",
-      "confidence": "high"
+      "claim": "Ghana demonstrates innovation and design in data exchange platforms that meet local needs.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "medium"
     },
     {
       "id": "F044",
-      "claim": "Lack of public trust in governments is a primary challenge to digital ID implementation.",
-      "source_url": "https://www.diplomacy.edu/resource/report-stronger-digital-voices-from-africa/digital-identification-africa",
-      "confidence": "high"
+      "claim": "The X-Road interoperability framework enables standardized communication between government and private sector systems.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F045",
-      "claim": "Concerns regarding data privacy breaches, cyber fraud, and cyberattacks hinder digital ID implementation.",
-      "source_url": "https://www.diplomacy.edu/resource/report-stronger-digital-voices-from-africa/digital-identification-africa",
-      "confidence": "high"
+      "claim": "Implementing a middle layer for secure data exchange can introduce performance overhead regarding latency and system complexity.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F046",
-      "claim": "Countries struggle to ensure transparency and strong oversight in data protection regulation enforcement.",
-      "source_url": "https://ecdpm.org/application/files/5517/0254/4789/Digital-ID-systems-in-Africa-ECDPM-Discussion-Paper-360-2023.pdf",
-      "confidence": "high"
+      "claim": "Incompatible certification authorities are a challenge for data exchange across jurisdictions.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F047",
-      "claim": "Benin faces challenges in ensuring effective participation and oversight in its digital ID efforts.",
-      "source_url": "https://ecdpm.org/application/files/5517/0254/4789/Digital-ID-systems-in-Africa-ECDPM-Discussion-Paper-360-2023.pdf",
-      "confidence": "high"
+      "claim": "Varying levels of trust and assurance are a challenge for data exchange across jurisdictions.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F048",
-      "claim": "Building fragmented digital systems creates a risk of vendor-locking.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F049",
-      "claim": "Vendor-locking risks embedding existing inequalities into future digital architecture.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F050",
-      "claim": "Power outages and insufficient mobile network coverage act as primary bottlenecks for deploying complex payment systems.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F051",
-      "claim": "Ten instant payment systems in the region were excluded from performance rankings due to insufficient data availability or failure to meet basic criteria.",
-      "source_url": "https://www.africanenda.org/uploads/files/siips2025/SIIPS2025-mainreport_en.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F052",
-      "claim": "Failure to coordinate procurement and standards increases costs and implementation timelines for payment systems.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
-      "confidence": "high"
+      "claim": "Data exchange layers are viewed as central to the success of the African Continental Free Trade Area by facilitating faster and more transparent trade.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "medium"
     }
   ],
   "search_rounds": 5,
   "unclosed_gaps": [
-    "Specific, measured economic or social outcomes (e.g., quantitative impact on GDP growth, poverty reduction rates, or specific cost-savings metrics) for countries other than Ghana and Rwanda.",
-    "Detailed comparative analysis of digital ID adoption rates and their direct correlation to service delivery efficiency in countries outside the primary case studies.",
-    "Evidence regarding the specific challenges or failures of digital public infrastructure implementation in countries beyond the success stories of Ghana and Rwanda."
+    "Specific, quantitative measured outcomes for DPI adoption in countries like Ghana, Rwanda, and Ethiopia beyond general policy goals or implementation timelines.",
+    "Concrete evidence of the impact of data exchange layers (beyond digital ID and payments) on public service delivery or economic metrics in these specific countries.",
+    "Comparative analysis of the success or failure of specific DPI implementations in countries outside the 'big three' (Nigeria, Kenya, South Africa)."
   ]
 }

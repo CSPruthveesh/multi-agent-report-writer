@@ -1,56 +1,57 @@
 {
   "system": "baseline",
   "topic_id": "t1",
-  "generated_at": "2026-07-29T16:51:39.861618+00:00",
-  "word_count": 871,
-  "findings_count": 69,
+  "generated_at": "2026-07-31T08:30:30.026146+00:00",
+  "word_count": 849,
+  "findings_count": 67,
   "citations": {
-    "cited_count": 44,
-    "valid_count": 69,
+    "cited_count": 41,
+    "valid_count": 67,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F008",
-      "F011",
-      "F014",
-      "F021",
+      "F003",
+      "F005",
+      "F012",
+      "F013",
+      "F015",
+      "F016",
       "F023",
-      "F025",
+      "F026",
       "F028",
-      "F029",
-      "F030",
       "F031",
       "F032",
-      "F035",
-      "F036",
-      "F038",
+      "F037",
+      "F040",
+      "F043",
+      "F044",
       "F045",
-      "F054",
+      "F046",
+      "F052",
+      "F053",
       "F056",
       "F057",
-      "F058",
       "F059",
-      "F060",
       "F061",
-      "F062",
-      "F067",
-      "F068"
+      "F063",
+      "F065",
+      "F066"
     ],
-    "coverage": 0.638
+    "coverage": 0.612
   },
-  "wall_ms": 64332,
+  "wall_ms": 83685,
   "tokens": {
     "calls": 13,
-    "total_in": 23703,
-    "total_out": 11150,
-    "total": 34853,
+    "total_in": 26105,
+    "total_out": 11174,
+    "total": 37279,
     "by_node": {
       "agent": {
         "calls": 13,
-        "in": 23703,
-        "out": 11150,
-        "total": 34853,
-        "ms": 45628
+        "in": 26105,
+        "out": 11174,
+        "total": 37279,
+        "ms": 62731
       }
     },
     "records": [
@@ -60,127 +61,127 @@
         "in_tokens": 111,
         "out_tokens": 106,
         "total_tokens": 217,
-        "latency_ms": 2064,
+        "latency_ms": 2315,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2605,
-        "out_tokens": 582,
-        "total_tokens": 3187,
-        "latency_ms": 3167,
+        "in_tokens": 2668,
+        "out_tokens": 734,
+        "total_tokens": 3402,
+        "latency_ms": 3928,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1018,
-        "out_tokens": 1058,
-        "total_tokens": 2076,
-        "latency_ms": 3205,
+        "in_tokens": 1573,
+        "out_tokens": 1874,
+        "total_tokens": 3447,
+        "latency_ms": 5661,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 3020,
-        "out_tokens": 665,
-        "total_tokens": 3685,
-        "latency_ms": 3292,
+        "in_tokens": 2214,
+        "out_tokens": 601,
+        "total_tokens": 2815,
+        "latency_ms": 3559,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1104,
-        "out_tokens": 1285,
-        "total_tokens": 2389,
-        "latency_ms": 3880,
+        "in_tokens": 1428,
+        "out_tokens": 784,
+        "total_tokens": 2212,
+        "latency_ms": 4091,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 1996,
-        "out_tokens": 52,
-        "total_tokens": 2048,
-        "latency_ms": 1262,
+        "in_tokens": 2415,
+        "out_tokens": 531,
+        "total_tokens": 2946,
+        "latency_ms": 3178,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 364,
-        "out_tokens": 318,
-        "total_tokens": 682,
-        "latency_ms": 1552,
+        "in_tokens": 1430,
+        "out_tokens": 923,
+        "total_tokens": 2353,
+        "latency_ms": 3468,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "assess",
-        "in_tokens": 1106,
-        "out_tokens": 161,
-        "total_tokens": 1267,
-        "latency_ms": 1735,
+        "in_tokens": 1333,
+        "out_tokens": 215,
+        "total_tokens": 1548,
+        "latency_ms": 2156,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2669,
-        "out_tokens": 749,
-        "total_tokens": 3418,
-        "latency_ms": 3747,
+        "in_tokens": 2622,
+        "out_tokens": 623,
+        "total_tokens": 3245,
+        "latency_ms": 3348,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1281,
-        "out_tokens": 1845,
-        "total_tokens": 3126,
-        "latency_ms": 5447,
+        "in_tokens": 1493,
+        "out_tokens": 1476,
+        "total_tokens": 2969,
+        "latency_ms": 4766,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "search",
-        "in_tokens": 2305,
-        "out_tokens": 866,
-        "total_tokens": 3171,
-        "latency_ms": 3867,
+        "in_tokens": 2676,
+        "out_tokens": 516,
+        "total_tokens": 3192,
+        "latency_ms": 3059,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "extract",
-        "in_tokens": 1344,
-        "out_tokens": 1954,
-        "total_tokens": 3298,
-        "latency_ms": 5794,
+        "in_tokens": 1390,
+        "out_tokens": 1288,
+        "total_tokens": 2678,
+        "latency_ms": 5183,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       },
       {
         "node": "agent",
         "call_type": "write",
-        "in_tokens": 4780,
-        "out_tokens": 1509,
-        "total_tokens": 6289,
-        "latency_ms": 6616,
+        "in_tokens": 4752,
+        "out_tokens": 1503,
+        "total_tokens": 6255,
+        "latency_ms": 18019,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite"
       }
@@ -189,423 +190,412 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "LFP cell-level costs are reported as low as $53\u2013$60/kWh.",
-      "source_url": "https://www.reddit.com/r/electricvehicles/comments/1e1ek67/can_chinese_mass_produced_lfp_batteries_compete",
-      "confidence": "medium"
+      "claim": "One source reports SIB cells carry a cost of $46\u2013$62/kWh.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "low"
     },
     {
       "id": "F002",
-      "claim": "LFP pack-level costs are estimated at approximately $95/kWh.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "One source reports LFP cells carry a cost of $52\u2013$55/kWh.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "low"
     },
     {
       "id": "F003",
-      "claim": "Sodium-ion cell-level costs are estimated between $46\u2013$87/kWh.",
-      "source_url": "https://www.reddit.com/r/electricvehicles/comments/1e1ek67/can_chinese_mass_produced_lfp_batteries_compete",
-      "confidence": "medium"
+      "claim": "One source reports SIB cells cost $59/kWh.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F004",
-      "claim": "Sodium-ion pack-level costs are estimated at $90\u2013$110/kWh.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "One source reports LFP cells cost $52/kWh.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F005",
-      "claim": "Sodium-ion production costs can exceed $100/kWh due to a lack of large-scale production.",
-      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
-      "confidence": "high"
+      "claim": "One source reports production costs for SIB at $50/kWh.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "confidence": "low"
     },
     {
       "id": "F006",
-      "claim": "LFP cycle life estimates range from 3,000 to 10,000 cycles.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "One source reports production costs for LFP at $70/kWh.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "confidence": "low"
     },
     {
       "id": "F007",
-      "claim": "Sodium-ion cycle life estimates range from 4,000 to 10,000 cycles.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "One source projects SIB costs at $55\u2013$70/kWh.",
+      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
+      "confidence": "low"
     },
     {
       "id": "F008",
-      "claim": "Sodium-ion market share in the energy storage sector is projected to grow to 30% by 2030.",
-      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
-      "confidence": "high"
+      "claim": "Bernstein and IRENA project SIB long-term costs reaching $40/kWh.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F009",
-      "claim": "Sodium-ion batteries retain 90%+ capacity at -20\u00b0C.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "Sodium carbonate costs $100\u2013$650/tonne.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F010",
-      "claim": "LFP batteries retain approximately 70% capacity at -20\u00b0C.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "Lithium carbonate costs $6,000\u2013$83,000/tonne.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F011",
-      "claim": "Layered oxide sodium-ion cathodes reach energy densities of up to 170 Wh/kg.",
-      "source_url": "https://source.benchmarkminerals.com/article/how-do-sodium-ion-batteries-compare-to-lfp",
-      "confidence": "high"
+      "claim": "SIB cycle life is reported as 1,000 to 4,000 cycles by one source.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F012",
-      "claim": "Sodium-ion batteries have a higher thermal runaway onset temperature than LFP batteries.",
-      "source_url": "https://www.battery.mba/resources/lfp-vs-nmc-vs-sodium-ion",
-      "confidence": "high"
+      "claim": "SIB cycle life is reported as 3,000 to 6,000 cycles by one source.",
+      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
+      "confidence": "low"
     },
     {
       "id": "F013",
-      "claim": "Sodium-ion batteries have the potential to achieve lower production costs than lithium-ion batteries due to cheaper raw materials and simpler manufacturing processes.",
-      "source_url": "https://prism.sustainability-directory.com/scenario/sodium-ion-batteries-and-grid-scale-energy-storage",
-      "confidence": "medium"
+      "claim": "SIB cycle life is reported as 8,000 to 10,000 cycles by one source.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
+      "confidence": "low"
     },
     {
       "id": "F014",
-      "claim": "Peak Energy aims to lower energy storage costs by up to 50% compared to current lithium-ion solutions.",
-      "source_url": "https://cleantechnica.com/2023/10/05/peak-energy-plans-sodium-ion-grid-scale-battery-storage-revolution?amp=1",
-      "confidence": "high"
+      "claim": "SIB cycle life is reported as over 10,000 cycles by one source.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "low"
     },
     {
       "id": "F015",
-      "claim": "Production costs for sodium-ion batteries are expected to fall below lithium iron phosphate benchmarks for multi-hour stationary storage as production scales.",
-      "source_url": "https://www.openpr.com/news/4500750/energy-storage-sodium-ion-battery-market-crosses-commercial",
-      "confidence": "medium"
+      "claim": "LFP cycle life is reported as 3,000 to 6,000 cycles by one source.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "low"
     },
     {
       "id": "F016",
-      "claim": "Prussian blue analogue cathode systems offer superior cycle life compared to other sodium-ion chemistries.",
-      "source_url": "https://researchintelo.com/report/grid-scale-sodium-ion-energy-storage-system-market",
-      "confidence": "high"
+      "claim": "LFP cycle life is reported as 5,000 to 6,000+ cycles by one source.",
+      "source_url": "https://korapower.com/blogs/education/lfp-vs-sodium-ion-home-battery-2026-homeowners-guide",
+      "confidence": "low"
     },
     {
       "id": "F017",
-      "claim": "Sodium-ion technology is used for frequency regulation and grid stabilization in the USA, Europe, and China.",
-      "source_url": "https://researchintelo.com/report/grid-scale-sodium-ion-energy-storage-system-market",
-      "confidence": "high"
+      "claim": "LFP cycle life is reported as 5,000 to 10,000+ cycles by one source.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F018",
-      "claim": "Sodium-ion batteries can provide fast-response capabilities within 200 milliseconds.",
-      "source_url": "https://researchintelo.com/report/grid-scale-sodium-ion-energy-storage-system-market",
-      "confidence": "high"
-    },
-    {
-      "id": "F019",
-      "claim": "The Baochi plant in China uses sodium-ion batteries to autonomously adjust voltage and frequency.",
-      "source_url": "https://www.ess-news.com/2025/06/03/china-launches-worlds-first-grid-forming-sodium-ion-battery-storage-plant",
-      "confidence": "high"
-    },
-    {
-      "id": "F020",
-      "claim": "Sodium-ion batteries maintain performance at temperatures as low as -25\u00b0C.",
-      "source_url": "https://ffdpower.com/sodium-ion-battery",
-      "confidence": "high"
-    },
-    {
-      "id": "F021",
-      "claim": "Sodium-ion batteries are used for commercial and industrial peak shaving.",
-      "source_url": "https://ffdpower.com/sodium-ion-battery",
-      "confidence": "high"
-    },
-    {
-      "id": "F022",
-      "claim": "Sodium-ion batteries are used for telecom backup due to long shelf life at 0 V and low maintenance requirements.",
-      "source_url": "https://ffdpower.com/sodium-ion-battery",
-      "confidence": "high"
-    },
-    {
-      "id": "F023",
-      "claim": "Sodium-ion batteries are used for renewable energy integration.",
-      "source_url": "https://ffdpower.com/sodium-ion-battery",
-      "confidence": "high"
-    },
-    {
-      "id": "F024",
-      "claim": "Natron Energy identifies data center UPS as an application for sodium-ion batteries.",
-      "source_url": "https://researchintelo.com/report/grid-scale-sodium-ion-energy-storage-system-market",
-      "confidence": "high"
-    },
-    {
-      "id": "F025",
-      "claim": "Sodium-ion cells currently achieve energy densities of 140\u2013185 Wh/kg.",
-      "source_url": "https://researchintelo.com/report/grid-scale-sodium-ion-energy-storage-system-market",
-      "confidence": "high"
-    },
-    {
-      "id": "F026",
-      "claim": "Sodium-ion energy density is projected to reach 200 Wh/kg by 2027.",
-      "source_url": "https://researchintelo.com/report/grid-scale-sodium-ion-energy-storage-system-market",
+      "claim": "SIB market share is expected to grow to 30% by 2030 for energy storage use cases.",
+      "source_url": "https://www.laserax.com/blog/sodium-ion-vs-lithium-ion-batteries",
       "confidence": "medium"
     },
     {
+      "id": "F019",
+      "claim": "SIB retains 85\u201390% capacity at -20\u00b0C.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "medium"
+    },
+    {
+      "id": "F020",
+      "claim": "LFP retains 60\u201380% capacity at -20\u00b0C.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "medium"
+    },
+    {
+      "id": "F021",
+      "claim": "SIB thermal runaway onset occurs 30\u201350\u00b0C higher than lithium-ion.",
+      "source_url": "https://www.zvepow.com/new/sodium-Ion-battery-cost-per-kwh-in-2026",
+      "confidence": "medium"
+    },
+    {
+      "id": "F022",
+      "claim": "Sodium-ion batteries reach 90% capacity in approximately 12 minutes.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
+      "confidence": "medium"
+    },
+    {
+      "id": "F023",
+      "claim": "Sodium-ion batteries operate in temperatures ranging from -40\u00b0C to +80\u00b0C.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
+      "confidence": "medium"
+    },
+    {
+      "id": "F024",
+      "claim": "Sodium-ion batteries can be stored at 0V.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
+      "confidence": "medium"
+    },
+    {
+      "id": "F025",
+      "claim": "One source projects a 143% ROI for sodium-ion systems compared to 22% for lithium iron phosphate systems.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "confidence": "low"
+    },
+    {
+      "id": "F026",
+      "claim": "Commercialization and deployment of molten sodium batteries is more advanced than that of sodium-ion batteries.",
+      "source_url": "https://www.sandia.gov/app/uploads/sites/163/2022/02/ESHB_Ch4_Sodium_Spoerke-1.pdf",
+      "confidence": "high"
+    },
+    {
       "id": "F027",
-      "claim": "Sodium-ion adoption is driven by supply chain strategy and raw material abundance.",
-      "source_url": "https://www.openpr.com/news/4500750/energy-storage-sodium-ion-battery-market-crosses-commercial",
+      "claim": "Sodium-ion batteries are used for frequency regulation.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
       "confidence": "medium"
     },
     {
       "id": "F028",
-      "claim": "The provided search results contain no information regarding the techno-economic analysis of sodium-ion batteries for grid-scale energy storage.",
-      "source_url": "",
-      "confidence": "low"
+      "claim": "Sodium-ion batteries are used for renewable energy intermittency management.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
+      "confidence": "medium"
     },
     {
       "id": "F029",
-      "claim": "The provided search results contain no information regarding the cost per kWh of sodium-ion batteries for grid-scale energy storage.",
-      "source_url": "",
-      "confidence": "low"
+      "claim": "Sodium-ion batteries are used for peak shaving in commercial and industrial applications.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
+      "confidence": "medium"
     },
     {
       "id": "F030",
-      "claim": "The provided search results contain no information regarding the cycle life of sodium-ion batteries for grid-scale energy storage.",
-      "source_url": "",
-      "confidence": "low"
+      "claim": "Sodium-ion batteries are used in microgrids, telecom backup power, and data centers.",
+      "source_url": "https://ffdpower.com/sodium-ion-battery",
+      "confidence": "medium"
     },
     {
       "id": "F031",
-      "claim": "The provided search results contain no information regarding the commercial deployment of sodium-ion batteries for grid-scale energy storage.",
-      "source_url": "",
-      "confidence": "low"
+      "claim": "Sodium-ion systems reduce the need for active cooling systems.",
+      "source_url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2026/jun/0609-sodium-ion-batteries-grid-scale-energy-storage.html",
+      "confidence": "medium"
     },
     {
       "id": "F032",
-      "claim": "The provided search results pertain exclusively to the electronic dance music genre known as techno.",
-      "source_url": "",
-      "confidence": "low"
+      "claim": "Cobalt-free sodium-ion batteries are estimated to be 40% to 60% lower in cost per kWh than LiCoO2 batteries.",
+      "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-48359-2_14",
+      "confidence": "medium"
     },
     {
       "id": "F033",
-      "claim": "Sodium-ion cell costs are estimated to potentially drop to $40/kWh as production scales.",
-      "source_url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Nov/IRENA_TEC_Sodium-ion_batteries_2025.pdf",
-      "confidence": "high"
+      "claim": "Many existing studies focus on material costs in isolation rather than the cost of the full battery system.",
+      "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-48359-2_14",
+      "confidence": "medium"
     },
     {
       "id": "F034",
-      "claim": "Sodium-ion battery LCOS is estimated at $115\u2013$135/MWh.",
-      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "claim": "Tiamat sodium-ion technology has demonstrated durability of more than 4,000 cycles.",
+      "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-48359-2_14",
       "confidence": "high"
     },
     {
       "id": "F035",
-      "claim": "Sodium-ion batteries currently exhibit costs ranging from $0.195 to $0.450/kWh in vehicle-to-grid applications.",
-      "source_url": "https://www.mdpi.com/2032-6653/16/4/200",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries can rely on passive or air cooling for stationary storage.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F036",
-      "claim": "The U.S. Department of Energy identifies sodium-ion batteries as having the potential for LCOS reductions of roughly $0.31/kWh.",
-      "source_url": "https://www.energy.gov/sites/default/files/2024-08/Achieving%20the%20Promise%20of%20Low-Cost%20Long%20Duration%20Energy%20Storage_FINAL_08052024.pdf",
-      "confidence": "high"
+      "claim": "Lithium iron phosphate battery systems often require active cooling, fans, and pumps.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F037",
-      "claim": "LFP LCOS for grid-scale applications ranges from $0.139 to $0.294/kWh.",
-      "source_url": "https://www.mdpi.com/2032-6653/16/4/200",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries are positioned to compete in commercial and industrial applications, data centers, residential storage, defense, and microgrids.",
+      "source_url": "https://www.energy-proceedings.org/a-techno-economic-assessment-of-sodium-ion-pouch-and-coin-cells-for-commercial-applications",
+      "confidence": "medium"
     },
     {
       "id": "F038",
-      "claim": "LFP LCOS is estimated at $145\u2013$170/MWh.",
-      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "claim": "Research models for sodium-ion penetration into stationary energy storage systems range from 100% penetration by 2040 to 100% penetration by 2035.",
+      "source_url": "https://www.nature.com/articles/s41560-024-01701-9",
       "confidence": "high"
     },
     {
       "id": "F039",
-      "claim": "Sodium-ion batteries are projected to have a 2% to 4% cost advantage over LFP between 2023 and 2030.",
-      "source_url": "https://www.faraday.ac.uk/wp-content/uploads/2023/09/20230908_Rho_Motion_Faraday_Institution_UK_BESS_Report_Final.pdf",
-      "confidence": "high"
+      "claim": "Lithium iron phosphate is identified as the most techno-economically efficient option for large-scale stationary storage in some analyses.",
+      "source_url": "https://ujcontent.uj.ac.za/view/pdfCoverPage?instCode=27UOJ_INST&filePid=1313673770007691&download=true",
+      "confidence": "medium"
     },
     {
       "id": "F040",
-      "claim": "Sodium-ion manufacturing costs remain higher than LFP manufacturing costs.",
-      "source_url": "https://www.faraday.ac.uk/wp-content/uploads/2023/09/20230908_Rho_Motion_Faraday_Institution_UK_BESS_Report_Final.pdf",
-      "confidence": "high"
+      "claim": "Sodium-ion is an emerging technology with theoretical performance similar to lithium-ion.",
+      "source_url": "https://kb.osu.edu/items/26775480-1949-41f4-b7fa-0a391bbaebd3",
+      "confidence": "medium"
     },
     {
       "id": "F041",
-      "claim": "LFP cycle life ranges from 3,000 to 5,000 cycles.",
+      "claim": "The installed CAPEX for LFP BESS is estimated at $260\u2013$290/kWh.",
       "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
-      "confidence": "high"
+      "confidence": "medium"
     },
     {
       "id": "F042",
-      "claim": "One source reports a sodium-ion cycle life of 35,000 cycles without capacity loss.",
-      "source_url": "https://www.faraday.ac.uk/wp-content/uploads/2023/09/20230908_Rho_Motion_Faraday_Institution_UK_BESS_Report_Final.pdf",
-      "confidence": "high"
+      "claim": "The installed CAPEX for sodium-ion BESS is estimated at $210\u2013$240/kWh.",
+      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F043",
-      "claim": "One source lists a sodium-ion cycle life range of 3,000\u20135,000 cycles.",
+      "claim": "Sodium-ion system costs are approximately 15% lower than LFP system costs due to the elimination of HVAC and chiller systems.",
       "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
-      "confidence": "high"
+      "confidence": "medium"
     },
     {
       "id": "F044",
-      "claim": "LFP is the preferred technology for applications where volumetric energy density is the primary constraint.",
-      "source_url": "https://jisenergy.com/sodium-ion-vs-lfp-bess-lcos-a-complete-technoeconomic-analysis-20260720",
-      "confidence": "high"
+      "claim": "Sodium-ion is projected to reach cost parity with LFP by the end of 2026.",
+      "source_url": "https://nextgpower.com/lfp-vs-sodium-ion-battery-2026-utility-ci-storage",
+      "confidence": "low"
     },
     {
       "id": "F045",
-      "claim": "LFP is the preferred technology for vehicle-to-grid applications due to lower costs and longer cycle life compared to sodium-ion.",
-      "source_url": "https://www.mdpi.com/2032-6653/16/4/200",
-      "confidence": "high"
+      "claim": "Sodium-ion is projected to have a 5\u201310% cost advantage over LFP in 2027.",
+      "source_url": "https://nextgpower.com/lfp-vs-sodium-ion-battery-2026-utility-ci-storage",
+      "confidence": "low"
     },
     {
       "id": "F046",
-      "claim": "LFP maintains a Technology Readiness Level of 9.",
-      "source_url": "https://jisenergy.com/sodium-ion-vs-lfp-bess-lcos-a-complete-technoeconomic-analysis-20260720",
-      "confidence": "high"
+      "claim": "Sodium-ion is projected to have a 15\u201320% cost advantage over LFP by 2028.",
+      "source_url": "https://nextgpower.com/lfp-vs-sodium-ion-battery-2026-utility-ci-storage",
+      "confidence": "low"
     },
     {
       "id": "F047",
-      "claim": "Sodium-ion batteries perform better in cold temperatures than LFP.",
-      "source_url": "https://www.faraday.ac.uk/wp-content/uploads/2023/09/20230908_Rho_Motion_Faraday_Institution_UK_BESS_Report_Final.pdf",
-      "confidence": "high"
+      "claim": "Annual fixed OPEX for sodium-ion systems is $1.00\u2013$2.00/kW-yr.",
+      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F048",
-      "claim": "Sodium-ion batteries require up to 90% lower cooling energy consumption than LFP.",
+      "claim": "Annual fixed OPEX for LFP systems is $10.00\u2013$14.00/kW-yr.",
       "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
-      "confidence": "high"
+      "confidence": "medium"
     },
     {
       "id": "F049",
-      "claim": "Sodium-ion batteries are moving from TRL 7 to TRL 8.",
-      "source_url": "https://jisenergy.com/sodium-ion-vs-lfp-bess-lcos-a-complete-technoeconomic-analysis-20260720",
-      "confidence": "high"
+      "claim": "Sodium-ion systems utilize less than 0.5% auxiliary power.",
+      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F050",
-      "claim": "Peak Energy has a multi-year agreement to supply up to 4.75 GWh of sodium-ion BESS to Jupiter Power through 2030.",
-      "source_url": "https://www.energy-storage.news/us-based-bess-companies-peak-energy-ess-inc-and-unigrid-aim-to-commercialise-sodium-ion-in-us-europe",
-      "confidence": "high"
+      "claim": "LFP systems utilize 4.5%\u20137.0% auxiliary power.",
+      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F051",
-      "claim": "Peak Energy has a 1.5 GWh supply agreement with Energy Vault for AI data center applications.",
-      "source_url": "https://www.energy-storage.news/us-based-bess-companies-peak-energy-ess-inc-and-unigrid-aim-to-commercialise-sodium-ion-in-us-europe",
-      "confidence": "high"
+      "claim": "One source projects a 143% ROI for sodium-ion end users compared to 22% for LFP.",
+      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "confidence": "low"
     },
     {
       "id": "F052",
-      "claim": "Peak Energy and General Motors are partnering to develop next-generation sodium-ion cells for grid-scale storage.",
-      "source_url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2026/jun/0609-sodium-ion-batteries-grid-scale-energy-storage.html",
-      "confidence": "high"
+      "claim": "LFP has a cycle life of 8,000\u201312,000+ cycles.",
+      "source_url": "https://nextgpower.com/lfp-vs-sodium-ion-battery-2026-utility-ci-storage",
+      "confidence": "medium"
     },
     {
       "id": "F053",
-      "claim": "General Motors plans a 4 GWh sodium-ion manufacturing plant in Sacramento, California.",
-      "source_url": "https://www.canarymedia.com/articles/batteries/pioneering-grid-battery-factory-california",
-      "confidence": "high"
+      "claim": "Sodium-ion has a cycle life of 5,000\u20137,000 cycles.",
+      "source_url": "https://nextgpower.com/lfp-vs-sodium-ion-battery-2026-utility-ci-storage",
+      "confidence": "medium"
     },
     {
       "id": "F054",
-      "claim": "Peak Energy is conducting a 3.1 MWh pilot project with RWE Americas in Wisconsin.",
-      "source_url": "https://www.energy-storage.news/us-based-bess-companies-peak-energy-ess-inc-and-unigrid-aim-to-commercialise-sodium-ion-in-us-europe",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries retain 85\u201390% capacity at -20\u00b0C.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F055",
-      "claim": "BYD targets 50 GWh of annual production capacity for its third-generation polyanion-based sodium-ion platform at its Xuzhou facility.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries have a reported cycle life range of 1,000 to 4,000 cycles.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F056",
-      "claim": "ESS Tech procured 8.5 GWh of sodium-ion cells and modules from Alsym Energy.",
-      "source_url": "https://www.utilitydive.com/news/ess-tech-launches-12-mwh-sodium-ion-battery-building-block-system/825204",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries have a reported cycle life range of 3,000 to 5,000 cycles.",
+      "source_url": "https://www.ecohome.net/en/guides/4202/sodium-ion-vs-lfp-which-home-battery-is-best-in-2026",
+      "confidence": "low"
     },
     {
       "id": "F057",
-      "claim": "Unigrid plans to expand production to 2 GWh per year by 2027 using a foundry-subscription model.",
-      "source_url": "https://www.energy-storage.news/us-based-bess-companies-peak-energy-ess-inc-and-unigrid-aim-to-commercialise-sodium-ion-in-us-europe",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries have a reported cycle life range of 4,000 to 6,000 cycles.",
+      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
+      "confidence": "low"
     },
     {
       "id": "F058",
-      "claim": "HyperStrong and SMA Solar Technology signed a strategic partnership in May 2026 for utility-scale grid-compliant storage integration.",
-      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
-      "confidence": "high"
+      "claim": "Some sodium-ion storage-grade cells claim a cycle life of 10,000 or more cycles.",
+      "source_url": "https://www.alsym.com/wp-content/uploads/2026/04/Whitepaper-The-Promise-Potential-of-Sodium-ion-in-2026-2-4.pdf",
+      "confidence": "low"
     },
     {
       "id": "F059",
-      "claim": "NEO Battery Materials and NainTech signed a joint development agreement in August 2025 for grid storage and AI data center power supply.",
-      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
-      "confidence": "high"
+      "claim": "Some sodium-ion cells claim a cycle life of up to 15,000 cycles.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F060",
-      "claim": "Peak Energy deployed a 3.5 MWh sodium-ion system at SolarTAC, Colorado, in September 2025.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "High-cycle claims for sodium-ion batteries are based on cells manufactured since 2025-2026 and remain unproven at scale.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "medium"
     },
     {
       "id": "F061",
-      "claim": "Peak Energy completed a MISO-connected deployment with RWE Americas in March 2026.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "LFP batteries have a reported cycle life range of 3,000 to 6,000 cycles.",
+      "source_url": "https://www.bonnenbatteries.com/sodium-ion-battery-vs-lithium-ion-battery-a-friendly-comparison",
+      "confidence": "low"
     },
     {
       "id": "F062",
-      "claim": "BYD delivered a megawatt-scale sodium-ion grid energy storage system in 2025.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "LFP batteries have a reported cycle life range of 5,000 to 10,000 or more cycles.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "low"
     },
     {
       "id": "F063",
-      "claim": "Phase 2 of the Fulin Sodium-Ion Energy Storage Station in China is operational with 10 MWh online.",
-      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
-      "confidence": "high"
+      "claim": "LFP batteries have a reported cycle life range of 6,000 to 10,000 cycles.",
+      "source_url": "https://www.ecohome.net/en/guides/4202/sodium-ion-vs-lfp-which-home-battery-is-best-in-2026",
+      "confidence": "low"
     },
     {
       "id": "F064",
-      "claim": "Sodium-ion cells currently achieve 90\u2013175 Wh/kg energy density.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "LFP technology has a decade of field-verified reliability.",
+      "source_url": "https://energy.ecoflow.com/us/blog/sodium-ion-lfp-which-is-better",
+      "confidence": "medium"
     },
     {
       "id": "F065",
-      "claim": "LFP cells achieve 205 Wh/kg energy density.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
+      "claim": "Kora Powerblock LFP cells are rated for 6,000 or more cycles at 80% capacity as of June 2026.",
+      "source_url": "https://korapower.com/blogs/education/lfp-vs-sodium-ion-home-battery-2026-homeowners-guide",
       "confidence": "high"
     },
     {
       "id": "F066",
-      "claim": "NMC systems achieve up to 255 Wh/kg energy density.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "Sodium-ion batteries can operate in temperatures as low as -20\u00b0C.",
+      "source_url": "https://www.ecohome.net/en/guides/4202/sodium-ion-vs-lfp-which-home-battery-is-best-in-2026",
+      "confidence": "medium"
     },
     {
       "id": "F067",
-      "claim": "Sodium-ion systems can reach 90% charge capacity in approximately 12 minutes.",
-      "source_url": "https://www.kingsresearch.com/blog/sodium-ion-batteries-grid-scale-energy-storage",
-      "confidence": "high"
-    },
-    {
-      "id": "F068",
-      "claim": "Peak Energy claims its BESS is engineered to operate for more than 20 years without scheduled maintenance.",
-      "source_url": "https://www.energy-storage.news/us-based-bess-companies-peak-energy-ess-inc-and-unigrid-aim-to-commercialise-sodium-ion-in-us-europe",
-      "confidence": "high"
-    },
-    {
-      "id": "F069",
-      "claim": "Hard carbon anode production capacity is currently failing to keep pace with cell demand growth.",
-      "source_url": "https://www.gminsights.com/industry-analysis/utility-scale-sodium-ion-energy-storage-systems-market",
-      "confidence": "high"
+      "claim": "Sodium-ion systems can utilize passive or air cooling to reduce auxiliary power loads and maintenance costs.",
+      "source_url": "https://volta.foundation/assessing-the-promise-and-potential-of-sodium-ion-batteries-in-2026",
+      "confidence": "medium"
     }
   ],
   "search_rounds": 5,
   "unclosed_gaps": [
-    "Direct techno-economic analysis comparing the Levelized Cost of Storage (LCOS) for sodium-ion versus LFP in grid-scale applications.",
-    "Specific data on the current commercial scale of sodium-ion grid-storage projects versus LFP, as current evidence focuses on pilot or niche applications.",
-    "Clearer distinction between cell-level cost projections and actual grid-scale project deployment costs for sodium-ion."
+    "Lack of consensus on current cycle life for commercial-grade sodium-ion cells, with data ranging from 1,000 to 10,000+ cycles.",
+    "Absence of standardized system-level cost comparisons (BOS costs) between SIB and LFP, as current data focuses heavily on cell-level material costs.",
+    "Limited evidence on the actual market penetration or 'winning' niches beyond pilot projects and theoretical projections.",
+    "Lack of comparative data on the degradation rates of SIB vs LFP under real-world grid-scale operating conditions."
   ]
 }
