@@ -8,6 +8,8 @@ import pytest
 
 from src.graph import nodes
 from src.graph.build import FREE_OVERRIDES, GRAPH, build, run
+from src.graph.checkpoint import sqlite_checkpointer, thread_config
+from src.graph.nodes import _fake
 from src.graph.state import (
     CRITIC_TARGETS,
     MAX_RESEARCH_LOOPS,
@@ -218,6 +220,52 @@ def test_routing_to_the_writer_keeps_the_critique():
     out = nodes.supervisor(state)
     assert out["route"] == "writer"
     assert "critique" not in out
+
+
+def test_a_crashed_run_resumes_from_the_last_completed_node(tmp_path):
+    """A checkpointer whose resume path has never executed is a backup nobody restored.
+
+    Crash simulated with KeyboardInterrupt rather than an ordinary exception, because
+    resilient() catches Exception and would degrade the node instead of killing the
+    run — which is the point of it, and the wrong thing here.
+
+    The assertion that matters is not that the resumed run finishes. It is that the
+    nodes which already completed are not re-executed: replaying the Researcher would
+    double the findings and spend the search budget twice, which on a real run is the
+    difference between resuming and restarting.
+    """
+    calls = {"writer": 0}
+
+    def crashing_writer(state):
+        calls["writer"] += 1
+        if calls["writer"] == 1:
+            raise KeyboardInterrupt("simulated crash mid-run")
+        return _fake.writer(state)
+
+    cp = sqlite_checkpointer(tmp_path / "resume.sqlite")
+    overrides = {**FREE_OVERRIDES, "writer": crashing_writer}
+    cfg = thread_config("resume-test")
+
+    with pytest.raises(KeyboardInterrupt):
+        build(checkpointer=cp, overrides=overrides).invoke(initial_state("t"), config=cfg)
+
+    # Work done before the crash is on disk.
+    parked = build(checkpointer=cp, overrides=overrides).get_state(cfg)
+    findings_at_crash = len(parked.values.get("findings") or [])
+    assert findings_at_crash > 0, "nothing was checkpointed before the crash"
+
+    # Resume: same thread, no new input, the writer works this time.
+    final = build(checkpointer=cp, overrides=overrides).invoke(None, config=cfg)
+
+    assert final["route"] == "done", "the resumed run did not finish"
+    assert len(final["findings"]) == findings_at_crash, (
+        "the Researcher re-ran on resume — that is a restart, not a resume"
+    )
+    # The node that crashed is re-entered; nothing upstream of it is. The exact count
+    # is 1 crash plus however many times the revision loop calls the Writer, so the
+    # property is "it ran again", not a number.
+    assert calls["writer"] > 1, "the crashed node was never re-entered"
+    assert final["revision_count"] == 1, "the revision loop did not survive the resume"
 
 
 def test_the_free_routing_check_is_actually_free():
