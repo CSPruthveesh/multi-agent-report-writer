@@ -46,11 +46,36 @@ EXTRACT_SYSTEM = """Convert research notes into discrete findings.
 Rules:
 - One finding = one factual assertion. Split compound sentences.
 - Do not add anything not present in the notes. No inference, no background.
-- Attach the source URL that supports each claim. If the notes do not attribute a
-  claim to a specific URL, use the empty string and set confidence to "low".
-- confidence: "high" if a credible source states it directly, "medium" if implied or
-  from a weaker source, "low" if inferred, contested, or single-source.
-- Drop anything that is opinion, hedging, or connective prose."""
+- Attach the source URL that supports each claim. If the notes do not attribute the
+  claim, take the URL from the sources list where the attribution is unambiguous; if it
+  is genuinely unattributable, drop the claim rather than recording it without a source.
+- Drop anything that is opinion, hedging, or connective prose.
+
+Prefer specific claims, but do not discard evidence to achieve it:
+- A claim carrying a figure, a date or a named measured outcome is always worth recording.
+- A claim with none of those is still worth recording if it is specific to this subject.
+  Mark it low. Drop it only if it would be true of almost any subject in the field.
+- Record a restatement of an earlier claim once, keeping the most specific version.
+
+confidence measures how much weight the claim can bear, not whether some source said
+it. Nearly everything in the notes was stated by a source, so "a source says so" is not
+sufficient for high.
+- high   - a specific quantified or dated fact from a primary or institutional source:
+           a regulator, statistics agency, standards body, company filing or disclosure,
+           peer-reviewed work, or a named report that describes its methodology.
+- medium - a specific fact from trade press or a secondary aggregator, or a figure whose
+           date, scope or definition is unclear.
+- low    - unquantified or generic, or from a marketing page, SEO aggregator, blog,
+           forum or unattributed source, or contradicted elsewhere in the notes.
+
+If two sources give different values for the same quantity, record each value as its own
+finding attributed to its own source, set both to low, and say inside each claim that
+sources disagree. Do not emit a separate finding whose subject is the disagreement: a
+finding is one assertion about the world, attributable to one URL, and a claim about the
+state of the evidence cannot be cited by anything.
+
+Expect a spread of confidence values. If every finding comes out "high", the rule above
+was not applied."""
 
 
 def _gemini(
@@ -199,8 +224,8 @@ def extract(
         out.append(
             Finding(
                 id=f"F{i:03d}",
-                claim=f.claim.strip(),
-                source_url=f.source_url or "",
+                claim=" ".join(f.claim.split()),
+                source_url=" ".join(f.source_url.split()) if f.source_url else "",
                 confidence=f.confidence,
             )
         )

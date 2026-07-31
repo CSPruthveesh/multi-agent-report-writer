@@ -1,0 +1,104 @@
+from __future__ import annotations
+
+import copy
+
+import pytest
+
+from src.graph import nodes
+from src.graph.build import GRAPH, build, run
+from src.graph.state import (
+    CRITIC_TARGETS,
+    MAX_RESEARCH_LOOPS,
+    MAX_REVISIONS,
+    MAX_SEARCHES,
+    ROUTES,
+    ReportState,
+    initial_state,
+)
+
+REVISE = {"verdict": "revise", "target": "writer", "issues": []}
+PASSED = {"verdict": "pass", "target": "writer", "issues": []}
+FINDING = {"id": "F001", "claim": "a claim", "source_url": "https://x", "confidence": "high"}
+
+
+def test_initial_state_covers_every_declared_field():
+    assert set(initial_state("t")) == set(ReportState.__annotations__)
+
+
+def test_critic_targets_derive_from_routes():
+    assert set(CRITIC_TARGETS) <= set(ROUTES)
+    assert "finalize" not in CRITIC_TARGETS
+
+
+def test_conditional_edges_are_exactly_routes():
+    g = GRAPH.get_graph()
+    targets = {e.target for e in g.edges if e.conditional and e.source == "supervisor"}
+    assert targets == set(ROUTES)
+
+
+def test_build_rejects_an_unknown_override():
+    with pytest.raises(ValueError, match="unknown node"):
+        build(overrides={"reseacher": lambda s: {}})
+
+
+def test_run_refuses_to_write_results_while_nodes_are_stubbed():
+    if not nodes.STUBBED:
+        pytest.skip("no stubs left; the gate is expected to be open")
+    with pytest.raises(RuntimeError, match="still stubs"):
+        run("t1", "a topic")
+
+
+@pytest.mark.parametrize(
+    ("patch", "expected"),
+    [
+        ({"gaps": ["g"]}, "researcher"),
+        ({"gaps": ["g"], "research_loops": MAX_RESEARCH_LOOPS}, "writer"),
+        ({"gaps": ["g"], "searches_used": MAX_SEARCHES}, "writer"),
+        ({}, "writer"),
+        ({"draft": "d"}, "finalize"),
+        ({"draft": "d", "critique": PASSED}, "finalize"),
+        ({"draft": "d", "critique": REVISE}, "writer"),
+        ({"draft": "d", "critique": REVISE, "revision_count": MAX_REVISIONS}, "finalize"),
+        ({"draft": "d", "critique": {**REVISE, "target": "analyst"}}, "analyst"),
+        ({"draft": "d", "critique": {**REVISE, "target": "researcher"}}, "researcher"),
+        ({"draft": "d", "critique": {**REVISE, "target": "editor"}}, "writer"),
+        ({"draft": "d", "critique": {"verdict": "revise", "issues": []}}, "writer"),
+    ],
+)
+def test_supervisor_routing_table(patch, expected):
+    state = initial_state("t")
+    state.update(patch)
+    assert nodes.supervisor(state)["route"] == expected
+
+
+def test_supervisor_retires_gaps_it_cannot_act_on_without_spending_a_revision():
+    state = initial_state("t")
+    state.update(gaps=["g"], searches_used=MAX_SEARCHES, draft="d", critique=REVISE)
+    out = nodes.supervisor(state)
+    assert out["unclosed_gaps"] == ["g"]
+    assert out["gaps"] == []
+    assert out["revision_count"] == 1
+
+
+def test_finalize_declares_unclosed_gaps_and_ignores_stale_ones():
+    state = initial_state("t")
+    state.update(draft="# R\n\nbody.", gaps=["stale"], unclosed_gaps=["real"], critique=PASSED)
+    draft = nodes.finalize(state)["draft"]
+    assert "Known limitations" in draft
+    assert "real" in draft
+    assert "stale" not in draft
+
+
+def test_finalize_leaves_a_clean_pass_untouched():
+    state = initial_state("t")
+    state.update(draft="# R\n\nbody.", critique=PASSED)
+    assert nodes.finalize(state)["draft"] == "# R\n\nbody."
+
+
+@pytest.mark.parametrize("name", ["analyst", "writer", "critic", "supervisor", "finalize"])
+def test_no_node_mutates_the_state_it_is_given(name):
+    state = initial_state("t")
+    state.update(draft="d", critique=REVISE, findings=[FINDING])
+    before = copy.deepcopy(state)
+    getattr(nodes, name)(state)
+    assert state == before
