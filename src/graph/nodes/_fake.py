@@ -18,6 +18,7 @@ from src.graph.state import MAX_SEARCHES, ReportState, trace_event
 
 NODE = "researcher"
 ANALYST = "analyst"
+WRITER = "writer"
 
 
 def researcher(state: ReportState) -> dict[str, Any]:
@@ -123,5 +124,52 @@ def analyst(state: ReportState) -> dict[str, Any]:
             trace_event(ANALYST, "outlined", fake=True, sections=3, tensions=0,
                         gaps_raw=len(gaps), gaps_kept=len(gaps), dropped_unblocking=0,
                         dropped_repeat=0, revision=False, tokens=0)
+        ],
+    }
+
+
+def writer(state: ReportState) -> dict[str, Any]:
+    """Offline double for the real Writer. Echoes the outline it was handed, so the
+    routing check still shows what the node upstream produced, and reports the same
+    trace fields as the real one."""
+    outline = state.get("outline") or ""
+    findings = list(state.get("findings") or [])
+    revising = state.get("critique") is not None
+    rev = state.get("revision_count", 0)
+
+    if not findings or not outline:
+        return {
+            "draft": "",
+            "trace": [trace_event(WRITER, "skipped", fake=True,
+                                  why="no findings or no outline")],
+        }
+
+    cites = ", ".join(f["id"] for f in findings[:4]) or "F001"
+    draft = f"# Fake Report\n\n(outline received)\n\n{outline}\n\nFake prose citing [{cites}]."
+    if revising:
+        draft += f"\n\n(revision {rev})"
+
+    words = len(draft.split())
+    extra = {"edits_returned": 1, "edits_applied": 1, "fallback": False,
+             "changed_pct": 2.0, "issues_addressed": 1} if revising else {}
+    return {
+        "draft": draft,
+        "token_log": [
+            {
+                "node": WRITER,
+                "call_type": "fake",
+                "in_tokens": 0,
+                "out_tokens": 0,
+                "total_tokens": 0,
+                "latency_ms": 0,
+                "attempts": 1,
+                "model": "fake",
+            }
+        ],
+        "trace": [
+            trace_event(WRITER, "revised" if revising else "drafted", fake=True,
+                        revision=rev, words=words, in_range=False,
+                        cited=len(findings[:4]), broken_cites=0, cite_repair=False,
+                        tokens=0, **extra)
         ],
     }

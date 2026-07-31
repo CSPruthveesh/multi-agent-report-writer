@@ -137,29 +137,38 @@ def test_unaddressed_gaps_survive_the_analyst_and_reach_the_report():
 
 
 @pytest.fixture
-def offline_analyst(monkeypatch):
-    """Stop the Analyst calling the API from inside this suite.
+def offline_nodes(monkeypatch):
+    """Stop the model-calling nodes reaching the API from inside this suite.
 
-    The registry binds the name `analyst` to the function, which shadows the
-    submodule, so importlib is the only way to reach the module and patch the
-    generate() it closed over. That shadowing is recorded at the end of section 14
-    of the Phase 2 write-up; this is the first place it actually bites.
+    The registry binds each node's name to its function, which shadows the submodule,
+    so importlib is the only way to reach the module and patch the generate() it
+    closed over. That shadowing is recorded at the end of section 14 of the Phase 2
+    write-up; it has now bitten twice, once per node that became real.
     """
-    mod = importlib.import_module("src.graph.nodes.analyst")
-    plan = mod.Analysis(
+    analyst_mod = importlib.import_module("src.graph.nodes.analyst")
+    plan = analyst_mod.Analysis(
         sections=["Framing [F001]"],
         thesis="a thesis",
         tensions=[],
-        gaps=[mod.Gap(missing="a missing thing", blocks="Framing")],
+        gaps=[analyst_mod.Gap(missing="a missing thing", blocks="Framing")],
     )
-    monkeypatch.setattr(mod, "generate", lambda *a, **k: SimpleNamespace(parsed=plan))
-    return mod
+    monkeypatch.setattr(analyst_mod, "generate",
+                        lambda *a, **k: SimpleNamespace(parsed=plan))
+
+    writer_mod = importlib.import_module("src.graph.nodes.writer")
+    edits = writer_mod.Revision(edits=[writer_mod.Edit(find="d", replace="D", why="w")])
+    monkeypatch.setattr(
+        writer_mod, "generate",
+        lambda *a, **k: SimpleNamespace(text="# R\n\nBody citing [F001].", parsed=edits),
+    )
 
 
 @pytest.mark.parametrize("name", ["analyst", "writer", "critic", "supervisor", "finalize"])
-def test_no_node_mutates_the_state_it_is_given(name, offline_analyst):
+def test_no_node_mutates_the_state_it_is_given(name, offline_nodes):
     state = initial_state("t")
-    state.update(draft="d", critique=REVISE, findings=[FINDING])
+    # outline matters: without it the Writer takes its no-outline path and the test
+    # passes while exercising nothing. It did exactly that when first written.
+    state.update(draft="d", critique=REVISE, findings=[FINDING], outline="## A [F001]")
     before = copy.deepcopy(state)
     getattr(nodes, name)(state)
     assert state == before
