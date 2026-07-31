@@ -16,6 +16,10 @@ NODE = "supervisor"
 
 def supervisor(state: ReportState) -> dict[str, Any]:
     gaps = list(state.get("gaps") or [])
+    # Gaps the Researcher could not afford. They arrive on their own field because the
+    # Analyst overwrites gaps on the way here, and they are retired rather than retried:
+    # the budget that would have paid for them is already gone.
+    unaddressed = list(state.get("unaddressed_gaps") or [])
     draft = state.get("draft")
     crit = state.get("critique")
     loops = state.get("research_loops", 0)
@@ -25,11 +29,21 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     updates: dict[str, Any] = {}
     trace: list[dict[str, Any]] = []
 
+    if unaddressed:
+        updates["unaddressed_gaps"] = []
+        updates["unclosed_gaps"] = list(state.get("unclosed_gaps") or []) + unaddressed
+        trace.append(
+            trace_event(NODE, "retire_gaps", count=len(unaddressed),
+                        why="researcher had no search budget left",
+                        searches=f"{searches}/{MAX_SEARCHES}")
+        )
+
     if gaps and loops < MAX_RESEARCH_LOOPS and searches < MAX_SEARCHES:
         return {
+            **updates,
             "route": "researcher",
             "research_loops": loops + 1,
-            "trace": [
+            "trace": trace + [
                 trace_event(NODE, "route", to="researcher", why="evidence gaps",
                             gaps=len(gaps), loop=f"{loops + 1}/{MAX_RESEARCH_LOOPS}",
                             searches=f"{searches}/{MAX_SEARCHES}")
@@ -43,7 +57,8 @@ def supervisor(state: ReportState) -> dict[str, Any]:
             else "research loop budget spent"
         )
         updates["gaps"] = []
-        updates["unclosed_gaps"] = list(state.get("unclosed_gaps") or []) + gaps
+        updates["unclosed_gaps"] = list(updates.get("unclosed_gaps")
+                                        or state.get("unclosed_gaps") or []) + gaps
         trace.append(
             trace_event(NODE, "retire_gaps", count=len(gaps), why=why,
                         loops=f"{loops}/{MAX_RESEARCH_LOOPS}",

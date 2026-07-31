@@ -28,6 +28,7 @@ def researcher(state: ReportState) -> dict[str, Any]:
 
     if remaining <= 0:
         return {
+            "unaddressed_gaps": gaps,
             "trace": [
                 trace_event(NODE, "skipped", fake=True, why="search budget exhausted",
                             used=used, left_for_supervisor=len(gaps))
@@ -55,7 +56,8 @@ def researcher(state: ReportState) -> dict[str, Any]:
     return {
         "findings": kept,
         "searches_used": used + len(queries),
-        "gaps": unaddressed,
+        "gaps": [],
+        "unaddressed_gaps": unaddressed,
         "token_log": [
             {
                 "node": NODE,

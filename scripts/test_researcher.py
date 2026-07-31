@@ -62,7 +62,7 @@ def main() -> None:
 
     ev = (upd.get("trace") or [{}])[0]
     queries = ev.get("queries", 0)
-    gaps_back = len(upd.get("gaps") or [])
+    gaps_back = len(upd.get("unaddressed_gaps") or [])
     ids = [f["id"] for f in findings]
     expect_ids = [f"F{i:03d}" for i in range(findings_in + 1, findings_in + 1 + len(findings))]
     want = 2 * queries

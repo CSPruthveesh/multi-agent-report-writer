@@ -97,6 +97,45 @@ def test_finalize_leaves_a_clean_pass_untouched():
     assert nodes.finalize(state)["draft"] == "# R\n\nbody."
 
 
+def test_supervisor_retires_unaddressed_gaps():
+    state = initial_state("t")
+    state.update(unaddressed_gaps=["could not afford this one"], searches_used=MAX_SEARCHES)
+    out = nodes.supervisor(state)
+    assert out["unclosed_gaps"] == ["could not afford this one"]
+    assert out["unaddressed_gaps"] == []
+
+
+def test_unaddressed_gaps_survive_the_analyst_and_reach_the_report():
+    """The handover travels on its own field, because the Analyst is always in the way.
+
+    START -> researcher -> analyst -> supervisor, on every path. Both the Researcher and
+    the Analyst write `gaps`, and that field overwrites, so a gap handed back through it
+    is wiped before the supervisor ever sees it. That is what happened: unclosed_gaps
+    could never be non-empty in a real run and the report declared no limitations.
+
+    The suite missed it because it tested the supervisor's retire logic directly, with
+    the field already populated. Nothing checked that the value arrives.
+    """
+    def researcher(state):
+        return {
+            "gaps": [],
+            "unaddressed_gaps": ["no budget left for this one"],
+            "searches_used": MAX_SEARCHES,
+            "trace": [],
+        }
+
+    def analyst(state):
+        # What the real Analyst does on every path: writes gaps, wiping what was there.
+        return {"outline": "an outline", "gaps": [], "trace": []}
+
+    app = build(overrides={"researcher": researcher, "analyst": analyst})
+    final = app.invoke(initial_state("t"), config={"recursion_limit": 40})
+
+    assert final["unclosed_gaps"] == ["no budget left for this one"]
+    assert "Known limitations" in final["draft"]
+    assert "no budget left for this one" in final["draft"]
+
+
 @pytest.fixture
 def offline_analyst(monkeypatch):
     """Stop the Analyst calling the API from inside this suite.

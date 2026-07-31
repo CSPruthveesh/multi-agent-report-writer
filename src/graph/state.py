@@ -19,6 +19,10 @@ class ReportState(TypedDict, total=False):
     findings: Annotated[list[dict[str, Any]], operator.add]
     searches_used: int
     research_loops: int
+    # Gaps the Researcher could not afford to search. It cannot write unclosed_gaps —
+    # that field belongs to the supervisor — and it cannot hand them back through gaps,
+    # because the Analyst sits between them on every path and overwrites that field.
+    unaddressed_gaps: list[str]
     unclosed_gaps: list[str]
 
     outline: str | None
@@ -39,6 +43,7 @@ def initial_state(topic: str) -> ReportState:
         findings=[],
         searches_used=0,
         research_loops=0,
+        unaddressed_gaps=[],
         unclosed_gaps=[],
         outline=None,
         gaps=[],
