@@ -32,6 +32,8 @@ import time
 from collections.abc import Callable
 from typing import Any
 
+from langgraph.errors import GraphBubbleUp
+
 from src.graph.state import ReportState, trace_event
 
 log = logging.getLogger(__name__)
@@ -60,6 +62,16 @@ def resilient(name: str, fn: Callable[[ReportState], dict[str, Any]]):
     def wrapped(state: ReportState) -> dict[str, Any]:
         try:
             return fn(state)
+        except GraphBubbleUp:
+            # Control flow, not failure. interrupt() and Command() work by raising,
+            # and GraphInterrupt subclasses Exception — so without this the wrapper
+            # would catch a legitimate pause, retry the node, catch the second
+            # interrupt and degrade. The approval gate would never open and the
+            # symptom would be a node that mysteriously fails twice.
+            #
+            # LangGraph names the base class GraphBubbleUp precisely because these
+            # signals have to pass through user code untouched.
+            raise
         except Exception as e:  # noqa: BLE001
             log.warning("[%s] raised %s: %s — retrying once", name, type(e).__name__, e)
             time.sleep(1.0)

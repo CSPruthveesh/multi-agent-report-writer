@@ -121,6 +121,11 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     #    the run. Found by the contract suite rather than in production, which is the
     #    first time that has happened in this project.
     if draft is None:
+        # A brief that reached its reader is spent. Cleared here as well as in rule 4
+        # because an approval rejection routes analyst -> supervisor with no draft yet,
+        # which lands on this branch rather than that one.
+        if state.get("revision_brief"):
+            updates["revision_brief"] = None
         if writes >= MAX_WRITE_ATTEMPTS:
             return out("finalize", "writer produced no draft", degraded=True)
         res = out("writer", "no draft", attempt=f"{writes + 1}/{MAX_WRITE_ATTEMPTS}")

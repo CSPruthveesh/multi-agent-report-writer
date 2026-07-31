@@ -1,0 +1,30 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	researcher(researcher)
+	analyst(analyst)
+	supervisor(supervisor)
+	writer(writer)
+	critic(critic)
+	finalize(finalize)
+	approval(approval)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> researcher;
+	analyst --> supervisor;
+	approval -.-> analyst;
+	approval -.-> writer;
+	critic --> supervisor;
+	researcher --> analyst;
+	supervisor -.-> analyst;
+	supervisor -. &nbsp;writer&nbsp; .-> approval;
+	supervisor -.-> finalize;
+	supervisor -.-> researcher;
+	writer --> critic;
+	finalize --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

@@ -41,6 +41,37 @@ def sqlite_checkpointer(path: Path | None = None):
     return SqliteSaver(conn)
 
 
+def describe(graph: Any, thread_id: str) -> dict[str, Any]:
+    """What a saved thread is waiting on, without resuming it.
+
+    `--status` exists because a parked thread is invisible otherwise: the process
+    that started it has exited, and the only record is a row in a SQLite file. Being
+    able to ask "what is this waiting for" before deciding whether to answer it is
+    the difference between a durable pause and a lost run.
+    """
+    snap = graph.get_state(thread_config(thread_id))
+    values = snap.values or {}
+    pending = [
+        getattr(itr, "value", None)
+        for task in (getattr(snap, "tasks", ()) or ())
+        for itr in (getattr(task, "interrupts", ()) or ())
+    ]
+    return {
+        "thread_id": thread_id,
+        "exists": bool(values),
+        "next": list(snap.next or ()),
+        "awaiting_human": bool(pending),
+        "interrupt": pending[0] if pending else None,
+        "findings": len(values.get("findings") or []),
+        "tokens_spent": sum(
+            r.get("total_tokens", 0) for r in (values.get("token_log") or [])
+        ),
+        "research_loops": values.get("research_loops", 0),
+        "revisions": values.get("revision_count", 0),
+        "has_draft": bool((values.get("draft") or "").strip()),
+    }
+
+
 def thread_config(thread_id: str) -> dict[str, Any]:
     """Every checkpointed invocation needs a thread id — it is the key the saved
     state is filed under, and the handle resume_run() uses to find it again."""

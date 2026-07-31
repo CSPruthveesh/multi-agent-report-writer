@@ -14,6 +14,7 @@ from src.common.schemas import Finding
 from src.graph import nodes
 from src.graph.checkpoint import sqlite_checkpointer, thread_config
 from src.graph.nodes import _fake
+from src.graph.nodes.approval import approval
 from src.graph.retry import resilient
 from src.graph.state import (
     MAX_RESEARCH_LOOPS,
@@ -25,7 +26,15 @@ from src.graph.state import (
 )
 
 
-def build(checkpointer: Any = None, overrides: dict[str, Any] | None = None):
+def build(checkpointer: Any = None, overrides: dict[str, Any] | None = None,
+          *, hitl: bool = False):
+    """Compile the graph. hitl=True inserts the approval gate before the Writer.
+
+    The graph genuinely has two shapes rather than one shape with a flag read at
+    runtime, so scripts/viz.py can render both and neither carries the other's cost.
+    Off by default because the six-topic evaluation runs unattended, and a graph that
+    blocks on human input cannot be evaluated.
+    """
     fns: dict[str, Any] = {
         "researcher": nodes.researcher,
         "analyst": nodes.analyst,
@@ -55,10 +64,39 @@ def build(checkpointer: Any = None, overrides: dict[str, Any] | None = None):
     g.add_edge("critic", "supervisor")
     g.add_edge("finalize", END)
 
+    # The approval node is deliberately NOT wrapped in resilient(). interrupt() works
+    # by raising, and GraphInterrupt subclasses Exception — so the wrapper would catch
+    # a legitimate pause, retry the node, catch the second interrupt, and degrade.
+    # The gate would never open and the symptom would be a node that mysteriously
+    # fails twice. retry.py re-raises GraphBubbleUp for the same reason; this is the
+    # belt to that pair of braces, because the failure is silent either way.
+    if hitl:
+        g.add_node("approval", approval)
+        # Approve and edit go on to the Writer. Reject goes back to the Analyst.
+        #
+        # A single unconditional edge to the Writer was the first version, and it made
+        # rejection unreachable: the node cleared the outline and filed the objection,
+        # then control went straight to a Writer that skipped for want of an outline
+        # until the write budget stopped the run. The node's logic was correct in
+        # isolation and had nowhere to go.
+        #
+        # The condition is the outline itself rather than a decision flag, because
+        # "the Writer cannot run without an outline" is an invariant of the graph and
+        # not a fact about this node. Reject is simply the case that clears it.
+        g.add_conditional_edges(
+            "approval",
+            lambda s: "analyst" if not (s.get("outline") or "").strip() else "writer",
+            {"analyst": "analyst", "writer": "writer"},
+        )
+
+    # Targets still derive from ROUTES — only the writer's destination moves, so a
+    # node added or renamed in ROUTES still flows through here. Writing the map out
+    # by hand is Phase 2's error 10 and has now been proposed four times.
+    writer_target = "approval" if hitl else "writer"
     g.add_conditional_edges(
         "supervisor",
         lambda s: s["route"] if s.get("route") in ROUTES else "finalize",
-        {r: r for r in ROUTES},
+        {r: (writer_target if r == "writer" else r) for r in ROUTES},
     )
 
     return g.compile(checkpointer=checkpointer)
@@ -162,8 +200,10 @@ def run(
     _guard_stubs()
 
     tid = thread_id or f"{topic_id}-{uuid.uuid4().hex[:8]}"
-    cp = sqlite_checkpointer() if checkpoint else None
-    graph = build(checkpointer=cp) if cp else GRAPH
+    # hitl needs a checkpointer: an interrupt parks the thread on disk and the
+    # process must be able to exit while it waits.
+    cp = sqlite_checkpointer() if (checkpoint or hitl) else None
+    graph = build(checkpointer=cp, hitl=hitl) if cp else GRAPH
     cfg = thread_config(tid) if cp else {"recursion_limit": 40}
 
     t0 = time.perf_counter()
@@ -212,7 +252,7 @@ def resume_run(
     _guard_stubs()
 
     cp = sqlite_checkpointer()
-    graph = build(checkpointer=cp)
+    graph = build(checkpointer=cp, hitl=True)
     cfg = thread_config(thread_id)
 
     t0 = time.perf_counter()
@@ -230,12 +270,13 @@ def resume_run(
     return {"status": "complete", "thread_id": thread_id, "dir": out, "state": final}
 
 
-def export_mermaid(path: str = "docs/graph.mmd") -> Path:
+def export_mermaid(path: str = "docs/graph.mmd", *, hitl: bool = False) -> Path:
     p = Path(path)
     if not p.is_absolute():
         p = ROOT / p
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(GRAPH.get_graph().draw_mermaid(), encoding="utf-8")
+    g = build(hitl=True) if hitl else GRAPH
+    p.write_text(g.get_graph().draw_mermaid(), encoding="utf-8")
     return p
 
 
