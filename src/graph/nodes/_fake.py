@@ -19,6 +19,7 @@ from src.graph.state import MAX_SEARCHES, ReportState, trace_event
 NODE = "researcher"
 ANALYST = "analyst"
 WRITER = "writer"
+CRITIC = "critic"
 
 
 def researcher(state: ReportState) -> dict[str, Any]:
@@ -171,5 +172,86 @@ def writer(state: ReportState) -> dict[str, Any]:
                         revision=rev, words=words, in_range=False,
                         cited=len(findings[:4]), broken_cites=0, cite_repair=False,
                         tokens=0, **extra)
+        ],
+    }
+
+
+def _span_from(draft: str) -> str:
+    """A span quoted verbatim out of the draft.
+
+    The Writer discards any issue whose span it cannot find and falls back to a full
+    rewrite. A double that invents a span would make the routing check exercise the
+    fallback rather than the surgical path — which is precisely the defect the real
+    stub Critic shipped with in Phase 4, silently, for a whole phase.
+    """
+    for para in draft.split("\n\n"):
+        stripped = para.strip()
+        if len(stripped.split()) > 6 and not stripped.startswith("#"):
+            head = stripped[:60]
+            return head.rsplit(" ", 1)[0] if " " in head else head
+    return ""
+
+
+def critic(state: ReportState) -> dict[str, Any]:
+    """Offline double for the real Critic. Fails once, then passes, so the routing
+    check still exercises one revision and then terminates."""
+    draft = state.get("draft") or ""
+    if not draft.strip():
+        return {
+            "critique": None,
+            "trace": [trace_event(CRITIC, "skipped", fake=True, why="no draft to review")],
+        }
+
+    first = state.get("critique") is None
+    span = _span_from(draft)
+    scores = {
+        "factual_grounding": 4,
+        "structural_coherence": 2 if first else 4,
+        "depth_of_analysis": 3 if first else 4,
+        "citation_integrity": 5,
+        "absence_of_filler": 4,
+    }
+    verdict = "revise" if first and span else "pass"
+    critique: dict[str, Any] = {
+        "scores": scores,
+        "verdict": verdict,
+        "target": "writer",
+        "issues": (
+            [
+                {
+                    "span": span,
+                    "criterion": "structural_coherence",
+                    "problem": "This passage does not connect to what follows.",
+                    "fix": "Add the causal link forward to the next section.",
+                }
+            ]
+            if verdict == "revise"
+            else []
+        ),
+        "summary": "fake critique",
+        "broken_citations": [],
+        "citation_cap_applied": False,
+    }
+    return {
+        "critique": critique,
+        "token_log": [
+            {
+                "node": CRITIC,
+                "call_type": "fake",
+                "in_tokens": 0,
+                "out_tokens": 0,
+                "total_tokens": 0,
+                "latency_ms": 0,
+                "attempts": 1,
+                "model": "fake",
+            }
+        ],
+        "trace": [
+            trace_event(CRITIC, "scored", fake=True, verdict=verdict,
+                        target="writer" if verdict == "revise" else "-",
+                        worst=f"structural_coherence={min(scores.values())}",
+                        issues_raw=len(critique["issues"]),
+                        issues_kept=len(critique["issues"]),
+                        dropped_ungrounded=0, broken_cites=0, cite_cap=False, tokens=0)
         ],
     }

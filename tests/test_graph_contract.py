@@ -57,7 +57,12 @@ def test_run_refuses_to_write_results_while_nodes_are_stubbed():
         ({"gaps": ["g"], "research_loops": MAX_RESEARCH_LOOPS}, "writer"),
         ({"gaps": ["g"], "searches_used": MAX_SEARCHES}, "writer"),
         ({}, "writer"),
-        ({"draft": "d"}, "finalize"),
+        # A draft with no critique is now normal, not an error: routing upstream
+        # clears the critique, and the Writer is the only node that turns a better
+        # plan into a better draft.
+        ({"draft": "d"}, "writer"),
+        # ...but an empty draft means the Writer already declined. Terminal.
+        ({"draft": "   "}, "finalize"),
         ({"draft": "d", "critique": PASSED}, "finalize"),
         ({"draft": "d", "critique": REVISE}, "writer"),
         ({"draft": "d", "critique": REVISE, "revision_count": MAX_REVISIONS}, "finalize"),
@@ -95,6 +100,43 @@ def test_finalize_leaves_a_clean_pass_untouched():
     state = initial_state("t")
     state.update(draft="# R\n\nbody.", critique=PASSED)
     assert nodes.finalize(state)["draft"] == "# R\n\nbody."
+
+
+def test_routing_upstream_clears_the_critique():
+    """Otherwise the stale verdict sends the run upstream twice and ships the original.
+
+    The upstream node re-runs, control returns here, and the old critique is still in
+    state saying "revise". Without clearing it the supervisor routes upstream again,
+    burns the second revision, hits the cap and finalizes the draft that was never
+    rewritten — the improved outline reaches nobody.
+    """
+    state = initial_state("t")
+    state.update(draft="d", critique={**REVISE, "target": "analyst"})
+    out = nodes.supervisor(state)
+    assert out["route"] == "analyst"
+    assert out["critique"] is None
+    assert out["revision_count"] == 1
+
+
+def test_routing_to_the_writer_keeps_the_critique():
+    """The Writer needs the issues — they are what it turns into edits."""
+    state = initial_state("t")
+    state.update(draft="d", critique=REVISE)
+    out = nodes.supervisor(state)
+    assert out["route"] == "writer"
+    assert "critique" not in out
+
+
+def test_an_empty_draft_terminates_instead_of_looping():
+    """The Writer declined; routing back produces the same nothing.
+
+    draft is None before the Writer runs and "" after it returns without one, so the
+    two are distinguishable. Conflating them spins the graph to its recursion limit.
+    """
+    state = initial_state("t")
+    state.update(draft="")
+    out = nodes.supervisor(state)
+    assert out["route"] == "finalize"
 
 
 def test_supervisor_retires_unaddressed_gaps():
@@ -161,6 +203,18 @@ def offline_nodes(monkeypatch):
         writer_mod, "generate",
         lambda *a, **k: SimpleNamespace(text="# R\n\nBody citing [F001].", parsed=edits),
     )
+
+    critic_mod = importlib.import_module("src.graph.nodes.critic")
+    verdict = critic_mod.RawCritique(
+        scores=critic_mod.Scores(
+            factual_grounding=4, structural_coherence=4, depth_of_analysis=4,
+            citation_integrity=4, absence_of_filler=4,
+        ),
+        issues=[],
+        summary="fine",
+    )
+    monkeypatch.setattr(critic_mod, "generate",
+                        lambda *a, **k: SimpleNamespace(parsed=verdict))
 
 
 @pytest.mark.parametrize("name", ["analyst", "writer", "critic", "supervisor", "finalize"])

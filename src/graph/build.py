@@ -137,14 +137,13 @@ if __name__ == "__main__":
     live = "--live" in sys.argv
 
     if live:
-        print("--live: the Researcher, Analyst and Writer will make real API calls "
-              "and spend quota.")
+        print("--live: every node is real and will spend quota.")
         app = GRAPH
     else:
-        print("routing check with a fake Researcher, Analyst and Writer — no API calls. "
+        print("routing check with fake nodes throughout — no API calls. "
               "Pass --live for the real ones.")
         app = build(overrides={"researcher": _fake.researcher, "analyst": _fake.analyst,
-                               "writer": _fake.writer})
+                               "writer": _fake.writer, "critic": _fake.critic})
 
     state = cast(ReportState, app.invoke(initial_state("stub topic"), config={"recursion_limit": 40}))
     print("\n--- trace ---")

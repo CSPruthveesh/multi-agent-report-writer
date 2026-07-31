@@ -1,3 +1,18 @@
+"""Supervisor and finalize — the routing brain and the exit.
+
+Neither is a stub. Both are deterministic and neither makes a model call.
+
+The supervisor is pure if/else on purpose. Paying a model to evaluate
+`if gaps and research_loops < 2` adds cost, latency, and a nondeterministic
+failure mode in exchange for nothing. "We used an LLM supervisor" is a common
+unforced error in agent projects; being able to say why you didn't is the better
+answer.
+
+Every path out of here either advances the run or terminates it. No branch loops
+without incrementing a counter — verify by reading the function, not by trusting
+this docstring.
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -29,6 +44,8 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     updates: dict[str, Any] = {}
     trace: list[dict[str, Any]] = []
 
+    # 0. Retire the Researcher's handover first, so it is recorded whether the run
+    #    then loops, writes or finishes.
     if unaddressed:
         updates["unaddressed_gaps"] = []
         updates["unclosed_gaps"] = list(state.get("unclosed_gaps") or []) + unaddressed
@@ -38,6 +55,12 @@ def supervisor(state: ReportState) -> dict[str, Any]:
                         searches=f"{searches}/{MAX_SEARCHES}")
         )
 
+    # 1. Evidence gaps outrank everything, including an existing draft. This is the
+    #    loop that justifies the architecture, so it gets first refusal.
+    #
+    #    Both budgets are checked. A loop budget with no searches left is a wasted
+    #    hop to a node that will decline to do anything, and before the handover
+    #    existed it also lost the gap on the way.
     if gaps and loops < MAX_RESEARCH_LOOPS and searches < MAX_SEARCHES:
         return {
             **updates,
@@ -50,6 +73,13 @@ def supervisor(state: ReportState) -> dict[str, Any]:
             ],
         }
 
+    # 2. Gaps remain but a budget is spent. Retire them into `unclosed_gaps`, clear
+    #    `gaps`, and FALL THROUGH to the normal decision.
+    #
+    #    Falling through matters. An earlier version routed straight to finalize
+    #    here, which meant any run with one unclosed gap got ZERO quality revisions
+    #    — an evidence problem silently cancelled the entire critic loop. The two
+    #    loops are independent and must stay that way.
     if gaps:
         why = (
             "search budget spent"
@@ -72,32 +102,81 @@ def supervisor(state: ReportState) -> dict[str, Any]:
             "trace": trace + [trace_event(NODE, "route", to=route, why=why, **detail)],
         }
 
+    # 3. No draft yet.
     if draft is None:
         return out("writer", "no draft")
 
-    if crit is None:
-        return out("finalize", "no critique (unexpected)")
+    # 3b. The Writer ran and produced nothing — no findings, or no outline. draft is
+    #     None before it runs and "" after it declines, so the two are distinguishable
+    #     and only this one is terminal.
+    #
+    #     Without this, rule 4 spins: empty draft -> Critic returns no critique ->
+    #     rule 4 routes back to the Writer -> same empty draft, until the recursion
+    #     limit kills the run. Found by the contract suite rather than in production,
+    #     which is the first time that has happened in this project.
+    if not draft.strip():
+        return out("finalize", "writer produced no draft", degraded=True)
 
+    # 4. Draft exists but no critique. Two ways to get here: a Critic parse failure,
+    #    or an upstream revision just completed (see rule 7, which clears the stale
+    #    critique). Either way the Writer is the right next stop — it will rewrite
+    #    against the new outline or evidence. This cannot loop: writer -> critic
+    #    always produces a critique.
+    if crit is None:
+        return out("writer", "draft awaiting fresh critique")
+
+    # 5. Critic passed.
     if crit.get("verdict") == "pass":
         scores = crit.get("scores") or {}
         return out("finalize", "critic passed",
                    min_score=min(scores.values()) if scores else None)
 
+    # 6. Critic wants changes but the revision budget is spent. Ship degraded.
+    #    Never loop forever, never return nothing.
     if revs >= MAX_REVISIONS:
         return out("finalize", "revision budget exhausted", degraded=True)
 
+    # 7. Semantic retry, routed to whoever can actually fix the problem. Sending a
+    #    structural complaint to the Writer produces cosmetic edits; the Analyst
+    #    owns structure.
+    #
+    #    CRITIC_TARGETS is derived from ROUTES in state.py rather than written out
+    #    here. A hardcoded tuple happens to hold today and stops holding the moment
+    #    a node is added or renamed, which is Phase 2's error 10.
     target = crit.get("target", "writer")
     if target not in CRITIC_TARGETS:
         trace.append(trace_event(NODE, "retarget", requested=target, to="writer",
                                  why="not a routable repair target"))
         target = "writer"
+
     res = out(target, "critic requested revision",
               revision=f"{revs + 1}/{MAX_REVISIONS}")
     res["revision_count"] = revs + 1
+
+    # Routing upstream (analyst/researcher) must clear the critique.
+    #
+    # The bug this fixes: the upstream node re-runs and control returns here, but
+    # the OLD critique is still in state with verdict="revise". The supervisor
+    # routes upstream again, burns the second revision, hits the cap, and ships the
+    # ORIGINAL draft — the improved outline or new evidence never reaches the Writer
+    # at all. The loop ran, cost tokens, and changed nothing.
+    #
+    # Clearing it means rule 4 catches the return trip and sends it to the Writer,
+    # which is the only node that can turn a better plan into a better draft.
+    if target in ("analyst", "researcher"):
+        res["critique"] = None
     return res
 
 
 def finalize(state: ReportState) -> dict[str, Any]:
+    """Ship it.
+
+    If the run ended with unresolved criticism or unclosed evidence gaps, append
+    them as declared limitations rather than shipping silently as if it passed. An
+    honest "here is what this report does not establish" is more useful than a
+    clean-looking report that quietly omits the same information — and it is the
+    difference between a bounded system and one that just gave up.
+    """
     draft = (state.get("draft") or "").rstrip()
     crit = state.get("critique") or {}
     unclosed = state.get("unclosed_gaps") or []
