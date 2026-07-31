@@ -114,7 +114,23 @@ def main() -> None:
 
     topics = [args.topic] if args.topic else list(TOPICS)
     ledger = TokenLedger()
-    out: dict[str, list[dict[str, Any]]] = {}
+
+    # Keyed by model, not overwritten per run. Two judges reading the same pairs is
+    # a stronger result than one judge reading them twice — agreement between models
+    # is evidence the preference is about the reports, and disagreement is evidence
+    # it is about the judge. Either is worth more than a file with one of them in it.
+    #
+    # This is not hypothetical. The first judge, gemini-2.5-flash, became unavailable
+    # to new users partway through the comparison — its three completed pairs cannot
+    # be reproduced and would have been silently replaced by a plain overwrite.
+    saved: dict[str, Any] = {}
+    if RESULT_FILE.exists():
+        prev = json.loads(RESULT_FILE.read_text(encoding="utf-8"))
+        # migrate the original single-model shape
+        saved = prev.get("by_model") or (
+            {prev.get("judge_model", "unknown"): prev.get("results") or {}}
+        )
+    out: dict[str, list[dict[str, Any]]] = saved.setdefault(args.model, {})
 
     print(f"judge model: {args.model}\n")
     for t in topics:
@@ -125,8 +141,7 @@ def main() -> None:
             if c:
                 out[t].append(c)
                 RESULT_FILE.write_text(
-                    json.dumps({"judge_model": args.model, "results": out}, indent=2),
-                    encoding="utf-8")
+                    json.dumps({"by_model": saved}, indent=2), encoding="utf-8")
                 print(f"  {t}  A={a[:9]:<10} B={b[:9]:<10} -> {c['winner_system']:<11}"
                       f"({c['margin']}, {c['criterion']})")
             else:
