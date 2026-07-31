@@ -118,10 +118,30 @@ def discriminate() -> None:
     elif m_rich > m_thin:
         print("\n  FAIL, inverted — more gaps on well-covered topics than thin ones.")
         print("  Something is wrong with the gap prompt. Investigate before continuing.")
+    elif sum(r["gaps_raw"] for r in rows) == 0:
+        # Under-detection. The model proposes nothing, so the post-filter is not the
+        # cause and every remedy that removes gaps is the wrong direction. Split on
+        # gaps_raw rather than gaps_kept: same symptom in the kept column, opposite
+        # causes, opposite fixes.
+        print("\n  FAIL, under-detecting — the Analyst proposed NO gaps on any topic.")
+        print("  The research loop cannot fire, so the gap-driven Researcher mode is")
+        print("  dead code. Note raw is 0: nothing is being filtered out, so tightening")
+        print("  the rules will not help. Things to try, in order:")
+        print("    1. Give it a test for when a gap is REQUIRED, not just permitted")
+        print("    2. Stop `tensions` absorbing conflicts it should be reporting as gaps")
+        print("    3. Raise temperature — 0.3 may be too conservative for a judgement")
+        print("    4. Only if gaps then appear everywhere, start tightening")
+    elif sum(r["gaps_kept"] for r in rows) < len(rows):
+        # Gaps exist but do not track density. Not over-generation — the volume is too
+        # low for that — so tightening the rules would just return it to zero.
+        print("\n  FAIL, not discriminating — gaps appear, but not where evidence is")
+        print("  thinner. Check WHICH test is firing before changing anything: a topic")
+        print("  can be thin in count, in confidence, or in substance, and a test for")
+        print("  one will not catch the others. Read the gap text on a failing topic.")
     else:
-        print("\n  FAIL — gap counts do not separate by evidence density.")
-        print("  The Analyst is generating gaps rather than detecting them.")
-        print("  Fix before Phase 4. Things to try, in order:")
+        print("\n  FAIL, over-generating — gaps on every topic regardless of density.")
+        print("  The Analyst is generating gaps rather than detecting them, so the loop")
+        print("  fires on topics that never needed it. Things to try, in order:")
         print("    1. Strengthen the 'zero gaps is correct' line in GAP_DISCIPLINE")
         print("    2. Lower MAX_GAPS to 1 — forcing one choice sharpens the ranking")
         print("    3. Require the blocked section be quoted verbatim from `sections`")

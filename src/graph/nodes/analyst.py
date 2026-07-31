@@ -85,15 +85,35 @@ class Analysis(BaseModel):
 
 
 GAP_DISCIPLINE = f"""
-Gap rules — read these carefully, they are the part people get wrong:
+Gap rules — read these carefully, they are the part people get wrong.
+
+Two tests that REQUIRE a gap. Apply both to every section you listed:
+
+- Thin support. The section rests on fewer than three findings, or on nothing above
+  medium confidence. Evidence that thin cannot carry a section. Say which measurement,
+  figure or source would make it stand up.
+- Nothing measured. The section's findings say what exists but never say how much, how
+  many, how fast or how well — no figures, dates, rates or named outcomes. A long list
+  of confident claims that a thing exists is still no evidence of how it performs, and
+  a section cannot analyse what nobody has measured. Say what number is missing.
+- Unresolved conflict. Two findings give different values for the same quantity and
+  nothing in the evidence settles which is right. That is missing evidence, not a
+  tension. A tension is a real disagreement in the world worth showing the reader; a
+  conflict you cannot resolve is a hole in what was gathered. Say what would settle it.
+
+If either test fires on a section, you must report it, up to the cap.
+
+Then the limits:
 
 - A gap is evidence you NEED and do not HAVE. It is not evidence you would like more of.
 - Every gap must name the outline section it blocks. If you cannot name a blocked
   section, it is not a gap — drop it.
 - Maximum {MAX_GAPS}. If you have more candidates, keep only the ones that do the most
   damage to the report.
-- Reporting ZERO gaps is the correct and expected answer when the evidence covers the
-  topic. An empty list is a valid, complete response. Do not invent a gap to seem thorough.
+- Reporting ZERO gaps is correct when neither test above fires anywhere. An empty list
+  is a valid, complete response. Do not invent a gap to seem thorough — but do not
+  report zero merely because the finding list is long. A long list of weakly supported
+  claims is exactly what the first test is for.
 - Never report a gap you already reported and that came back unclosed. It has been
   searched for and not found; saying so again wastes the budget."""
 
