@@ -1,3 +1,13 @@
+"""Remaining stubs. Each gets deleted from here when its phase lands.
+
+    writer -> Phase 4    critic -> Phase 5
+
+Keeping the unbuilt nodes as stubs means the graph always runs end to end, so you
+can exercise real routing against a real Researcher without having built the other
+four. Do not let these linger past their phase — a stub that silently survives into
+Phase 9 would quietly fake half your results.
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -5,40 +15,18 @@ from typing import Any
 from src.graph.state import ReportState, trace_event
 
 
-def analyst(state: ReportState) -> dict[str, Any]:
-    findings = state.get("findings") or []
-    loops = state.get("research_loops", 0)
-
-    gaps = ["stub gap: no evidence on the second half of the question"] if loops == 0 else []
-
-    ids = [f["id"] for f in findings[:6]]
-    outline = "\n".join(
-        [
-            f"## Section 1 — Framing [{', '.join(ids[:2])}]",
-            f"## Section 2 — Evidence [{', '.join(ids[2:4])}]",
-            f"## Section 3 — Implications [{', '.join(ids[4:6])}]",
-        ]
-    )
-    return {
-        "outline": outline,
-        "gaps": gaps,
-        "trace": [trace_event("analyst", "outlined", stub=True, sections=3, gaps=len(gaps))],
-    }
-
-
 def writer(state: ReportState) -> dict[str, Any]:
+    """STUB — Phase 4. Reads outline + findings, writes draft."""
     revising = state.get("critique") is not None
     rev = state.get("revision_count", 0)
     findings = state.get("findings") or []
+    outline = state.get("outline") or ""
     cites = ", ".join(f["id"] for f in findings[:4]) or "F001"
-    body = "\n\n".join(
-        [
-            "# Stub Report",
-            f"Section one asserts something and cites it [{cites}].",
-            "Section two builds on it.",
-            "Section three draws the implication.",
-        ]
-    )
+
+    # Echo the real outline so you can eyeball what the Analyst produced without
+    # having built the Writer yet.
+    body = "# Stub Report\n\n(outline received from analyst)\n\n" + outline
+    body += f"\n\nStub prose citing [{cites}]."
     if revising:
         body += f"\n\n(revision {rev})"
     return {
@@ -49,6 +37,9 @@ def writer(state: ReportState) -> dict[str, Any]:
 
 
 def critic(state: ReportState) -> dict[str, Any]:
+    """STUB — Phase 5. Reads draft + findings, writes critique."""
+    # Fail on the first critique, then pass. Keyed off `critique` rather than a
+    # counter so the gap loop cannot accidentally skip this path.
     first = state.get("critique") is None
     scores = {
         "factual_grounding": 4,

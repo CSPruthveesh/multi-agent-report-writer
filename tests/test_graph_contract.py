@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import copy
+import importlib
+from types import SimpleNamespace
 
 import pytest
 
@@ -95,8 +97,28 @@ def test_finalize_leaves_a_clean_pass_untouched():
     assert nodes.finalize(state)["draft"] == "# R\n\nbody."
 
 
+@pytest.fixture
+def offline_analyst(monkeypatch):
+    """Stop the Analyst calling the API from inside this suite.
+
+    The registry binds the name `analyst` to the function, which shadows the
+    submodule, so importlib is the only way to reach the module and patch the
+    generate() it closed over. That shadowing is recorded at the end of section 14
+    of the Phase 2 write-up; this is the first place it actually bites.
+    """
+    mod = importlib.import_module("src.graph.nodes.analyst")
+    plan = mod.Analysis(
+        sections=["Framing [F001]"],
+        thesis="a thesis",
+        tensions=[],
+        gaps=[mod.Gap(missing="a missing thing", blocks="Framing")],
+    )
+    monkeypatch.setattr(mod, "generate", lambda *a, **k: SimpleNamespace(parsed=plan))
+    return mod
+
+
 @pytest.mark.parametrize("name", ["analyst", "writer", "critic", "supervisor", "finalize"])
-def test_no_node_mutates_the_state_it_is_given(name):
+def test_no_node_mutates_the_state_it_is_given(name, offline_analyst):
     state = initial_state("t")
     state.update(draft="d", critique=REVISE, findings=[FINDING])
     before = copy.deepcopy(state)

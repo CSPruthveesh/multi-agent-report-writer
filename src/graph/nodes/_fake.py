@@ -1,3 +1,15 @@
+"""Offline doubles for the nodes that cost money, used only by the routing check.
+
+Not stubs. A stub stands in for a node nobody has written; these stand in for nodes
+that exist, so that `python -m src.graph.build` can exercise real routing for free.
+They must never appear in STUBBED — see section 8 of the Phase 2 write-up.
+
+One rule: every double mirrors the state effects of the node it replaces, and stamps
+fake=True into its trace so no output of it can be mistaken for a real run. Add a
+double here whenever a node becomes real, or the routing check quietly starts
+spending quota — that has now happened twice.
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -5,6 +17,7 @@ from typing import Any
 from src.graph.state import MAX_SEARCHES, ReportState, trace_event
 
 NODE = "researcher"
+ANALYST = "analyst"
 
 
 def researcher(state: ReportState) -> dict[str, Any]:
@@ -60,5 +73,53 @@ def researcher(state: ReportState) -> dict[str, Any]:
                         found=len(kept), kept=len(kept), dropped_dupes=0,
                         unaddressed=len(unaddressed),
                         budget=f"{used + len(queries)}/{MAX_SEARCHES}", tokens=0)
+        ],
+    }
+
+
+def analyst(state: ReportState) -> dict[str, Any]:
+    """Offline double for the real Analyst. Raises one gap on the first pass so the
+    routing check still exercises the research loop, then none, so it terminates."""
+    findings = list(state.get("findings") or [])
+    loops = state.get("research_loops", 0)
+
+    if not findings:
+        return {
+            "outline": None,
+            "gaps": [],
+            "trace": [trace_event(ANALYST, "skipped", fake=True,
+                                  why="no findings to analyse")],
+        }
+
+    ids = [f["id"] for f in findings[:6]]
+    gaps = ["fake gap: evidence missing for the second section"] if loops == 0 else []
+    outline = "\n".join(
+        [
+            "THESIS: a fake thesis the fake evidence supports",
+            "",
+            f"## Framing [{', '.join(ids[:2])}]",
+            f"## Evidence [{', '.join(ids[2:4])}]",
+            f"## Implications [{', '.join(ids[4:6])}]",
+        ]
+    )
+    return {
+        "outline": outline,
+        "gaps": gaps,
+        "token_log": [
+            {
+                "node": ANALYST,
+                "call_type": "fake",
+                "in_tokens": 0,
+                "out_tokens": 0,
+                "total_tokens": 0,
+                "latency_ms": 0,
+                "attempts": 1,
+                "model": "fake",
+            }
+        ],
+        "trace": [
+            trace_event(ANALYST, "outlined", fake=True, sections=3, tensions=0,
+                        gaps_raw=len(gaps), gaps_kept=len(gaps), dropped_unblocking=0,
+                        dropped_repeat=0, revision=False, tokens=0)
         ],
     }
