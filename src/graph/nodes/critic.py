@@ -75,7 +75,22 @@ CRITERION_OWNER = {
     "absence_of_filler": "writer",
 }
 
-PASS_THRESHOLD = 3  # revise if any criterion is at or below this
+# Revise if any criterion is at or below this.
+#
+# Was 3. Across six live topics nothing ever scored below 4, so the revision loop
+# never fired once — the Writer/Critic half of the architecture was idle in
+# production while being fully built and tested. Thirty criterion scores came back
+# as twenty-two 5s and eight 4s.
+#
+# 4 is the level at which the Critic is already writing real, grounded criticism:
+# "this sentence is a rhetorical summary that adds no new information". Those issues
+# were being computed, span-checked, stored, and then discarded because the verdict
+# came out pass. Raising the bar spends roughly 7,500 tokens per affected topic to
+# find out what acting on them is worth, which is the number Phase 9 needs — "we
+# built it and it never fired" is a weaker result than either outcome of measuring it.
+#
+# ISSUE_RULES below has to agree with this number. See the note there.
+PASS_THRESHOLD = 4
 
 PERSONA = """You are a demanding editor reviewing a research report before publication. You
 are not the author and you owe them nothing. You have the evidence the report was written
@@ -117,6 +132,15 @@ beautifully structured and factually ungrounded.
 When a report sits between two anchors, round DOWN. Optimistic scoring hides the
 differences this review exists to find."""
 
+# The "4 or below" line below must match PASS_THRESHOLD. When they disagree the
+# failure is silent: the verdict computes to revise, no issues were raised because the
+# prompt forbade it, and the rule further down converts the verdict back to pass. The
+# loop stays dead and nothing in the trace says why.
+#
+# It was already disagreeing — the threshold was 3 and this said "3 or below", and the
+# loop only looked one change away from working because the model was raising issues
+# for 4s in defiance of the instruction. Relying on an instruction not being followed
+# is not a mechanism.
 ISSUE_RULES = """
 Issue rules — this is the part that matters:
 
@@ -125,7 +149,7 @@ Issue rules — this is the part that matters:
   criticism is lost.
 - Make the span long enough to be unique — a full sentence, not a phrase.
 - One issue per real problem. Do not pad the list.
-- Only raise issues for criteria you scored 3 or below. If everything scored 4+, return
+- Only raise issues for criteria you scored 4 or below. If everything scored 5, return
   an empty list — that is a valid and complete response.
 - `fix` must be actionable and achievable with the evidence available. Do not ask for
   claims the evidence cannot support."""
