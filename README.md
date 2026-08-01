@@ -97,28 +97,46 @@ was no room left to show an improvement. The human scored the same reports 2.33.
 That is a finding about the instrument, not the system, and it is why the hand scores are
 not a second opinion here — they are the only opinion.
 
-### The gap loop does not pay for itself
+### The gap loop gathers evidence the Writer does not cite
 
-32.6% of the multi-agent run goes to the Analyst→Researcher gap loop.
+The Analyst→Researcher gap loop is **32.6% of the multi-agent run**. It was measured
+directly rather than through a judge: run all six topics with the loop disabled, and count.
+Coverage is a mechanical fact — findings gathered, findings cited, gaps left declared — so
+there is no ceiling effect, no position bias, and none of the run-to-run drift that makes
+the judge unreliable at this scale.
 
-| Topic | Shape | Gap loops | Calls | Judge delta |
-|---|---|---:|---:|---:|
-| t2 | abundant-sources | 0 | 10 | −0.5 |
-| t3 | thin-evidence | 1 | 16 | −2.5 |
-| t4 | contested | 1 | 16 | **+1.5** |
-| t5 | cross-domain | 1 | 16 | −1.0 |
-| t1 | abundant-sources | 2 | 18 | −1.5 |
-| t6 | cross-domain | 2 | 20 | **−5.5** |
+```bash
+uv run python -m src.run --system multiagent --all --max-research-loops 0 --out-suffix noloop
+```
 
-The topic that never ran the loop at all, on 10 calls against 16 to 20, scored −0.5 —
-better than four of the five that did. The two that ran it hardest scored −1.5 and −5.5.
-**On this evidence the third of the run it consumes buys nothing measurable.**
+| | Loop on | Loop off | Difference |
+|---|---:|---:|---:|
+| Findings gathered | 283 | 206 | **+77** |
+| Findings cited | 200 | 179 | +21 |
+| Coverage | 71% | **87%** | −16 points |
+| Unclosed gaps declared | 5 | 5 | **none** |
+| Tokens | 249,968 | 158,113 | **−36.7%** |
+| Model calls | 96 | 60 | −37.5% |
 
-That held across both runs, with different topics doing the looping each time. Loop count
-is still confounded with topic shape across six topics, so it is a strong hint rather than
-a settled result — a `--max-research-loops 0` flag would turn it into six matched pairs and
-settle it. Given the noise floor below, it is the only version of this question worth
-asking.
+**56 of the 77 extra findings — 73% — were never cited.** The loop gathers faster than the
+Writer can absorb, and the share of gathered evidence that reaches the report *falls* from
+87% to 71% when it runs.
+
+The unclosed-gaps row is the sharpest. The loop exists to close evidence gaps. Both arms
+declared five. By its own stated purpose it netted nothing.
+
+**Read the two signals differently.** t2 raised no gaps in either arm, so it ran the same
+configuration twice — an accidental control. It moved by 4 findings and 10 citations on
+identical settings. So the +77 findings is well clear of the noise and is real; the +21
+citations is not, and should not be quoted as an effect.
+
+That splits the conclusion rather than softening it: **the evidence gain is solid, and the
+part of it that reaches a reader is inside the noise.**
+
+This says nothing about prose quality. The loop-off reports run 994–1,142 words and cite
+normally, but nobody has read them. Judging that arm would cost 190k tokens and land inside
+a two-point noise floor — a mechanical question now has a mechanical answer, and a judge
+would only add a weaker one on top.
 
 The revision loop (Critic→Writer) sat at **0% of run cost** for three consecutive six-topic
 runs at threshold 3, and did not terminate at threshold 4. After the Writer change it fired
@@ -210,7 +228,13 @@ node rather than reading a flag at runtime. Both `.png` renders are git-ignored;
 The two dotted back-edges are the loops under test. `supervisor -.-> researcher` is the gap
 loop, which buys evidence coverage. `critic → supervisor → writer` is the revision loop,
 which buys prose quality. They are never averaged into one "overhead" number — they are
-different products with different value.
+different products with different value, and measuring them separately is what showed the
+first one gathering evidence that never gets cited.
+
+Both are capped, and both caps travel in graph state rather than being read from a module
+constant — so a run made with the gap loop disabled records that condition in its own
+`run.json`. An experimental condition that is not in the artifact is one nobody can verify
+afterwards.
 
 The graph also checkpoints to SQLite, contains node failures, and supports an outline
 approval gate (`--hitl`).
@@ -281,6 +305,14 @@ uv run python -m src.run --resume <thread_id> --approve
 uv run python -m src.run --status <thread_id>
 ```
 
+Run a matched arm — same topics and first-pass budget, gap loop off — without overwriting
+the control it is compared against:
+
+```bash
+# writes to results/multiagent_noloop/, leaving results/multiagent/ intact
+uv run python -m src.run --system multiagent --all --max-research-loops 0 --out-suffix noloop
+```
+
 Evaluate. Only the first of these spends tokens:
 
 ```bash
@@ -326,6 +358,7 @@ choice of judge visible in the command rather than buried in a file.
 | `scripts/` | Calibration, pairwise judging, chaos and resume demos, backfills |
 | `data/topics.json` | The six frozen topics, with a pre-registered trap for each |
 | `results/` | Reports, run records, judge output, hand scores |
+| `results/multiagent_noloop/` | The gap-loop-off arm, for the matched-pair comparison |
 | `docs/comparison.md` | Generated — the comparison table, with its own integrity checks |
 | `docs/cost.md` | Generated — cost breakdown, tokens and ratios only |
 | `docs/graph.mmd` | Generated — graph topology, and `graph_hitl.mmd` with the approval gate |
