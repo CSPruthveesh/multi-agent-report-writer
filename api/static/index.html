@@ -145,8 +145,10 @@ function drawGauges(b){
 
 /* The row itself comes from trace.js. What stays here is this page's own concern: the
    baseline meter, which only means anything because these topics are the frozen six. */
+let view = null;
+
 function addEvent(d){
-  $('#trace').appendChild(traceRow(d, BUDGETS));
+  view.push(d);
 
   const m = d.cost.multiple;
   if (m != null){
@@ -166,7 +168,8 @@ function addEvent(d){
 $('#go').onclick = async () => {
   const topic = TOPICS.find(t => t.id === $('#topic').value);
   if(!topic) return;
-  $('#trace').innerHTML=''; $('#report').hidden=true; $('#report').classList.remove('err');
+  view = traceView($('#trace'), BUDGETS);
+  view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
   $('#go').disabled=true; $('#go').textContent='Running…';
 
   const res = await fetch('/api/run',{method:'POST',
@@ -174,8 +177,10 @@ $('#go').onclick = async () => {
     body:JSON.stringify({topic:topic.topic, topic_id:topic.id})});
 
   await readSSE(res, {
+    start: () => view.start(),
     node: addEvent,
     done: d => {
+      view.finish();
       $('#report').hidden=false; $('#report').classList.remove('err');
       const s = d.scores||{}, scored = Object.keys(s).length
         ? ' · ' + Object.entries(s).map(([k,v])=>`${k.split('_')[0]} ${v}`).join(' · ') : '';
@@ -185,6 +190,7 @@ $('#go').onclick = async () => {
       $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
     },
     error: d => {
+      view.finish();
       $('#report').hidden=false; $('#report').classList.add('err');
       $('#reportHead').textContent='Run failed';
       $('#md').textContent = `${d.error}: ${d.detail}`;

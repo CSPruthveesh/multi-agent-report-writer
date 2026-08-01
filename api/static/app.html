@@ -44,8 +44,7 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 
 <header class="head">
   <div>
-    <div class="eyebrow">Multi-agent report writer</div>
-    <h1>Report writer</h1>
+    <h1>Multi-agent report writer</h1>
     <p class="sub">Ask a research question. Four agents search the web, judge whether the
       evidence is enough, write the report and review it. You get a cited briefing and a
       list of anything they looked for and could not find.</p>
@@ -108,7 +107,8 @@ function fail(title, detail){
 
 $('#go').onclick = async () => {
   const topic = ta.value.trim();
-  $('#trace').innerHTML=''; $('#report').hidden=true; $('#report').classList.remove('err');
+  const view = traceView($('#trace'), BUDGETS);
+  view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
   $('#go').disabled=true; $('#go').textContent='Running…';
   $('#spent').textContent='Starting…';
 
@@ -122,12 +122,14 @@ $('#go').onclick = async () => {
     'The question needs to be between 15 and 300 characters.');
 
   await readSSE(res, {
+    start: () => view.start(),
     node: d => {
-      $('#trace').appendChild(traceRow(d, BUDGETS));
+      view.push(d);
       // Tokens only. No multiple: see the note at the top of the stylesheet.
       $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used so far`;
     },
     done: d => {
+      view.finish();
       $('#report').hidden=false; $('#report').classList.remove('err');
       const words = d.report.trim().split(/\s+/).length;
       const cites = new Set(d.report.match(/F\d{3}/g)||[]).size;
@@ -137,7 +139,7 @@ $('#go').onclick = async () => {
       $('#md').innerHTML = renderMarkdown(d.report);
       $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
     },
-    error: d => fail(d.error, d.detail),
+    error: d => { view.finish(); fail(d.error, d.detail); },
   });
 
   $('#go').disabled=false; $('#go').textContent='Write the report';

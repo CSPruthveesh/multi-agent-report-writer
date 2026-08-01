@@ -154,3 +154,51 @@ async function readSSE(res, handlers) {
     }
   }
 }
+
+/* ---------------------------------------------------------------- sequencing
+ *
+ * The stream only carries COMPLETED events — a node emits its trace entry after its
+ * model call returns. So the page sat still for the ten or twenty seconds a node was
+ * working, then a finished row appeared from nowhere.
+ *
+ * A placeholder row is added for the node about to run and replaced when its real
+ * event arrives: "searching…" becomes "searched · 36 sources · 3 queries".
+ *
+ * Which node runs next is not a guess. Most edges in the graph are fixed —
+ * researcher → analyst and writer → critic — and the rest go through the supervisor,
+ * which announces its choice in the route event's `to` field. The supervisor itself
+ * never gets a placeholder: it makes no model call, so it would flash and vanish.
+ */
+const WORKING = {
+  researcher: 'searching', analyst: 'planning the report',
+  writer: 'writing', critic: 'reviewing', finalize: 'finishing',
+};
+const FIXED_EDGE = { researcher: 'analyst', writer: 'critic' };
+
+function pendingRow(node) {
+  const row = document.createElement('div');
+  row.className = 'ev pending';
+  row.innerHTML = `<div class="node">${esc(node)}<div class="dot"></div></div>
+    <div class="body"><div class="action">${esc(WORKING[node])}…</div></div>`;
+  return row;
+}
+
+/** Owns the trace element: appends real rows, and keeps one placeholder ahead. */
+function traceView(el, caps) {
+  let pending = null;
+  const clear = () => { if (pending) { pending.remove(); pending = null; } };
+  const expect = node => {
+    if (node && WORKING[node]) { pending = pendingRow(node); el.appendChild(pending); }
+  };
+  return {
+    reset() { el.innerHTML = ''; pending = null; },
+    start() { clear(); expect('researcher'); },
+    push(d) {
+      clear();
+      el.appendChild(traceRow(d, caps));
+      const e = d.event;
+      expect(e.node === 'supervisor' ? e.to : FIXED_EDGE[e.node]);
+    },
+    finish() { clear(); },
+  };
+}
