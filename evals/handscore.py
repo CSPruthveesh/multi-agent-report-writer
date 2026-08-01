@@ -27,7 +27,7 @@ import random
 import shutil
 from pathlib import Path
 
-from src.common.io import RESULTS, get_topic
+from src.common.io import RESULTS, get_topic, load_topics
 
 HS = RESULTS / "handscore"
 CRITERIA = [
@@ -52,9 +52,16 @@ Scoring on top of them — or letting compare.py join them to the current judge 
 — produces a table whose human column and judge column describe different documents,
 and nothing in the output would say so.
 
-Move each directory aside, then run this again:
+Move each directory OUT of results/handscore/, then run this again:
 
 {commands}
+
+Out of the directory, not renamed inside it. Everything that reads results/handscore/
+globs it, and an archived copy left in place still holds a mapping and a set of scores.
+The staleness check would clear it — it looks for the source report under the archived
+name, finds nothing to compare, and correctly reports no difference — so the old scores
+would rejoin the current numbers beside the new ones. The previous set is committed at
+2e33d58 either way.
 """
 
 
@@ -62,12 +69,32 @@ def _stale_refusal(topics: list[str]) -> str:
     listing = "\n".join(
         f"  {HS / t}  ({len(stale_labels(t))} of 2 reports changed)" for t in topics
     )
-    commands = "\n".join(f"  Move-Item {HS / t} {HS / t}.old" for t in topics)
+    archive = HS.parent / "handscore_superseded"
+    commands = "\n".join(
+        [f"  New-Item -ItemType Directory -Force {archive}"]
+        + [f"  Move-Item {HS / t} {archive / t}" for t in topics]
+    )
     return STALE_REFUSAL.format(listing=listing, commands=commands)
 
 
 def _digest(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()[:12]
+
+
+def is_topic_dir(name: str) -> bool:
+    """Whether a directory under results/handscore/ names a real topic.
+
+    Everything that reads this directory globs it, and a glob believes whatever it
+    finds. An archived t1.old still holds mapping.json and handscores.json, so it
+    reads as a valid topic — and stale_labels() clears it, because it looks for
+    results/<system>/t1.old/report.md, finds nothing to compare, and honestly reports
+    no difference. The old scores would then join the current judge numbers next to
+    the new ones, which is the failure the staleness check exists to prevent, arrived
+    at by archiving the evidence exactly as instructed.
+
+    So the name has to be checked against topics.json rather than trusted.
+    """
+    return name in {t["id"] for t in load_topics()}
 
 
 def stale_labels(topic_id: str) -> list[str]:
@@ -96,7 +123,9 @@ def stale_labels(topic_id: str) -> list[str]:
 
 
 def scored_topics() -> list[str]:
-    return sorted(p.parent.name for p in HS.glob("*/handscores.json"))
+    return sorted(
+        p.parent.name for p in HS.glob("*/handscores.json") if is_topic_dir(p.parent.name)
+    )
 
 
 def _write_evidence(d: Path, topic_id: str, systems: list[str]) -> None:

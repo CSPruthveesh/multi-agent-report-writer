@@ -33,7 +33,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from evals.handscore import stale_labels
+from evals.handscore import is_topic_dir, stale_labels
 from src.common.io import RESULTS, get_topic
 
 CRITERIA = [
@@ -128,6 +128,10 @@ def collect_hand() -> dict[str, Any] | None:
     for d in sorted(hs.glob("*/")):
         mp, sc = d / "mapping.json", d / "handscores.json"
         if not (mp.exists() and sc.exists()):
+            continue
+        # An archived directory keeps its mapping and scores and passes the staleness
+        # check for the wrong reason, so the name is validated before either is read.
+        if not is_topic_dir(d.name):
             continue
         if stale_labels(d.name):
             stale.append(d.name)
