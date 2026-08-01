@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -332,7 +333,11 @@ def render(d: dict, md: bool) -> None:
         "hand": hand, "cost_multiples": (cost or {}).get("multiples"),
         "warnings": warnings,
     }, indent=2), encoding="utf-8")
-    p(f"\nwrote {out}")
+    # stderr, not stdout: --markdown is redirected into docs/comparison.md, and a status
+    # line carrying an absolute local path does not belong in a committed document. The
+    # operator still sees it. Same defect 8fd69a3 fixed in cost_report.py; this file was
+    # written before that fix and inherited the shape.
+    print(f"\nwrote {out}", file=sys.stderr)
 
 
 def main() -> None:

@@ -250,6 +250,16 @@ uv run python -m evals.handscore --reveal    # mappings, after scoring
 uv run python -m scripts.cost_report         # free — cost by node and phase
 ```
 
+Both reports have a `--markdown` mode that regenerates the committed documents:
+
+```bash
+uv run python -m evals.compare --markdown      > docs/comparison.md
+uv run python -m scripts.cost_report --markdown > docs/cost.md
+```
+
+Both are generated files. They go stale the moment results change, so regenerate them in
+the same commit as any new run.
+
 **Ordering matters.** `compare.py` prints hand scores mapped to their systems, so it breaks
 the blind for any topic not yet scored. Score first, compare after.
 
@@ -270,7 +280,8 @@ choice of judge visible in the command rather than buried in a file.
 | `scripts/` | Calibration, pairwise judging, chaos and resume demos, backfills |
 | `data/topics.json` | The six frozen topics, with a pre-registered trap for each |
 | `results/` | Reports, run records, judge output, hand scores |
-| `docs/cost.md` | Generated cost breakdown — tokens and ratios only |
+| `docs/comparison.md` | Generated — the comparison table, with its own integrity checks |
+| `docs/cost.md` | Generated — cost breakdown, tokens and ratios only |
 
 Every run record carries the commit it was produced at, and `cost_report` refuses to read a
 set spanning more than one code version as a single measurement.
