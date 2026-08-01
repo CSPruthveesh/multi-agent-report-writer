@@ -38,67 +38,73 @@
   "multiagent": {
     "totals": {
       "runs": 6,
-      "in": 185909,
-      "out": 60114,
-      "total": 246023,
-      "calls": 94,
-      "ms": 410026,
-      "words": 6084,
+      "in": 192554,
+      "out": 57414,
+      "total": 249968,
+      "calls": 96,
+      "ms": 401323,
+      "words": 6481,
       "usd": null,
       "usd_per_report": null
     },
     "by_node": {
       "researcher": {
         "calls": 69,
-        "in": 105287,
-        "out": 45192,
-        "total": 150479,
-        "ms": 223011
+        "in": 105748,
+        "out": 42172,
+        "total": 147920,
+        "ms": 212619
       },
       "analyst": {
         "calls": 13,
-        "in": 43054,
-        "out": 4534,
-        "total": 47588,
-        "ms": 32701
+        "in": 41125,
+        "out": 4442,
+        "total": 45567,
+        "ms": 33899
       },
       "writer": {
-        "calls": 6,
-        "in": 13411,
-        "out": 8706,
-        "total": 22117,
-        "ms": 41084
+        "calls": 7,
+        "in": 17689,
+        "out": 8975,
+        "total": 26664,
+        "ms": 44467
       },
       "critic": {
-        "calls": 6,
-        "in": 24157,
-        "out": 1682,
-        "total": 25839,
-        "ms": 15726
+        "calls": 7,
+        "in": 27992,
+        "out": 1825,
+        "total": 29817,
+        "ms": 16109
       }
     },
     "code_versions": {
       "commits": [
-        "626098d"
+        "2008af8"
       ],
       "consistent": true,
-      "dirty": false,
+      "dirty": true,
       "missing": 0,
-      "inferred": 6,
+      "inferred": 0,
       "runs": 6
     },
     "by_phase": {
       "first_pass": {
         "calls": 60,
-        "in": 118192,
-        "out": 41217,
-        "total": 159409
+        "in": 119923,
+        "out": 41055,
+        "total": 160978
       },
       "gap_loop": {
         "calls": 34,
-        "in": 67717,
-        "out": 18897,
-        "total": 86614
+        "in": 65539,
+        "out": 15872,
+        "total": 81411
+      },
+      "revision_loop": {
+        "calls": 2,
+        "in": 7092,
+        "out": 487,
+        "total": 7579
       }
     },
     "phase_tagged_share": 1.0,
@@ -109,27 +115,31 @@
       },
       "search": {
         "calls": 28,
-        "total": 76746
+        "total": 77271
       },
       "extract": {
         "calls": 28,
-        "total": 68047
+        "total": 64937
       },
       "analyze": {
         "calls": 13,
-        "total": 47588
+        "total": 45567
       },
       "gap_plan": {
         "calls": 7,
-        "total": 4645
+        "total": 4671
       },
       "write": {
         "calls": 6,
-        "total": 22117
+        "total": 23391
       },
       "critique": {
-        "calls": 6,
-        "total": 25839
+        "calls": 7,
+        "total": 29817
+      },
+      "revise": {
+        "calls": 1,
+        "total": 3273
       }
     },
     "retries": {
@@ -140,9 +150,9 @@
     }
   },
   "multiples": {
-    "tokens": 1.26,
-    "calls": 1.21,
-    "latency": 0.77,
+    "tokens": 1.28,
+    "calls": 1.23,
+    "latency": 0.75,
     "cost": null
   }
 }

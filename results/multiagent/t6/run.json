@@ -1,60 +1,69 @@
 {
   "system": "multiagent",
   "topic_id": "t6",
-  "generated_at": "2026-08-01T06:53:27.226332+00:00",
+  "generated_at": "2026-08-01T10:39:56.425604+00:00",
   "code_version": {
-    "commit": "626098ddabd188450bcbca601ae4c7c6dfb319de",
-    "commit_short": "626098d",
-    "dirty": null,
-    "inferred": true
+    "commit": "2008af88edc40c3c3936da813b0dd4c5ba89aea8",
+    "commit_short": "2008af8",
+    "dirty": true
   },
-  "word_count": 999,
-  "findings_count": 45,
+  "word_count": 1104,
+  "findings_count": 41,
   "citations": {
-    "cited_count": 43,
-    "valid_count": 45,
+    "cited_count": 29,
+    "valid_count": 41,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
+      "F004",
+      "F016",
       "F017",
-      "F019"
+      "F018",
+      "F020",
+      "F021",
+      "F023",
+      "F024",
+      "F025",
+      "F027",
+      "F028",
+      "F032"
     ],
-    "coverage": 0.956
+    "coverage": 0.707
   },
-  "wall_ms": 65871,
+  "wall_ms": 72529,
   "tokens": {
-    "calls": 16,
-    "total_in": 29454,
-    "total_out": 9155,
-    "total": 38609,
+    "calls": 20,
+    "total_in": 40508,
+    "total_out": 9567,
+    "total": 50075,
     "by_node": {
       "researcher": {
-        "calls": 12,
-        "in": 18164,
-        "out": 6752,
-        "total": 24916,
-        "ms": 34594
+        "calls": 13,
+        "in": 19712,
+        "out": 6112,
+        "total": 25824,
+        "ms": 32601
       },
       "analyst": {
-        "calls": 2,
-        "in": 5347,
-        "out": 706,
-        "total": 6053,
-        "ms": 5080
+        "calls": 3,
+        "in": 7462,
+        "out": 1055,
+        "total": 8517,
+        "ms": 7923
       },
       "writer": {
-        "calls": 1,
-        "in": 2028,
-        "out": 1502,
-        "total": 3530,
-        "ms": 6707
+        "calls": 2,
+        "in": 5484,
+        "out": 1658,
+        "total": 7142,
+        "ms": 9553
       },
       "critic": {
-        "calls": 1,
-        "in": 3915,
-        "out": 195,
-        "total": 4110,
-        "ms": 3016
+        "calls": 2,
+        "in": 7850,
+        "out": 742,
+        "total": 8592,
+        "ms": 5851
       }
     },
     "records": [
@@ -64,7 +73,7 @@
         "in_tokens": 102,
         "out_tokens": 71,
         "total_tokens": 173,
-        "latency_ms": 1227,
+        "latency_ms": 1318,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -74,10 +83,36 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2025,
-        "out_tokens": 451,
-        "total_tokens": 2476,
-        "latency_ms": 2559,
+        "in_tokens": 2089,
+        "out_tokens": 461,
+        "total_tokens": 2550,
+        "latency_ms": 3102,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
+      },
+      {
+        "node": "researcher",
+        "call_type": "extract",
+        "in_tokens": 1252,
+        "out_tokens": 658,
+        "total_tokens": 1910,
+        "latency_ms": 4243,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
+      },
+      {
+        "node": "researcher",
+        "call_type": "search",
+        "in_tokens": 2351,
+        "out_tokens": 356,
+        "total_tokens": 2707,
+        "latency_ms": 2459,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -88,9 +123,9 @@
         "node": "researcher",
         "call_type": "extract",
         "in_tokens": 1248,
-        "out_tokens": 553,
-        "total_tokens": 1801,
-        "latency_ms": 2375,
+        "out_tokens": 645,
+        "total_tokens": 1893,
+        "latency_ms": 2239,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -100,10 +135,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2626,
-        "out_tokens": 314,
-        "total_tokens": 2940,
-        "latency_ms": 2377,
+        "in_tokens": 2162,
+        "out_tokens": 371,
+        "total_tokens": 2533,
+        "latency_ms": 2465,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -113,36 +148,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1244,
-        "out_tokens": 416,
-        "total_tokens": 1660,
-        "latency_ms": 2586,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 0,
-        "revision": 0,
-        "phase": "first_pass"
-      },
-      {
-        "node": "researcher",
-        "call_type": "search",
-        "in_tokens": 2124,
-        "out_tokens": 372,
-        "total_tokens": 2496,
-        "latency_ms": 2759,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 0,
-        "revision": 0,
-        "phase": "first_pass"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1185,
-        "out_tokens": 846,
-        "total_tokens": 2031,
-        "latency_ms": 4304,
+        "in_tokens": 1192,
+        "out_tokens": 625,
+        "total_tokens": 1817,
+        "latency_ms": 2264,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -152,10 +161,10 @@
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 1732,
-        "out_tokens": 374,
-        "total_tokens": 2106,
-        "latency_ms": 2673,
+        "in_tokens": 1820,
+        "out_tokens": 275,
+        "total_tokens": 2095,
+        "latency_ms": 2137,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -165,10 +174,10 @@
       {
         "node": "researcher",
         "call_type": "gap_plan",
-        "in_tokens": 628,
-        "out_tokens": 67,
-        "total_tokens": 695,
-        "latency_ms": 2759,
+        "in_tokens": 595,
+        "out_tokens": 53,
+        "total_tokens": 648,
+        "latency_ms": 1139,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
@@ -178,10 +187,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2277,
-        "out_tokens": 560,
-        "total_tokens": 2837,
-        "latency_ms": 3248,
+        "in_tokens": 2966,
+        "out_tokens": 595,
+        "total_tokens": 3561,
+        "latency_ms": 2826,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
@@ -191,36 +200,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1436,
-        "out_tokens": 1934,
-        "total_tokens": 3370,
-        "latency_ms": 5171,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 1,
-        "revision": 0,
-        "phase": "gap_loop"
-      },
-      {
-        "node": "researcher",
-        "call_type": "search",
-        "in_tokens": 1925,
-        "out_tokens": 521,
-        "total_tokens": 2446,
-        "latency_ms": 2683,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 1,
-        "revision": 0,
-        "phase": "gap_loop"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1344,
-        "out_tokens": 647,
-        "total_tokens": 1991,
-        "latency_ms": 2546,
+        "in_tokens": 1372,
+        "out_tokens": 1077,
+        "total_tokens": 2449,
+        "latency_ms": 3914,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
@@ -230,10 +213,10 @@
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3615,
-        "out_tokens": 332,
-        "total_tokens": 3947,
-        "latency_ms": 2407,
+        "in_tokens": 2540,
+        "out_tokens": 427,
+        "total_tokens": 2967,
+        "latency_ms": 3536,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
@@ -241,329 +224,385 @@
         "phase": "gap_loop"
       },
       {
-        "node": "writer",
-        "call_type": "write",
-        "in_tokens": 2028,
-        "out_tokens": 1502,
-        "total_tokens": 3530,
-        "latency_ms": 6707,
+        "node": "researcher",
+        "call_type": "gap_plan",
+        "in_tokens": 625,
+        "out_tokens": 71,
+        "total_tokens": 696,
+        "latency_ms": 1383,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 1,
+        "research_loop": 2,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "researcher",
+        "call_type": "search",
+        "in_tokens": 2504,
+        "out_tokens": 359,
+        "total_tokens": 2863,
+        "latency_ms": 2400,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 2,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "researcher",
+        "call_type": "extract",
+        "in_tokens": 1254,
+        "out_tokens": 770,
+        "total_tokens": 2024,
+        "latency_ms": 2849,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 2,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "analyst",
+        "call_type": "analyze",
+        "in_tokens": 3102,
+        "out_tokens": 353,
+        "total_tokens": 3455,
+        "latency_ms": 2250,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 2,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "writer",
+        "call_type": "write",
+        "in_tokens": 2297,
+        "out_tokens": 1572,
+        "total_tokens": 3869,
+        "latency_ms": 8032,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 2,
         "revision": 0,
         "phase": "first_pass"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 3915,
-        "out_tokens": 195,
-        "total_tokens": 4110,
-        "latency_ms": 3016,
+        "in_tokens": 3945,
+        "out_tokens": 341,
+        "total_tokens": 4286,
+        "latency_ms": 2808,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 1,
+        "research_loop": 2,
         "revision": 0,
         "phase": "first_pass"
+      },
+      {
+        "node": "writer",
+        "call_type": "revise",
+        "in_tokens": 3187,
+        "out_tokens": 86,
+        "total_tokens": 3273,
+        "latency_ms": 1521,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 2,
+        "revision": 1,
+        "phase": "revision_loop"
+      },
+      {
+        "node": "critic",
+        "call_type": "critique",
+        "in_tokens": 3905,
+        "out_tokens": 401,
+        "total_tokens": 4306,
+        "latency_ms": 3043,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 2,
+        "revision": 1,
+        "phase": "revision_loop"
       }
     ]
   },
   "findings": [
     {
       "id": "F001",
-      "claim": "Expansive export control systems may force U.S. universities to scale back AI research to avoid compliance violations.",
-      "source_url": "https://www.brookings.edu/articles/the-tension-between-ai-export-control-and-u-s-ai-innovation",
-      "confidence": "medium"
+      "claim": "The U.S. Bureau of Industry and Security issued an AI Diffusion Rule on January 15, 2025.",
+      "source_url": "https://www.congress.gov/crs-product/R48642",
+      "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "DeepSeek restricted access to its API due to an inability to provide sufficient inference compute to meet demand.",
+      "claim": "The January 15, 2025 AI Diffusion Rule was rescinded.",
+      "source_url": "https://www.congress.gov/crs-product/R48642",
+      "confidence": "high"
+    },
+    {
+      "id": "F003",
+      "claim": "DeepSeek restricted API access due to insufficient inference compute.",
       "source_url": "https://ai-frontiers.org/articles/us-chip-export-controls-china-ai",
       "confidence": "medium"
     },
     {
-      "id": "F003",
-      "claim": "The U.S. Bureau of Industry and Security issued an AI Diffusion Rule on January 15, 2025, to curtail PRC access to advanced chips and AI computing power.",
-      "source_url": "https://www.congress.gov/crs-product/R48642",
-      "confidence": "high"
-    },
-    {
       "id": "F004",
-      "claim": "The U.S. Bureau of Industry and Security rescinded the AI Diffusion Rule in 2025.",
-      "source_url": "https://www.congress.gov/crs-product/R48642",
-      "confidence": "high"
+      "claim": "U.S. export control regulations targeting cloud-based access to AI computation could force U.S. universities to scale back AI research.",
+      "source_url": "https://www.brookings.edu/articles/the-tension-between-ai-export-control-and-u-s-ai-innovation",
+      "confidence": "medium"
     },
     {
       "id": "F005",
-      "claim": "Semiconductor firms report that export controls reduce revenues by limiting sales to China.",
-      "source_url": "https://en.wikipedia.org/wiki/United_States_New_Export_Controls_on_Advanced_Computing_and_Semiconductors_to_China",
-      "confidence": "medium"
+      "claim": "U.S. export controls target advanced microprocessors and memory required for AI datacenters.",
+      "source_url": "https://www.csis.org/analysis/did-us-semiconductor-export-controls-harm-innovation",
+      "confidence": "high"
     },
     {
       "id": "F006",
-      "claim": "Industry analysts suggest that market demand from customers outside of China compensates for export control-related revenue losses within a few quarters.",
-      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors-two-divergent-visions",
-      "confidence": "medium"
+      "claim": "U.S. export controls target semiconductor design and manufacturing hardware.",
+      "source_url": "https://www.csis.org/analysis/did-us-semiconductor-export-controls-harm-innovation",
+      "confidence": "high"
     },
     {
       "id": "F007",
-      "claim": "A 2026 bibliometric study indicates that research on AI governance is distributed across national systems and policy contexts.",
-      "source_url": "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2026.1762748/full",
+      "claim": "U.S. export controls target CAD tools.",
+      "source_url": "https://www.csis.org/analysis/did-us-semiconductor-export-controls-harm-innovation",
       "confidence": "high"
     },
     {
       "id": "F008",
-      "claim": "Large-scale research collaboration between the US and China is a general trend across most subject areas.",
-      "source_url": "https://ncses.nsf.gov/pubs/nsb202333/international-collaboration-and-citations",
+      "claim": "U.S. export controls target human capital.",
+      "source_url": "https://www.csis.org/analysis/did-us-semiconductor-export-controls-harm-innovation",
       "confidence": "high"
     },
     {
       "id": "F009",
-      "claim": "Bibliometric data for 2024 and 2025 regarding global AI research network transformations is preliminary.",
+      "claim": "Global AI research networks between 2000 and 2009 were characterized as a unipolar Western-led network.",
       "source_url": "https://academic.oup.com/spp/advance-article/doi/10.1093/scipol/scag017/8551274",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "Full collaborative patterns in AI research may not yet be visible in publication records due to inherent data lags.",
+      "claim": "Global AI research networks between 2010 and 2016 were characterized by the rise of China and the emergence of a bipolar network.",
       "source_url": "https://academic.oup.com/spp/advance-article/doi/10.1093/scipol/scag017/8551274",
-      "confidence": "medium"
+      "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "Chinese firms have focused on innovative optimization in response to hardware scarcity.",
-      "source_url": "https://cyber.fsi.stanford.edu/publication/taking-stock-deepseek-shock",
-      "confidence": "medium"
+      "claim": "Global AI research networks between 2017 and 2021 were characterized by peak collaboration amid geopolitical strain.",
+      "source_url": "https://academic.oup.com/spp/advance-article/doi/10.1093/scipol/scag017/8551274",
+      "confidence": "high"
     },
     {
       "id": "F012",
-      "claim": "A deal to deploy 3,000 Huawei Ascend GPUs in Malaysia was retracted.",
-      "source_url": "https://ai-frontiers.org/articles/us-chip-export-controls-china-ai",
+      "claim": "Global AI research networks after 2021 shifted toward a domain shaped by strategic rivalry.",
+      "source_url": "https://academic.oup.com/spp/advance-article/doi/10.1093/scipol/scag017/8551274",
       "confidence": "high"
     },
     {
       "id": "F013",
-      "claim": "China remains reliant on American hardware to train and deploy models at scale.",
-      "source_url": "https://cyber.fsi.stanford.edu/publication/taking-stock-deepseek-shock",
-      "confidence": "medium"
+      "claim": "Bibliometric data for the 2024\u20132025 period is preliminary and may not yet fully reflect collaborative patterns resulting from recent geopolitical shifts.",
+      "source_url": "https://academic.oup.com/spp/advance-article/doi/10.1093/scipol/scag017/8551274",
+      "confidence": "high"
     },
     {
       "id": "F014",
-      "claim": "Chinese firms have used Nvidia H800 and H20 chips to train competitive models.",
-      "source_url": "https://cyber.fsi.stanford.edu/publication/taking-stock-deepseek-shock",
-      "confidence": "medium"
+      "claim": "Prior to recent export restrictions, the U.S. and China maintained a large collaboration network.",
+      "source_url": "https://ncses.nsf.gov/pubs/nsb202333/international-collaboration-and-citations",
+      "confidence": "high"
     },
     {
       "id": "F015",
-      "claim": "Exports of H200 chips to China would increase computing power available to Chinese firms compared to domestic production capabilities.",
-      "source_url": "https://www.cfr.org/articles/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain",
-      "confidence": "medium"
+      "claim": "U.S. export controls restrict China from sourcing advanced AI chips including Nvidia A100 and H800 models.",
+      "source_url": "https://ai-frontiers.org/articles/us-chip-export-controls-china-ai",
+      "confidence": "high"
     },
     {
       "id": "F016",
-      "claim": "U.S. export controls restrict the transfer of advanced GPUs to China.",
-      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
+      "claim": "U.S. export controls limit China's access to newer hardware such as the Nvidia H20 chip.",
+      "source_url": "https://cyber.fsi.stanford.edu/publication/taking-stock-deepseek-shock",
       "confidence": "high"
     },
     {
       "id": "F017",
-      "claim": "U.S. export controls restrict the sharing of model weights for advanced closed-weight AI models.",
-      "source_url": "https://www.congress.gov/crs-product/R48642",
-      "confidence": "high"
+      "claim": "Large-scale exports of H200 chips to China could allow the country to reach computing levels by 2026\u20132027 that would otherwise not be achievable until 2028\u20132029.",
+      "source_url": "https://www.cfr.org/articles/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain",
+      "confidence": "medium"
     },
     {
       "id": "F018",
-      "claim": "Data center operators face compliance risks if their facilities provide compute access to Chinese entities or nationals.",
-      "source_url": "https://www.gtlaw.com/en/insights/2025/12/navigating-gpu-export-controls-and-ai-use-restrictions-in-data-center-operations",
-      "confidence": "high"
+      "claim": "Export controls have not seriously slowed improvements in Chinese AI model quality.",
+      "source_url": "https://ai-frontiers.org/articles/us-chip-export-controls-china-ai",
+      "confidence": "low"
     },
     {
       "id": "F019",
-      "claim": "Suppliers of wafer-fabrication equipment have experienced business growth.",
-      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
-      "confidence": "medium"
+      "claim": "Hardware scarcity has encouraged innovative optimization and expedited AI development efforts within China.",
+      "source_url": "https://cyber.fsi.stanford.edu/publication/taking-stock-deepseek-shock",
+      "confidence": "low"
     },
     {
       "id": "F020",
-      "claim": "Nvidia's market access has been reduced by export controls.",
-      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
-      "confidence": "medium"
+      "claim": "The Malaysian government retracted a deal to deploy 3,000 Ascend GPUs in Malaysia.",
+      "source_url": "https://ai-frontiers.org/articles/us-chip-export-controls-china-ai",
+      "confidence": "high"
     },
     {
       "id": "F021",
-      "claim": "Global semiconductor industry revenue reached an estimated $772 billion in 2025.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "Malaysia is subject to broad U.S. export control groups.",
+      "source_url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors",
+      "confidence": "high"
     },
     {
       "id": "F022",
-      "claim": "Global semiconductor industry revenue grew 22% in 2025 compared to 2024.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "The Qwen3.5-plus-02-15 model achieved an MMLU score of 88.5%.",
+      "source_url": "https://www.lxt.ai/blog/llm-benchmarks",
+      "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "Global semiconductor sales are projected to reach $1 trillion in 2026.",
-      "source_url": "https://www.semiconductors.org/global-semiconductor-sales-increase-25-from-q4-2025-to-q1-2026",
+      "claim": "The Qwen3.5-122B-A10B model achieved an MMLU score of 91.8%.",
+      "source_url": "https://pricepertoken.com/leaderboards/benchmark/mmlu",
       "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "AI chips are expected to account for approximately 50% of total semiconductor industry revenue in 2026.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "The Qwen3.5-27B model achieved an MMLU score of 91.5%.",
+      "source_url": "https://pricepertoken.com/leaderboards/benchmark/mmlu",
+      "confidence": "high"
     },
     {
       "id": "F025",
-      "claim": "AI chips are expected to represent less than 0.2% of total semiconductor unit volume in 2026.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "The Qwen3.5-35B-A3B model achieved an MMLU score of 90.7%.",
+      "source_url": "https://pricepertoken.com/leaderboards/benchmark/mmlu",
+      "confidence": "high"
     },
     {
       "id": "F026",
-      "claim": "The Asia Pacific region held 51% of the global semiconductor market in 2025.",
-      "source_url": "https://www.fortunebusinessinsights.com/semiconductor-market-102365",
-      "confidence": "medium"
+      "claim": "The DeepSeek R1 0528 model achieved an MMLU score of 90.5%.",
+      "source_url": "https://pricepertoken.com/leaderboards/benchmark/mmlu",
+      "confidence": "high"
     },
     {
       "id": "F027",
-      "claim": "The Asia Pacific semiconductor market revenue was $304.87 billion in 2025.",
-      "source_url": "https://www.fortunebusinessinsights.com/semiconductor-market-102365",
-      "confidence": "medium"
+      "claim": "The DeepSeek V4 Pro Base model achieved an MMLU score of 90.1%.",
+      "source_url": "https://benchlm.ai/benchmarks/mmlu",
+      "confidence": "high"
     },
     {
       "id": "F028",
-      "claim": "The Asia Pacific semiconductor market is projected to reach $338.56 billion in 2026.",
-      "source_url": "https://www.fortunebusinessinsights.com/semiconductor-market-102365",
-      "confidence": "medium"
+      "claim": "The DeepSeek V4 Flash Base model achieved an MMLU score of 88.7%.",
+      "source_url": "https://benchlm.ai/benchmarks/mmlu",
+      "confidence": "high"
     },
     {
       "id": "F029",
-      "claim": "China\u2019s semiconductor market is projected to reach $130.74 billion by 2026.",
-      "source_url": "https://www.fortunebusinessinsights.com/semiconductor-market-102365",
-      "confidence": "medium"
+      "claim": "The GLM 5 and GLM 5 Thinking models achieved an MMLU score of 91.7%.",
+      "source_url": "https://pricepertoken.com/leaderboards/benchmark/mmlu",
+      "confidence": "high"
     },
     {
       "id": "F030",
-      "claim": "Year-to-year semiconductor sales in China increased 74.8% as of March 2026.",
-      "source_url": "https://www.semiconductors.org/global-semiconductor-sales-increase-25-from-q4-2025-to-q1-2026",
+      "claim": "The 2026 AI Index Report states the performance gap between U.S. and Chinese AI models effectively closed as of March 2026.",
+      "source_url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance",
       "confidence": "high"
     },
     {
       "id": "F031",
-      "claim": "China\u2019s largest chipmaker reported 2025 revenue of $9.3 billion.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "DeepSeek-R1 matched the top U.S. model in February 2025.",
+      "source_url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance",
+      "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "China\u2019s largest chipmaker reported a 16% year-on-year revenue increase in 2025.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "The GSM8K benchmark has an invalid question rate of up to 42%.",
+      "source_url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance",
+      "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "The firm CXMT reported a 130% revenue surge in 2025.",
-      "source_url": "https://www.facebook.com/Markedium.bd/posts/chinese-semiconductor-firms-posted-record-revenues-in-2025-driven-by-ai-demand-a/1371077208386658",
-      "confidence": "medium"
+      "claim": "The MMLU Math benchmark has an invalid question rate of 2%.",
+      "source_url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance",
+      "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "Export controls from the U.S., Japan, and the Netherlands restrict Chinese access to transformative semiconductor tools.",
-      "source_url": "https://www.pwc.com/gx/en/industries/technology/pwc-semiconductor-and-beyond-2026-full-report.pdf",
-      "confidence": "medium"
+      "claim": "GSM8K is a benchmark for multi-step symbolic reasoning.",
+      "source_url": "https://www.lxt.ai/blog/llm-benchmarks",
+      "confidence": "high"
     },
     {
       "id": "F035",
-      "claim": "Chinese fabs are focusing on 28 nm mature nodes due to export controls.",
-      "source_url": "https://www.pwc.com/gx/en/industries/technology/pwc-semiconductor-and-beyond-2026-full-report.pdf",
+      "claim": "Chinese AI firms spent approximately $16 billion on NVIDIA H20 GPU supplies in 2025.",
+      "source_url": "https://www.techpowerup.com/335077/chinas-largest-ai-firms-reportedly-forked-out-usd-16-billion-total-for-nvidia-h20-gpu-supplies-in-2025",
       "confidence": "medium"
     },
     {
       "id": "F036",
-      "claim": "Chinese fabs are accelerating in-house R&D to reduce dependence on foreign equipment.",
-      "source_url": "https://www.pwc.com/gx/en/industries/technology/pwc-semiconductor-and-beyond-2026-full-report.pdf",
+      "claim": "Approximately one million China-specific accelerators were legally shipped to China to comply with export regulations.",
+      "source_url": "https://newsletter.semianalysis.com/p/2025-ai-diffusion-export-controls-microsoft-regulatory-capture-oracle-tears",
       "confidence": "medium"
     },
     {
       "id": "F037",
-      "claim": "Tariffs implemented in April 2025 increased expected semiconductor revenue relative to OEM factory revenue.",
-      "source_url": "https://omdia.tech.informa.com/blogs/2025/sep/how-trade-tensions-are-reshaping-the-global-semiconductor-landscape",
-      "confidence": "medium"
+      "claim": "Exporting 3 million H200 chips to China in 2026 would represent roughly 9% of Nvidia\u2019s total AI computing power production for that year.",
+      "source_url": "https://arxiv.org/html/2601.20115v3",
+      "confidence": "high"
     },
     {
       "id": "F038",
-      "claim": "Tariffs implemented in April 2025 correlate with declines in unit shipments for products with high semiconductor content.",
-      "source_url": "https://omdia.tech.informa.com/blogs/2025/sep/how-trade-tensions-are-reshaping-the-global-semiconductor-landscape",
-      "confidence": "medium"
+      "claim": "Chinese firms accounted for 5.3% of global AI chip production capacity in 2025.",
+      "source_url": "https://www.cfr.org/articles/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain",
+      "confidence": "high"
     },
     {
       "id": "F039",
-      "claim": "As of July 2025, China is the strongest research collaborator for the United States, the UK, and the EU in the field of artificial intelligence.",
-      "source_url": "https://www.digital-science.com/press-releases/new-report-shows-china-dominates-in-ai-research",
-      "confidence": "high"
+      "claim": "Chinese firms' share of global AI chip production capacity is projected to drop to 2.2% by 2027.",
+      "source_url": "https://www.cfr.org/articles/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain",
+      "confidence": "medium"
     },
     {
       "id": "F040",
-      "claim": "In 2025, China\u2019s share of high-impact AI publications was approximately 48%.",
-      "source_url": "https://aiinsocietyhub.com/articles/research-ai-publications-global-dominance-2000-2025",
-      "confidence": "medium"
+      "claim": "The U.S. government halted the export of the H800 GPU on October 23, 2023.",
+      "source_url": "https://www.cfr.org/articles/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain",
+      "confidence": "high"
     },
     {
       "id": "F041",
-      "claim": "In 2025, China\u2019s share of overall AI publications was approximately 38%.",
-      "source_url": "https://aiinsocietyhub.com/articles/research-ai-publications-global-dominance-2000-2025",
-      "confidence": "medium"
-    },
-    {
-      "id": "F042",
-      "claim": "By 2025, China\u2019s average citations per paper in AI surpassed that of the United States.",
-      "source_url": "https://aiinsocietyhub.com/articles/research-ai-publications-global-dominance-2000-2025",
-      "confidence": "medium"
-    },
-    {
-      "id": "F043",
-      "claim": "By 2026, Asia ranked first among continents in total AI research citations.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13080151",
-      "confidence": "high"
-    },
-    {
-      "id": "F044",
-      "claim": "As of 2026, AI model production remains concentrated in the United States and China.",
-      "source_url": "https://hai.stanford.edu/ai-index/2026-ai-index-report",
-      "confidence": "high"
-    },
-    {
-      "id": "F045",
-      "claim": "As of 2026, China is intensifying efforts to become a world leader in technology and AI.",
-      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13080151",
+      "claim": "The H20 is the most advanced AI processor legally available in China under existing export controls.",
+      "source_url": "https://www.techpowerup.com/335077/chinas-largest-ai-firms-reportedly-forked-out-usd-16-billion-total-for-nvidia-h20-gpu-supplies-in-2025",
       "confidence": "medium"
     }
   ],
-  "revisions": 0,
-  "research_loops": 1,
+  "revisions": 1,
+  "research_loops": 2,
   "searches_used": 5,
   "write_attempts": 1,
-  "unclosed_gaps": [],
+  "unclosed_gaps": [
+    "Comparative longitudinal data on the rate of AI model training efficiency improvements in China versus the U.S. to validate the claim that hardware scarcity directly caused the observed optimization."
+  ],
   "final_critique": {
     "scores": {
-      "factual_grounding": 5,
+      "factual_grounding": 4,
       "structural_coherence": 5,
       "depth_of_analysis": 4,
-      "citation_integrity": 5,
+      "citation_integrity": 4,
       "absence_of_filler": 4
     },
     "verdict": "pass",
-    "target": "analyst",
+    "target": "researcher",
     "issues": [
       {
-        "span": "This report examines the intersection of geopolitical policy, market performance, and the output of the global academic AI community.",
-        "criterion": "absence_of_filler",
-        "problem": "This sentence is a generic introductory statement that provides no specific information or analytical value.",
-        "fix": "Remove the sentence and start the paragraph with the core thesis statement."
+        "span": "The closing of the performance gap, as evidenced by benchmark parity, indicates that the strategic focus of Chinese AI development has shifted from raw compute dominance to algorithmic optimization.",
+        "criterion": "depth_of_analysis",
+        "problem": "The report draws a causal link between benchmark parity and a shift in strategic focus that is not explicitly supported by the evidence.",
+        "fix": "Rephrase to present this as a potential interpretation or hypothesis rather than a definitive conclusion, acknowledging the lack of evidence regarding internal strategic shifts."
       }
     ],
-    "summary": "The report is exceptionally well-grounded and structured, though it includes a minor introductory filler sentence that adds no substantive value.",
+    "summary": "The report is well-structured and generally grounded in the provided evidence, though it occasionally overreaches by inferring strategic motivations from performance data without direct evidence.",
     "broken_citations": [],
     "citation_cap_applied": false,
     "citation_cap_reason": ""
@@ -575,13 +614,13 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 20,
-      "kept": 20,
+      "found": 21,
+      "kept": 21,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h9/m11/l0",
+      "confidence": "h16/m3/l2",
       "budget": "3/5",
-      "tokens": 13577,
+      "tokens": 13583,
       "sent": [
         "impact of US semiconductor export controls on international university",
         "bibliometric analysis of AI research collaboration patterns between US",
@@ -591,21 +630,21 @@
     {
       "node": "analyst",
       "action": "outlined",
-      "sections": 4,
+      "sections": 3,
       "tensions": 1,
-      "gaps_raw": 2,
-      "gaps_kept": 2,
+      "gaps_raw": 1,
+      "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 2106
+      "tokens": 2095
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "researcher",
       "why": "evidence gaps",
-      "gaps": 2,
+      "gaps": 1,
       "loop": "1/2",
       "searches": "3/5"
     },
@@ -613,30 +652,73 @@
       "node": "researcher",
       "action": "searched",
       "mode": "gap-driven",
-      "queries": 2,
-      "found": 25,
-      "kept": 25,
+      "queries": 1,
+      "found": 13,
+      "kept": 13,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h5/m20/l0",
-      "budget": "5/5",
-      "tokens": 11339,
+      "confidence": "h13/m0/l0",
+      "budget": "4/5",
+      "tokens": 6658,
       "sent": [
-        "semiconductor industry revenue impact analysis China export controls v",
-        "bibliometric analysis US-China AI research collaboration trends 2025 2"
+        "comparative performance benchmarks of Chinese AI models on MMLU or GSM"
       ]
     },
     {
       "node": "analyst",
       "action": "outlined",
-      "sections": 3,
+      "sections": 4,
+      "tensions": 2,
+      "gaps_raw": 2,
+      "gaps_kept": 2,
+      "dropped_unblocking": 0,
+      "dropped_repeat": 0,
+      "revision": false,
+      "tokens": 2967
+    },
+    {
+      "node": "supervisor",
+      "action": "route",
+      "to": "researcher",
+      "why": "evidence gaps",
+      "gaps": 2,
+      "loop": "2/2",
+      "searches": "4/5"
+    },
+    {
+      "node": "researcher",
+      "action": "searched",
+      "mode": "gap-driven",
+      "queries": 1,
+      "found": 7,
+      "kept": 7,
+      "dropped_dupes": 0,
+      "unaddressed": 1,
+      "confidence": "h3/m4/l0",
+      "budget": "5/5",
+      "tokens": 5583,
+      "sent": [
+        "quantitative analysis of total GPU compute capacity reduction in Chine"
+      ]
+    },
+    {
+      "node": "analyst",
+      "action": "outlined",
+      "sections": 4,
       "tensions": 2,
       "gaps_raw": 0,
       "gaps_kept": 0,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3947
+      "tokens": 3455
+    },
+    {
+      "node": "supervisor",
+      "action": "retire_gaps",
+      "count": 1,
+      "why": "researcher had no search budget left",
+      "searches": "5/5"
     },
     {
       "node": "supervisor",
@@ -649,27 +731,71 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 999,
+      "words": 1073,
       "in_range": true,
-      "cited": 43,
+      "sections": 5,
+      "ends_on": "Closing Section",
+      "has_limits": true,
+      "cited": 29,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3530
+      "tokens": 3869
+    },
+    {
+      "node": "critic",
+      "action": "scored",
+      "verdict": "revise",
+      "target": "writer",
+      "worst": "absence_of_filler=3",
+      "mean": 4.0,
+      "issues_raw": 2,
+      "issues_kept": 1,
+      "dropped_ungrounded": 1,
+      "broken_cites": 0,
+      "cites": 29,
+      "cite_cap": false,
+      "tokens": 4286
+    },
+    {
+      "node": "supervisor",
+      "action": "route",
+      "to": "writer",
+      "why": "critic requested revision",
+      "revision": "1/2"
+    },
+    {
+      "node": "writer",
+      "action": "revised",
+      "revision": 1,
+      "words": 1035,
+      "in_range": true,
+      "sections": 5,
+      "ends_on": "Closing Section",
+      "has_limits": true,
+      "cited": 29,
+      "broken_cites": 0,
+      "cite_repair": false,
+      "tokens": 3273,
+      "edits_returned": 1,
+      "edits_applied": 1,
+      "fallback": false,
+      "changed_pct": 1.8,
+      "issues_addressed": 1
     },
     {
       "node": "critic",
       "action": "scored",
       "verdict": "pass",
       "target": "-",
-      "worst": "depth_of_analysis=4",
-      "mean": 4.6,
-      "issues_raw": 1,
+      "worst": "factual_grounding=4",
+      "mean": 4.2,
+      "issues_raw": 2,
       "issues_kept": 1,
-      "dropped_ungrounded": 0,
+      "dropped_ungrounded": 1,
       "broken_cites": 0,
-      "cites": 43,
+      "cites": 29,
       "cite_cap": false,
-      "tokens": 4110
+      "tokens": 4306
     },
     {
       "node": "supervisor",
@@ -684,8 +810,8 @@
       "degraded": false,
       "why": "-",
       "node_failures": 0,
-      "unclosed_gaps": 0,
-      "words": 999
+      "unclosed_gaps": 1,
+      "words": 1104
     }
   ]
 }

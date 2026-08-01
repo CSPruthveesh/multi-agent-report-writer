@@ -1,59 +1,66 @@
 {
   "system": "multiagent",
   "topic_id": "t3",
-  "generated_at": "2026-08-01T06:49:56.027213+00:00",
+  "generated_at": "2026-08-01T10:36:35.602409+00:00",
   "code_version": {
-    "commit": "626098ddabd188450bcbca601ae4c7c6dfb319de",
-    "commit_short": "626098d",
-    "dirty": null,
-    "inferred": true
+    "commit": "2008af88edc40c3c3936da813b0dd4c5ba89aea8",
+    "commit_short": "2008af8",
+    "dirty": true
   },
-  "word_count": 1054,
+  "word_count": 1102,
   "findings_count": 45,
   "citations": {
-    "cited_count": 44,
+    "cited_count": 36,
     "valid_count": 45,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F009"
+      "F003",
+      "F005",
+      "F025",
+      "F030",
+      "F036",
+      "F040",
+      "F041",
+      "F042",
+      "F045"
     ],
-    "coverage": 0.978
+    "coverage": 0.8
   },
-  "wall_ms": 68009,
+  "wall_ms": 77341,
   "tokens": {
-    "calls": 18,
-    "total_in": 33510,
-    "total_out": 9692,
-    "total": 43202,
+    "calls": 16,
+    "total_in": 32974,
+    "total_out": 10044,
+    "total": 43018,
     "by_node": {
       "researcher": {
-        "calls": 13,
-        "in": 18666,
-        "out": 6994,
-        "total": 25660,
-        "ms": 34538
+        "calls": 12,
+        "in": 19347,
+        "out": 7884,
+        "total": 27231,
+        "ms": 43416
       },
       "analyst": {
-        "calls": 3,
-        "in": 9110,
-        "out": 836,
-        "total": 9946,
-        "ms": 6656
+        "calls": 2,
+        "in": 7540,
+        "out": 605,
+        "total": 8145,
+        "ms": 5313
       },
       "writer": {
         "calls": 1,
-        "in": 1928,
-        "out": 1499,
-        "total": 3427,
-        "ms": 7101
+        "in": 2283,
+        "out": 1451,
+        "total": 3734,
+        "ms": 7731
       },
       "critic": {
         "calls": 1,
-        "in": 3806,
-        "out": 363,
-        "total": 4169,
-        "ms": 2527
+        "in": 3804,
+        "out": 104,
+        "total": 3908,
+        "ms": 1757
       }
     },
     "records": [
@@ -63,7 +70,7 @@
         "in_tokens": 108,
         "out_tokens": 66,
         "total_tokens": 174,
-        "latency_ms": 1387,
+        "latency_ms": 1354,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -73,10 +80,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2129,
-        "out_tokens": 488,
-        "total_tokens": 2617,
-        "latency_ms": 3031,
+        "in_tokens": 2284,
+        "out_tokens": 919,
+        "total_tokens": 3203,
+        "latency_ms": 5391,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -86,10 +93,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1333,
-        "out_tokens": 1287,
-        "total_tokens": 2620,
-        "latency_ms": 4559,
+        "in_tokens": 1852,
+        "out_tokens": 1179,
+        "total_tokens": 3031,
+        "latency_ms": 9078,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -99,10 +106,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2569,
-        "out_tokens": 504,
-        "total_tokens": 3073,
-        "latency_ms": 2924,
+        "in_tokens": 2326,
+        "out_tokens": 432,
+        "total_tokens": 2758,
+        "latency_ms": 2768,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -112,10 +119,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1437,
-        "out_tokens": 1285,
-        "total_tokens": 2722,
-        "latency_ms": 4019,
+        "in_tokens": 1302,
+        "out_tokens": 1127,
+        "total_tokens": 2429,
+        "latency_ms": 3378,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -125,36 +132,36 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1847,
-        "out_tokens": 53,
-        "total_tokens": 1900,
-        "latency_ms": 1375,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 0,
-        "revision": 0,
-        "phase": "first_pass"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 710,
-        "out_tokens": 9,
-        "total_tokens": 719,
-        "latency_ms": 1205,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 0,
-        "revision": 0,
-        "phase": "first_pass"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
         "in_tokens": 2362,
-        "out_tokens": 287,
-        "total_tokens": 2649,
-        "latency_ms": 1993,
+        "out_tokens": 704,
+        "total_tokens": 3066,
+        "latency_ms": 5346,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
+      },
+      {
+        "node": "researcher",
+        "call_type": "extract",
+        "in_tokens": 1629,
+        "out_tokens": 1634,
+        "total_tokens": 3263,
+        "latency_ms": 6257,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
+      },
+      {
+        "node": "analyst",
+        "call_type": "analyze",
+        "in_tokens": 3398,
+        "out_tokens": 286,
+        "total_tokens": 3684,
+        "latency_ms": 3038,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -164,10 +171,10 @@
       {
         "node": "researcher",
         "call_type": "gap_plan",
-        "in_tokens": 587,
-        "out_tokens": 46,
-        "total_tokens": 633,
-        "latency_ms": 1061,
+        "in_tokens": 609,
+        "out_tokens": 68,
+        "total_tokens": 677,
+        "latency_ms": 1068,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
@@ -177,10 +184,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1912,
-        "out_tokens": 710,
-        "total_tokens": 2622,
-        "latency_ms": 3516,
+        "in_tokens": 2091,
+        "out_tokens": 249,
+        "total_tokens": 2340,
+        "latency_ms": 1817,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
@@ -190,104 +197,78 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1576,
-        "out_tokens": 713,
-        "total_tokens": 2289,
-        "latency_ms": 3016,
+        "in_tokens": 1101,
+        "out_tokens": 421,
+        "total_tokens": 1522,
+        "latency_ms": 2006,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 1,
-        "revision": 0,
-        "phase": "gap_loop"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 2896,
-        "out_tokens": 293,
-        "total_tokens": 3189,
-        "latency_ms": 2273,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 1,
-        "revision": 0,
-        "phase": "gap_loop"
-      },
-      {
-        "node": "researcher",
-        "call_type": "gap_plan",
-        "in_tokens": 586,
-        "out_tokens": 38,
-        "total_tokens": 624,
-        "latency_ms": 1080,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite",
-        "research_loop": 2,
         "revision": 0,
         "phase": "gap_loop"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2525,
-        "out_tokens": 459,
-        "total_tokens": 2984,
-        "latency_ms": 2912,
+        "in_tokens": 2251,
+        "out_tokens": 513,
+        "total_tokens": 2764,
+        "latency_ms": 2717,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 2,
+        "research_loop": 1,
         "revision": 0,
         "phase": "gap_loop"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1347,
-        "out_tokens": 1336,
-        "total_tokens": 2683,
-        "latency_ms": 4453,
+        "in_tokens": 1432,
+        "out_tokens": 572,
+        "total_tokens": 2004,
+        "latency_ms": 2236,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 2,
+        "research_loop": 1,
         "revision": 0,
         "phase": "gap_loop"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3852,
-        "out_tokens": 256,
-        "total_tokens": 4108,
-        "latency_ms": 2390,
+        "in_tokens": 4142,
+        "out_tokens": 319,
+        "total_tokens": 4461,
+        "latency_ms": 2275,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 2,
+        "research_loop": 1,
         "revision": 0,
         "phase": "gap_loop"
       },
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 1928,
-        "out_tokens": 1499,
-        "total_tokens": 3427,
-        "latency_ms": 7101,
+        "in_tokens": 2283,
+        "out_tokens": 1451,
+        "total_tokens": 3734,
+        "latency_ms": 7731,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 2,
+        "research_loop": 1,
         "revision": 0,
         "phase": "first_pass"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 3806,
-        "out_tokens": 363,
-        "total_tokens": 4169,
-        "latency_ms": 2527,
+        "in_tokens": 3804,
+        "out_tokens": 104,
+        "total_tokens": 3908,
+        "latency_ms": 1757,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
-        "research_loop": 2,
+        "research_loop": 1,
         "revision": 0,
         "phase": "first_pass"
       }
@@ -296,305 +277,294 @@
   "findings": [
     {
       "id": "F001",
-      "claim": "Ghana, Rwanda, and Ethiopia are early adopters of Digital Public Infrastructure approaches.",
-      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
-      "confidence": "medium"
+      "claim": "Ghana is at an advanced stage of implementation regarding digital public infrastructure.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
+      "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "Ghana established a Digital Economy Policy Strategy in 2024.",
+      "claim": "Ghana's Digital Economy Policy Strategy (2024) positions digital infrastructure as foundational to economic transformation.",
       "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "Ghana Interbank Payment and Settlement Systems Limited was established in 2007 to provide a framework for financial data exchange.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
-    },
-    {
-      "id": "F004",
-      "claim": "Rwanda formalized its vision through the ICT Sector Strategic Plan for 2024\u20132029.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F005",
-      "claim": "Ethiopia is developing an Integrated Data Governance Framework.",
-      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F006",
-      "claim": "Ethiopia is developing a data governance strategy focused on health, agriculture, finance, and social protection.",
-      "source_url": "https://www.global-solutions-initiative.org/wp-content/uploads/2026/02/T20_TF_2_SB2_PB5_PolicyPlunbing.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F007",
-      "claim": "Research teams in Ethiopia have completed pilot studies on the impact of Digital Public Infrastructure.",
-      "source_url": "https://gdn.int/digitalisation",
-      "confidence": "high"
-    },
-    {
-      "id": "F008",
-      "claim": "A 2024 assessment of 31 African instant payment systems categorized Ghana's GHIPSS Instant Pay and Mobile Money Interoperability systems as progressed in inclusivity and interoperability.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
-    },
-    {
-      "id": "F009",
-      "claim": "Digital Public Infrastructure is a tool to streamline customs clearance, facilitate cross-border payments, and improve SME access to trade finance.",
-      "source_url": "https://acetforafrica.org/research-and-analysis/insights-ideas/digital-public-infrastructure-dpi-will-drive-ai-for-africas-economic-transformation",
-      "confidence": "low"
-    },
-    {
-      "id": "F010",
-      "claim": "CybAfrique is investigating critical failure points of Digital Public Infrastructure in Africa, focusing on governance gaps and the erosion of public trust.",
-      "source_url": "https://www.centerforfinancialinclusion.org/research/global-dpi-insights-community",
-      "confidence": "medium"
-    },
-    {
-      "id": "F011",
-      "claim": "CybAfrique is benchmarking Ethiopia against other nations regarding Digital Public Infrastructure failure points.",
-      "source_url": "https://www.centerforfinancialinclusion.org/research/global-dpi-insights-community",
-      "confidence": "medium"
-    },
-    {
-      "id": "F012",
-      "claim": "A 2024 assessment of 31 African instant payment systems found that none had reached a mature level of inclusivity.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
-    },
-    {
-      "id": "F013",
-      "claim": "A 2024 assessment of 31 African instant payment systems classified nine systems as progressed.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
-    },
-    {
-      "id": "F014",
-      "claim": "African instant payment systems processed 64 billion transactions in 2024.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "high"
-    },
-    {
-      "id": "F015",
-      "claim": "The total value of transactions processed by African instant payment systems in 2024 was nearly $2 trillion.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "high"
-    },
-    {
-      "id": "F016",
-      "claim": "Transaction volumes for African instant payment systems have grown at an average annual rate of 35% since 2020.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "high"
-    },
-    {
-      "id": "F017",
-      "claim": "Consumers in Angola, C\u00f4te d\u2019Ivoire, Madagascar, and Tunisia are adopting digital payments faster than merchants.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
-    },
-    {
-      "id": "F018",
-      "claim": "Young adults and women in Angola, C\u00f4te d\u2019Ivoire, Madagascar, and Tunisia face barriers to digital payment adoption including fraud concerns, lack of identification, and limited access to agents.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
-    },
-    {
-      "id": "F019",
-      "claim": "Academic research indicates a positive correlation between the adoption of digital payments and GDP growth.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F020",
-      "claim": "Growth of e-money is associated with stronger outcomes in monetary policy transmission.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F021",
-      "claim": "Growth of e-money is associated with growth in bank deposits and credit.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F022",
-      "claim": "Growth of e-money is associated with increased efficiency in financial intermediation.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F023",
-      "claim": "E-money growth enhances the ability of banks to create credit.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F024",
-      "claim": "E-money growth affects the responsiveness of lending rates.",
-      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F025",
-      "claim": "36 African countries operate instant payment systems.",
-      "source_url": "https://www.forbesafrica.com/current-affairs/2025/11/17/entrepreneurship-to-flourish-africas-instant-payments-hit-64-billion-transactions-new-report-shows",
-      "confidence": "medium"
-    },
-    {
-      "id": "F026",
-      "claim": "The Integrated Customs Management System in Ghana allows for electronic processing of customs declarations.",
-      "source_url": "https://dpi.africa.com/transforming-governance-the-impact-of-digital-public-infrastructure-on-public-services-in-ghana",
-      "confidence": "high"
-    },
-    {
-      "id": "F027",
-      "claim": "The Customs Division of the Ghana Revenue Authority reported a 20 percent increase in revenue in 2021 compared to 2020 following the introduction of the Integrated Customs Management System.",
-      "source_url": "https://dpi.africa.com/transforming-governance-the-impact-of-digital-public-infrastructure-on-public-services-in-ghana",
-      "confidence": "high"
-    },
-    {
-      "id": "F028",
-      "claim": "A WTO report states that limited electronic invoicing and customs clearance processes in Ghana increase costs and inefficiencies.",
-      "source_url": "https://www.wto.org/english/tratop_e/serv_e/ghana-report-digital-trade-for-africa-initiative_e.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F029",
-      "claim": "The Ghana Integrated Financial Ecosystem was established in 2022 to facilitate access to digital trade finance and guarantees for MSMEs.",
-      "source_url": "https://dco.org/wp-content/uploads/2025/10/Ghana-Report.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F030",
-      "claim": "The Bank of Ghana launched a Digital Credentials system to streamline SME participation in digital trade.",
-      "source_url": "https://dco.org/wp-content/uploads/2025/10/Ghana-Report.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F031",
-      "claim": "The total value of mobile money accounts with commercial banks in Ghana reached GH\u00a218.69 billion by the end of March 2024.",
-      "source_url": "https://dpi.africa.com/transforming-governance-the-impact-of-digital-public-infrastructure-on-public-services-in-ghana",
-      "confidence": "high"
-    },
-    {
-      "id": "F032",
-      "claim": "An IMF report from April 2020 found that nearly half of the countries in Sub-Saharan Africa experienced a statistically significant boost in tax collection efficiency after implementing e-filing systems.",
-      "source_url": "https://www.elibrary.imf.org/display/book/9781513536835/ch03.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F033",
       "claim": "The Ghana Interbank Payment and Settlement Systems Limited was established in 2007.",
       "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
-      "id": "F034",
-      "claim": "GhIPSS serves as the backbone for financial data exchange and cross-institutional payments in Ghana.",
+      "id": "F004",
+      "claim": "The Ghana Interbank Payment and Settlement Systems Limited created a framework for financial data exchange, data protection protocols, and compliance.",
       "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
-      "id": "F035",
-      "claim": "GhIPSS is utilized by banks, savings and loans companies, mobile network operators, and third-party payment providers in Ghana.",
+      "id": "F005",
+      "claim": "A 2024 assessment categorized Ghana\u2019s GHIPSS Instant Pay and Mobile Money Interoperability as progressed systems.",
       "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
     },
     {
-      "id": "F036",
-      "claim": "GhIPSS is not integrated into a government-wide data exchange platform in Ghana.",
-      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
-      "confidence": "high"
-    },
-    {
-      "id": "F037",
-      "claim": "Digitalization has enabled microfinance and microcredit institutions to serve the MSME market in Ghana.",
-      "source_url": "https://www.afi-global.org/wp-content/uploads/2024/10/AFI_AfPI_SMEFWG_survey-report_AW2_digital.pdf",
-      "confidence": "medium"
-    },
-    {
-      "id": "F038",
-      "claim": "Ghana is in the process of introducing digital IDs.",
-      "source_url": "https://www.elibrary.imf.org/display/book/9781513536835/ch03.xml",
-      "confidence": "high"
-    },
-    {
-      "id": "F039",
-      "claim": "Rwanda's Irembo platform processed over 30 million service requests by 2025.",
-      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F040",
+      "id": "F006",
       "claim": "Rwanda is at an advanced stage of implementation regarding digital public infrastructure.",
       "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
       "confidence": "high"
     },
     {
-      "id": "F041",
-      "claim": "Rwanda's digital strategy includes a focus on promoting basic digital and financial literacy.",
-      "source_url": "https://www.elibrary.imf.org/display/book/9781513536835/ch03.xml",
+      "id": "F007",
+      "claim": "Rwanda's ICT Sector Strategic Plan (2024\u20132029) positions digital infrastructure as foundational to economic transformation.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "high"
     },
     {
-      "id": "F042",
-      "claim": "Entrepreneurial ecosystem mapping has been used to surface bottlenecks and inform policy design in Rwanda.",
-      "source_url": "https://air.unimi.it/retrieve/8141c011-d287-4805-a1e2-99c382e71469/RSC_GGP_Ferracane_Nordas_2026.pdf",
-      "confidence": "medium"
-    },
-    {
-      "id": "F043",
+      "id": "F008",
       "claim": "Ethiopia is at an advanced stage of implementation regarding digital public infrastructure.",
       "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-report-executive_summary-v2.1_0.pdf",
       "confidence": "high"
     },
     {
-      "id": "F044",
-      "claim": "Entrepreneurial ecosystem mapping has been used to surface bottlenecks and inform policy design in Ethiopia.",
-      "source_url": "https://air.unimi.it/retrieve/8141c011-d287-4805-a1e2-99c382e71469/RSC_GGP_Ferracane_Nordas_2026.pdf",
+      "id": "F009",
+      "claim": "Digital public infrastructure implementation in Africa is under-financed and fragmented.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
       "confidence": "medium"
     },
     {
-      "id": "F045",
-      "claim": "Mobile financial services have the potential to enhance affordable access to finance for SMEs in 49 Sub-Saharan African countries.",
-      "source_url": "https://www.idos-research.de/uploads/media/DP_4.2020.pdf",
+      "id": "F010",
+      "claim": "A 2024 assessment of 31 instant payment systems in Africa found that none had reached a mature level of inclusivity.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
       "confidence": "high"
+    },
+    {
+      "id": "F011",
+      "claim": "A 2024 assessment of 31 instant payment systems in Africa classified nine systems as progressed.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "high"
+    },
+    {
+      "id": "F012",
+      "claim": "Academic research indicates a positive correlation between the adoption of digital payment instruments and GDP growth across multiple countries.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "medium"
+    },
+    {
+      "id": "F013",
+      "claim": "Panel data analysis of 47 countries shows e-money growth is associated with stronger monetary policy transmission.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F014",
+      "claim": "Panel data analysis of 47 countries shows e-money growth is associated with increased bank deposits and credit.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F015",
+      "claim": "Panel data analysis of 47 countries shows e-money growth is associated with improved efficiency in financial intermediation.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F016",
+      "claim": "Instant payment systems provide faster and less expensive access to funds for end users and SMEs.",
+      "source_url": "https://www.finextra.com/the-long-read/1531/instant-payments-in-africa-in-2026-will-drive-the-next-economic-growth-era",
+      "confidence": "medium"
+    },
+    {
+      "id": "F017",
+      "claim": "Instant payment systems increase the availability of digital merchant payments.",
+      "source_url": "https://www.finextra.com/the-long-read/1531/instant-payments-in-africa-in-2026-will-drive-the-next-economic-growth-era",
+      "confidence": "medium"
+    },
+    {
+      "id": "F018",
+      "claim": "Instant payment systems reduce cash-handling costs.",
+      "source_url": "https://www.finextra.com/the-long-read/1531/instant-payments-in-africa-in-2026-will-drive-the-next-economic-growth-era",
+      "confidence": "medium"
+    },
+    {
+      "id": "F019",
+      "claim": "As of 2025, there are 36 live instant payment systems across 31 African countries.",
+      "source_url": "https://cioafrica.co/new-siips-report-shows-rapid-growth-in-instant-payments",
+      "confidence": "high"
+    },
+    {
+      "id": "F020",
+      "claim": "Thirty-six countries in Africa have implemented a combination of live instant payment systems, digital ID systems, and data protection frameworks.",
+      "source_url": "https://cioafrica.co/new-siips-report-shows-rapid-growth-in-instant-payments",
+      "confidence": "high"
+    },
+    {
+      "id": "F021",
+      "claim": "The share of adults using digital payments in Sub-Saharan Africa increased from approximately 25% to 50% over the last decade.",
+      "source_url": "https://fastpayments.worldbank.org/sites/default/files/2026-03/Scaling%20Instant%20Payments%20in%20Africa_White%20Paper.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F022",
+      "claim": "Data on bank branches and ATMs is available for Benin, Burkina Faso, C\u00f4te d\u2019Ivoire, Guinea-Bissau, Mali, Niger, Senegal, and Togo.",
+      "source_url": "https://www.elibrary.imf.org/view/journals/087/2025/004/article-A001-en.xml",
+      "confidence": "high"
+    },
+    {
+      "id": "F023",
+      "claim": "Namibia is deploying the X-Road interoperability framework to establish a national data exchange backbone.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F024",
+      "claim": "Benin is deploying the X-Road interoperability framework to establish a national data exchange backbone.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F025",
+      "claim": "Tanzania utilizes the Jamii X-Change platform to facilitate secure data sharing between government and private sector entities.",
+      "source_url": "https://ecdpm.org/application/files/5217/7685/8488/Digital-public-infrastructure-East-African-Community-ECDPM-Discussion-Paper-404-2026.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F026",
+      "claim": "Tanzania utilizes an open by design model for its digital public infrastructure.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F027",
+      "claim": "Uganda operates the UgHub service portal for e-government services.",
+      "source_url": "https://ecdpm.org/application/files/5217/7685/8488/Digital-public-infrastructure-East-African-Community-ECDPM-Discussion-Paper-404-2026.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F028",
+      "claim": "Rwanda utilizes the Irembo service portal for e-government services.",
+      "source_url": "https://ecdpm.org/application/files/5217/7685/8488/Digital-public-infrastructure-East-African-Community-ECDPM-Discussion-Paper-404-2026.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F029",
+      "claim": "Rwanda utilizes an open by design model for its digital public infrastructure.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F030",
+      "claim": "Ghana is exploring the expansion of existing API management and identity access management capabilities to facilitate government-wide data exchange.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "medium"
+    },
+    {
+      "id": "F031",
+      "claim": "The Republic of the Congo is developing a National Data Governance Strategy as of June 2026.",
+      "source_url": "https://www.uneca.org/stories/building-the-foundations-of-a-trusted-data-ecosystem-in-the-republic-of-the-congo",
+      "confidence": "high"
+    },
+    {
+      "id": "F032",
+      "claim": "Policymakers in Angola, Cabo Verde, Equatorial Guinea, Guinea-Bissau, Mozambique, and S\u00e3o Tom\u00e9 and Pr\u00edncipe are working to translate the UNESCO Data Governance Toolkit into practical policies.",
+      "source_url": "https://www.unesco.org/en/articles/advancing-data-infrastructure-and-governance-lusophone-africa-regional-workshop-concludes-luanda",
+      "confidence": "high"
+    },
+    {
+      "id": "F033",
+      "claim": "The Smart Africa Trust Alliance facilitates real-time, cross-border data exchange and interoperability across African nations.",
+      "source_url": "https://ecdpm.org/application/files/5217/7685/8488/Digital-public-infrastructure-East-African-Community-ECDPM-Discussion-Paper-404-2026.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F034",
+      "claim": "The African Union Data Policy Framework provides guidelines for regional and national data exchange.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F035",
+      "claim": "The African Union Interoperability Framework for Digital ID provides guidelines for regional and national data exchange.",
+      "source_url": "https://ecdpm.org/application/files/5217/7685/8488/Digital-public-infrastructure-East-African-Community-ECDPM-Discussion-Paper-404-2026.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F036",
+      "claim": "Mauritius is deploying an ISO-compliant digital ID wallet as part of its 2030 digital strategy.",
+      "source_url": "https://e-governancehub.ru/wp-content/uploads/2026/02/E_Governance_in_Africa_2026_%E2%80%94_Digitalisation_Across_Sectors_%E2%80%94_DRAFT-2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F037",
+      "claim": "The African Development Bank estimates that Africa requires over USD 100 billion per year to close the overall infrastructure gap.",
+      "source_url": "https://mohacafrica.org/infrastructure-gap-in-africa",
+      "confidence": "high"
+    },
+    {
+      "id": "F038",
+      "claim": "The Africa\u2019s Development Dynamics 2025 report estimates an annual investment of USD 155 billion in infrastructure is needed to boost African countries\u2019 productive transformation.",
+      "source_url": "https://www.oecd.org/en/publications/2025/10/africa-s-development-dynamics-2025_d153f2a8/full-report/developing-africa-s-infrastructure-for-productive-transformation_88f75d0c.html",
+      "confidence": "high"
+    },
+    {
+      "id": "F039",
+      "claim": "The ITU estimates that USD 1.6 trillion is required to close the global digital infrastructure gap.",
+      "source_url": "https://www.itu.int/hub/2025/01/digital-infrastructure-investment-usd-1-6-trillion-to-close-the-gap",
+      "confidence": "high"
+    },
+    {
+      "id": "F040",
+      "claim": "The internet economy in Africa has the potential to contribute USD 300 billion to the continent's GDP by 2025.",
+      "source_url": "https://mohacafrica.org/infrastructure-gap-in-africa",
+      "confidence": "medium"
+    },
+    {
+      "id": "F041",
+      "claim": "DPI-like ID systems are active or in pilot phases in Ethiopia, Ghana, Lesotho, Seychelles, Uganda, and Togo.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F042",
+      "claim": "DPI-like data exchange systems are active or in pilot phases in Angola, Benin, Botswana, Burkina Faso, Lesotho, Liberia, Madagascar, Mauritius, Morocco, and Namibia.",
+      "source_url": "https://www.undp.org/sites/g/files/zskgke326/files/2026-06/undp-africa-dpi-full_report-digital-version-v2.3_compr2.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F043",
+      "claim": "The ECOWAS Biometric Identity Card is a standardized digital ID initiative intended to facilitate cross-border movement and simplify ID verification among member states.",
+      "source_url": "https://www.uneca.org/sites/default/files/DITE-AFRICA/Africa%20Digtial%20ID%20Landscape%20Report%20%282023%29.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F044",
+      "claim": "Internet penetration is below 20 percent in Burundi, Central African Republic, and South Sudan.",
+      "source_url": "https://carnegieendowment.org/research/2025/02/digital-public-infrastructure-a-practical-approach-for-africa",
+      "confidence": "high"
+    },
+    {
+      "id": "F045",
+      "claim": "Over 100 million people in Sub-Saharan Africa lack official identification documents.",
+      "source_url": "https://milkeninstitute.org/content-hub/insights/global-digital-asset-adoption-sub-saharan-africa",
+      "confidence": "medium"
     }
   ],
   "revisions": 0,
-  "research_loops": 2,
+  "research_loops": 1,
   "searches_used": 5,
   "write_attempts": 1,
-  "unclosed_gaps": [],
+  "unclosed_gaps": [
+    "Comprehensive data on the actual annual investment currently being deployed toward digital public infrastructure in Africa to compare against the estimated USD 100-155 billion requirement."
+  ],
   "final_critique": {
     "scores": {
-      "factual_grounding": 4,
+      "factual_grounding": 5,
       "structural_coherence": 5,
-      "depth_of_analysis": 4,
-      "citation_integrity": 4,
-      "absence_of_filler": 4
+      "depth_of_analysis": 5,
+      "citation_integrity": 5,
+      "absence_of_filler": 5
     },
     "verdict": "pass",
     "target": "researcher",
-    "issues": [
-      {
-        "span": "Nations such as Ghana, Rwanda, and Ethiopia have emerged as early adopters, moving beyond pilot programs toward formalized national strategies that aim to reshape their domestic economies [F001].",
-        "criterion": "factual_grounding",
-        "problem": "The citation [F001] only supports the claim that these nations are early adopters; it does not support the claim that they have moved beyond pilot programs or that their strategies aim to reshape domestic economies.",
-        "fix": "Remove the claim about moving beyond pilot programs or provide specific evidence for each country's transition from pilot to national strategy."
-      },
-      {
-        "span": "The proliferation of digital payments has moved from a consumer convenience to a fundamental driver of macroeconomic health.",
-        "criterion": "factual_grounding",
-        "problem": "This is a broad, sweeping claim that is not directly supported by the provided evidence, which focuses on specific correlations between e-money and financial metrics rather than 'macroeconomic health' as a whole.",
-        "fix": "Rephrase to reflect the specific findings regarding financial intermediation and monetary policy transmission."
-      }
-    ],
-    "summary": "The report is well-structured and synthesizes the provided evidence effectively, though it occasionally overreaches with broad generalizations that exceed the scope of the source findings.",
+    "issues": [],
+    "summary": "The report is exceptionally well-grounded, logically structured, and effectively synthesizes the provided evidence while maintaining the requested tensions.",
     "broken_citations": [],
     "citation_cap_applied": false,
     "citation_cap_reason": ""
@@ -606,13 +576,13 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 25,
-      "kept": 25,
+      "found": 36,
+      "kept": 36,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h18/m6/l1",
+      "confidence": "h28/m8/l0",
       "budget": "3/5",
-      "tokens": 13825,
+      "tokens": 17924,
       "sent": [
         "digital public infrastructure adoption impact assessment Ghana Rwanda ",
         "economic outcomes of instant payment systems and digital ID in Sub-Sah",
@@ -624,19 +594,19 @@
       "action": "outlined",
       "sections": 3,
       "tensions": 1,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
+      "gaps_raw": 2,
+      "gaps_kept": 2,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 2649
+      "tokens": 3684
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "researcher",
       "why": "evidence gaps",
-      "gaps": 1,
+      "gaps": 2,
       "loop": "1/2",
       "searches": "3/5"
     },
@@ -644,53 +614,17 @@
       "node": "researcher",
       "action": "searched",
       "mode": "gap-driven",
-      "queries": 1,
-      "found": 7,
-      "kept": 7,
+      "queries": 2,
+      "found": 9,
+      "kept": 9,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h7/m0/l0",
-      "budget": "4/5",
-      "tokens": 5544,
-      "sent": [
-        "quantitative impact of digital public infrastructure on customs cleara"
-      ]
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 3,
-      "tensions": 1,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 3189
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "evidence gaps",
-      "gaps": 1,
-      "loop": "2/2",
-      "searches": "4/5"
-    },
-    {
-      "node": "researcher",
-      "action": "searched",
-      "mode": "gap-driven",
-      "queries": 1,
-      "found": 13,
-      "kept": 13,
-      "dropped_dupes": 0,
-      "unaddressed": 0,
-      "confidence": "h10/m3/l0",
+      "confidence": "h7/m2/l0",
       "budget": "5/5",
-      "tokens": 6291,
+      "tokens": 9307,
       "sent": [
-        "longitudinal study impact of digital public infrastructure on SME trad"
+        "cost estimate to close digital public infrastructure financing gap in ",
+        "standardized performance metrics and KPIs for digital ID and data exch"
       ]
     },
     {
@@ -698,12 +632,20 @@
       "action": "outlined",
       "sections": 4,
       "tensions": 1,
-      "gaps_raw": 0,
-      "gaps_kept": 0,
+      "gaps_raw": 1,
+      "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 4108
+      "tokens": 4461
+    },
+    {
+      "node": "supervisor",
+      "action": "retire_gaps",
+      "count": 1,
+      "why": "search budget spent",
+      "loops": "1/2",
+      "searches": "5/5"
     },
     {
       "node": "supervisor",
@@ -716,34 +658,37 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 1054,
+      "words": 1064,
       "in_range": true,
-      "cited": 44,
+      "sections": 5,
+      "ends_on": "Closing section: The limits of current momentum",
+      "has_limits": true,
+      "cited": 36,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3427
+      "tokens": 3734
     },
     {
       "node": "critic",
       "action": "scored",
       "verdict": "pass",
       "target": "-",
-      "worst": "factual_grounding=4",
-      "mean": 4.2,
-      "issues_raw": 2,
-      "issues_kept": 2,
+      "worst": "factual_grounding=5",
+      "mean": 5.0,
+      "issues_raw": 0,
+      "issues_kept": 0,
       "dropped_ungrounded": 0,
       "broken_cites": 0,
-      "cites": 44,
+      "cites": 36,
       "cite_cap": false,
-      "tokens": 4169
+      "tokens": 3908
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "finalize",
       "why": "critic passed",
-      "min_score": 4
+      "min_score": 5
     },
     {
       "node": "finalize",
@@ -751,8 +696,8 @@
       "degraded": false,
       "why": "-",
       "node_failures": 0,
-      "unclosed_gaps": 0,
-      "words": 1054
+      "unclosed_gaps": 1,
+      "words": 1102
     }
   ]
 }

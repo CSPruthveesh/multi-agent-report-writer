@@ -12,6 +12,12 @@ checkpoints/
 # excluded src/analysis/ — the cost module would never have been committed and a
 # fresh clone could not have run the report.
 /analysis/
+# Superseded hand-score directories, archived when a re-run or a change to the
+# blinding invalidates them. Every version is already reachable in history, so a
+# second copy under a new name only confuses which one is canonical. Ignored rather
+# than left untracked because code_version() reads the whole tree: an untracked file
+# makes every subsequent run record itself as produced from a dirty tree.
+results/handscore_superseded/
 .pytest_cache/
 .ruff_cache/
 .vscode/settings.json

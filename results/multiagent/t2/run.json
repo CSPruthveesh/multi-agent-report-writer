@@ -1,70 +1,75 @@
 {
   "system": "multiagent",
   "topic_id": "t2",
-  "generated_at": "2026-08-01T06:48:47.966565+00:00",
+  "generated_at": "2026-08-01T10:35:18.217123+00:00",
   "code_version": {
-    "commit": "626098ddabd188450bcbca601ae4c7c6dfb319de",
-    "commit_short": "626098d",
-    "dirty": null,
-    "inferred": true
+    "commit": "2008af88edc40c3c3936da813b0dd4c5ba89aea8",
+    "commit_short": "2008af8",
+    "dirty": true
   },
-  "word_count": 1005,
-  "findings_count": 51,
+  "word_count": 930,
+  "findings_count": 48,
   "citations": {
-    "cited_count": 39,
-    "valid_count": 51,
+    "cited_count": 30,
+    "valid_count": 48,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
+      "F003",
+      "F006",
+      "F007",
+      "F009",
       "F012",
-      "F026",
+      "F020",
+      "F021",
+      "F029",
+      "F031",
       "F032",
+      "F033",
       "F036",
-      "F040",
+      "F037",
+      "F039",
       "F041",
-      "F042",
-      "F043",
-      "F044",
-      "F047",
-      "F048",
-      "F049"
+      "F045",
+      "F046",
+      "F048"
     ],
-    "coverage": 0.765
+    "coverage": 0.625
   },
-  "wall_ms": 49565,
+  "wall_ms": 46604,
   "tokens": {
     "calls": 10,
-    "total_in": 22126,
-    "total_out": 9097,
-    "total": 31223,
+    "total_in": 21037,
+    "total_out": 8196,
+    "total": 29233,
     "by_node": {
       "researcher": {
         "calls": 7,
-        "in": 11648,
-        "out": 6961,
-        "total": 18609,
-        "ms": 28509
+        "in": 11233,
+        "out": 6328,
+        "total": 17561,
+        "ms": 28135
       },
       "analyst": {
         "calls": 1,
-        "in": 3999,
-        "out": 308,
-        "total": 4307,
-        "ms": 2671
+        "in": 3565,
+        "out": 314,
+        "total": 3879,
+        "ms": 2378
       },
       "writer": {
         "calls": 1,
-        "in": 2295,
-        "out": 1507,
-        "total": 3802,
-        "ms": 7539
+        "in": 2345,
+        "out": 1339,
+        "total": 3684,
+        "ms": 6203
       },
       "critic": {
         "calls": 1,
-        "in": 4184,
-        "out": 321,
-        "total": 4505,
-        "ms": 2418
+        "in": 3894,
+        "out": 215,
+        "total": 4109,
+        "ms": 1965
       }
     },
     "records": [
@@ -74,7 +79,7 @@
         "in_tokens": 105,
         "out_tokens": 75,
         "total_tokens": 180,
-        "latency_ms": 1407,
+        "latency_ms": 1138,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -84,10 +89,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2574,
-        "out_tokens": 633,
-        "total_tokens": 3207,
-        "latency_ms": 4569,
+        "in_tokens": 2323,
+        "out_tokens": 498,
+        "total_tokens": 2821,
+        "latency_ms": 4336,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -97,10 +102,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1514,
-        "out_tokens": 2186,
-        "total_tokens": 3700,
-        "latency_ms": 5974,
+        "in_tokens": 1370,
+        "out_tokens": 1451,
+        "total_tokens": 2821,
+        "latency_ms": 5021,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -110,10 +115,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2273,
-        "out_tokens": 699,
-        "total_tokens": 2972,
-        "latency_ms": 3714,
+        "in_tokens": 2105,
+        "out_tokens": 683,
+        "total_tokens": 2788,
+        "latency_ms": 4096,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -123,10 +128,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1508,
-        "out_tokens": 1492,
-        "total_tokens": 3000,
-        "latency_ms": 4180,
+        "in_tokens": 1512,
+        "out_tokens": 1305,
+        "total_tokens": 2817,
+        "latency_ms": 4720,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -136,10 +141,10 @@
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2236,
-        "out_tokens": 597,
-        "total_tokens": 2833,
-        "latency_ms": 3279,
+        "in_tokens": 2385,
+        "out_tokens": 635,
+        "total_tokens": 3020,
+        "latency_ms": 3168,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -149,10 +154,10 @@
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1438,
-        "out_tokens": 1279,
-        "total_tokens": 2717,
-        "latency_ms": 5386,
+        "in_tokens": 1433,
+        "out_tokens": 1681,
+        "total_tokens": 3114,
+        "latency_ms": 5656,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -162,10 +167,10 @@
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3999,
-        "out_tokens": 308,
-        "total_tokens": 4307,
-        "latency_ms": 2671,
+        "in_tokens": 3565,
+        "out_tokens": 314,
+        "total_tokens": 3879,
+        "latency_ms": 2378,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -175,10 +180,10 @@
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 2295,
-        "out_tokens": 1507,
-        "total_tokens": 3802,
-        "latency_ms": 7539,
+        "in_tokens": 2345,
+        "out_tokens": 1339,
+        "total_tokens": 3684,
+        "latency_ms": 6203,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -188,10 +193,10 @@
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 4184,
-        "out_tokens": 321,
-        "total_tokens": 4505,
-        "latency_ms": 2418,
+        "in_tokens": 3894,
+        "out_tokens": 215,
+        "total_tokens": 4109,
+        "latency_ms": 1965,
         "attempts": 1,
         "model": "gemini-3.1-flash-lite",
         "research_loop": 0,
@@ -215,296 +220,278 @@
     },
     {
       "id": "F003",
-      "claim": "Net absorption of office space turned negative in Q2 2020.",
-      "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
+      "claim": "San Francisco has the highest office vacancy rate in the nation at roughly 35%.",
+      "source_url": "https://meketa.com/wp-content/uploads/2025/07/MEKETA_Office-Space.pdf",
       "confidence": "high"
     },
     {
       "id": "F004",
-      "claim": "Net absorption of office space recovered in late 2021.",
-      "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
+      "claim": "Downtown San Francisco office vacancy rates exceed 36%.",
+      "source_url": "https://meketa.com/wp-content/uploads/2025/07/MEKETA_Office-Space.pdf",
       "confidence": "high"
     },
     {
       "id": "F005",
-      "claim": "Net absorption of office space has returned to negative territory.",
-      "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F006",
-      "claim": "San Francisco has an overall office vacancy rate of roughly 35%.",
-      "source_url": "https://meketa.com/wp-content/uploads/2025/07/MEKETA_Office-Space.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F007",
-      "claim": "San Francisco has a downtown office vacancy rate of over 36%.",
-      "source_url": "https://meketa.com/wp-content/uploads/2025/07/MEKETA_Office-Space.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F008",
       "claim": "Buildings classified as hardest-hit had an average vacancy rate of 38% at the end of 2022.",
       "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
       "confidence": "high"
     },
     {
-      "id": "F009",
-      "claim": "Hardest-hit buildings represent one in seven buildings in downtown markets.",
+      "id": "F006",
+      "claim": "One in seven buildings in downtown markets are classified as hardest-hit.",
       "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F007",
+      "claim": "One in 12 buildings in suburban markets are classified as hardest-hit.",
+      "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F008",
+      "claim": "Office space demand from 2019 to 2023 fell by 41% for companies expecting workers in the office one day per week.",
+      "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
+      "confidence": "high"
+    },
+    {
+      "id": "F009",
+      "claim": "Office space demand from 2019 to 2023 fell by 9% for companies requiring staff onsite two to three days per week.",
+      "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "Hardest-hit buildings represent one in 12 buildings in suburban markets.",
-      "source_url": "https://www.credaglobal.org/globalassets/research-and-publications/report/hybrid-work-and-the-future-of-office-space/naiop_hybrid-work-and-the-future-of-office.pdf",
+      "claim": "Office space demand from 2019 to 2023 grew by 1% for companies requiring full-time attendance.",
+      "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
       "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "National estimates indicate a cumulative loss of 20% to 45% in office valuations since 2019.",
+      "claim": "The Lincoln Institute of Land Policy estimates cumulative losses in office valuations between 20% and 45% since 2019.",
       "source_url": "https://www.lincolninst.edu/publications/working-papers/fiscal-impacts-work-from-home-commercial-property-values-united-states",
-      "confidence": "high"
+      "confidence": "low"
     },
     {
       "id": "F012",
-      "claim": "One source estimates a 20\u201330% drop in office building prices nationwide.",
+      "claim": "Meketa estimates a 20\u201330% drop in office building prices.",
       "source_url": "https://meketa.com/wp-content/uploads/2025/07/MEKETA_Office-Space.pdf",
       "confidence": "low"
     },
     {
       "id": "F013",
-      "claim": "The U.S. office sector has experienced an estimated $413 billion destruction in value.",
-      "source_url": "https://www.stern.nyu.edu/sites/default/files/2024-07/Gupta%20Mittal%20vanNieuwerburgh.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F014",
-      "claim": "Some properties in San Francisco, Boston, and New York have experienced valuation declines exceeding 50%.",
+      "claim": "Valuation declines in San Francisco, Boston, and New York have exceeded 50%.",
       "source_url": "https://www.lincolninst.edu/publications/working-papers/fiscal-impacts-work-from-home-commercial-property-values-united-states",
       "confidence": "high"
     },
     {
-      "id": "F015",
-      "claim": "A study on New York City office buildings estimated a 39% decline in long-run value.",
-      "source_url": "https://www.stern.nyu.edu/sites/default/files/2024-07/Gupta%20Mittal%20vanNieuwerburgh.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F016",
+      "id": "F014",
       "claim": "Commercial real estate taxes account for approximately 10% of overall tax revenue for the average U.S. city.",
       "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
       "confidence": "high"
     },
     {
+      "id": "F015",
+      "claim": "In some municipalities, property taxes represent a third or more of local budgets.",
+      "source_url": "https://www.lincolninst.edu/publications/working-papers/fiscal-impacts-work-from-home-commercial-property-values-united-states",
+      "confidence": "high"
+    },
+    {
+      "id": "F016",
+      "claim": "The feasibility gap is the difference between the cost of producing a residential unit and the unit's value on the open market.",
+      "source_url": "https://www.brookings.edu/articles/understanding-office-to-residential-conversion",
+      "confidence": "high"
+    },
+    {
       "id": "F017",
-      "claim": "Commercial property makes up nearly 60% of the property tax base in Atlanta.",
-      "source_url": "https://itep.org/the-impact-of-work-from-home-on-commercial-property-values-and-the-property-tax-in-u-s-cities",
+      "claim": "Office-to-residential conversions require modifying plumbing and sewage systems to add at least one bathroom per unit.",
+      "source_url": "https://www.enterprisecommunity.org/story/what-will-it-take-convert-offices-housing",
       "confidence": "high"
     },
     {
       "id": "F018",
-      "claim": "Commercial property makes up 41% of the property tax base in New York City.",
-      "source_url": "https://itep.org/the-impact-of-work-from-home-on-commercial-property-values-and-the-property-tax-in-u-s-cities",
+      "claim": "Office-to-residential conversions require re-working lighting and electrical systems.",
+      "source_url": "https://www.enterprisecommunity.org/story/what-will-it-take-convert-offices-housing",
       "confidence": "high"
     },
     {
       "id": "F019",
-      "claim": "Office space demand from 2019 to 2023 fell by 41% for companies requiring one day of in-office attendance per week.",
-      "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
+      "claim": "High building acquisition costs in Washington, D.C. push projected returns below the threshold required for investment.",
+      "source_url": "https://econsultsolutions.com/office-to-residential-conversions-incentive-programs",
       "confidence": "high"
     },
     {
       "id": "F020",
-      "claim": "Office space demand from 2019 to 2023 fell by 9% for companies requiring two to three days of in-office attendance per week.",
-      "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
-      "confidence": "high"
+      "claim": "Average office rents in the U.S. are approximately $30 per square foot.",
+      "source_url": "https://www.morganstanley.com/ideas/commercial-residential-real-estate-conversion",
+      "confidence": "medium"
     },
     {
       "id": "F021",
-      "claim": "Office space demand from 2019 to 2023 grew by 1% for companies requiring full-time in-office attendance.",
-      "source_url": "https://www.chicagobooth.edu/review/whats-impact-hybrid-work-commercial-real-estate",
-      "confidence": "high"
+      "claim": "Annualized apartment rents in the U.S. are approximately $29 per square foot.",
+      "source_url": "https://www.morganstanley.com/ideas/commercial-residential-real-estate-conversion",
+      "confidence": "medium"
     },
     {
       "id": "F022",
-      "claim": "Office attendance in major cities has stabilized at less than 75% of pre-pandemic levels.",
-      "source_url": "https://meketa.com/wp-content/uploads/2025/07/MEKETA_Office-Space.pdf",
+      "claim": "Market uncertainty regarding the financial value of existing office buildings complicates financing for owners and developers.",
+      "source_url": "https://www.brookings.edu/articles/understanding-office-to-residential-conversion",
       "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "Conversion is hindered by a gap between the cost of producing a residential unit and the unit's value on the open market.",
-      "source_url": "https://www.brookings.edu/articles/understanding-office-to-residential-conversion",
-      "confidence": "medium"
+      "claim": "Deep floor plates in office buildings create residential units that lack access to natural light.",
+      "source_url": "https://www.enterprisecommunity.org/story/what-will-it-take-convert-offices-housing",
+      "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "Projects face high acquisition costs, complex and expensive construction requirements, and difficult financial market conditions.",
-      "source_url": "https://bipartisanpolicy.org/explainer/vacant-offices-housing-conversion",
-      "confidence": "medium"
+      "claim": "Dated zoning regulations that separate office and residential uses conflict with conversion projects.",
+      "source_url": "https://www.brookings.edu/articles/understanding-office-to-residential-conversion",
+      "confidence": "high"
     },
     {
       "id": "F025",
-      "claim": "Zoning laws that separate office and residential uses impede conversion projects.",
-      "source_url": "https://www.brookings.edu/articles/understanding-office-to-residential-conversion",
+      "claim": "The lack of upfront financial support is a more significant limiting factor for conversions than affordability requirements.",
+      "source_url": "https://econsultsolutions.com/office-to-residential-conversions-incentive-programs",
       "confidence": "medium"
     },
     {
       "id": "F026",
-      "claim": "Long-term tax abatements are often less effective than substantial, upfront capital incentives.",
-      "source_url": "https://bipartisanpolicy.org/explainer/vacant-offices-housing-conversion",
-      "confidence": "medium"
-    },
-    {
-      "id": "F027",
-      "claim": "In Washington, D.C., high acquisition costs combined with insufficient incentives have kept returns below the threshold required for investment.",
-      "source_url": "https://bipartisanpolicy.org/explainer/vacant-offices-housing-conversion",
-      "confidence": "medium"
-    },
-    {
-      "id": "F028",
-      "claim": "Uncertainty regarding the financial value of existing office buildings for owners, renters, and lenders has slowed conversion activity.",
-      "source_url": "https://www.brookings.edu/articles/understanding-office-to-residential-conversion",
-      "confidence": "medium"
-    },
-    {
-      "id": "F029",
-      "claim": "The National Association of Realtors estimates that 43,500 housing units could be created across 27 major metros if 20% of vacant office square footage were converted.",
-      "source_url": "https://www.nar.realtor/reports/analysis-and-case-studies-on-office-to-housing-conversions",
+      "claim": "Substantial upfront capital incentives are more effective at ensuring financial viability for conversions than long-term tax abatement programs.",
+      "source_url": "https://econsultsolutions.com/office-to-residential-conversions-incentive-programs",
       "confidence": "high"
     },
     {
+      "id": "F027",
+      "claim": "New York City's 421-g tax exemption program and federal subsidies converted 13 million square feet of office space into 12,900 apartments between 1995 and 2006.",
+      "source_url": "https://comptroller.nyc.gov/reports/office-to-residential-conversions-in-nyc-economics-and-fiscal-estimates",
+      "confidence": "high"
+    },
+    {
+      "id": "F028",
+      "claim": "The economic viability of projects like 25 Water Street in NYC is often established prior to the passage of tax incentives.",
+      "source_url": "https://comptroller.nyc.gov/reports/office-to-residential-conversions-in-nyc-economics-and-fiscal-estimates",
+      "confidence": "high"
+    },
+    {
+      "id": "F029",
+      "claim": "Logistical and economic hurdles limit the potential for wide-scale office-to-residential conversion.",
+      "source_url": "https://www.morganstanley.com/ideas/commercial-residential-real-estate-conversion",
+      "confidence": "medium"
+    },
+    {
       "id": "F030",
-      "claim": "Research suggests a potential for 11,200 units in San Francisco compared to the city's goal of 82,000 new units by 2031.",
-      "source_url": "https://bipartisanpolicy.org/explainer/vacant-offices-housing-conversion",
+      "claim": "1.2 billion square feet of U.S. office space is technically viable for conversion.",
+      "source_url": "https://www.facebook.com/mspbj/posts/office-to-residential-conversion-projects-remain-challenging-but-new-research-id/935867611891374",
       "confidence": "medium"
     },
     {
       "id": "F031",
-      "claim": "The New York City 421-g program converted 13 million square feet of office space into approximately 12,900 apartments between 1995 and 2006.",
-      "source_url": "https://comptroller.nyc.gov/reports/office-to-residential-conversions-in-nyc-economics-and-fiscal-estimates",
-      "confidence": "high"
-    },
-    {
-      "id": "F032",
-      "claim": "The National Association of Realtors reports that 22 of 27 pandemic-impacted metros have market conditions where Class A apartment rents exceed Class B/C office rents.",
-      "source_url": "https://www.nar.realtor/reports/analysis-and-case-studies-on-office-to-housing-conversions",
-      "confidence": "high"
-    },
-    {
-      "id": "F033",
-      "claim": "New York City uses the 467-m tax benefit program, which requires income restrictions on at least 25% of units.",
-      "source_url": "https://comptroller.nyc.gov/reports/office-to-residential-conversions-in-nyc-economics-and-fiscal-estimates",
-      "confidence": "high"
-    },
-    {
-      "id": "F034",
-      "claim": "Chicago approved $260 million in tax increment financing for five downtown projects as of October 2025, requiring 30% of units to be affordable.",
-      "source_url": "https://www.jpmorgan.com/insights/real-estate/community-development-banking/office-to-residential-conversion-what-to-know",
-      "confidence": "high"
-    },
-    {
-      "id": "F035",
-      "claim": "Boston offers a tax abatement of up to 75% for projects with 17% of units designated as affordable.",
-      "source_url": "https://www.jpmorgan.com/insights/real-estate/community-development-banking/office-to-residential-conversion-what-to-know",
-      "confidence": "high"
-    },
-    {
-      "id": "F036",
-      "claim": "Missouri utilizes state historic tax credits to facilitate the adaptive reuse of older office buildings.",
-      "source_url": "https://bipartisanpolicy.org/explainer/vacant-offices-housing-conversion",
-      "confidence": "medium"
-    },
-    {
-      "id": "F037",
-      "claim": "Residential buildings generally have lower rentable square footage than office buildings.",
-      "source_url": "https://comptroller.nyc.gov/reports/office-to-residential-conversions-in-nyc-economics-and-fiscal-estimates",
-      "confidence": "medium"
-    },
-    {
-      "id": "F038",
-      "claim": "Developers may add floors, reduce apartment sizes, or market windowless interior spaces as home offices to preserve rentable space.",
-      "source_url": "https://comptroller.nyc.gov/reports/office-to-residential-conversions-in-nyc-economics-and-fiscal-estimates",
-      "confidence": "medium"
-    },
-    {
-      "id": "F039",
-      "claim": "The overall U.S. office vacancy rate was 19.0% as of Q1 2025.",
+      "claim": "The overall U.S. office vacancy rate was 19.0% in Q1 2025.",
       "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
       "confidence": "high"
     },
     {
-      "id": "F040",
+      "id": "F032",
       "claim": "The vacancy rate for Class B office buildings was 19.6% in Q4 2024.",
       "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
       "confidence": "high"
     },
     {
-      "id": "F041",
+      "id": "F033",
       "claim": "The vacancy rate for Class C office buildings was 14.5% in Q4 2024.",
       "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
       "confidence": "high"
     },
     {
-      "id": "F042",
-      "claim": "Total U.S. commercial office space is approximately 4.8 billion square feet as of Q1 2025.",
-      "source_url": "https://www.augustberres.com/august-berres-blog/unlocking-value-in-underutilized-commercial-real-estate",
-      "confidence": "high"
-    },
-    {
-      "id": "F043",
-      "claim": "Average office asking rents were $38.23 per square foot in Q4 2024.",
-      "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
-      "confidence": "high"
-    },
-    {
-      "id": "F044",
-      "claim": "Average office asking rents were $38.21 per square foot in Q1 2025.",
-      "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
-      "confidence": "high"
-    },
-    {
-      "id": "F045",
-      "claim": "As of Q3 2024, 71 million square feet of U.S. office inventory was planned for or undergoing conversion.",
-      "source_url": "https://www.augustberres.com/august-berres-blog/unlocking-value-in-underutilized-commercial-real-estate",
-      "confidence": "high"
-    },
-    {
-      "id": "F046",
-      "claim": "Planned or underway office conversions represent 1.7% of total U.S. office inventory.",
-      "source_url": "https://www.caliberco.com/rising-trend-of-office-space-conversion-to-multifamily-residential-units",
-      "confidence": "high"
-    },
-    {
-      "id": "F047",
-      "claim": "Planned conversions of 25 million square feet in 19 focus markets would reduce downtown office inventory by 2%.",
-      "source_url": "https://www.cbre.com/insights/books/shaping-tomorrows-cities/the-conversion-potential",
-      "confidence": "high"
-    },
-    {
-      "id": "F048",
-      "claim": "Office-to-residential conversions totaled 55,300 units in 2024.",
-      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
-      "confidence": "high"
-    },
-    {
-      "id": "F049",
-      "claim": "Projections for 2025 estimate 77,700 office-to-residential conversion units.",
+      "id": "F034",
+      "claim": "Hybrid and remote work preferences are a primary driver of diminished demand for large corporate office space.",
       "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
       "confidence": "medium"
     },
     {
-      "id": "F050",
-      "claim": "Converting zombie buildings with over 50% vacancy in 19 focus markets has the potential for 43,500 additional residential units.",
+      "id": "F035",
+      "claim": "Corporate efforts to reduce costs by shrinking office footprints are a primary driver of diminished demand for large corporate office space.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "medium"
+    },
+    {
+      "id": "F036",
+      "claim": "The average U.S. office asking rent was $38.21 per square foot in Q1 2025.",
+      "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
+      "confidence": "high"
+    },
+    {
+      "id": "F037",
+      "claim": "The average U.S. office asking rent was $38.23 per square foot in Q4 2024.",
+      "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
+      "confidence": "high"
+    },
+    {
+      "id": "F038",
+      "claim": "Office-to-residential units totaled 21,300 in 2022.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "high"
+    },
+    {
+      "id": "F039",
+      "claim": "Office-to-residential units totaled 45,200 in 2023.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "high"
+    },
+    {
+      "id": "F040",
+      "claim": "Office-to-residential units totaled 55,300 in 2024.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "high"
+    },
+    {
+      "id": "F041",
+      "claim": "Projections for 2025 estimate 77,700 office-to-residential units.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "medium"
+    },
+    {
+      "id": "F042",
+      "claim": "Planned or underway office-to-residential conversions represent 1.7% to 2% of total U.S. office inventory.",
       "source_url": "https://www.cbre.com/insights/books/shaping-tomorrows-cities/the-conversion-potential",
       "confidence": "high"
     },
     {
-      "id": "F051",
-      "claim": "Multifamily sector investment sales volume grew for 11 consecutive months as of early 2025.",
-      "source_url": "https://www.realogicinc.com/realogic-blog/an-in-depth-look-at-commercial-to-residential-conversions-part-8",
+      "id": "F043",
+      "claim": "Completing all office-to-residential projects planned or underway as of Q1 2024 in 19 focus markets would reduce downtown office inventory by 2%.",
+      "source_url": "https://www.cbre.com/insights/books/shaping-tomorrows-cities/the-conversion-potential",
+      "confidence": "high"
+    },
+    {
+      "id": "F044",
+      "claim": "There is over 43 million square feet of Class B and C office space with vacancy rates greater than 50% in or near mixed-use districts across 19 focus markets.",
+      "source_url": "https://www.cbre.com/insights/books/shaping-tomorrows-cities/the-conversion-potential",
+      "confidence": "high"
+    },
+    {
+      "id": "F045",
+      "claim": "The 43 million square feet of 'zombie' office space represents potential for approximately 43,500 new residential units.",
+      "source_url": "https://www.cbre.com/insights/books/shaping-tomorrows-cities/the-conversion-potential",
+      "confidence": "medium"
+    },
+    {
+      "id": "F046",
+      "claim": "New York offers a 90% property tax exemption for conversion projects with at least 25% affordable housing.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "high"
+    },
+    {
+      "id": "F047",
+      "claim": "Ohio utilizes a Historic Preservation Tax Credit to drive office-to-residential conversions.",
+      "source_url": "https://www.northspyre.com/blog/office-to-residential-conversions",
+      "confidence": "high"
+    },
+    {
+      "id": "F048",
+      "claim": "The Real Estate Roundtable is advocating for federal tax incentives to encourage the conversion of older, under-utilized buildings.",
+      "source_url": "https://www.rer.org/wp-content/uploads/CRE-By-the-Numbers-2025-July-2025.pdf",
       "confidence": "high"
     }
   ],
@@ -517,27 +504,21 @@
     "scores": {
       "factual_grounding": 5,
       "structural_coherence": 5,
-      "depth_of_analysis": 4,
+      "depth_of_analysis": 5,
       "citation_integrity": 5,
       "absence_of_filler": 4
     },
     "verdict": "pass",
-    "target": "analyst",
+    "target": "writer",
     "issues": [
       {
-        "span": "The shift toward hybrid work has fundamentally decoupled office demand from employment growth, triggering a period of profound instability in the U.S. commercial real estate sector.",
-        "criterion": "factual_grounding",
-        "problem": "The claim that office demand is decoupled from employment growth is not supported by the provided evidence.",
-        "fix": "Remove the claim regarding the decoupling of office demand from employment growth as it is not substantiated by the provided findings."
-      },
-      {
-        "span": "Consequently, conversion remains a targeted, policy-dependent response rather than a comprehensive solution to the structural shift in how commercial space is utilized.",
+        "span": "For the smart reader, the takeaway is that conversion will not \"save\" downtown office markets or restore municipal tax bases to their pre-2020 levels.",
         "criterion": "absence_of_filler",
-        "problem": "The conclusion repeats the summary of the argument rather than synthesizing new insight.",
-        "fix": "Condense the final paragraph to focus on the specific policy-dependent nature of the solution without restating the entire premise."
+        "problem": "This sentence is editorializing and uses informal, non-academic language ('smart reader') that adds no analytical value.",
+        "fix": "Remove the sentence and integrate the conclusion directly into the preceding analysis of market limitations."
       }
     ],
-    "summary": "The report is well-grounded and logically structured, though it occasionally includes broad assertions not directly supported by the provided evidence and contains a slightly redundant conclusion.",
+    "summary": "The report is exceptionally well-grounded and maintains structural coherence, though it occasionally lapses into informal editorializing in the conclusion.",
     "broken_citations": [],
     "citation_cap_applied": false,
     "citation_cap_reason": ""
@@ -549,13 +530,13 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 51,
-      "kept": 51,
+      "found": 48,
+      "kept": 48,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h39/m11/l1",
+      "confidence": "h37/m9/l2",
       "budget": "3/5",
-      "tokens": 18609,
+      "tokens": 17561,
       "sent": [
         "impact of hybrid work on US office vacancy rates and commercial real e",
         "feasibility and economic challenges of office-to-residential conversio",
@@ -566,13 +547,13 @@
       "node": "analyst",
       "action": "outlined",
       "sections": 4,
-      "tensions": 1,
+      "tensions": 2,
       "gaps_raw": 0,
       "gaps_kept": 0,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 4307
+      "tokens": 3879
     },
     {
       "node": "supervisor",
@@ -585,27 +566,30 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 1005,
+      "words": 930,
       "in_range": true,
-      "cited": 39,
+      "sections": 4,
+      "ends_on": "Conclusion: The Limits of Adaptive Reuse",
+      "has_limits": false,
+      "cited": 30,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3802
+      "tokens": 3684
     },
     {
       "node": "critic",
       "action": "scored",
       "verdict": "pass",
       "target": "-",
-      "worst": "depth_of_analysis=4",
-      "mean": 4.6,
-      "issues_raw": 2,
-      "issues_kept": 2,
+      "worst": "absence_of_filler=4",
+      "mean": 4.8,
+      "issues_raw": 1,
+      "issues_kept": 1,
       "dropped_ungrounded": 0,
       "broken_cites": 0,
-      "cites": 39,
+      "cites": 30,
       "cite_cap": false,
-      "tokens": 4505
+      "tokens": 4109
     },
     {
       "node": "supervisor",
@@ -621,7 +605,7 @@
       "why": "-",
       "node_failures": 0,
       "unclosed_gaps": 0,
-      "words": 1005
+      "words": 930
     }
   ]
 }

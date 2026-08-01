@@ -4,48 +4,48 @@
 
 IDs are per-report: F001 here is a different claim from F001 in the other evidence file. Do not cross-check.
 
-- **[F001]** (medium) Ghana, Rwanda, and Ethiopia are early adopters of Digital Public Infrastructure approaches.
-- **[F002]** (high) Ghana established a Digital Economy Policy Strategy in 2024.
-- **[F003]** (high) Ghana Interbank Payment and Settlement Systems Limited was established in 2007 to provide a framework for financial data exchange.
-- **[F004]** (high) Rwanda formalized its vision through the ICT Sector Strategic Plan for 2024–2029.
-- **[F005]** (high) Ethiopia is developing an Integrated Data Governance Framework.
-- **[F006]** (high) Ethiopia is developing a data governance strategy focused on health, agriculture, finance, and social protection.
-- **[F007]** (high) Research teams in Ethiopia have completed pilot studies on the impact of Digital Public Infrastructure.
-- **[F008]** (high) A 2024 assessment of 31 African instant payment systems categorized Ghana's GHIPSS Instant Pay and Mobile Money Interoperability systems as progressed in inclusivity and interoperability.
-- **[F009]** (low) Digital Public Infrastructure is a tool to streamline customs clearance, facilitate cross-border payments, and improve SME access to trade finance.
-- **[F010]** (medium) CybAfrique is investigating critical failure points of Digital Public Infrastructure in Africa, focusing on governance gaps and the erosion of public trust.
-- **[F011]** (medium) CybAfrique is benchmarking Ethiopia against other nations regarding Digital Public Infrastructure failure points.
-- **[F012]** (high) A 2024 assessment of 31 African instant payment systems found that none had reached a mature level of inclusivity.
-- **[F013]** (high) A 2024 assessment of 31 African instant payment systems classified nine systems as progressed.
-- **[F014]** (high) African instant payment systems processed 64 billion transactions in 2024.
-- **[F015]** (high) The total value of transactions processed by African instant payment systems in 2024 was nearly $2 trillion.
-- **[F016]** (high) Transaction volumes for African instant payment systems have grown at an average annual rate of 35% since 2020.
-- **[F017]** (medium) Consumers in Angola, Côte d’Ivoire, Madagascar, and Tunisia are adopting digital payments faster than merchants.
-- **[F018]** (medium) Young adults and women in Angola, Côte d’Ivoire, Madagascar, and Tunisia face barriers to digital payment adoption including fraud concerns, lack of identification, and limited access to agents.
-- **[F019]** (high) Academic research indicates a positive correlation between the adoption of digital payments and GDP growth.
-- **[F020]** (high) Growth of e-money is associated with stronger outcomes in monetary policy transmission.
-- **[F021]** (high) Growth of e-money is associated with growth in bank deposits and credit.
-- **[F022]** (high) Growth of e-money is associated with increased efficiency in financial intermediation.
-- **[F023]** (high) E-money growth enhances the ability of banks to create credit.
-- **[F024]** (high) E-money growth affects the responsiveness of lending rates.
-- **[F025]** (medium) 36 African countries operate instant payment systems.
-- **[F026]** (high) The Integrated Customs Management System in Ghana allows for electronic processing of customs declarations.
-- **[F027]** (high) The Customs Division of the Ghana Revenue Authority reported a 20 percent increase in revenue in 2021 compared to 2020 following the introduction of the Integrated Customs Management System.
-- **[F028]** (high) A WTO report states that limited electronic invoicing and customs clearance processes in Ghana increase costs and inefficiencies.
-- **[F029]** (high) The Ghana Integrated Financial Ecosystem was established in 2022 to facilitate access to digital trade finance and guarantees for MSMEs.
-- **[F030]** (high) The Bank of Ghana launched a Digital Credentials system to streamline SME participation in digital trade.
-- **[F031]** (high) The total value of mobile money accounts with commercial banks in Ghana reached GH¢18.69 billion by the end of March 2024.
-- **[F032]** (high) An IMF report from April 2020 found that nearly half of the countries in Sub-Saharan Africa experienced a statistically significant boost in tax collection efficiency after implementing e-filing systems.
-- **[F033]** (high) The Ghana Interbank Payment and Settlement Systems Limited was established in 2007.
-- **[F034]** (high) GhIPSS serves as the backbone for financial data exchange and cross-institutional payments in Ghana.
-- **[F035]** (high) GhIPSS is utilized by banks, savings and loans companies, mobile network operators, and third-party payment providers in Ghana.
-- **[F036]** (high) GhIPSS is not integrated into a government-wide data exchange platform in Ghana.
-- **[F037]** (medium) Digitalization has enabled microfinance and microcredit institutions to serve the MSME market in Ghana.
-- **[F038]** (high) Ghana is in the process of introducing digital IDs.
-- **[F039]** (high) Rwanda's Irembo platform processed over 30 million service requests by 2025.
-- **[F040]** (high) Rwanda is at an advanced stage of implementation regarding digital public infrastructure.
-- **[F041]** (high) Rwanda's digital strategy includes a focus on promoting basic digital and financial literacy.
-- **[F042]** (medium) Entrepreneurial ecosystem mapping has been used to surface bottlenecks and inform policy design in Rwanda.
-- **[F043]** (high) Ethiopia is at an advanced stage of implementation regarding digital public infrastructure.
-- **[F044]** (medium) Entrepreneurial ecosystem mapping has been used to surface bottlenecks and inform policy design in Ethiopia.
-- **[F045]** (high) Mobile financial services have the potential to enhance affordable access to finance for SMEs in 49 Sub-Saharan African countries.
+- **[F001]** (high) Ghana is at an advanced stage of implementation regarding digital public infrastructure.
+- **[F002]** (high) Ghana's Digital Economy Policy Strategy (2024) positions digital infrastructure as foundational to economic transformation.
+- **[F003]** (high) The Ghana Interbank Payment and Settlement Systems Limited was established in 2007.
+- **[F004]** (high) The Ghana Interbank Payment and Settlement Systems Limited created a framework for financial data exchange, data protection protocols, and compliance.
+- **[F005]** (high) A 2024 assessment categorized Ghana’s GHIPSS Instant Pay and Mobile Money Interoperability as progressed systems.
+- **[F006]** (high) Rwanda is at an advanced stage of implementation regarding digital public infrastructure.
+- **[F007]** (high) Rwanda's ICT Sector Strategic Plan (2024–2029) positions digital infrastructure as foundational to economic transformation.
+- **[F008]** (high) Ethiopia is at an advanced stage of implementation regarding digital public infrastructure.
+- **[F009]** (medium) Digital public infrastructure implementation in Africa is under-financed and fragmented.
+- **[F010]** (high) A 2024 assessment of 31 instant payment systems in Africa found that none had reached a mature level of inclusivity.
+- **[F011]** (high) A 2024 assessment of 31 instant payment systems in Africa classified nine systems as progressed.
+- **[F012]** (medium) Academic research indicates a positive correlation between the adoption of digital payment instruments and GDP growth across multiple countries.
+- **[F013]** (high) Panel data analysis of 47 countries shows e-money growth is associated with stronger monetary policy transmission.
+- **[F014]** (high) Panel data analysis of 47 countries shows e-money growth is associated with increased bank deposits and credit.
+- **[F015]** (high) Panel data analysis of 47 countries shows e-money growth is associated with improved efficiency in financial intermediation.
+- **[F016]** (medium) Instant payment systems provide faster and less expensive access to funds for end users and SMEs.
+- **[F017]** (medium) Instant payment systems increase the availability of digital merchant payments.
+- **[F018]** (medium) Instant payment systems reduce cash-handling costs.
+- **[F019]** (high) As of 2025, there are 36 live instant payment systems across 31 African countries.
+- **[F020]** (high) Thirty-six countries in Africa have implemented a combination of live instant payment systems, digital ID systems, and data protection frameworks.
+- **[F021]** (medium) The share of adults using digital payments in Sub-Saharan Africa increased from approximately 25% to 50% over the last decade.
+- **[F022]** (high) Data on bank branches and ATMs is available for Benin, Burkina Faso, Côte d’Ivoire, Guinea-Bissau, Mali, Niger, Senegal, and Togo.
+- **[F023]** (high) Namibia is deploying the X-Road interoperability framework to establish a national data exchange backbone.
+- **[F024]** (high) Benin is deploying the X-Road interoperability framework to establish a national data exchange backbone.
+- **[F025]** (high) Tanzania utilizes the Jamii X-Change platform to facilitate secure data sharing between government and private sector entities.
+- **[F026]** (high) Tanzania utilizes an open by design model for its digital public infrastructure.
+- **[F027]** (high) Uganda operates the UgHub service portal for e-government services.
+- **[F028]** (high) Rwanda utilizes the Irembo service portal for e-government services.
+- **[F029]** (high) Rwanda utilizes an open by design model for its digital public infrastructure.
+- **[F030]** (medium) Ghana is exploring the expansion of existing API management and identity access management capabilities to facilitate government-wide data exchange.
+- **[F031]** (high) The Republic of the Congo is developing a National Data Governance Strategy as of June 2026.
+- **[F032]** (high) Policymakers in Angola, Cabo Verde, Equatorial Guinea, Guinea-Bissau, Mozambique, and São Tomé and Príncipe are working to translate the UNESCO Data Governance Toolkit into practical policies.
+- **[F033]** (medium) The Smart Africa Trust Alliance facilitates real-time, cross-border data exchange and interoperability across African nations.
+- **[F034]** (high) The African Union Data Policy Framework provides guidelines for regional and national data exchange.
+- **[F035]** (high) The African Union Interoperability Framework for Digital ID provides guidelines for regional and national data exchange.
+- **[F036]** (high) Mauritius is deploying an ISO-compliant digital ID wallet as part of its 2030 digital strategy.
+- **[F037]** (high) The African Development Bank estimates that Africa requires over USD 100 billion per year to close the overall infrastructure gap.
+- **[F038]** (high) The Africa’s Development Dynamics 2025 report estimates an annual investment of USD 155 billion in infrastructure is needed to boost African countries’ productive transformation.
+- **[F039]** (high) The ITU estimates that USD 1.6 trillion is required to close the global digital infrastructure gap.
+- **[F040]** (medium) The internet economy in Africa has the potential to contribute USD 300 billion to the continent's GDP by 2025.
+- **[F041]** (high) DPI-like ID systems are active or in pilot phases in Ethiopia, Ghana, Lesotho, Seychelles, Uganda, and Togo.
+- **[F042]** (high) DPI-like data exchange systems are active or in pilot phases in Angola, Benin, Botswana, Burkina Faso, Lesotho, Liberia, Madagascar, Mauritius, Morocco, and Namibia.
+- **[F043]** (high) The ECOWAS Biometric Identity Card is a standardized digital ID initiative intended to facilitate cross-border movement and simplify ID verification among member states.
+- **[F044]** (high) Internet penetration is below 20 percent in Burundi, Central African Republic, and South Sudan.
+- **[F045]** (medium) Over 100 million people in Sub-Saharan Africa lack official identification documents.

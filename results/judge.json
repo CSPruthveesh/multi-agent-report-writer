@@ -16,21 +16,21 @@
       },
       "multiagent": {
         "factual_grounding": 5.0,
-        "structural_coherence": 5.0,
-        "depth_of_analysis": 5.0,
+        "structural_coherence": 4.5,
+        "depth_of_analysis": 4.5,
         "citation_integrity": 5.0,
-        "absence_of_filler": 5.0
+        "absence_of_filler": 4.5
       },
       "orderings": [
         "baseline",
         "multiagent"
       ],
-      "reasoning": "Report A excels in analyzing system-level engineering economics, specifically linking passive cooling to lower auxiliary power and OPEX. Report B provides a stronger analysis of supply chain bottlenecks, highlighting midstream processing limitations in North America and Europe and the manufacturing immaturity of hard carbon anodes.",
+      "reasoning": "The main difference between the two reports lies in their structural coherence. Report A is exceptionally well-organized, dedicating distinct sections to cost, cycle life, deployment niches, and evidence limitations, whereas Report B awkwardly buries its cycle life discussion inside a section on market growth and application deployment. Both reports exhibit flawless factual grounding and citation integrity, accurately tracing every claim to their respective evidence sets.",
       "words": {
         "baseline": 849,
-        "multiagent": 856
+        "multiagent": 961
       },
-      "spread": 0
+      "spread": 1
     },
     {
       "topic_id": "t2",
@@ -53,10 +53,10 @@
         "baseline",
         "multiagent"
       ],
-      "reasoning": "Report A stands out for its explicit discussion of evidence gaps, highlighting what is missing from the current literature regarding building classes and tax base impacts. Report B provides a deeper look into the physical and architectural workarounds of conversions (such as windowless home offices and adding floors) and connects the office vacancy crisis directly to municipal tax bases in cities like Atlanta and New York.",
+      "reasoning": "Both reports are exceptionally strong and well-grounded. Report A distinguishes itself by including a dedicated 'Evidence Gaps and Limitations' section that explicitly details what data is missing from the current literature, while Report B provides a slightly more detailed exploration of the physical and technical challenges of conversion, such as deep floor plates and plumbing modifications.",
       "words": {
         "baseline": 912,
-        "multiagent": 1005
+        "multiagent": 930
       },
       "spread": 1
     },
@@ -71,20 +71,20 @@
         "absence_of_filler": 5.0
       },
       "multiagent": {
-        "factual_grounding": 3.0,
-        "structural_coherence": 4.5,
-        "depth_of_analysis": 4.0,
-        "citation_integrity": 3.5,
-        "absence_of_filler": 4.0
+        "factual_grounding": 4.5,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.5,
+        "citation_integrity": 4.0,
+        "absence_of_filler": 4.5
       },
       "orderings": [
         "baseline",
         "multiagent"
       ],
-      "reasoning": "The primary difference lies in factual accuracy and synthesis quality; Report A perfectly aligns with its evidence and explicitly outlines critical research gaps, whereas Report B contains a direct factual error by inverting the consumer-versus-merchant adoption rates described in F017. Report A also achieves a tighter, more cohesive structure that avoids descriptive summaries in favor of analytical depth.",
+      "reasoning": "Report A focuses on the operational and governance challenges of DPI (such as system latency and legal hurdles) and explicitly structures its analysis around critical evidence gaps. Report B frames its analysis around a macroeconomic 'progress and paradox' narrative, contrasting rapid payment system expansion with a massive regional investment deficit. Report A maintains perfect citation integrity, whereas Report B has a minor mismatch where a Ghana-specific fact (F004) is loosely used to support a sentence about data governance initiatives in Congo and Angola.",
       "words": {
         "baseline": 884,
-        "multiagent": 1054
+        "multiagent": 994
       },
       "spread": 1
     },
@@ -92,14 +92,42 @@
       "topic_id": "t4",
       "rounds": 2,
       "baseline": {
-        "factual_grounding": 3.0,
+        "factual_grounding": 3.5,
         "structural_coherence": 5.0,
-        "depth_of_analysis": 4.0,
-        "citation_integrity": 3.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 3.5,
         "absence_of_filler": 5.0
       },
       "multiagent": {
         "factual_grounding": 4.5,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.5,
+        "citation_integrity": 4.5,
+        "absence_of_filler": 5.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
+      ],
+      "reasoning": "Both reports suffer from factual reversals of their respective evidence sets: Report A misrepresents F010 (reversing the direction of precision downweighting) and misapplies F035 (using a monopsony-related fact to describe perfect competition), while Report B reverses the direction of criticism in F008 (claiming Neumark and Wascher criticized zero-effect studies for failing pre-trends, when the reverse was true). Report A, however, offers slightly greater depth of analysis by explicitly outlining theoretical gaps and distinguishing between headcount and hours worked.",
+      "words": {
+        "baseline": 1040,
+        "multiagent": 969
+      },
+      "spread": 1
+    },
+    {
+      "topic_id": "t5",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 4.5,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 4.0,
         "structural_coherence": 5.0,
         "depth_of_analysis": 5.0,
         "citation_integrity": 4.5,
@@ -109,38 +137,10 @@
         "baseline",
         "multiagent"
       ],
-      "reasoning": "Report B is much more factually reliable, whereas Report A suffers from several critical citation errors and factual inversions. Specifically, Report A claims that meta-analyses downweight highly precise estimates (contradicting F010) and misattributes the removal of the hiring trade-off to a perfectly competitive market (misrepresenting F035).",
-      "words": {
-        "baseline": 1040,
-        "multiagent": 1027
-      },
-      "spread": 1
-    },
-    {
-      "topic_id": "t5",
-      "rounds": 2,
-      "baseline": {
-        "factual_grounding": 5.0,
-        "structural_coherence": 5.0,
-        "depth_of_analysis": 5.0,
-        "citation_integrity": 5.0,
-        "absence_of_filler": 5.0
-      },
-      "multiagent": {
-        "factual_grounding": 4.0,
-        "structural_coherence": 5.0,
-        "depth_of_analysis": 4.5,
-        "citation_integrity": 3.5,
-        "absence_of_filler": 5.0
-      },
-      "orderings": [
-        "baseline",
-        "multiagent"
-      ],
-      "reasoning": "Report A exhibits flawless citation integrity and factual grounding, whereas Report B contains a clear citation mismatch, using [F036] (which lists specific resistance genes in Tunisia and Turkey) to support a claim about a lack of longitudinal studies. Additionally, Report A provides a more robust trade policy analysis by integrating specific WTO SPS Agreement mechanisms and the Marine Mammal Protection Act as a regulatory model.",
+      "reasoning": "Report A provides a highly sophisticated analysis of international trade law (WTO SPS Agreement, TPP, and the Marine Mammal Protection Act as a policy template) while explicitly addressing the clinical 'evidence gap.' Report B focuses more on the clinical and environmental toll of AMR (including specific pathogens and mortality statistics) and domestic regulatory friction, though it slightly mischaracterizes its F029 source statistic regarding BAP-certified facility refusals.",
       "words": {
         "baseline": 898,
-        "multiagent": 936
+        "multiagent": 1132
       },
       "spread": 1
     },
@@ -155,23 +155,23 @@
         "absence_of_filler": 5.0
       },
       "multiagent": {
-        "factual_grounding": 5.0,
+        "factual_grounding": 3.5,
         "structural_coherence": 4.5,
         "depth_of_analysis": 4.0,
-        "citation_integrity": 5.0,
-        "absence_of_filler": 4.0
+        "citation_integrity": 3.0,
+        "absence_of_filler": 4.5
       },
       "orderings": [
         "baseline",
         "multiagent"
       ],
-      "reasoning": "Report A maintains a tight, analytical focus on academic AI research, exploring the compute gap, decentralized university workarounds, and the fragmentation of research collaboration while critically evaluating empirical data gaps. Report B, by contrast, devotes substantial space to corporate semiconductor revenues, market shares, and manufacturing statistics, which dilutes its focus on the academic sector.",
+      "reasoning": "The primary difference is that Report A directly addresses the prompt's focus on academic AI research and universities outside the US, carefully outlining the limitations of current empirical data on academic output. Report B, by contrast, focuses almost entirely on Chinese commercial AI firms, model benchmarks, and industry-wide hardware capacity, largely ignoring the academic context. Additionally, Report B contains several citation mismatches, such as citing F034 instead of F032 for benchmark error rates.",
       "words": {
         "baseline": 909,
-        "multiagent": 999
+        "multiagent": 965
       },
       "spread": 1
     }
   ],
-  "judge_tokens": 188669
+  "judge_tokens": 185298
 }
