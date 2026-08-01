@@ -65,14 +65,30 @@ would rejoin the current numbers beside the new ones. The previous set is commit
 """
 
 
+def _free_archive_path(topic_id: str) -> Path:
+    """A destination that does not already exist.
+
+    Superseding happens more than once — a topic can be re-scored, superseded again,
+    and archived again — so a fixed destination collides on the second round and the
+    printed command fails. Third time in this phase that a correct check shipped
+    remediation advice which did not work; the advice is part of the fix.
+    """
+    base = HS.parent / "handscore_superseded"
+    p = base / topic_id
+    n = 2
+    while p.exists():
+        p = base / f"{topic_id}-{n}"
+        n += 1
+    return p
+
+
 def _stale_refusal(topics: list[str]) -> str:
     listing = "\n".join(
         f"  {HS / t}  ({len(stale_labels(t))} of 2 reports changed)" for t in topics
     )
-    archive = HS.parent / "handscore_superseded"
     commands = "\n".join(
-        [f"  New-Item -ItemType Directory -Force {archive}"]
-        + [f"  Move-Item {HS / t} {archive / t}" for t in topics]
+        [f"  New-Item -ItemType Directory -Force {HS.parent / 'handscore_superseded'}"]
+        + [f"  Move-Item {HS / t} {_free_archive_path(t)}" for t in topics]
     )
     return STALE_REFUSAL.format(listing=listing, commands=commands)
 
