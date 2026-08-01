@@ -607,5 +607,10 @@
       "unclosed_gaps": 0,
       "words": 930
     }
+  ],
+  "max_research_loops": 2,
+  "max_research_loops_source": "constant-at-commit",
+  "backfilled": [
+    "max_research_loops"
   ]
 }

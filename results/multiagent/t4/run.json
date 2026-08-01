@@ -655,5 +655,10 @@
       "unclosed_gaps": 2,
       "words": 1152
     }
+  ],
+  "max_research_loops": 2,
+  "max_research_loops_source": "trace",
+  "backfilled": [
+    "max_research_loops"
   ]
 }
