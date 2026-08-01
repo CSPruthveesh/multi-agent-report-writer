@@ -53,6 +53,17 @@ button:hover:not(:disabled){background:var(--signal)}
 button:disabled{opacity:.4;cursor:default}
 button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
+/* The link across between the two pages. Outlined rather than filled, because on both
+   pages the filled button is the one that spends tokens and a second solid block beside
+   it would read as an equal choice. Shared because both pages carry one — the last time
+   a style existed on both pages in two copies it drifted. */
+.switch{display:inline-block;text-decoration:none;background:none;
+  border:1px solid var(--rule);color:var(--muted);border-radius:2px;
+  padding:8px 17px;font:600 11px/1 Archivo,sans-serif;
+  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.switch:hover{border-color:var(--signal);color:var(--signal)}
+.switch:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+
 /* ---------- trace lane ---------- */
 .trace{position:relative;min-height:120px}
 .trace::before{content:"";position:absolute;left:calc(var(--lane) - 1px);top:6px;bottom:6px;

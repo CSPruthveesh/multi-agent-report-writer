@@ -14,6 +14,7 @@
    trace.css. */
 .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
 .budgets{font:400 11px/1.7 'JetBrains Mono',monospace;color:var(--muted);text-align:right}
+.headright{display:flex;flex-direction:column;align-items:flex-end;gap:11px}
 
 .controls{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
 select{
@@ -70,7 +71,10 @@ select:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
       on the right is the point: watch what the orchestration costs against a single
       agent doing the same job.</p>
   </div>
-  <div class="budgets" id="budgets"></div>
+  <div class="headright">
+    <a class="switch" href="/">user</a>
+    <div class="budgets" id="budgets"></div>
+  </div>
 </header>
 
 <div class="controls">
