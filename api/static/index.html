@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run trace — Multi-Agent Report Writer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E7EBEC; --panel:#F8F9F9; --ink:#14181B; --muted:#6B7478;
+  --rule:#C3CACC; --rule-soft:#D8DEDF;
+  --signal:#0F6E6B;          /* instrument teal: normal operation */
+  --alarm:#C43B21;           /* chart-recorder red: over baseline */
+  --amber:#9A6B00;           /* degraded / retried */
+  --lane:56px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--rule-soft) 1px,transparent 1px),
+    linear-gradient(90deg,var(--rule-soft) 1px,transparent 1px);
+  background-size:100% 28px,28px 100%;
+  color:var(--ink);
+  font:400 15px/1.5 Archivo,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+
+/* ---------- masthead ---------- */
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px;flex-wrap:wrap}
+.eyebrow{font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+h1{font:700 30px/1 Archivo,sans-serif;letter-spacing:-.02em;margin:0}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;max-width:46ch}
+.budgets{font:400 11px/1.7 'JetBrains Mono',monospace;color:var(--muted);text-align:right}
+
+/* ---------- controls ---------- */
+.controls{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
+select{
+  flex:1;min-width:260px;background:var(--panel);border:1px solid var(--rule);
+  padding:11px 12px;font:400 14px Archivo,sans-serif;color:var(--ink);border-radius:2px}
+button{
+  background:var(--ink);color:var(--panel);border:none;padding:11px 26px;
+  font:600 13px/1 Archivo,sans-serif;letter-spacing:.04em;text-transform:uppercase;
+  cursor:pointer;border-radius:2px}
+button:hover:not(:disabled){background:var(--signal)}
+button:disabled{opacity:.4;cursor:default}
+select:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+
+/* ---------- layout ---------- */
+.grid{display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+/* ---------- trace lane ---------- */
+.trace{position:relative;min-height:120px}
+.trace::before{content:"";position:absolute;left:calc(var(--lane) - 1px);top:6px;bottom:6px;
+  width:2px;background:var(--rule)}
+.trace:empty::after{content:"No run yet. Pick a topic and start the run.";
+  display:block;padding:26px 0 26px var(--lane);color:var(--muted);font-size:14px}
+
+.ev{position:relative;display:grid;grid-template-columns:var(--lane) 1fr;
+  gap:14px;padding:9px 0;animation:in .22s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.dot{position:relative;height:22px}
+.dot::after{content:"";position:absolute;right:-6px;top:7px;width:9px;height:9px;
+  border-radius:50%;background:var(--signal);border:2px solid var(--paper)}
+.ev[data-loop="1"] .dot::after{background:var(--panel);border-color:var(--signal)}
+.ev[data-alarm="1"] .dot::after{background:var(--alarm)}
+.node{font:700 11px/22px 'JetBrains Mono',monospace;letter-spacing:.06em;
+  text-transform:uppercase;text-align:right;color:var(--ink)}
+.body{padding-top:1px}
+.action{font:600 14px/1.3 Archivo,sans-serif}
+.action .why{font-weight:400;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.chip{font:400 11px/1 'JetBrains Mono',monospace;color:var(--muted);
+  background:var(--panel);border:1px solid var(--rule-soft);padding:4px 7px;border-radius:2px}
+.chip b{font-weight:700;color:var(--ink)}
+.chip.hot{border-color:var(--alarm);color:var(--alarm)}
+.chip.warn{border-color:var(--amber);color:var(--amber)}
+
+/* return-edge bracket: encodes that this event is a loop re-entry */
+.ev[data-loop="1"]{background:linear-gradient(90deg,transparent 0,rgba(15,110,107,.05) 0)}
+.ev[data-loop="1"] .body::before{content:"↩ loop";float:right;
+  font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--signal);margin-left:10px}
+
+/* ---------- cost recorder: the signature element ---------- */
+.meter{position:sticky;top:20px;background:var(--panel);
+  border:1px solid var(--rule);border-radius:2px;padding:18px}
+.meter h2{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.mult{font:700 54px/.85 Archivo,sans-serif;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;transition:color .3s}
+.mult.over{color:var(--alarm)}
+.mult small{font:500 13px/1 'JetBrains Mono',monospace;letter-spacing:.06em;
+  color:var(--muted);display:block;margin-top:8px;text-transform:uppercase}
+
+/* the bar: a chart-recorder track with a hard baseline gate */
+.track{position:relative;height:26px;background:var(--paper);
+  border:1px solid var(--rule);margin:16px 0 6px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--signal);transition:width .35s ease-out}
+.fill.over{background:var(--alarm)}
+.gate{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);z-index:2}
+.gate::after{content:"baseline";position:absolute;top:-15px;left:4px;
+  font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink);white-space:nowrap}
+.readout{display:flex;justify-content:space-between;
+  font:400 11px/1.6 'JetBrains Mono',monospace;color:var(--muted)}
+.readout b{color:var(--ink);font-weight:700}
+
+.gauges{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule-soft)}
+.gauge{display:flex;justify-content:space-between;align-items:center;
+  font:400 11px/2 'JetBrains Mono',monospace;color:var(--muted)}
+.pips{display:flex;gap:3px}
+.pip{width:11px;height:5px;background:var(--rule)}
+.pip.on{background:var(--signal)}
+.pip.full{background:var(--alarm)}
+
+/* ---------- report ---------- */
+.report{margin-top:34px;background:var(--panel);border:1px solid var(--rule);
+  border-radius:2px;padding:30px 34px}
+.report h2{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 18px;
+  padding-bottom:12px;border-bottom:1px solid var(--rule-soft)}
+.md{font-size:15px;line-height:1.65;max-width:70ch}
+.md h1{font:700 25px/1.2 Archivo,sans-serif;margin:0 0 16px}
+.md h2{font:600 16px/1.3 Archivo,sans-serif;margin:26px 0 9px;
+  letter-spacing:0;text-transform:none;color:var(--ink);border:0;padding:0}
+.md p{margin:0 0 14px}
+.md cite{font:500 11px 'JetBrains Mono',monospace;font-style:normal;
+  color:var(--signal);background:rgba(15,110,107,.08);padding:1px 4px;border-radius:2px}
+.md hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
+.err{border-color:var(--alarm);color:var(--alarm)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="head">
+  <div>
+    <div class="eyebrow">Multi-agent report writer</div>
+    <h1>Run trace</h1>
+    <p class="sub">Researcher, analyst, writer and critic under a supervisor. The counter
+      on the right is the point: watch what the orchestration costs against a single
+      agent doing the same job.</p>
+  </div>
+  <div class="budgets" id="budgets"></div>
+</header>
+
+<div class="controls">
+  <select id="topic"><option>Loading topics…</option></select>
+  <button id="go">Start run</button>
+</div>
+
+<div class="grid">
+  <section class="trace" id="trace" aria-live="polite" aria-label="Node events"></section>
+
+  <aside class="meter">
+    <h2>Cost against baseline</h2>
+    <div class="mult" id="mult">0.00<span>×</span><small>of single-agent cost</small></div>
+    <div class="track">
+      <div class="fill" id="fill"></div>
+      <div class="gate" id="gate" style="left:20%"></div>
+    </div>
+    <div class="readout">
+      <span><b id="tok">0</b> tokens</span>
+      <span id="usdBox">—</span>
+    </div>
+    <div class="gauges" id="gauges"></div>
+  </aside>
+</div>
+
+<section class="report" id="report" hidden>
+  <h2 id="reportHead">Report</h2>
+  <div class="md" id="md"></div>
+</section>
+
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+let BUDGETS = {searches:5, research_loops:2, revisions:2};
+let BASE = {tokens:0, usd:0};
+let PRICED = false;               // dollars only when someone supplied rates
+const SCALE = 5;                     // track shows up to 5x baseline
+const GATE_PCT = 100 / SCALE;        // where the baseline gate sits
+
+fetch('/api/topics').then(r=>r.json()).then(d=>{
+  BUDGETS = d.budgets; BASE = d.baseline; PRICED = !!d.prices_supplied;
+  const sel = $('#topic');
+  sel.innerHTML = d.topics.map(t =>
+    `<option value="${t.id}">${t.id} · ${t.shape} · ${t.topic.slice(0,72)}…</option>`).join('');
+  $('#gate').style.left = GATE_PCT + '%';
+  $('#budgets').innerHTML = BASE.n
+    ? `baseline ${BASE.tokens.toLocaleString()} tokens${
+         BASE.usd == null ? '' : ` · $${BASE.usd.toFixed(4)}`}<br>
+       mean of ${BASE.n} single-agent runs<br>
+       budgets · ${BUDGETS.searches} searches · ${BUDGETS.research_loops} gap loops ·
+       ${BUDGETS.revisions} revisions`
+    : 'No baseline runs found — the multiple cannot be shown.';
+  drawGauges({searches:0, research_loops:0, revisions:0});
+});
+
+function drawGauges(b){
+  const rows = [['searches','searches',BUDGETS.searches],
+                ['research_loops','gap loops',BUDGETS.research_loops],
+                ['revisions','revisions',BUDGETS.revisions]];
+  $('#gauges').innerHTML = rows.map(([k,label,max])=>{
+    const used = b[k] || 0;
+    const pips = Array.from({length:max},(_,i)=>
+      `<span class="pip ${i<used ? (used>=max?'full':'on') : ''}"></span>`).join('');
+    return `<div class="gauge"><span>${label}</span>
+      <span class="pips">${pips}</span><span>${used}/${max}</span></div>`;
+  }).join('');
+}
+
+function chip(label,val,cls=''){ return `<span class="chip ${cls}">${label} <b>${val}</b></span>`; }
+
+const HIDE = new Set(['node','action','why','to','tokens']);
+
+function addEvent(d){
+  const e = d.event, isLoop = (e.why||'').includes('gap') || e.action==='retire_gaps' ||
+        (d.budgets.revisions>0 && e.node==='writer');
+  const alarm = ['degraded','parse_failed','skipped'].includes(e.action);
+  const chips = Object.entries(e)
+    .filter(([k,v]) => !HIDE.has(k) && v !== undefined && v !== '' && v !== false)
+    .map(([k,v]) => {
+      const hot = (k==='degraded' && v) || (k==='broken_cites' && v>0) ||
+                  (k==='fallback' && v) || (k==='dropped_ungrounded' && v>0);
+      return chip(k.replace(/_/g,' '), v, hot ? 'hot' : '');
+    });
+
+  if (e.node==='researcher' && d.budgets.searches)
+    chips.unshift(chip('budget', `${d.budgets.searches}/${BUDGETS.searches}`,
+      d.budgets.searches>=BUDGETS.searches ? 'warn' : ''));
+
+  const row = document.createElement('div');
+  row.className='ev'; row.dataset.loop = isLoop?'1':'0'; row.dataset.alarm = alarm?'1':'0';
+  row.innerHTML = `<div class="node">${e.node}<div class="dot"></div></div>
+    <div class="body">
+      <div class="action">${e.action}${e.to?` → ${e.to}`:''}
+        ${e.why?`<span class="why"> — ${e.why}</span>`:''}</div>
+      ${chips.length?`<div class="chips">${chips.join('')}</div>`:''}
+    </div>`;
+  $('#trace').appendChild(row);
+
+  const m = d.cost.multiple;
+  if (m != null){
+    const over = m > 1;
+    $('#mult').innerHTML = `${m.toFixed(2)}<span>×</span><small>of single-agent cost</small>`;
+    $('#mult').classList.toggle('over', over);
+    $('#fill').style.width = Math.min(100, m/SCALE*100) + '%';
+    $('#fill').classList.toggle('over', over);
+  }
+  $('#tok').textContent = d.cost.tokens.toLocaleString();
+  // Never render a dollar figure nobody verified. 8fd69a3 stripped these from the
+  // reports for that reason, and a demo is a bigger surface, not an exemption.
+  $('#usdBox').textContent = (PRICED && d.cost.usd != null)
+    ? '$' + d.cost.usd.toFixed(4) : 'no verified rates';
+  drawGauges(d.budgets);
+}
+
+function render(md){
+  return md.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/\[((?:F\d{3})(?:,\s*F\d{3})*)\]/g,'<cite>$1</cite>')
+    .replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/^---$/gm,'<hr>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .split(/\n{2,}/).map(b=>/^<(h1|h2|hr)/.test(b)?b:`<p>${b.replace(/\n/g,' ')}</p>`).join('');
+}
+
+$('#go').onclick = async () => {
+  const sel = $('#topic'), opt = sel.selectedOptions[0];
+  const topics = await fetch('/api/topics').then(r=>r.json());
+  const topic = topics.topics.find(t=>t.id===sel.value);
+  $('#trace').innerHTML=''; $('#report').hidden=true; $('#go').disabled=true;
+  $('#go').textContent='Running…';
+
+  const res = await fetch('/api/run',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({topic:topic.topic, topic_id:topic.id})});
+
+  const reader = res.body.getReader(), dec = new TextDecoder();
+  let buf='';
+  while(true){
+    const {done,value} = await reader.read();
+    if(done) break;
+    buf += dec.decode(value,{stream:true});
+    const frames = buf.split('\n\n'); buf = frames.pop();
+    for(const f of frames){
+      const ev = (f.match(/^event: (.+)$/m)||[])[1];
+      const dm = f.match(/^data: (.+)$/m); if(!dm) continue;
+      const d = JSON.parse(dm[1]);
+      if(ev==='node') addEvent(d);
+      else if(ev==='done'){
+        $('#report').hidden=false; $('#report').classList.remove('err');
+        const s = d.scores||{}, scored = Object.keys(s).length
+          ? ' · ' + Object.entries(s).map(([k,v])=>`${k.split('_')[0]} ${v}`).join(' · ') : '';
+        $('#reportHead').textContent =
+          `Report · ${d.report.split(/\s+/).length} words · ${d.cost.multiple}× baseline${scored}`;
+        $('#md').innerHTML = render(d.report);
+      }
+      else if(ev==='error'){
+        $('#report').hidden=false; $('#report').classList.add('err');
+        $('#reportHead').textContent='Run failed';
+        $('#md').textContent = `${d.error}: ${d.detail}`;
+      }
+    }
+  }
+  $('#go').disabled=false; $('#go').textContent='Start run';
+};
+</script>
+</body>
+</html>
