@@ -33,6 +33,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from evals.handscore import stale_labels
 from src.common.io import RESULTS, get_topic
 
 CRITERIA = [
@@ -109,14 +110,27 @@ def collect() -> dict[str, Any]:
 
 
 def collect_hand() -> dict[str, Any] | None:
+    """Hand scores, with any that describe a superseded run left out.
+
+    This function is where a stale hand score does its damage. It joins whatever is on
+    disk to the current judge numbers, so a directory left over from an earlier run
+    puts a human column and a judge column in the same table describing different
+    documents. stale_labels() is imported rather than restated so the two files cannot
+    drift on what "stale" means — the same argument evals/judge.py makes for importing
+    _body rather than reimplementing the blinding.
+    """
     hs = RESULTS / "handscore"
     if not hs.exists():
         return None
     per_sys: dict[str, list[dict[str, int]]] = {"baseline": [], "multiagent": []}
-    topics = []
+    topics: list[str] = []
+    stale: list[str] = []
     for d in sorted(hs.glob("*/")):
         mp, sc = d / "mapping.json", d / "handscores.json"
         if not (mp.exists() and sc.exists()):
+            continue
+        if stale_labels(d.name):
+            stale.append(d.name)
             continue
         m = json.loads(mp.read_text(encoding="utf-8"))
         s = json.loads(sc.read_text(encoding="utf-8"))["scores"]
@@ -124,9 +138,10 @@ def collect_hand() -> dict[str, Any] | None:
             per_sys[sysname].append(s[label])
         topics.append(d.name)
     if not topics:
-        return None
+        return {"topics": [], "means": {}, "stale": stale} if stale else None
     return {
         "topics": topics,
+        "stale": stale,
         "means": {
             sysname: {c: sum(x[c] for x in lst) / len(lst) for c in CRITERIA}
             for sysname, lst in per_sys.items() if lst
@@ -172,6 +187,17 @@ def check_agreement(means: dict, hand: dict | None) -> tuple[str | None, dict]:
         return (f"Judge and hand scores diverge by more than 1.0 on: {', '.join(bad)}. "
                 f"Trust your own read on those and explain the divergence."), diffs
     return None, diffs
+
+
+def check_stale_hand(hand: dict | None) -> str | None:
+    """Say what was dropped. A silent exclusion reads as full coverage."""
+    dropped = (hand or {}).get("stale") or []
+    if not dropped:
+        return None
+    return (f"Hand scores for {', '.join(dropped)} were left out: their copied reports no "
+            f"longer match the reports on disk, so they describe a superseded run. "
+            f"Re-score them, or say in the write-up that the hand column covers "
+            f"{len((hand or {}).get('topics') or [])} topics and not those.")
 
 
 def check_loop_value(cost: dict | None, means: dict) -> str | None:
@@ -285,8 +311,9 @@ def render(d: dict, md: bool) -> None:
             p(f"  {shape:<20} n={b['n']}  grounding {g:+.2f}  coherence {s:+.2f}  "
               f"mean {mn:+.2f}")
 
-    # hand scores
-    if hand:
+    # hand scores. `hand` can be truthy with no usable topics when every scored
+    # directory was dropped as stale, so this branches on the topics, not the dict.
+    if hand and hand.get("topics"):
         p("\n### Hand scores\n" if md else "\nHand scores (blind, "
           f"{len(hand['topics'])} topics: {', '.join(hand['topics'])})")
         _, diffs = check_agreement(means, hand)
@@ -312,6 +339,7 @@ def render(d: dict, md: bool) -> None:
         check_baseline_strength(means),
         check_agreement(means, hand)[0],
         check_loop_value(cost, means),
+        check_stale_hand(hand),
     ]
     warnings = [w for w in warnings if w]
     p("\n### Integrity checks\n" if md else "\n" + "=" * 72)

@@ -21,6 +21,7 @@ check on whether the judge is measuring anything real.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 import shutil
@@ -37,6 +38,65 @@ CRITERIA = [
     ("absence_of_filler", "every paragraph carries information"),
 ]
 SUGGESTED = ["t1", "t3", "t5"]  # one per shape
+
+STALE_REFUSAL = """\
+Hand scores exist for reports that are no longer on disk:
+
+{listing}
+
+prepare() returns early for an already-prepared topic, so a fresh run leaves the old
+copies in place and the old scores beside them. Those scores describe text that no
+longer exists.
+
+Scoring on top of them — or letting compare.py join them to the current judge numbers
+— produces a table whose human column and judge column describe different documents,
+and nothing in the output would say so.
+
+Move each directory aside, then run this again:
+
+{commands}
+"""
+
+
+def _stale_refusal(topics: list[str]) -> str:
+    listing = "\n".join(
+        f"  {HS / t}  ({len(stale_labels(t))} of 2 reports changed)" for t in topics
+    )
+    commands = "\n".join(f"  Move-Item {HS / t} {HS / t}.old" for t in topics)
+    return STALE_REFUSAL.format(listing=listing, commands=commands)
+
+
+def _digest(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()[:12]
+
+
+def stale_labels(topic_id: str) -> list[str]:
+    """Labels whose copied report no longer matches the report it was copied from.
+
+    The copy is its own record. No stored hash to keep in sync, and no way for the
+    check to drift from what is actually on disk — the two files either match or they
+    do not.
+
+    Reads mapping.json to locate each label's source and never returns or prints a
+    system name, so calling this does not cost the blinding. Returning labels rather
+    than systems is deliberate for the same reason.
+    """
+    d = HS / topic_id
+    mp = d / "mapping.json"
+    if not mp.exists():
+        return []
+    m = json.loads(mp.read_text(encoding="utf-8"))
+    out = []
+    for i, label in enumerate(("report_1", "report_2"), start=1):
+        src = RESULTS / m[label] / topic_id / "report.md"
+        copy = d / f"report_{i}.md"
+        if src.exists() and copy.exists() and _digest(src) != _digest(copy):
+            out.append(label)
+    return out
+
+
+def scored_topics() -> list[str]:
+    return sorted(p.parent.name for p in HS.glob("*/handscores.json"))
 
 
 def _write_evidence(d: Path, topic_id: str, systems: list[str]) -> None:
@@ -74,32 +134,53 @@ def _write_evidence(d: Path, topic_id: str, systems: list[str]) -> None:
         (d / f"evidence_{i}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def _materialise(d: Path, topic_id: str, systems: list[str]) -> None:
+    """Copy both reports and both evidence files under the given label order."""
+    for i, sysname in enumerate(systems, start=1):
+        src = RESULTS / sysname / topic_id / "report.md"
+        if not src.exists():
+            raise SystemExit(f"missing {src}")
+        shutil.copy(src, d / f"report_{i}.md")
+    _write_evidence(d, topic_id, systems)
+
+
 def prepare(topic_id: str) -> Path:
     d = HS / topic_id
     if (d / "mapping.json").exists():
-        # Backfill evidence for a topic prepared before this existed, WITHOUT
-        # re-shuffling. The mapping is read here but never printed — re-rolling it
-        # would invalidate any scores already recorded against these labels.
+        # The mapping is read on every branch here and printed on none of them.
         m = json.loads((d / "mapping.json").read_text(encoding="utf-8"))
+        systems = [m["report_1"], m["report_2"]]
+        stale = stale_labels(topic_id)
+
+        if stale and (d / "handscores.json").exists():
+            raise SystemExit(_stale_refusal([topic_id]))
+
+        if stale:
+            # A newer run exists and nothing has been scored against these copies, so
+            # replacing them costs nothing. The label order is taken from the existing
+            # mapping rather than re-rolled: the shuffle is seeded by topic_id and would
+            # come out the same anyway, and depending on that is a worse habit than not.
+            _materialise(d, topic_id, systems)
+            print(f"re-prepared from the current run ({len(stale)} of 2 changed): {d}")
+            return d
+
+        # Backfill evidence for a topic prepared before those files existed, WITHOUT
+        # re-shuffling — re-rolling would invalidate scores already recorded against
+        # these labels.
         if not (d / "evidence_1.md").exists():
-            _write_evidence(d, topic_id, [m["report_1"], m["report_2"]])
+            _write_evidence(d, topic_id, systems)
             print(f"added evidence files to existing: {d}")
         else:
             print(f"already prepared: {d}")
         return d
+
     d.mkdir(parents=True, exist_ok=True)
 
     rng = random.Random(topic_id)
     systems = ["baseline", "multiagent"]
     rng.shuffle(systems)
 
-    for i, sysname in enumerate(systems, start=1):
-        src = RESULTS / sysname / topic_id / "report.md"
-        if not src.exists():
-            raise SystemExit(f"missing {src}")
-        shutil.copy(src, d / f"report_{i}.md")
-
-    _write_evidence(d, topic_id, systems)
+    _materialise(d, topic_id, systems)
     (d / "mapping.json").write_text(
         json.dumps({"report_1": systems[0], "report_2": systems[1]}), encoding="utf-8"
     )
@@ -158,11 +239,25 @@ def reveal() -> None:
         print()
 
 
+def refuse_stale_scored() -> None:
+    """Guard every entry point, not just the one that was being thought about.
+
+    prepare() catches this for the topic it is preparing, but --reveal never calls
+    prepare() and the all-scored branch returns before it. A check that covers only
+    the path you had in mind is the exact shape of defect this project keeps finding.
+    """
+    bad = [t for t in scored_topics() if stale_labels(t)]
+    if bad:
+        raise SystemExit(_stale_refusal(bad))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--topic-id")
     ap.add_argument("--reveal", action="store_true")
     args = ap.parse_args()
+
+    refuse_stale_scored()
 
     if args.reveal:
         reveal()

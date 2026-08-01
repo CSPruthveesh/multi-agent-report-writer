@@ -95,6 +95,7 @@
       "t3",
       "t5"
     ],
+    "stale": [],
     "means": {
       "baseline": {
         "factual_grounding": 4.0,
