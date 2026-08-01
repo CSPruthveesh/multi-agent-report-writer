@@ -30,10 +30,17 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   margin-top:11px;flex-wrap:wrap}
 .count{font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
 .count.bad{color:var(--alarm)}
-.examples{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
-.examples span{font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
-.eg{background:none;border:1px dashed var(--rule);color:var(--muted);padding:5px 9px;
-  font:400 12px/1 Archivo,sans-serif;text-transform:none;letter-spacing:0}
+/* One per line. Wrapped inline they broke at different points on every reload, so the
+   block changed shape depending on which three came up — and a question that wraps mid
+   clause is harder to read than one that owns its own row. */
+.examples{margin-top:14px}
+.examples > span{display:block;font:400 11px 'JetBrains Mono',monospace;
+  color:var(--muted);margin-bottom:7px}
+.eg{display:block;width:100%;text-align:left;background:none;
+  border:1px dashed var(--rule);color:var(--muted);border-radius:2px;
+  padding:9px 12px;margin-bottom:6px;
+  font:400 13px/1.4 Archivo,sans-serif;text-transform:none;letter-spacing:0}
+.eg:last-child{margin-bottom:0}
 .eg:hover{border-color:var(--signal);color:var(--signal);background:none}
 
 /* Before a run this page says nothing. Removing the placeholder text alone would have
@@ -67,8 +74,7 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   </div>
   <div class="examples">
     <span>try:</span>
-    <button class="eg">The effect of four-day working weeks on productivity and staff retention</button>
-    <button class="eg">Whether urban congestion charges reduce emissions or just move them</button>
+    <div id="egs"></div>
   </div>
 </div>
 
@@ -91,6 +97,49 @@ let BUDGETS = {searches:5, research_loops:1, revisions:2};
 
 fetch('/api/topics').then(r=>r.json()).then(d=>{ BUDGETS = d.budgets; });
 
+/* Twelve, three shown. Every one is a question with a measurable answer that the
+   evidence might not settle — the shape the six frozen evaluation topics have, because
+   that is what this system is for. A prompt that can be answered from one source does
+   not need four agents. */
+const IDEAS = [
+  "Whether four-day working weeks raise productivity or simply redistribute the same hours",
+  "How urban congestion charges affect emissions, and whether the reduction is real or displaced",
+  "The measurable effect of remote work on commercial property values in mid-sized cities",
+  "Whether microplastics in drinking water have demonstrated human health effects or only suspected ones",
+  "How heat pump adoption is changing peak winter electricity demand in cold climates",
+  "The evidence on whether school phone bans improve attainment or only reduce disruption",
+  "Whether voluntary carbon offset markets have delivered verifiable emissions reductions",
+  "How antibiotic use in livestock relates to resistance in human infections",
+  "The effect of minimum unit pricing on alcohol consumption and alcohol-related harm",
+  "Whether AI coding assistants change measured developer output or only perceived speed",
+  "How lithium and nickel supply constraints are shaping electric vehicle prices",
+  "What universal basic income trials measured about employment, health and wellbeing"
+];
+
+/* Fresh three on every load. Not stored, so a reload is a reroll — the point is to show
+   the range of thing that works here, and a fixed pair only ever showed two of them. */
+/* Fisher-Yates, not sort(() => Math.random() - 0.5). The comparator trick is the
+   familiar one-liner and it is not uniform — the sort makes assumptions about a
+   comparator that a random one breaks. Measured over 4000 draws it gave the twelve
+   topics between 688 and 1546 appearances where 1000 is even; some questions would
+   have shown up twice as often as others for no reason. */
+function shuffled(list){
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function drawExamples(){
+  const pick = shuffled(IDEAS).slice(0, 3);
+  $('#egs').innerHTML = pick.map(q => `<button class="eg">${esc(q)}</button>`).join('');
+  $('#egs').querySelectorAll('.eg').forEach(b => b.onclick = () => {
+    ta.value = b.textContent.trim(); validate(); ta.focus();
+  });
+}
+
 const ta = $('#topic');
 function validate(){
   const n = ta.value.trim().length;
@@ -99,10 +148,8 @@ function validate(){
   $('#go').disabled = n < MIN;
 }
 ta.addEventListener('input', validate);
-document.querySelectorAll('.eg').forEach(b=>b.onclick=()=>{
-  ta.value = b.textContent.trim(); validate(); ta.focus();
-});
 validate();
+drawExamples();
 
 function fail(title, detail){
   $('#report').hidden=false; $('#report').classList.add('err');
