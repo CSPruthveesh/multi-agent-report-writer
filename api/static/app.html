@@ -36,10 +36,15 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   font:400 12px/1 Archivo,sans-serif;text-transform:none;letter-spacing:0}
 .eg:hover{border-color:var(--signal);color:var(--signal);background:none}
 
-.trace:empty::after{content:"Ask a question above to start.";
-  display:block;padding:26px 0 26px var(--lane);color:var(--muted);font-size:14px}
+/* Before a run this page says nothing. Removing the placeholder text alone would have
+   left the scaffolding behind it: .trace holds a 120px min-height and draws the lane
+   rule, and .spent draws a divider, so an untouched page would show an empty ruled box
+   above a stray horizontal line. Both collapse until there is something to put in them. */
+.trace:empty{min-height:0}
+.trace:empty::before{display:none}
 .spent{margin-top:16px;padding-top:12px;border-top:1px solid var(--rule-soft);
   font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
+.spent:empty{display:none}
 </style>
 </head>
 <body>
