@@ -24,9 +24,9 @@ import argparse
 import hashlib
 import json
 import random
-import shutil
 from pathlib import Path
 
+from scripts.judge import _body
 from src.common.io import RESULTS, get_topic, load_topics
 
 HS = RESULTS / "handscore"
@@ -77,8 +77,44 @@ def _stale_refusal(topics: list[str]) -> str:
     return STALE_REFUSAL.format(listing=listing, commands=commands)
 
 
-def _digest(p: Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()[:12]
+def _norm(s: str) -> str:
+    return s.strip() + "\n"
+
+
+def _digest(s: str) -> str:
+    return hashlib.sha256(_norm(s).encode("utf-8")).hexdigest()[:12]
+
+
+def blind_text(system: str, topic_id: str) -> str:
+    """A report as the scorer should see it: without its declared-limitations section.
+
+    The judge has stripped this since scripts/judge.py was written, because the
+    baseline has no mechanism to declare an evidence gap and the graph declares one on
+    most topics — a format tell strong enough to identify the system on sight.
+
+    Hand scoring did not strip it, and that was a hole for as long as this file has
+    existed. It cost the first two topics of the second scoring round: the section was
+    recognised, the system was identified, and the remaining four criteria stopped
+    being blind. A leak that only affects a human is still a leak, and the human is
+    the instrument that matters most here — the judge scored a set of disconnected
+    topic buckets 4.83 out of 5 on structural coherence and could not see the problem
+    at all.
+
+    _body is imported from the judge rather than restated so the two instruments
+    cannot drift on what blinding means. The declared-gaps asymmetry is not lost by
+    this — it is reported by compare.py as a categorical fact, which is what
+    scripts/judge.py's own docstring argued for and what was never done.
+    """
+    src = RESULTS / system / topic_id / "report.md"
+    if not src.exists():
+        raise SystemExit(f"missing {src}")
+    return _norm(_body(src.read_text(encoding="utf-8")))
+
+
+def declares_gaps(system: str, topic_id: str) -> bool:
+    """Whether this report carries a declared-limitations section, before stripping."""
+    src = RESULTS / system / topic_id / "report.md"
+    return src.exists() and "## Known limitations" in src.read_text(encoding="utf-8")
 
 
 def is_topic_dir(name: str) -> bool:
@@ -117,7 +153,14 @@ def stale_labels(topic_id: str) -> list[str]:
     for i, label in enumerate(("report_1", "report_2"), start=1):
         src = RESULTS / m[label] / topic_id / "report.md"
         copy = d / f"report_{i}.md"
-        if src.exists() and copy.exists() and _digest(src) != _digest(copy):
+        if not (src.exists() and copy.exists()):
+            continue
+        # Compare against the blinded form, not the raw file — the copy is stripped, so
+        # a raw comparison would report every topic carrying a limitations section as
+        # permanently stale and there would be no way to prepare one that satisfied it.
+        if _digest(blind_text(m[label], topic_id)) != _digest(
+            copy.read_text(encoding="utf-8")
+        ):
             out.append(label)
     return out
 
@@ -164,12 +207,11 @@ def _write_evidence(d: Path, topic_id: str, systems: list[str]) -> None:
 
 
 def _materialise(d: Path, topic_id: str, systems: list[str]) -> None:
-    """Copy both reports and both evidence files under the given label order."""
+    """Write both reports, blinded, and both evidence files, under the label order."""
     for i, sysname in enumerate(systems, start=1):
-        src = RESULTS / sysname / topic_id / "report.md"
-        if not src.exists():
-            raise SystemExit(f"missing {src}")
-        shutil.copy(src, d / f"report_{i}.md")
+        (d / f"report_{i}.md").write_text(
+            blind_text(sysname, topic_id), encoding="utf-8"
+        )
     _write_evidence(d, topic_id, systems)
 
 
@@ -229,6 +271,10 @@ def score(topic_id: str) -> None:
     print("\nEvidence for citation_integrity — each report against its OWN file:")
     print(f"  {d / 'evidence_1.md'}\n  {d / 'evidence_2.md'}")
     print("  (same IDs, different claims — do not cross-check)")
+    print("\nAny 'Known limitations' section has been removed from both copies. Only one")
+    print("system can produce one, so it identifies the system on sight. It is counted")
+    print("and reported separately by compare.py. Do not mark a report down for lacking")
+    print("one — you are not being shown it.")
     print("\nDo not open mapping.json until you have finished all three topics.\n")
     input("Press Enter when you have read both... ")
 

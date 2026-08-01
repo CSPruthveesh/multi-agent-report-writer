@@ -33,7 +33,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from evals.handscore import is_topic_dir, stale_labels
+from evals.handscore import declares_gaps, is_topic_dir, stale_labels
 from src.common.io import RESULTS, get_topic
 
 CRITERIA = [
@@ -104,9 +104,20 @@ def collect() -> dict[str, Any]:
             n += json.loads(p.read_text(encoding="utf-8"))["citations"]["broken_count"]
         broken[sysname] = n
 
+    # Both instruments strip the declared-limitations section before scoring, because
+    # only one system can produce one and it identifies that system on sight. Stripping
+    # it is not the same as pretending it does not exist: criterion 1 rewards saying
+    # where evidence is absent, so removing the declaration removes something the graph
+    # genuinely earns. It is counted here and reported as a categorical fact instead,
+    # which is what scripts/judge.py's docstring argued for and what nothing did.
+    declared = {
+        s: sum(declares_gaps(s, r["topic_id"]) for r in rows)
+        for s in ("baseline", "multiagent")
+    }
+
     hand = collect_hand()
     return {"judge": judge, "rows": rows, "means": means, "by_shape": by_shape,
-            "broken": broken, "cost": cost, "hand": hand}
+            "broken": broken, "cost": cost, "hand": hand, "declared": declared}
 
 
 def collect_hand() -> dict[str, Any] | None:
@@ -257,6 +268,18 @@ def render(d: dict, md: bool) -> None:
         p(f"  {'MEAN':<24}{bm:>9.2f}{mm:>9.2f}{mm - bm:>+9.2f}")
         p(f"  {'broken citations':<24}{d['broken']['baseline']:>9}"
           f"{d['broken']['multiagent']:>9}")
+
+    dec, n = d["declared"], len(d["rows"])
+    line = (f"declared unclosed evidence gaps: baseline {dec['baseline']}/{n}, "
+            f"multi-agent {dec['multiagent']}/{n}. Stripped from both before scoring "
+            f"by judge and hand, because only one system can produce the section. "
+            f"Criterion 1 rewards saying where evidence is absent, so this is reported "
+            f"rather than scored.")
+    p(f"\n> **Declared limitations.** {line}" if md else
+      f"\n  Declared limitations\n    baseline {dec['baseline']}/{n}   "
+      f"multi-agent {dec['multiagent']}/{n}\n"
+      f"    Stripped from both before scoring — only one system has the mechanism.\n"
+      f"    Reported, not scored: criterion 1 rewards declaring absent evidence.")
 
     # cost
     if cost and "multiples" in cost:
