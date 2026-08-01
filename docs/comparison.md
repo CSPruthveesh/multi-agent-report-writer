@@ -52,4 +52,4 @@ Judge: gemini-3.5-flash, 2 round(s), 6 topics, blind and order-randomised.
 ### Integrity checks
 
 
-No warnings raised.
+> **Warning.** They disagree about WHICH SYSTEM IS BETTER on 3 of 5 criteria: factual_grounding, structural_coherence, citation_integrity. A small gap between two deltas of opposite sign is still a contradiction, and it is the more interesting one. Trust your own read and explain the divergence in the write-up.
