@@ -16,7 +16,10 @@
 .budgets{font:400 11px/1.7 'JetBrains Mono',monospace;color:var(--muted);text-align:right}
 .headright{display:flex;flex-direction:column;align-items:flex-end;gap:11px}
 
-.controls{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
+.controls{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap;align-items:center}
+.hitl{display:flex;align-items:center;gap:7px;white-space:nowrap;
+  font:400 12px 'JetBrains Mono',monospace;color:var(--muted);cursor:pointer}
+.hitl input{accent-color:var(--signal);cursor:pointer}
 select{
   flex:1;min-width:260px;background:var(--panel);border:1px solid var(--rule);
   padding:11px 12px;font:400 14px Archivo,sans-serif;color:var(--ink);border-radius:2px}
@@ -58,6 +61,24 @@ select:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .pip{width:11px;height:5px;background:var(--rule)}
 .pip.on{background:var(--signal)}
 .pip.full{background:var(--alarm)}
+
+/* ---------- the approval gate ----------
+   Named .approval, not .gate: .gate is already the baseline marker on the meter, and
+   two meanings for one class in one file is how a stylesheet starts lying. */
+.approval{margin-top:26px;background:var(--panel);border:1px solid var(--signal);
+  border-left-width:3px;border-radius:2px;padding:20px 22px}
+.approval h2{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--signal);margin:0 0 6px}
+.apmeta{font:400 11px 'JetBrains Mono',monospace;color:var(--muted);margin-bottom:12px}
+#apOutline{width:100%;min-height:150px;resize:vertical;background:var(--paper);
+  border:1px solid var(--rule);border-radius:2px;padding:12px 13px;color:var(--ink);
+  font:400 12.5px/1.6 'JetBrains Mono',monospace}
+#apOutline:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
+.apactions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+#apNote{flex:1;min-width:200px;background:var(--paper);border:1px solid var(--rule);
+  border-radius:2px;padding:9px 11px;color:var(--ink);
+  font:400 13px Archivo,sans-serif}
+.aphint{font:400 11px/1.6 'JetBrains Mono',monospace;color:var(--muted);margin-top:10px}
 </style>
 </head>
 <body>
@@ -79,6 +100,7 @@ select:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 <div class="controls">
   <select id="topic"><option>Loading topics…</option></select>
+  <label class="hitl"><input type="checkbox" id="hitl"> approval gate</label>
   <button id="go">Start run</button>
 </div>
 
@@ -99,6 +121,20 @@ select:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
     <div class="gauges" id="gauges"></div>
   </aside>
 </div>
+
+<section class="approval" id="apPanel" hidden>
+  <h2>Outline approval</h2>
+  <div class="apmeta" id="apMeta"></div>
+  <textarea id="apOutline" spellcheck="false"></textarea>
+  <div class="apactions">
+    <button id="apApprove">approve</button>
+    <a class="switch" id="apEdit" role="button" tabindex="0">use my edits</a>
+    <a class="switch" id="apReject" role="button" tabindex="0">reject</a>
+    <input id="apNote" placeholder="what is wrong with it — sent to the analyst on reject">
+  </div>
+  <p class="aphint">Approve keeps the outline as written. Edits go straight to the Writer.
+    Reject sends it back to the Analyst with your note and costs another planning pass.</p>
+</section>
 
 <section class="report" id="report" hidden>
   <h2 id="reportHead">Report</h2>
@@ -169,27 +205,39 @@ function addEvent(d){
   drawGauges(d.budgets);
 }
 
-$('#go').onclick = async () => {
-  const topic = TOPICS.find(t => t.id === $('#topic').value);
-  if(!topic) return;
-  view = traceView($('#trace'), BUDGETS);
-  view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
-  $('#go').disabled=true; $('#go').textContent='Running…';
+/* The gate can fire more than once. Approval sits before the Writer, so a revision
+   loop re-enters it — the probe that verified this backend hit it twice on a run whose
+   Critic asked for changes. So consume() is re-entrant: answering a gate opens a new
+   stream that is read with the same handlers, and may park again. */
+let parked = null;   // {thread_id, seen} while a gate is open
 
-  const res = await fetch('/api/run',{method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({topic:topic.topic, topic_id:topic.id})});
-
+async function consume(res){
   await readSSE(res, {
     start: () => view.start(),
     node: addEvent,
+    approval: d => {
+      // Clear the pending row first. The supervisor routed to the Writer, so the lane
+      // is showing "writing…" — but nothing is writing, it is waiting for a person.
+      view.finish();
+      parked = {thread_id: d.thread_id, seen: d.seen};
+      const i = d.interrupt || {};
+      const gaps = (i.unclosed_gaps || []).length;
+      $('#apMeta').textContent =
+        `${i.finding_count} findings gathered${gaps ? ` · ${gaps} gap${gaps===1?'':'s'} already unclosed` : ''}`;
+      $('#apOutline').value = i.outline || '';
+      $('#apNote').value = '';
+      $('#apPanel').hidden = false;
+      $('#go').textContent = 'Waiting for you…';
+      $('#apPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+    },
     done: d => {
       view.finish();
       $('#report').hidden=false; $('#report').classList.remove('err');
       const s = d.scores||{}, scored = Object.keys(s).length
         ? ' · ' + Object.entries(s).map(([k,v])=>`${k.split('_')[0]} ${v}`).join(' · ') : '';
+      const mult = d.cost.multiple == null ? '' : ` · ${d.cost.multiple}× baseline`;
       $('#reportHead').textContent =
-        `Report · ${d.report.split(/\s+/).length} words · ${d.cost.multiple}× baseline${scored}`;
+        `Report · ${d.report.split(/\s+/).length} words${mult}${scored}`;
       $('#md').innerHTML = renderMarkdown(d.report);
       $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
     },
@@ -201,8 +249,42 @@ $('#go').onclick = async () => {
       $('#gaps').innerHTML='';
     },
   });
+}
 
-  $('#go').disabled=false; $('#go').textContent='Start run';
+async function decide(decision){
+  if(!parked) return;
+  const {thread_id, seen} = parked;
+  parked = null;
+  $('#apPanel').hidden = true;
+  $('#go').textContent = 'Running…';
+  const res = await fetch('/api/resume',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({thread_id, decision, seen})});
+  await consume(res);
+  if(!parked){ $('#go').disabled=false; $('#go').textContent='Start run'; }
+}
+
+$('#apApprove').onclick = () => decide({action:'approve'});
+$('#apEdit').onclick    = () => decide({action:'edit', outline:$('#apOutline').value});
+$('#apReject').onclick  = () => decide({action:'reject', note:$('#apNote').value.trim()});
+
+$('#go').onclick = async () => {
+  const topic = TOPICS.find(t => t.id === $('#topic').value);
+  if(!topic) return;
+  view = traceView($('#trace'), BUDGETS);
+  view.reset(); parked = null;
+  $('#report').hidden=true; $('#report').classList.remove('err');
+  $('#apPanel').hidden=true;
+  $('#go').disabled=true; $('#go').textContent='Running…';
+
+  const res = await fetch('/api/run',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({topic:topic.topic, topic_id:topic.id,
+                         hitl:$('#hitl').checked})});
+
+  await consume(res);
+  // A parked run is not finished — the button stays disabled until the gate is answered.
+  if(!parked){ $('#go').disabled=false; $('#go').textContent='Start run'; }
 };
 </script>
 </body>

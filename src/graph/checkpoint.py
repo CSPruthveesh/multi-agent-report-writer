@@ -41,6 +41,31 @@ def sqlite_checkpointer(path: Path | None = None):
     return SqliteSaver(conn)
 
 
+async def async_sqlite_checkpointer(path: Path | None = None):
+    """The same file, reachable from an async graph.
+
+    SqliteSaver is sync only — graph.astream() against one raises NotImplementedError
+    and says so, which is how the API found out. The web demo streams, so it needs the
+    async saver, and both write the same runs.sqlite: a thread parked by the API can be
+    inspected by `--status` from the CLI and vice versa.
+
+    A connection per caller rather than one shared. The two sides of a gated run are
+    separate HTTP requests, so nothing can be held open between them anyway, and the
+    durable state is the file rather than the handle.
+    """
+    import aiosqlite
+    from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
+
+    db = path or CHECKPOINT_DB
+    db.parent.mkdir(parents=True, exist_ok=True)
+    conn = await aiosqlite.connect(str(db))
+    saver = AsyncSqliteSaver(conn)
+    # SqliteSaver creates its tables on first use; the async one does not, and a saver
+    # asked to read a thread from a database with no schema is a confusing failure.
+    await saver.setup()
+    return saver
+
+
 def describe(graph: Any, thread_id: str) -> dict[str, Any]:
     """What a saved thread is waiting on, without resuming it.
 

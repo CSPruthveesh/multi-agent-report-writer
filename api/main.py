@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import uuid
 from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
@@ -50,11 +51,13 @@ from typing import Any
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from langgraph.types import Command
 from pydantic import BaseModel, Field
 
 from src.analysis.cost import PRICES_SET, cost_usd
 from src.common.io import RESULTS, load_topics
 from src.graph.build import build
+from src.graph.checkpoint import async_sqlite_checkpointer, thread_config
 from src.graph.state import (
     MAX_RESEARCH_LOOPS,
     MAX_REVISIONS,
@@ -71,12 +74,28 @@ STATIC = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
 
+class ResumeRequest(BaseModel):
+    """A decision on a parked thread.
+
+    `seen` is how many trace events the client already has. The resumed stream replays
+    from a state whose trace holds everything so far, so without it the client would
+    redraw the whole run under the rows it is already showing.
+    """
+    thread_id: str
+    decision: dict[str, Any]
+    seen: int = 0
+
+
 class RunRequest(BaseModel):
     # Bounded because the public page lets anyone type anything and every run spends
     # real tokens. A one-word topic also gives the Researcher nothing to plan from,
     # so the floor is a quality guard as much as a cost one.
     topic: str = Field(min_length=15, max_length=300)
     topic_id: str | None = None
+    # Inserts the approval node before the Writer. Needs a checkpointer: interrupt()
+    # raises, LangGraph parks the thread on disk, and the answer arrives on a separate
+    # request — there is nowhere to park without one.
+    hitl: bool = False
 
 
 def _is_frozen(topic: str, topic_id: str | None) -> bool:
@@ -140,6 +159,15 @@ def topics() -> dict[str, Any]:
     }
 
 
+@app.post("/api/resume")
+async def resume(req: ResumeRequest) -> StreamingResponse:
+    return StreamingResponse(
+        _resume(req),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
 @app.get("/api/comparison")
 def comparison() -> dict[str, Any]:
     p = RESULTS / "comparison.json"
@@ -150,20 +178,47 @@ def _sse(event: str, data: dict[str, Any]) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
 
 
-async def _stream(topic: str, comparable: bool) -> AsyncIterator[str]:
-    graph = build()
-    state = initial_state(topic)
+async def _pending_interrupt(graph, cfg) -> dict[str, Any] | None:
+    """The payload an interrupt parked, or None if the thread simply finished.
 
+    astream ends the same way whether the graph completed or stopped at interrupt(),
+    so the difference is only visible in the checkpointed state afterwards.
+
+    aget_state, not get_state. The saver behind a streaming graph is the async one, and
+    it refuses sync calls from the event loop with a message saying exactly that — the
+    graph ran to the gate and then fell over reading its own parked state.
+    """
+    snap = await graph.aget_state(cfg)
+    for task in getattr(snap, "tasks", ()) or ():
+        for itr in getattr(task, "interrupts", ()) or ():
+            value = getattr(itr, "value", None)
+            if value is not None:
+                return value
+    return None
+
+
+async def _drive(graph, cfg, payload, *, comparable: bool, seen_trace: int,
+                 thread_id: str | None) -> AsyncIterator[str]:
+    """Stream one leg of a run: from the start, or from a resume.
+
+    Both legs are the same loop. A gated run is two calls to this — the first ends on
+    an approval event, the second is handed Command(resume=decision) as its payload and
+    picks up the trace where the client left off.
+    """
     spent_in = spent_out = spent = 0
-    seen_trace = 0
     baseline = _baseline_reference()
+    finished = False
 
-    yield _sse("start", {"topic": topic, "baseline": baseline,
-                         "comparable": comparable})
+    def cost() -> dict[str, Any]:
+        return {
+            "tokens": spent,
+            "usd": _usd(spent_in, spent_out),
+            "multiple": round(spent / baseline["tokens"], 2)
+            if comparable and baseline["tokens"] else None,
+        }
 
     try:
-        async for chunk in graph.astream(state, config={"recursion_limit": 40},
-                                         stream_mode="values"):
+        async for chunk in graph.astream(payload, config=cfg, stream_mode="values"):
             # Token totals, recomputed from the authoritative log rather than
             # accumulated client-side.
             records = chunk.get("token_log") or []
@@ -175,12 +230,7 @@ async def _stream(topic: str, comparable: bool) -> AsyncIterator[str]:
             for ev in trace[seen_trace:]:
                 yield _sse("node", {
                     "event": ev,
-                    "cost": {
-                        "tokens": spent,
-                        "usd": _usd(spent_in, spent_out),
-                        "multiple": round(spent / baseline["tokens"], 2)
-                        if comparable and baseline["tokens"] else None,
-                    },
+                    "cost": cost(),
                     "budgets": {
                         "searches": chunk.get("searches_used", 0),
                         "research_loops": chunk.get("research_loops", 0),
@@ -198,27 +248,87 @@ async def _stream(topic: str, comparable: bool) -> AsyncIterator[str]:
             seen_trace = len(trace)
 
             if chunk.get("route") == "done":
+                finished = True
                 crit = chunk.get("critique") or {}
                 yield _sse("done", {
                     "report": chunk.get("draft") or "",
                     "findings": chunk.get("findings") or [],
                     "scores": crit.get("scores") or {},
                     "unclosed_gaps": chunk.get("unclosed_gaps") or [],
-                    "cost": {
-                        "tokens": spent,
-                        "usd": _usd(spent_in, spent_out),
-                        "multiple": round(spent / baseline["tokens"], 2)
-                        if comparable and baseline["tokens"] else None,
-                    },
+                    "cost": cost(),
+                })
+
+        if not finished and thread_id:
+            payload = await _pending_interrupt(graph, cfg)
+            if payload:
+                yield _sse("approval", {
+                    "thread_id": thread_id,
+                    "interrupt": payload,
+                    # What the client has drawn, handed back on resume so the replayed
+                    # state does not redraw the run under the rows already on screen.
+                    "seen": seen_trace,
+                    "cost": cost(),
                 })
     except Exception as e:  # noqa: BLE001
         yield _sse("error", {"error": type(e).__name__, "detail": str(e)[:200]})
 
 
+async def _close(saver) -> None:
+    """Hand the checkpointer's connection back.
+
+    aiosqlite runs each connection on its own thread, so a leaked one keeps a thread
+    alive for the life of the process — one per gated request, none of them doing
+    anything. The probe found it by refusing to exit after printing its results.
+    """
+    conn = getattr(saver, "conn", None)
+    if conn is not None:
+        try:
+            await conn.close()
+        except Exception:  # noqa: BLE001, S110
+            pass  # A run that finished should not fail on tidying up after itself.
+
+
+async def _stream(topic: str, comparable: bool, hitl: bool) -> AsyncIterator[str]:
+    # A gate needs somewhere to park. Without a checkpointer interrupt() raises into a
+    # graph that cannot save itself, so the gated build gets one and the ungated build
+    # deliberately does not — a checkpointer on every request would write a thread file
+    # for runs nobody will ever resume.
+    thread_id = uuid.uuid4().hex[:12] if hitl else None
+    saver = await async_sqlite_checkpointer() if hitl else None
+    graph = build(checkpointer=saver, hitl=True) if hitl else build()
+    cfg = thread_config(thread_id) if hitl else {"recursion_limit": 40}
+
+    yield _sse("start", {"topic": topic, "baseline": _baseline_reference(),
+                         "comparable": comparable, "hitl": hitl,
+                         "thread_id": thread_id})
+
+    try:
+        async for frame in _drive(graph, cfg, initial_state(topic, hitl=hitl),
+                                  comparable=comparable, seen_trace=0,
+                                  thread_id=thread_id):
+            yield frame
+    finally:
+        await _close(saver)
+
+
+async def _resume(req: ResumeRequest) -> AsyncIterator[str]:
+    """Answer a parked thread and stream the rest of the run."""
+    saver = await async_sqlite_checkpointer()
+    graph = build(checkpointer=saver, hitl=True)
+    cfg = thread_config(req.thread_id)
+    try:
+        async for frame in _drive(graph, cfg, Command(resume=req.decision),
+                                  comparable=False, seen_trace=req.seen,
+                                  thread_id=req.thread_id):
+            yield frame
+    finally:
+        await _close(saver)
+
+
 @app.post("/api/run")
 async def run(req: RunRequest) -> StreamingResponse:
     return StreamingResponse(
-        _stream(req.topic, _is_frozen(req.topic, req.topic_id)),
+        _stream(req.topic, _is_frozen(req.topic, req.topic_id), req.hitl),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
