@@ -188,20 +188,50 @@ def check_baseline_strength(means: dict) -> str | None:
     return None
 
 
+# Below this, a delta is treated as "no preference" rather than a direction. Without it
+# a judge delta of -0.25 against a hand delta of exactly 0.00 counts as a disagreement,
+# which reads as a conflict where one instrument simply found the two systems equal.
+DIRECTION_EPS = 0.1
+
+
 def check_agreement(means: dict, hand: dict | None) -> tuple[str | None, dict]:
+    """Magnitude AND direction. The first version checked only the first.
+
+    abs(jd - hd) asks how far apart the two instruments are. It cannot ask whether they
+    disagree about which system won, and those are different questions — two criteria
+    can sit 0.6 apart while one instrument says the graph is better and the other says
+    it is worse.
+
+    That is not hypothetical. On the run this was written against, four of five criteria
+    pointed in opposite directions with every magnitude gap under 1.0, and the summary
+    line reported "judge/human agreement within expected bounds" over the single most
+    important disagreement in the project. True as written, false as read — the same
+    failure this project has now logged six times.
+    """
     if not hand or "multiagent" not in hand["means"]:
         return None, {}
-    diffs = {}
+    diffs, flips = {}, []
     for c in CRITERIA:
         jd = means["multiagent"][c] - means["baseline"][c]
         hd = hand["means"]["multiagent"][c] - hand["means"]["baseline"][c]
         diffs[c] = round(abs(jd - hd), 2)
-    worst = max(diffs.values())
-    if worst > 1.0:
-        bad = [c for c, v in diffs.items() if v > 1.0]
-        return (f"Judge and hand scores diverge by more than 1.0 on: {', '.join(bad)}. "
-                f"Trust your own read on those and explain the divergence."), diffs
-    return None, diffs
+        if abs(jd) >= DIRECTION_EPS and abs(hd) >= DIRECTION_EPS and (jd > 0) != (hd > 0):
+            flips.append(c)
+
+    bad = [c for c, v in diffs.items() if v > 1.0]
+    parts = []
+    if bad:
+        parts.append(f"Judge and hand scores diverge by more than 1.0 on: "
+                     f"{', '.join(bad)}.")
+    if flips:
+        parts.append(f"They disagree about WHICH SYSTEM IS BETTER on {len(flips)} of "
+                     f"{len(CRITERIA)} criteria: {', '.join(flips)}. A small gap between "
+                     f"two deltas of opposite sign is still a contradiction, and it is "
+                     f"the more interesting one.")
+    if not parts:
+        return None, diffs
+    parts.append("Trust your own read and explain the divergence in the write-up.")
+    return " ".join(parts), diffs
 
 
 def check_stale_hand(hand: dict | None) -> str | None:

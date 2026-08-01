@@ -6,7 +6,21 @@ from typing import Annotated, Any, TypedDict
 
 SUFFIX_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
-MAX_RESEARCH_LOOPS = 2
+# Was 2. Lowered after the matched-pair experiment, which compared 0 against 2 across six
+# topics and found the loop bought 77 findings, no citation gain distinguishable from
+# run-to-run noise, the same number of unclosed gaps declared, and 36.7% more tokens. The
+# report is the binding constraint, not the evidence: a 1,000-word report carries 30 to 40
+# citations however much is gathered, so the loop's findings crowd out first-pass findings
+# rather than adding to them.
+#
+# 1 rather than 0, and the distinction is a judgement rather than a measurement. The
+# experiment tested 0 and 2; it did not test 1. What supports 1 specifically is weaker
+# evidence — the two topics that ran a SECOND loop scored worst of the six with the judge
+# — so this cuts the round that has no support while keeping the one the architecture was
+# built around. Going to 0 is defensible on the data and is one flag away:
+#
+#     uv run python -m src.run --system multiagent --all --max-research-loops 0
+MAX_RESEARCH_LOOPS = 1
 MAX_REVISIONS = 2
 
 # Guard against a failing Writer spinning the graph. Distinct from MAX_REVISIONS:

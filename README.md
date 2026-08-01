@@ -146,6 +146,13 @@ was already near full.
 The unclosed-gaps row is the sharpest of the lot. The loop exists to close evidence gaps.
 Both arms declared five. By its own stated purpose it netted nothing.
 
+**The cap was lowered from 2 to 1 as a result.** Not to 0, and that distinction is a
+judgement rather than a measurement: the experiment tested 0 against 2 and never tested 1.
+What supports 1 specifically is weaker evidence — the two topics that ran a *second* loop
+scored worst of the six with the judge — so this drops the round with no support and keeps
+the one the architecture was built around. Going to 0 is defensible on the data and is one
+flag away.
+
 This matters for what to do about it. If the Writer *ignored* the loop's output you would
 fix the Writer. Because the report is *already full*, gathering more cannot help at any
 Writer quality — the only levers are capping the loop or lengthening the report, and the
