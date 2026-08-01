@@ -12,20 +12,74 @@
 const esc = s => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-function chip(label, val, cls = '') {
-  return `<span class="chip ${cls}">${label} <b>${esc(val)}</b></span>`;
-}
+/* One line per event, not a row of boxed fields.
+ *
+ * The boxes rendered every field the node happened to emit, at equal weight, wrapping
+ * to three lines on the busier nodes — so reading the shape of a run meant reading
+ * twenty numbers. This picks the few that say what the node did, and marks the ones
+ * that mean something is wrong.
+ *
+ * Fields not named here are deliberately dropped rather than appended. A summary that
+ * grows a term every time a node gains a field is not a summary.
+ */
+function summarise(e, d, caps) {
+  const n = v => `<b>${esc(v)}</b>`;
+  const bad = v => `<span class="bad">${esc(v)}</span>`;
+  const bits = [];
 
-/* budget: traceRow injects its own chip with threshold styling, so the raw field would
- *         draw the same "3/5" twice.
- * sent:   a list of search queries. Rendered below the chips instead — it is the
- *         longest field in the trace and the only one worth reading in full. */
-const HIDE = new Set(['node', 'action', 'why', 'to', 'tokens', 'budget', 'sent']);
+  switch (e.node) {
+    case 'researcher': {
+      if (e.found != null) bits.push(`${n(e.found)} sources`);
+      if (e.queries != null) bits.push(`${n(e.queries)} ${e.queries === 1 ? 'query' : 'queries'}`);
+      if (e.mode) bits.push(esc(e.mode));
+      const used = d.budgets.searches, cap = caps.searches;
+      if (used) bits.push(used >= cap
+        ? `<span class="warn">search budget ${used}/${cap} spent</span>`
+        : `budget ${n(`${used}/${cap}`)}`);
+      break;
+    }
+    case 'analyst':
+      if (e.sections != null) bits.push(`${n(e.sections)} sections`);
+      if (e.tensions) bits.push(`${n(e.tensions)} tensions held apart`);
+      bits.push(e.gaps_kept ? `${n(e.gaps_kept)} evidence gap to close` : 'no gaps');
+      break;
 
-/* Fields where a non-zero value is a problem rather than a statistic. */
-function isHot(k, v) {
-  return (k === 'degraded' && v) || (k === 'broken_cites' && v > 0) ||
-         (k === 'fallback' && v) || (k === 'dropped_ungrounded' && v > 0);
+    case 'supervisor':
+      if (e.loop) bits.push(`loop ${n(e.loop)}`);
+      if (e.count != null) bits.push(`${n(e.count)} gap${e.count === 1 ? '' : 's'} retired`);
+      if (e.loops) bits.push(`loops ${n(e.loops)}`);
+      if (e.searches) bits.push(`searches ${n(e.searches)}`);
+      if (e.attempt) bits.push(`attempt ${n(e.attempt)}`);
+      if (e.min_score != null) bits.push(`lowest score ${n(e.min_score)}`);
+      break;
+
+    case 'writer':
+      if (e.words != null) bits.push(`${n(e.words)} words`);
+      if (e.cited != null) bits.push(`${n(e.cited)} cited`);
+      if (e.broken_cites) bits.push(bad(`${e.broken_cites} broken citations`));
+      if (e.ends_on) bits.push(`closes on ${n(e.ends_on)}`);
+      if (e.changed_pct != null) bits.push(`${n(e.changed_pct + '%')} of the text changed`);
+      if (e.fallback) bits.push(bad('fell back to a rewrite'));
+      break;
+
+    case 'critic':
+      if (e.verdict) bits.push(n(e.verdict));
+      if (e.mean != null) bits.push(`mean ${n(e.mean)}`);
+      if (e.worst) bits.push(`worst ${esc(e.worst)}`);
+      if (e.dropped_ungrounded) bits.push(bad(`${e.dropped_ungrounded} ungrounded dropped`));
+      break;
+
+    case 'finalize':
+      if (e.words != null) bits.push(`${n(e.words)} words`);
+      bits.push(e.unclosed_gaps
+        ? bad(`${e.unclosed_gaps} gap${e.unclosed_gaps === 1 ? '' : 's'} left unclosed`)
+        : 'every gap closed');
+      if (e.node_failures) bits.push(bad(`${e.node_failures} node failures`));
+      break;
+  }
+
+  if (e.degraded) bits.unshift(bad('degraded'));
+  return bits.join(' · ');
 }
 
 /**
@@ -40,14 +94,7 @@ function traceRow(d, caps) {
                  (d.budgets.revisions > 0 && e.node === 'writer');
   const alarm = ['degraded', 'parse_failed', 'skipped'].includes(e.action);
 
-  const chips = Object.entries(e)
-    .filter(([k, v]) => !HIDE.has(k) && v !== undefined && v !== '' && v !== false)
-    .map(([k, v]) => chip(k.replace(/_/g, ' '), v, isHot(k, v) ? 'hot' : ''));
-
-  if (e.node === 'researcher' && d.budgets.searches) {
-    chips.unshift(chip('budget', `${d.budgets.searches}/${caps.searches}`,
-      d.budgets.searches >= caps.searches ? 'warn' : ''));
-  }
+  const detail = summarise(e, d, caps);
 
   const queries = Array.isArray(e.sent) && e.sent.length
     ? `<ul class="queries">${e.sent.map(q => `<li>${esc(q)}</li>`).join('')}</ul>` : '';
@@ -60,7 +107,7 @@ function traceRow(d, caps) {
     <div class="body">
       <div class="action">${esc(e.action)}${e.to ? ` → ${esc(e.to)}` : ''}
         ${e.why ? `<span class="why"> — ${esc(e.why)}</span>` : ''}</div>
-      ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
+      ${detail ? `<div class="detail">${detail}</div>` : ''}
       ${queries}
     </div>`;
   return row;

@@ -16,10 +16,12 @@
   --signal:#0F6E6B;          /* instrument teal: normal operation */
   --alarm:#C43B21;           /* chart-recorder red: over baseline, or degraded */
   --amber:#9A6B00;           /* at a budget limit */
-  /* RESEARCHER and SUPERVISOR measure ~73px at 11px monospace with .06em tracking.
-     At 56px they overflowed, and single words have no break opportunity — so instead
-     of wrapping they spilled LEFT out of the column, under text-align:right. */
-  --lane:88px;
+  /* RESEARCHER and SUPERVISOR measure ~73px at 11px monospace with .06em tracking,
+     and the labels are right-aligned so they END at the lane edge — which is exactly
+     where the timeline dot is centred. 88px put 6.5px of every final character under
+     the dot. The lane now carries the text plus a gutter the dot can sit in. */
+  --lane:104px;
+  --gutter:20px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -68,16 +70,18 @@ button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .ev[data-loop="1"] .dot{background:var(--panel);border-color:var(--signal)}
 .ev[data-alarm="1"] .dot{background:var(--alarm)}
 .node{font:700 11px/22px 'JetBrains Mono',monospace;letter-spacing:.06em;
-  text-transform:uppercase;text-align:right;color:var(--ink);white-space:nowrap}
+  text-transform:uppercase;text-align:right;color:var(--ink);white-space:nowrap;
+  padding-right:var(--gutter)}
 .body{padding-top:1px}
 .action{font:600 14px/1.3 Archivo,sans-serif}
 .action .why{font-weight:400;color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.chip{font:400 11px/1 'JetBrains Mono',monospace;color:var(--muted);
-  background:var(--panel);border:1px solid var(--rule-soft);padding:4px 7px;border-radius:2px}
-.chip b{font-weight:700;color:var(--ink)}
-.chip.hot{border-color:var(--alarm);color:var(--alarm)}
-.chip.warn{border-color:var(--amber);color:var(--amber)}
+/* One line per event instead of a row of boxed fields. The boxes gave every number
+   the same weight and wrapped to three lines on the busier nodes, so the shape of a
+   run was hard to read at a glance — which is the only thing the trace is for. */
+.detail{font:400 11.5px/1.6 'JetBrains Mono',monospace;color:var(--muted);margin-top:4px}
+.detail b{font-weight:500;color:var(--ink)}
+.detail .bad{color:var(--alarm);font-weight:700}
+.detail .warn{color:var(--amber);font-weight:700}
 
 /* queries the researcher actually sent — too long for a chip, and the most
    legible evidence in the trace that this thing is really searching */
