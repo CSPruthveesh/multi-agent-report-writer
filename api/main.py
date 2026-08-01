@@ -49,7 +49,7 @@ from typing import Any
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from src.analysis.cost import PRICES_SET, cost_usd
 from src.common.io import RESULTS, load_topics
@@ -66,8 +66,24 @@ STATIC = Path(__file__).parent / "static"
 
 
 class RunRequest(BaseModel):
-    topic: str
+    # Bounded because the public page lets anyone type anything and every run spends
+    # real tokens. A one-word topic also gives the Researcher nothing to plan from,
+    # so the floor is a quality guard as much as a cost one.
+    topic: str = Field(min_length=15, max_length=300)
     topic_id: str | None = None
+
+
+def _is_frozen(topic: str, topic_id: str | None) -> bool:
+    """Whether this run is comparable to the recorded baseline.
+
+    The baseline is the mean of six single-agent runs on six specific topics. Against
+    anything else it is the cost of a different task, and putting a multiple next to a
+    topic somebody just invented would be the same error as the placeholder prices —
+    a number that is arithmetically real and means nothing.
+    """
+    return any(
+        t["id"] == topic_id and t["topic"] == topic for t in load_topics()
+    )
 
 
 def _usd(in_tok: float, out_tok: float) -> float | None:
@@ -128,7 +144,7 @@ def _sse(event: str, data: dict[str, Any]) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
 
 
-async def _stream(topic: str) -> AsyncIterator[str]:
+async def _stream(topic: str, comparable: bool) -> AsyncIterator[str]:
     graph = build()
     state = initial_state(topic)
 
@@ -136,7 +152,8 @@ async def _stream(topic: str) -> AsyncIterator[str]:
     seen_trace = 0
     baseline = _baseline_reference()
 
-    yield _sse("start", {"topic": topic, "baseline": baseline})
+    yield _sse("start", {"topic": topic, "baseline": baseline,
+                         "comparable": comparable})
 
     try:
         async for chunk in graph.astream(state, config={"recursion_limit": 40},
@@ -156,7 +173,7 @@ async def _stream(topic: str) -> AsyncIterator[str]:
                         "tokens": spent,
                         "usd": _usd(spent_in, spent_out),
                         "multiple": round(spent / baseline["tokens"], 2)
-                        if baseline["tokens"] else None,
+                        if comparable and baseline["tokens"] else None,
                     },
                     "budgets": {
                         "searches": chunk.get("searches_used", 0),
@@ -185,7 +202,7 @@ async def _stream(topic: str) -> AsyncIterator[str]:
                         "tokens": spent,
                         "usd": _usd(spent_in, spent_out),
                         "multiple": round(spent / baseline["tokens"], 2)
-                        if baseline["tokens"] else None,
+                        if comparable and baseline["tokens"] else None,
                     },
                 })
     except Exception as e:  # noqa: BLE001
@@ -195,7 +212,7 @@ async def _stream(topic: str) -> AsyncIterator[str]:
 @app.post("/api/run")
 async def run(req: RunRequest) -> StreamingResponse:
     return StreamingResponse(
-        _stream(req.topic),
+        _stream(req.topic, _is_frozen(req.topic, req.topic_id)),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
@@ -203,4 +220,16 @@ async def run(req: RunRequest) -> StreamingResponse:
 
 @app.get("/")
 def index() -> FileResponse:
+    """The page for someone who wants a report on their own topic."""
+    return FileResponse(STATIC / "app.html")
+
+
+@app.get("/dev")
+def dev() -> FileResponse:
+    """The instrument view: full trace, frozen topics, cost against baseline.
+
+    Kept separate rather than hidden behind a flag on one page. The two answer
+    different questions — this one is for reading the machinery, / is for getting a
+    report — and a single page trying to do both would do the second one badly.
+    """
     return FileResponse(STATIC / "index.html")
