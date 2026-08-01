@@ -1,0 +1,122 @@
+{
+  "quality": {
+    "baseline": {
+      "factual_grounding": 4.666666666666667,
+      "structural_coherence": 5.0,
+      "depth_of_analysis": 4.833333333333333,
+      "citation_integrity": 4.666666666666667,
+      "absence_of_filler": 5.0
+    },
+    "multiagent": {
+      "factual_grounding": 4.416666666666667,
+      "structural_coherence": 4.833333333333333,
+      "depth_of_analysis": 4.5,
+      "citation_integrity": 4.416666666666667,
+      "absence_of_filler": 4.666666666666667
+    }
+  },
+  "by_shape": {
+    "abundant-sources": {
+      "n": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.75,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      }
+    },
+    "thin-evidence": {
+      "n": 1,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 3.0,
+        "structural_coherence": 4.5,
+        "depth_of_analysis": 4.0,
+        "citation_integrity": 3.5,
+        "absence_of_filler": 4.0
+      }
+    },
+    "contested": {
+      "n": 1,
+      "baseline": {
+        "factual_grounding": 3.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.0,
+        "citation_integrity": 3.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 4.5,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 4.5,
+        "absence_of_filler": 5.0
+      }
+    },
+    "cross-domain": {
+      "n": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 4.5,
+        "structural_coherence": 4.75,
+        "depth_of_analysis": 4.25,
+        "citation_integrity": 4.25,
+        "absence_of_filler": 4.5
+      }
+    }
+  },
+  "broken_citations": {
+    "baseline": 0,
+    "multiagent": 0
+  },
+  "hand": {
+    "topics": [
+      "t1",
+      "t3",
+      "t5"
+    ],
+    "means": {
+      "baseline": {
+        "factual_grounding": 4.0,
+        "structural_coherence": 3.3333333333333335,
+        "depth_of_analysis": 3.3333333333333335,
+        "citation_integrity": 4.333333333333333,
+        "absence_of_filler": 3.6666666666666665
+      },
+      "multiagent": {
+        "factual_grounding": 4.333333333333333,
+        "structural_coherence": 2.3333333333333335,
+        "depth_of_analysis": 3.3333333333333335,
+        "citation_integrity": 4.0,
+        "absence_of_filler": 4.0
+      }
+    }
+  },
+  "cost_multiples": {
+    "tokens": 1.26,
+    "calls": 1.21,
+    "latency": 0.77,
+    "cost": null
+  },
+  "warnings": []
+}

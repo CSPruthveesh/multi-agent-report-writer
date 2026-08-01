@@ -1,118 +1,177 @@
 {
-  "judge_model": "gemini-2.5-flash",
-  "tokens": 94755,
-  "scores": {
-    "baseline": {
-      "t1": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
+  "judge_model": "gemini-3.5-flash",
+  "pipeline_model": "gemini-3.1-flash-lite",
+  "self_judged": false,
+  "repeats": 2,
+  "topics": [
+    {
+      "topic_id": "t1",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
       ],
-      "t2": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
-      ],
-      "t3": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
-      ],
-      "t4": [
-        {
-          "factual_grounding": 2,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 2,
-          "absence_of_filler": 5
-        }
-      ],
-      "t5": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
-      ],
-      "t6": [
-        {
-          "factual_grounding": 4,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
-      ]
+      "reasoning": "Report A excels in analyzing system-level engineering economics, specifically linking passive cooling to lower auxiliary power and OPEX. Report B provides a stronger analysis of supply chain bottlenecks, highlighting midstream processing limitations in North America and Europe and the manufacturing immaturity of hard carbon anodes.",
+      "words": {
+        "baseline": 849,
+        "multiagent": 856
+      },
+      "spread": 0
     },
-    "multiagent": {
-      "t1": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
+    {
+      "topic_id": "t2",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.5,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
       ],
-      "t2": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
+      "reasoning": "Report A stands out for its explicit discussion of evidence gaps, highlighting what is missing from the current literature regarding building classes and tax base impacts. Report B provides a deeper look into the physical and architectural workarounds of conversions (such as windowless home offices and adding floors) and connects the office vacancy crisis directly to municipal tax bases in cities like Atlanta and New York.",
+      "words": {
+        "baseline": 912,
+        "multiagent": 1005
+      },
+      "spread": 1
+    },
+    {
+      "topic_id": "t3",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 3.0,
+        "structural_coherence": 4.5,
+        "depth_of_analysis": 4.0,
+        "citation_integrity": 3.5,
+        "absence_of_filler": 4.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
       ],
-      "t3": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
+      "reasoning": "The primary difference lies in factual accuracy and synthesis quality; Report A perfectly aligns with its evidence and explicitly outlines critical research gaps, whereas Report B contains a direct factual error by inverting the consumer-versus-merchant adoption rates described in F017. Report A also achieves a tighter, more cohesive structure that avoids descriptive summaries in favor of analytical depth.",
+      "words": {
+        "baseline": 884,
+        "multiagent": 1054
+      },
+      "spread": 1
+    },
+    {
+      "topic_id": "t4",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 3.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.0,
+        "citation_integrity": 3.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 4.5,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 4.5,
+        "absence_of_filler": 5.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
       ],
-      "t4": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
+      "reasoning": "Report B is much more factually reliable, whereas Report A suffers from several critical citation errors and factual inversions. Specifically, Report A claims that meta-analyses downweight highly precise estimates (contradicting F010) and misattributes the removal of the hiring trade-off to a perfectly competitive market (misrepresenting F035).",
+      "words": {
+        "baseline": 1040,
+        "multiagent": 1027
+      },
+      "spread": 1
+    },
+    {
+      "topic_id": "t5",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 4.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 4.5,
+        "citation_integrity": 3.5,
+        "absence_of_filler": 5.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
       ],
-      "t5": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 4,
-          "absence_of_filler": 5
-        }
+      "reasoning": "Report A exhibits flawless citation integrity and factual grounding, whereas Report B contains a clear citation mismatch, using [F036] (which lists specific resistance genes in Tunisia and Turkey) to support a claim about a lack of longitudinal studies. Additionally, Report A provides a more robust trade policy analysis by integrating specific WTO SPS Agreement mechanisms and the Marine Mammal Protection Act as a regulatory model.",
+      "words": {
+        "baseline": 898,
+        "multiagent": 936
+      },
+      "spread": 1
+    },
+    {
+      "topic_id": "t6",
+      "rounds": 2,
+      "baseline": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 5.0,
+        "depth_of_analysis": 5.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 5.0
+      },
+      "multiagent": {
+        "factual_grounding": 5.0,
+        "structural_coherence": 4.5,
+        "depth_of_analysis": 4.0,
+        "citation_integrity": 5.0,
+        "absence_of_filler": 4.0
+      },
+      "orderings": [
+        "baseline",
+        "multiagent"
       ],
-      "t6": [
-        {
-          "factual_grounding": 5,
-          "structural_coherence": 5,
-          "depth_of_analysis": 5,
-          "citation_integrity": 5,
-          "absence_of_filler": 5
-        }
-      ]
+      "reasoning": "Report A maintains a tight, analytical focus on academic AI research, exploring the compute gap, decentralized university workarounds, and the fragmentation of research collaboration while critically evaluating empirical data gaps. Report B, by contrast, devotes substantial space to corporate semiconductor revenues, market shares, and manufacturing statistics, which dilutes its focus on the academic sector.",
+      "words": {
+        "baseline": 909,
+        "multiagent": 999
+      },
+      "spread": 1
     }
-  }
+  ],
+  "judge_tokens": 188669
 }

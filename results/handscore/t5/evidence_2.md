@@ -1,0 +1,63 @@
+# Evidence for report_2
+
+57 findings. Check every citation in `report_2.md` against THIS file.
+
+IDs are per-report: F001 here is a different claim from F001 in the other evidence file. Do not cross-check.
+
+- **[F001]** (high) Horizontal gene transfer is the primary mechanism for the spread of antibiotic resistance genes among aquatic bacterial populations.
+- **[F002]** (high) Horizontal gene transfer occurs through conjugation, transduction, and transformation.
+- **[F003]** (medium) Bacteria develop resistance through spontaneous mutations within their chromosomal DNA.
+- **[F004]** (medium) Antibiotic use in aquaculture creates selective pressure that facilitates the proliferation of resistant bacterial strains.
+- **[F005]** (medium) Humans are exposed to antibiotic-resistant bacteria through the consumption of raw or undercooked aquaculture products.
+- **[F006]** (medium) Humans are exposed to antibiotic-resistant bacteria through direct contact with contaminated water.
+- **[F007]** (medium) Resistant bacteria spread to natural environments via wastewater discharge, runoff, or direct discharge from aquaculture facilities.
+- **[F008]** (medium) Aquaculture workers and residents living near facilities are at higher risk of exposure to resistant bacteria.
+- **[F009]** (high) The transfer of resistance from aquaculture to humans is associated with increased severity and duration of infections and higher rates of treatment failure.
+- **[F010]** (medium) Vibrio, Aeromonas, Edwardsiella, and Pseudomonas species are common aquaculture pathogens that can spread to humans.
+- **[F011]** (high) There is a scarcity of information and a lack of direct research connecting specific antibiotic usage in aquaculture to human health outcomes.
+- **[F012]** (high) Governments should strengthen regulations based on antimicrobial categorization frameworks provided by the EMA, WHO, and WOAH.
+- **[F013]** (high) Recommended management strategies include establishing antimicrobial usage thresholds and mandatory record-keeping of antimicrobial class and duration.
+- **[F014]** (high) Recommended management strategies include monitoring water quality and feed standards.
+- **[F015]** (high) Antimicrobial residues in seafood are linked to the development of antimicrobial resistance in humans.
+- **[F016]** (high) Antimicrobial residues in seafood are linked to drug hypersensitivity reactions in humans.
+- **[F017]** (high) Antimicrobial residues in seafood are linked to the disruption of normal intestinal flora in humans.
+- **[F018]** (high) Residues of certain antibiotics used in aquaculture are associated with carcinogenic, mutagenic, and teratogenic effects.
+- **[F019]** (low) Specific risks of antibiotic residues in seafood include aplastic anemia and deadly forms of cancer.
+- **[F020]** (medium) Antibiotics used in aquatic environments are often slow to biodegrade.
+- **[F021]** (high) Antibiotic use in aquaculture affects bacteria and cyanobacteria in sediments.
+- **[F022]** (high) Antibiotic use in aquaculture disrupts ecological processes in the water column.
+- **[F023]** (high) The World Health Organization is responsible for developing international food safety standards regarding antimicrobial use and residues.
+- **[F024]** (high) The implementation of Hazard Analysis and Critical Control Point systems is recommended to assist regulatory authorities in controlling residues.
+- **[F025]** (high) Some countries maintain separate Maximum Residue Limit programs for domestic versus international markets.
+- **[F026]** (high) Chile utilizes regulated authorization and registration procedures for pharmaceutical use in aquaculture.
+- **[F027]** (high) China has implemented the Shining Sword campaign to enforce regulatory compliance regarding pharmaceutical use in aquaculture.
+- **[F028]** (medium) Concerns exist that the Trans-Pacific Partnership could be utilized to challenge U.S. food safety regulations prohibiting the import of seafood raised with banned antibiotics.
+- **[F029]** (high) There is a lack of comprehensive data regarding antibiotic consumption in Indonesia.
+- **[F030]** (high) Methodologies for regulating and reporting antibiotic use in aquaculture remain inconsistent globally.
+- **[F031]** (high) The FDA sets the permissible residue level for chloramphenicol in imported seafood at 0.15 ppb.
+- **[F032]** (high) The FDA sets the permissible residue level for nitrofurans in imported seafood at 0.5 ppb.
+- **[F033]** (high) The FDA sets the permissible residue level for malachite green and gentian violet in imported seafood at 0.5 ppb.
+- **[F034]** (medium) The EU, USA, and Japan enforce stricter regulations on antibiotic residues in seafood than many exporting nations.
+- **[F035]** (high) The WTO Sanitary and Phytosanitary Agreement uses risk analysis to protect public health and facilitate international trade.
+- **[F036]** (high) Antimicrobial residues in food are linked to antimicrobial drug resistance, hypersensitivity, carcinogenicity, mutagenicity, teratogenicity, and bone marrow depression.
+- **[F037]** (medium) Aquaculture farmers in developing nations use veterinary drugs and fungicides unapproved in the U.S. to manage disease in overcrowded pens.
+- **[F038]** (medium) Chloramphenicol is an unapproved antibiotic residue frequently found in imported seafood.
+- **[F039]** (medium) Approximately 2% of imported fish and seafood shipments in the United States undergo physical inspection or laboratory testing.
+- **[F040]** (high) The FDA has increased foreign site inspections and established permanent staff posts in strategic international locations.
+- **[F041]** (high) The FDA is implementing Food Safety Modernization Act authorities to establish programs for testing food via accredited laboratories.
+- **[F042]** (medium) Monitoring for chloramphenicol residues requires expensive instrumentation.
+- **[F043]** (high) The development and spread of antimicrobial resistance genes into human pathogens is documented as a consequence of antibiotic use in aquaculture.
+- **[F044]** (high) There is a lack of published reports confirming the transmission of resistant strains from aquaculture production into food and subsequently to the human population.
+- **[F045]** (high) The transfer of antibacterial resistance genes from live bacteria to other bacteria in food or the human intestine can occur via conjugation.
+- **[F046]** (high) Aquaculture wastewater serves as a reservoir for resistant bacteria.
+- **[F047]** (high) The EMBARGO systematic review protocol focuses on mapping epidemiological characteristics and infection control measures in healthcare and community settings.
+- **[F048]** (high) Clinical reports on Klebsiella pneumoniae outbreaks focus on hospital-based transmission and antibiotic stewardship.
+- **[F049]** (high) WTO members have the right to implement sanitary and phytosanitary measures to protect human, animal, or plant life or health.
+- **[F050]** (high) WTO sanitary and phytosanitary measures must be based on an assessment of risks to life or health.
+- **[F051]** (high) WTO members are required to accept the measures of other members as equivalent if the exporting member demonstrates their measures achieve the importing member's appropriate level of protection.
+- **[F052]** (high) WTO members that do not apply international standards as a condition for import should provide a reason for doing so.
+- **[F053]** (medium) WTO jurists may be required to define the criteria for an acceptable risk assessment for SPS measures in the context of China's ban on Japanese seafood.
+- **[F054]** (medium) Some WTO members argue that the European Union's processes for determining maximum residue levels for plant protection products create additional trade restrictions.
+- **[F055]** (high) The United States utilizes the Marine Mammal Protection Act to impose import prohibitions on seafood from fisheries that do not meet U.S. standards.
+- **[F056]** (high) The U.S. Marine Mammal Protection Act requires comparability findings for seafood imports.
+- **[F057]** (high) The FDA refuses entry to specific shrimp shipments due to the presence of veterinary drug residues, including antibiotics and fungicides.

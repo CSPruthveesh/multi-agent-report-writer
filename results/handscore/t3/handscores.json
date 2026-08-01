@@ -1,0 +1,19 @@
+{
+  "scores": {
+    "report_1": {
+      "factual_grounding": 4,
+      "structural_coherence": 4,
+      "depth_of_analysis": 3,
+      "citation_integrity": 4,
+      "absence_of_filler": 4
+    },
+    "report_2": {
+      "factual_grounding": 4,
+      "structural_coherence": 2,
+      "depth_of_analysis": 4,
+      "citation_integrity": 4,
+      "absence_of_filler": 4
+    }
+  },
+  "note": "there was no argument being created up in report 2 , it was basically just facts bundled up in paragraphs"
+}

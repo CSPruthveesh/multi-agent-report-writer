@@ -1,0 +1,73 @@
+# Evidence for report_2
+
+67 findings. Check every citation in `report_2.md` against THIS file.
+
+IDs are per-report: F001 here is a different claim from F001 in the other evidence file. Do not cross-check.
+
+- **[F001]** (medium) Sodium-ion batteries are currently more expensive or at price parity with lithium iron phosphate batteries due to a lack of large-scale production.
+- **[F002]** (low) Sodium-ion battery costs are estimated at $59/kWh by Energy Storage.
+- **[F003]** (low) Sodium-ion battery costs are estimated at over $100/kWh by Bonne Batteries.
+- **[F004]** (low) Lithium iron phosphate battery costs are estimated at $52/kWh by Energy Storage.
+- **[F005]** (low) Lithium iron phosphate battery costs are estimated at $60/kWh by Benchmark Minerals.
+- **[F006]** (high) Sodium carbonate raw material costs are $600–$650 per ton.
+- **[F007]** (high) Lithium carbonate raw material costs are $10,000–$11,000 per ton.
+- **[F008]** (high) Cost parity between sodium-ion and lithium iron phosphate technologies is not expected before 2031.
+- **[F009]** (low) Sodium-ion battery cycle life is reported as 4,000–6,000 cycles by Bonne Batteries.
+- **[F010]** (low) Sodium-ion battery cycle life is reported as 1,000–4,000 cycles by EcoFlow.
+- **[F011]** (low) Sodium-ion battery cycle life is reported as 8,000–10,000 cycles by Laserax.
+- **[F012]** (low) Lithium iron phosphate battery cycle life is reported as 5,000–10,000+ cycles by Laserax.
+- **[F013]** (low) Lithium iron phosphate battery cycle life is reported as 3,000–6,000 cycles by Bonne Batteries.
+- **[F014]** (medium) Lithium iron phosphate is the dominant technology for energy storage applications.
+- **[F015]** (medium) Sodium-ion batteries have a wider operating temperature range than lithium iron phosphate batteries.
+- **[F016]** (medium) Sodium-ion batteries currently hold approximately 5% of the market.
+- **[F017]** (medium) Lithium prices have returned to 2021 levels.
+- **[F018]** (medium) Grid-scale storage is the largest and fastest-growing application segment for sodium-ion batteries.
+- **[F019]** (medium) Sodium-ion batteries are used in commercial and industrial settings to optimize energy consumption and reduce peak demand charges.
+- **[F020]** (low) Sodium-ion batteries are used for solar self-consumption and cold-climate energy storage.
+- **[F021]** (medium) Data centers are deploying sodium-ion systems for backup power.
+- **[F022]** (medium) Microgrids and emergency backup are key use cases for sodium-ion batteries in commercial and public sector projects.
+- **[F023]** (low) Defense is a potential market for sodium-ion battery energy storage systems.
+- **[F024]** (high) Sodium-ion chemistry is less prone to thermal runaway than many lithium-ion systems.
+- **[F025]** (low) Sodium-ion batteries exhibit cold-climate resilience.
+- **[F026]** (high) CATL plans mass production of next-generation sodium-ion cells by 2026.
+- **[F027]** (high) Sodium carbonate is globally distributed and not classified as a critical mineral.
+- **[F028]** (high) Lithium carbonate is geographically concentrated and classified as a critical mineral.
+- **[F029]** (high) Sodium carbonate costs approximately USD 300 per metric ton.
+- **[F030]** (high) Lithium carbonate equivalents range from USD 13,000 to USD 80,000 per metric ton.
+- **[F031]** (medium) North America and Europe face midstream processing limitations in refining precursors into battery-grade specialized materials.
+- **[F032]** (medium) Scaling the production of hard carbon anodes and sodium-based cathodes lacks the manufacturing maturity of lithium-ion supply chains.
+- **[F033]** (medium) CATL has targeted pricing for sodium-ion cells at approximately 30% lower than lithium iron phosphate equivalents.
+- **[F034]** (medium) Sodium-ion systems can utilize passive or air cooling.
+- **[F035]** (medium) Using passive or air cooling instead of active cooling can reduce cooling energy consumption by up to 90% in sodium-ion systems.
+- **[F036]** (medium) Stationary energy storage is projected to account for 72.7% of the sodium-ion market share by 2026.
+- **[F037]** (medium) NTPC in India has launched pilot deployments for sodium-ion in solar hybrid projects.
+- **[F038]** (medium) Current commercial-scale sodium-ion energy density is approximately 175 Wh/kg.
+- **[F039]** (medium) Lithium-ion energy density ranges from 150 to 300 Wh/kg depending on chemistry.
+- **[F040]** (low) JMBatteries reports 2025 sodium-ion battery costs at $70–$100/kWh.
+- **[F041]** (low) JMBatteries reports 2025 LFP battery costs at $90–$130/kWh.
+- **[F042]** (low) Bonnen Batteries reports 2025 sodium-ion prices are roughly on par with lithium-ion due to a lack of large-scale production.
+- **[F043]** (high) BloombergNEF reported 2025 average LFP pack prices at $81/kWh.
+- **[F044]** (medium) Industry analysis projects 2026 sodium-ion cell costs at $55–$70/kWh.
+- **[F045]** (medium) Industry analysis projects 2026 LFP cell costs at $85–$110/kWh.
+- **[F046]** (medium) A whitepaper estimates sodium-ion LCOS at $115–$135/MWh.
+- **[F047]** (medium) A whitepaper estimates LFP LCOS at $145–$170/MWh.
+- **[F048]** (low) Sodium-ion battery cycle life is estimated between 3,000 and 6,000 cycles.
+- **[F049]** (low) Some sodium-ion battery designs are reported to exceed 10,000 cycles.
+- **[F050]** (low) LFP battery cycle life is estimated between 3,000 and 8,000 cycles.
+- **[F051]** (medium) Sodium-ion batteries retain 85–90% capacity at -20°C.
+- **[F052]** (medium) LFP batteries retain 60–80% capacity at -20°C.
+- **[F053]** (medium) Sodium-ion batteries can utilize passive or air cooling systems.
+- **[F054]** (medium) Sodium-ion is positioned as a chemistry for low-cost, short-range, fleet, and China-centric EV platforms.
+- **[F055]** (medium) Lithium iron phosphate batteries have a cycle life range of 3,000 to 6,000 cycles.
+- **[F056]** (medium) General industry figures for sodium-ion battery cycle life cluster between 3,000 and 6,000 cycles.
+- **[F057]** (low) NFPP sodium-ion battery chemistry is claimed to reach over 10,000 cycles.
+- **[F058]** (medium) Independent verification of cycle life for residential-scale sodium-ion batteries is limited.
+- **[F059]** (medium) Independent analysis of certain cells marketed as sodium-ion revealed voltage profiles and expansion signatures characteristic of lithium-ion.
+- **[F060]** (medium) NFPP sodium-ion batteries can operate with passive or air cooling.
+- **[F061]** (medium) Sodium-ion batteries have better cold-weather performance than lithium iron phosphate batteries.
+- **[F062]** (medium) Sodium-ion batteries allow for discharge to 0% state of charge.
+- **[F063]** (medium) Sodium-ion batteries are classified as non-hazardous for transport.
+- **[F064]** (medium) Lithium iron phosphate systems often require a 30% state of charge limit for shipping.
+- **[F065]** (medium) Lithium iron phosphate batteries have an energy density of 150–210 Wh/kg.
+- **[F066]** (medium) Sodium-ion batteries have an energy density of 100–175 Wh/kg.
+- **[F067]** (medium) Lithium iron phosphate batteries have an established US residential deployment history.

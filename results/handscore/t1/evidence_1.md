@@ -1,0 +1,73 @@
+# Evidence for report_1
+
+67 findings. Check every citation in `report_1.md` against THIS file.
+
+IDs are per-report: F001 here is a different claim from F001 in the other evidence file. Do not cross-check.
+
+- **[F001]** (low) One source reports SIB cells carry a cost of $46–$62/kWh.
+- **[F002]** (low) One source reports LFP cells carry a cost of $52–$55/kWh.
+- **[F003]** (low) One source reports SIB cells cost $59/kWh.
+- **[F004]** (low) One source reports LFP cells cost $52/kWh.
+- **[F005]** (low) One source reports production costs for SIB at $50/kWh.
+- **[F006]** (low) One source reports production costs for LFP at $70/kWh.
+- **[F007]** (low) One source projects SIB costs at $55–$70/kWh.
+- **[F008]** (medium) Bernstein and IRENA project SIB long-term costs reaching $40/kWh.
+- **[F009]** (medium) Sodium carbonate costs $100–$650/tonne.
+- **[F010]** (medium) Lithium carbonate costs $6,000–$83,000/tonne.
+- **[F011]** (low) SIB cycle life is reported as 1,000 to 4,000 cycles by one source.
+- **[F012]** (low) SIB cycle life is reported as 3,000 to 6,000 cycles by one source.
+- **[F013]** (low) SIB cycle life is reported as 8,000 to 10,000 cycles by one source.
+- **[F014]** (low) SIB cycle life is reported as over 10,000 cycles by one source.
+- **[F015]** (low) LFP cycle life is reported as 3,000 to 6,000 cycles by one source.
+- **[F016]** (low) LFP cycle life is reported as 5,000 to 6,000+ cycles by one source.
+- **[F017]** (low) LFP cycle life is reported as 5,000 to 10,000+ cycles by one source.
+- **[F018]** (medium) SIB market share is expected to grow to 30% by 2030 for energy storage use cases.
+- **[F019]** (medium) SIB retains 85–90% capacity at -20°C.
+- **[F020]** (medium) LFP retains 60–80% capacity at -20°C.
+- **[F021]** (medium) SIB thermal runaway onset occurs 30–50°C higher than lithium-ion.
+- **[F022]** (medium) Sodium-ion batteries reach 90% capacity in approximately 12 minutes.
+- **[F023]** (medium) Sodium-ion batteries operate in temperatures ranging from -40°C to +80°C.
+- **[F024]** (medium) Sodium-ion batteries can be stored at 0V.
+- **[F025]** (low) One source projects a 143% ROI for sodium-ion systems compared to 22% for lithium iron phosphate systems.
+- **[F026]** (high) Commercialization and deployment of molten sodium batteries is more advanced than that of sodium-ion batteries.
+- **[F027]** (medium) Sodium-ion batteries are used for frequency regulation.
+- **[F028]** (medium) Sodium-ion batteries are used for renewable energy intermittency management.
+- **[F029]** (medium) Sodium-ion batteries are used for peak shaving in commercial and industrial applications.
+- **[F030]** (medium) Sodium-ion batteries are used in microgrids, telecom backup power, and data centers.
+- **[F031]** (medium) Sodium-ion systems reduce the need for active cooling systems.
+- **[F032]** (medium) Cobalt-free sodium-ion batteries are estimated to be 40% to 60% lower in cost per kWh than LiCoO2 batteries.
+- **[F033]** (medium) Many existing studies focus on material costs in isolation rather than the cost of the full battery system.
+- **[F034]** (high) Tiamat sodium-ion technology has demonstrated durability of more than 4,000 cycles.
+- **[F035]** (medium) Sodium-ion batteries can rely on passive or air cooling for stationary storage.
+- **[F036]** (medium) Lithium iron phosphate battery systems often require active cooling, fans, and pumps.
+- **[F037]** (medium) Sodium-ion batteries are positioned to compete in commercial and industrial applications, data centers, residential storage, defense, and microgrids.
+- **[F038]** (high) Research models for sodium-ion penetration into stationary energy storage systems range from 100% penetration by 2040 to 100% penetration by 2035.
+- **[F039]** (medium) Lithium iron phosphate is identified as the most techno-economically efficient option for large-scale stationary storage in some analyses.
+- **[F040]** (medium) Sodium-ion is an emerging technology with theoretical performance similar to lithium-ion.
+- **[F041]** (medium) The installed CAPEX for LFP BESS is estimated at $260–$290/kWh.
+- **[F042]** (medium) The installed CAPEX for sodium-ion BESS is estimated at $210–$240/kWh.
+- **[F043]** (medium) Sodium-ion system costs are approximately 15% lower than LFP system costs due to the elimination of HVAC and chiller systems.
+- **[F044]** (low) Sodium-ion is projected to reach cost parity with LFP by the end of 2026.
+- **[F045]** (low) Sodium-ion is projected to have a 5–10% cost advantage over LFP in 2027.
+- **[F046]** (low) Sodium-ion is projected to have a 15–20% cost advantage over LFP by 2028.
+- **[F047]** (medium) Annual fixed OPEX for sodium-ion systems is $1.00–$2.00/kW-yr.
+- **[F048]** (medium) Annual fixed OPEX for LFP systems is $10.00–$14.00/kW-yr.
+- **[F049]** (medium) Sodium-ion systems utilize less than 0.5% auxiliary power.
+- **[F050]** (medium) LFP systems utilize 4.5%–7.0% auxiliary power.
+- **[F051]** (low) One source projects a 143% ROI for sodium-ion end users compared to 22% for LFP.
+- **[F052]** (medium) LFP has a cycle life of 8,000–12,000+ cycles.
+- **[F053]** (medium) Sodium-ion has a cycle life of 5,000–7,000 cycles.
+- **[F054]** (medium) Sodium-ion batteries retain 85–90% capacity at -20°C.
+- **[F055]** (low) Sodium-ion batteries have a reported cycle life range of 1,000 to 4,000 cycles.
+- **[F056]** (low) Sodium-ion batteries have a reported cycle life range of 3,000 to 5,000 cycles.
+- **[F057]** (low) Sodium-ion batteries have a reported cycle life range of 4,000 to 6,000 cycles.
+- **[F058]** (low) Some sodium-ion storage-grade cells claim a cycle life of 10,000 or more cycles.
+- **[F059]** (low) Some sodium-ion cells claim a cycle life of up to 15,000 cycles.
+- **[F060]** (medium) High-cycle claims for sodium-ion batteries are based on cells manufactured since 2025-2026 and remain unproven at scale.
+- **[F061]** (low) LFP batteries have a reported cycle life range of 3,000 to 6,000 cycles.
+- **[F062]** (low) LFP batteries have a reported cycle life range of 5,000 to 10,000 or more cycles.
+- **[F063]** (low) LFP batteries have a reported cycle life range of 6,000 to 10,000 cycles.
+- **[F064]** (medium) LFP technology has a decade of field-verified reliability.
+- **[F065]** (high) Kora Powerblock LFP cells are rated for 6,000 or more cycles at 80% capacity as of June 2026.
+- **[F066]** (medium) Sodium-ion batteries can operate in temperatures as low as -20°C.
+- **[F067]** (medium) Sodium-ion systems can utilize passive or air cooling to reduce auxiliary power loads and maintenance costs.
