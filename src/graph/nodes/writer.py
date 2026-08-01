@@ -37,6 +37,35 @@ gives three things a rewrite cannot:
 
 Fallback: if fewer than half the edits apply cleanly, fall back to a full rewrite
 and record it in the trace. Do not fail the node — a degraded revision beats none.
+
+THE OUTLINE IS COVERAGE, NOT A TABLE OF CONTENTS — PHASE 9
+----------------------------------------------------------
+The Phase 9 evaluation localised the graph's one real weakness here. Judge and blind
+human agreed the multi-agent reports lose on structural_coherence and on nothing else;
+strip that criterion and the remaining four came out +0.09 in the graph's favour. Both
+blind comments described the same thing without being asked to — "no argument being
+created, just facts bundled up in paragraphs".
+
+The mechanism was visible in the section headers. Six of six baseline reports end on a
+synthesising section — Conclusion, Policy Implications, Acknowledged Gaps. Zero of six
+graph reports did. Three ended on "## Known limitations", which the judge strips before
+scoring, so as judged all six ended mid-list on another topic bucket.
+
+The cause was in these rules. "Follow the outline's sections" is concrete and
+"Build an argument" is abstract, so the concrete one won. The Analyst's sections field
+asks for evidence grouped by topic with the IDs that support each — a partition, which
+is the right job for an Analyst — and a Writer following it faithfully renders a
+partition. The thesis was already there and nothing required the report to land it.
+
+So the outline is now stated to be what must be COVERED, and the closing section is
+the Writer's to add and is not in the outline. The limitations block moves after it,
+which also means the judged body ends on the argument rather than on whatever the
+strip left behind.
+
+The header for that block is now dictated rather than left to the model. _body() in
+scripts/judge.py matches the literal string "## Known limitations" to blind the judge;
+it was matching a string the Writer had never been told to produce, so a run where the
+model chose "## Limitations" would have failed to blind and said nothing about it.
 """
 
 from __future__ import annotations
@@ -58,6 +87,11 @@ NODE = "writer"
 TARGET_WORDS = (800, 1200)
 CITE_RE = re.compile(r"\bF\d{3}\b")
 
+# Dictated to the model rather than inferred from it, because scripts/judge.py blinds
+# the judge by cutting from this exact string. See the docstring.
+LIMITS_HEADER = "## Known limitations"
+HEADING_RE = re.compile(r"^#{2,}\s+(.+?)\s*$", re.MULTILINE)
+
 PERSONA = """You are a writer producing a briefing for a smart reader who does not know this
 topic. Someone else gathered the evidence and someone else planned the structure. Your job is
 the prose, and you are accountable for the report reading as one coherent piece rather than a
@@ -65,19 +99,31 @@ set of assembled parts."""
 
 RULES = f"""
 Requirements:
-- {TARGET_WORDS[0]}-{TARGET_WORDS[1]} words.
+- {TARGET_WORDS[0]}-{TARGET_WORDS[1]} words in total, closing section included. It comes
+  out of that budget, not on top of it.
 - Cite finding IDs inline on the sentence they support: [F003] or [F003, F012].
 - ONLY cite IDs that appear in the evidence list. Never invent one. A fabricated
   citation is worse than an uncited claim.
-- Follow the outline's sections and thesis. If the outline lists tensions, preserve them —
-  do not resolve a real disagreement into a smooth consensus.
-- Build an argument. Later sections should use what earlier ones established. Do not
-  restate the introduction as a conclusion.
+- Cover every section the outline lists, and argue the outline's thesis. If the outline
+  lists tensions, preserve them — do not resolve a real disagreement into a smooth
+  consensus.
 - Where evidence is thin, say so plainly rather than writing around it with confident
   prose. Fluent unsourced assertion is the specific failure being graded here.
 - No filler. No "in today's rapidly evolving landscape". No throat-clearing. Every
   paragraph carries information.
-- Markdown. One H1 title, then the sections. No preamble before the title."""
+- Markdown. One H1 title, then the sections. No preamble before the title.
+
+Structure — this is what separates a report from a list of facts:
+- The outline's sections are what you must COVER. They are not the whole table of
+  contents. The report ENDS with a closing section that the outline does not list and
+  that you write yourself.
+- That closing section takes a position on the thesis: what the evidence supports, what
+  it does not, and what follows for the reader. It is not a summary and it must not
+  restate the introduction. If it could have been written without reading the body, it
+  has failed.
+- Every section after the first opens from what the earlier ones established. A section
+  that could be moved anywhere in the report without loss is not carrying an argument.
+- Never end on a bucket of facts."""
 
 
 class Edit(BaseModel):
@@ -110,6 +156,19 @@ def _broken_cites(text: str, valid: set[str]) -> list[str]:
     return sorted(set(CITE_RE.findall(text)) - valid)
 
 
+def _judged_sections(text: str) -> list[str]:
+    """Section headers a judge will actually see.
+
+    scripts/judge.py cuts the report at LIMITS_HEADER before scoring, so the section
+    the report ends on as judged is not always the section it ends on as written.
+    Reporting the wrong one would have made the Phase 9 structural failure invisible
+    in the trace, which is how it stayed invisible for nine phases.
+    """
+    cut = text.find(LIMITS_HEADER)
+    body = text[:cut] if cut != -1 else text
+    return [h.strip() for h in HEADING_RE.findall(body)]
+
+
 def _changed_pct(before: str, after: str) -> float:
     """Rough proportion of the document that changed, by word-level difference."""
     a, b = before.split(), after.split()
@@ -131,9 +190,14 @@ def _write_fresh(
     if unclosed:
         listed = "\n".join(f"- {g}" for g in unclosed)
         gap_note = (
-            f"\n\nEvidence that was searched for and not found. Acknowledge these in the "
-            f"report where relevant rather than writing around them — a reader is better "
-            f"served knowing what is unestablished:\n{listed}"
+            f"\n\nEvidence that was searched for and not found. Acknowledge these where they "
+            f"bear on a claim rather than writing around them — a reader is better served "
+            f"knowing what is unestablished:\n{listed}\n\n"
+            f"Then list them again at the very end, AFTER the closing section, under exactly "
+            f"this header:\n\n{LIMITS_HEADER}\n\n"
+            f"That block is an appendix to the argument, not a substitute for it. The closing "
+            f"section comes first and is where the report reaches its position. Use that "
+            f"header verbatim — downstream tooling matches on it."
         )
 
     resp = generate(
@@ -298,6 +362,7 @@ def writer(state: ReportState) -> dict[str, Any]:
                 broken = still
 
     words = len(new_draft.split())
+    judged = _judged_sections(new_draft)
     return {
         "draft": new_draft,
         "token_log": log_entries(ledger, state),
@@ -308,6 +373,11 @@ def writer(state: ReportState) -> dict[str, Any]:
                 revision=rev,
                 words=words,
                 in_range=TARGET_WORDS[0] <= words <= TARGET_WORDS[1],
+                sections=len(judged),
+                # The last thing a judge reads. A topic bucket here is the Phase 9
+                # failure recurring; a closing section is the fix holding.
+                ends_on=judged[-1] if judged else "",
+                has_limits=LIMITS_HEADER in new_draft,
                 cited=len(set(CITE_RE.findall(new_draft))),
                 broken_cites=len(broken),
                 cite_repair=repaired,
