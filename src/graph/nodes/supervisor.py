@@ -48,6 +48,10 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     draft = (state.get("draft") or "").strip() or None
     crit = state.get("critique")
     loops = state.get("research_loops", 0)
+    # Read from state, not from the constant. A run started with the loop disabled
+    # carries its own cap; anything built before the field existed falls back to the
+    # default, so an old checkpoint resumes with the behaviour it was started under.
+    max_loops = state.get("max_research_loops", MAX_RESEARCH_LOOPS)
     revs = state.get("revision_count", 0)
     searches = state.get("searches_used", 0)
     writes = state.get("write_attempts", 0)
@@ -72,14 +76,14 @@ def supervisor(state: ReportState) -> dict[str, Any]:
     #    Both budgets are checked. A loop budget with no searches left is a wasted
     #    hop to a node that will decline to do anything, and before the handover
     #    existed it also lost the gap on the way.
-    if gaps and loops < MAX_RESEARCH_LOOPS and searches < MAX_SEARCHES:
+    if gaps and loops < max_loops and searches < MAX_SEARCHES:
         return {
             **updates,
             "route": "researcher",
             "research_loops": loops + 1,
             "trace": trace + [
                 trace_event(NODE, "route", to="researcher", why="evidence gaps",
-                            gaps=len(gaps), loop=f"{loops + 1}/{MAX_RESEARCH_LOOPS}",
+                            gaps=len(gaps), loop=f"{loops + 1}/{max_loops}",
                             searches=f"{searches}/{MAX_SEARCHES}")
             ],
         }
@@ -102,7 +106,7 @@ def supervisor(state: ReportState) -> dict[str, Any]:
                                         or state.get("unclosed_gaps") or []) + gaps
         trace.append(
             trace_event(NODE, "retire_gaps", count=len(gaps), why=why,
-                        loops=f"{loops}/{MAX_RESEARCH_LOOPS}",
+                        loops=f"{loops}/{max_loops}",
                         searches=f"{searches}/{MAX_SEARCHES}")
         )
 

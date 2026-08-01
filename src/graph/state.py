@@ -24,6 +24,11 @@ class ReportState(TypedDict, total=False):
     findings: Annotated[list[dict[str, Any]], operator.add]
     searches_used: int
     research_loops: int
+    # The gap-loop cap, carried in state rather than read from the module constant, so
+    # that a run made with the loop disabled records the condition that produced it.
+    # An experimental condition that is not in the artifact is one nobody can verify
+    # afterwards — the same argument as code_version, one level up.
+    max_research_loops: int
     write_attempts: int
     # Off by default so Phase 9 can batch six topics unattended. An approval gate
     # that cannot be turned off is an approval gate that blocks the evaluation.
@@ -52,13 +57,16 @@ class ReportState(TypedDict, total=False):
     trace: Annotated[list[dict[str, Any]], operator.add]
 
 
-def initial_state(topic: str, *, hitl: bool = False) -> ReportState:
+def initial_state(
+    topic: str, *, hitl: bool = False, max_research_loops: int = MAX_RESEARCH_LOOPS
+) -> ReportState:
     return ReportState(
         topic=topic,
         hitl=hitl,
         findings=[],
         searches_used=0,
         research_loops=0,
+        max_research_loops=max_research_loops,
         write_attempts=0,
         unaddressed_gaps=[],
         unclosed_gaps=[],

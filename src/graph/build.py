@@ -162,6 +162,11 @@ def _persist(topic_id: str, final: ReportState, wall_ms: int) -> Path:
         extra={
             "revisions": final.get("revision_count", 0),
             "research_loops": final.get("research_loops", 0),
+            # The cap, not just the loops actually taken. Zero loops because the cap was
+            # zero and zero loops because the Analyst raised no gaps are different runs,
+            # and without this field they are the same record — which would make the
+            # matched-pair experiment unreadable from its own artifacts.
+            "max_research_loops": final.get("max_research_loops", MAX_RESEARCH_LOOPS),
             "searches_used": final.get("searches_used", 0),
             "write_attempts": final.get("write_attempts", 0),
             "unclosed_gaps": final.get("unclosed_gaps") or [],
@@ -191,6 +196,7 @@ def run(
     hitl: bool = False,
     thread_id: str | None = None,
     checkpoint: bool = True,
+    max_research_loops: int = MAX_RESEARCH_LOOPS,
 ) -> dict[str, Any]:
     """Same signature as baseline.agent.run, plus persistence options.
 
@@ -207,7 +213,8 @@ def run(
     cfg = thread_config(tid) if cp else {"recursion_limit": 40}
 
     t0 = time.perf_counter()
-    final = cast(ReportState, graph.invoke(initial_state(topic, hitl=hitl), config=cfg))
+    start = initial_state(topic, hitl=hitl, max_research_loops=max_research_loops)
+    final = cast(ReportState, graph.invoke(start, config=cfg))
     wall_ms = int((time.perf_counter() - t0) * 1000)
 
     seen = _print_trace(final.get("trace") or []) if verbose else 0

@@ -15,6 +15,7 @@ import logging
 import sys
 
 from src.common.io import RESULTS, get_topic, load_topics, print_summary
+from src.graph.state import MAX_RESEARCH_LOOPS
 
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
 
@@ -62,6 +63,13 @@ def main() -> int:
     ap.add_argument("--all", action="store_true", help="run every topic in topics.json")
     ap.add_argument("--hitl", action="store_true", help="pause for outline approval")
     ap.add_argument("--no-checkpoint", action="store_true", help="disable persistence")
+    # The gap loop is a third of the graph's run cost and two evaluations have failed to
+    # show it buying quality. Setting this to 0 turns t2's accidental zero-loop run into
+    # a matched pair on every topic — same first-pass budget, loop on and off — which
+    # measures evidence coverage directly instead of inferring it from a judge.
+    ap.add_argument("--max-research-loops", type=int, default=MAX_RESEARCH_LOOPS,
+                    metavar="N", help=f"gap-loop cap (default {MAX_RESEARCH_LOOPS}; "
+                                      f"0 disables the loop)")
     ap.add_argument("--resume", metavar="THREAD_ID")
     ap.add_argument("--approve", action="store_true", help="with --resume: auto-approve")
     ap.add_argument("--status", metavar="THREAD_ID")
@@ -106,6 +114,7 @@ def main() -> int:
             return graph_run(
                 t["id"], t["topic"], verbose=not args.quiet,
                 hitl=args.hitl, checkpoint=not args.no_checkpoint,
+                max_research_loops=args.max_research_loops,
             )
 
     for t in topics:
