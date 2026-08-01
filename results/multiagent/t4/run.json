@@ -1,58 +1,62 @@
 {
   "system": "multiagent",
   "topic_id": "t4",
-  "generated_at": "2026-07-31T12:43:41.913722+00:00",
-  "word_count": 1035,
-  "findings_count": 41,
+  "generated_at": "2026-08-01T06:51:16.439229+00:00",
+  "word_count": 1108,
+  "findings_count": 51,
   "citations": {
-    "cited_count": 35,
-    "valid_count": 41,
+    "cited_count": 41,
+    "valid_count": 51,
     "broken": [],
     "broken_count": 0,
     "uncited_findings": [
-      "F016",
-      "F025",
-      "F027",
-      "F028",
-      "F032",
-      "F041"
+      "F012",
+      "F017",
+      "F022",
+      "F030",
+      "F031",
+      "F041",
+      "F044",
+      "F046",
+      "F050",
+      "F051"
     ],
-    "coverage": 0.854
+    "coverage": 0.804
   },
-  "wall_ms": 76678,
+  "wall_ms": 80321,
   "tokens": {
-    "calls": 18,
-    "total_in": 35145,
-    "total_out": 9878,
-    "total": 45023,
+    "calls": 16,
+    "total_in": 33456,
+    "total_out": 10420,
+    "total": 43876,
     "by_node": {
       "researcher": {
-        "calls": 13,
-        "in": 20112,
-        "out": 7211,
-        "total": 27323,
-        "ms": 43116
+        "calls": 12,
+        "in": 20109,
+        "out": 7821,
+        "total": 27930,
+        "ms": 48913
       },
       "analyst": {
-        "calls": 3,
-        "in": 9029,
-        "out": 996,
-        "total": 10025,
-        "ms": 8127
+        "calls": 2,
+        "in": 6763,
+        "out": 790,
+        "total": 7553,
+        "ms": 5378
       },
       "writer": {
         "calls": 1,
-        "in": 2082,
-        "out": 1457,
-        "total": 3539,
-        "ms": 7261
+        "in": 2394,
+        "out": 1478,
+        "total": 3872,
+        "ms": 6392
       },
       "critic": {
         "calls": 1,
-        "in": 3922,
-        "out": 214,
-        "total": 4136,
-        "ms": 2562
+        "in": 4190,
+        "out": 331,
+        "total": 4521,
+        "ms": 2914
       }
     },
     "records": [
@@ -60,456 +64,552 @@
         "node": "researcher",
         "call_type": "plan",
         "in_tokens": 104,
-        "out_tokens": 59,
-        "total_tokens": 163,
-        "latency_ms": 1478,
+        "out_tokens": 58,
+        "total_tokens": 162,
+        "latency_ms": 1155,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2548,
-        "out_tokens": 628,
-        "total_tokens": 3176,
-        "latency_ms": 3624,
+        "in_tokens": 2606,
+        "out_tokens": 655,
+        "total_tokens": 3261,
+        "latency_ms": 4012,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1477,
-        "out_tokens": 1327,
-        "total_tokens": 2804,
-        "latency_ms": 4859,
+        "in_tokens": 1530,
+        "out_tokens": 816,
+        "total_tokens": 2346,
+        "latency_ms": 3138,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 2276,
-        "out_tokens": 537,
-        "total_tokens": 2813,
-        "latency_ms": 3568,
+        "in_tokens": 2204,
+        "out_tokens": 567,
+        "total_tokens": 2771,
+        "latency_ms": 3256,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1403,
-        "out_tokens": 645,
-        "total_tokens": 2048,
-        "latency_ms": 4207,
+        "in_tokens": 1384,
+        "out_tokens": 1555,
+        "total_tokens": 2939,
+        "latency_ms": 4547,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "researcher",
         "call_type": "search",
-        "in_tokens": 1741,
-        "out_tokens": 863,
-        "total_tokens": 2604,
-        "latency_ms": 4023,
+        "in_tokens": 2122,
+        "out_tokens": 451,
+        "total_tokens": 2573,
+        "latency_ms": 2998,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "researcher",
         "call_type": "extract",
-        "in_tokens": 1669,
-        "out_tokens": 853,
-        "total_tokens": 2522,
-        "latency_ms": 3400,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 2544,
-        "out_tokens": 300,
-        "total_tokens": 2844,
-        "latency_ms": 2897,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "gap_plan",
-        "in_tokens": 695,
-        "out_tokens": 34,
-        "total_tokens": 729,
-        "latency_ms": 1319,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "search",
-        "in_tokens": 3304,
-        "out_tokens": 323,
-        "total_tokens": 3627,
-        "latency_ms": 2841,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1122,
-        "out_tokens": 571,
-        "total_tokens": 1693,
-        "latency_ms": 2637,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "analyst",
-        "call_type": "analyze",
-        "in_tokens": 2964,
-        "out_tokens": 336,
-        "total_tokens": 3300,
-        "latency_ms": 2658,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "gap_plan",
-        "in_tokens": 708,
-        "out_tokens": 34,
-        "total_tokens": 742,
-        "latency_ms": 1340,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "search",
-        "in_tokens": 1746,
-        "out_tokens": 544,
-        "total_tokens": 2290,
-        "latency_ms": 3460,
-        "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
-      },
-      {
-        "node": "researcher",
-        "call_type": "extract",
-        "in_tokens": 1319,
-        "out_tokens": 793,
+        "in_tokens": 1267,
+        "out_tokens": 845,
         "total_tokens": 2112,
-        "latency_ms": 6360,
+        "latency_ms": 3362,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "analyst",
         "call_type": "analyze",
-        "in_tokens": 3521,
-        "out_tokens": 360,
-        "total_tokens": 3881,
-        "latency_ms": 2572,
+        "in_tokens": 2769,
+        "out_tokens": 399,
+        "total_tokens": 3168,
+        "latency_ms": 2670,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 0,
+        "revision": 0,
+        "phase": "first_pass"
+      },
+      {
+        "node": "researcher",
+        "call_type": "gap_plan",
+        "in_tokens": 679,
+        "out_tokens": 48,
+        "total_tokens": 727,
+        "latency_ms": 1107,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "researcher",
+        "call_type": "search",
+        "in_tokens": 2302,
+        "out_tokens": 534,
+        "total_tokens": 2836,
+        "latency_ms": 3163,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "researcher",
+        "call_type": "extract",
+        "in_tokens": 1329,
+        "out_tokens": 913,
+        "total_tokens": 2242,
+        "latency_ms": 4350,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "researcher",
+        "call_type": "search",
+        "in_tokens": 3159,
+        "out_tokens": 567,
+        "total_tokens": 3726,
+        "latency_ms": 14522,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "researcher",
+        "call_type": "extract",
+        "in_tokens": 1423,
+        "out_tokens": 812,
+        "total_tokens": 2235,
+        "latency_ms": 3303,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "gap_loop"
+      },
+      {
+        "node": "analyst",
+        "call_type": "analyze",
+        "in_tokens": 3994,
+        "out_tokens": 391,
+        "total_tokens": 4385,
+        "latency_ms": 2708,
+        "attempts": 1,
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "gap_loop"
       },
       {
         "node": "writer",
         "call_type": "write",
-        "in_tokens": 2082,
-        "out_tokens": 1457,
-        "total_tokens": 3539,
-        "latency_ms": 7261,
+        "in_tokens": 2394,
+        "out_tokens": 1478,
+        "total_tokens": 3872,
+        "latency_ms": 6392,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "first_pass"
       },
       {
         "node": "critic",
         "call_type": "critique",
-        "in_tokens": 3922,
-        "out_tokens": 214,
-        "total_tokens": 4136,
-        "latency_ms": 2562,
+        "in_tokens": 4190,
+        "out_tokens": 331,
+        "total_tokens": 4521,
+        "latency_ms": 2914,
         "attempts": 1,
-        "model": "gemini-3.1-flash-lite"
+        "model": "gemini-3.1-flash-lite",
+        "research_loop": 1,
+        "revision": 0,
+        "phase": "first_pass"
       }
     ]
   },
   "findings": [
     {
       "id": "F001",
-      "claim": "Dube et al. (2024) and Cengiz et al. (2019) argue that employment shocks in the 1980s and 1990s bias estimates of minimum wage employment effects.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
+      "claim": "Allegretto, Dube, and Reich argue that traditional difference-in-difference models for estimating minimum wage employment effects are flawed.",
+      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2019/03/The-Employment-Effects-of-a-15-Minimum-Wage-in-the-US-and-in-Mississippi.pdf",
       "confidence": "high"
     },
     {
       "id": "F002",
-      "claim": "Dube et al. (2024) and Cengiz et al. (2019) contend that starting minimum wage employment analyses in the year 2000 avoids bias from pre-existing trends.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
+      "claim": "Allegretto, Dube, and Reich argue that U.S. minimum wage research should restrict comparison areas to those that are geographically proximate.",
+      "source_url": "https://whatweknow.inequality.cornell.edu/topics/does-raising-the-minimum-wage-negatively-impact-employment",
       "confidence": "high"
     },
     {
       "id": "F003",
-      "claim": "Dube, Lester, and Reich (2010) utilized contiguous county comparisons to control for regional economic influences and business cycles.",
-      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
+      "claim": "Allegretto, Dube, and Reich argue that standard minimum wage employment estimates are biased by the inclusion of the early 1990s period in estimation samples.",
+      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2019/03/The-Employment-Effects-of-a-15-Minimum-Wage-in-the-US-and-in-Mississippi.pdf",
       "confidence": "high"
     },
     {
       "id": "F004",
-      "claim": "Neumark and Wascher (2007) argue that meta-analyses should be sharply focused rather than simply averaging studies.",
-      "source_url": "https://sites.socsci.uci.edu/~dneumark/MW%20US%20literature.05.pdf",
+      "claim": "Allegretto, Dube, and Reich (2011) reported an own-wage elasticity estimate of 0.315 with a standard error of 0.402 for teens.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
       "confidence": "high"
     },
     {
       "id": "F005",
-      "claim": "Neumark argues that research designs that demand more of the data often result in larger standard errors.",
-      "source_url": "https://sites.socsci.uci.edu/~dneumark/MW%20US%20literature.05.pdf",
-      "confidence": "medium"
+      "claim": "Allegretto, Dube, Reich, and Zipperer (2017) reported an own-wage elasticity estimate of 0.043 with a standard error of 0.188 for teens.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
+      "confidence": "high"
     },
     {
       "id": "F006",
-      "claim": "Neumark and Wascher (2007) concluded that nearly two-thirds of newer studies found evidence of job loss.",
-      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
+      "claim": "Dube, Lester, and Reich (2016) found that a 10% increase in the minimum wage results in a 2.1% reduction in turnover for restaurant workers and teens.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
       "confidence": "high"
     },
     {
       "id": "F007",
-      "claim": "Neumark and Wascher (2007) concluded that 85% of studies they deemed most convincing found evidence of job loss.",
-      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
+      "claim": "Dube, Lester, and Reich (2016) reported an own-wage elasticity estimate of -0.266 with a standard error of 0.383 for teens.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
       "confidence": "high"
     },
     {
       "id": "F008",
-      "claim": "Neumark and Kala (2025) indicate that minimum wage job loss effects are more evident for Black men.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
+      "claim": "In a perfectly competitive labor market, firms are wage-takers.",
+      "source_url": "https://courses.lumenlearning.com/suny-microeconomics/chapter/monopsony-and-the-minimum-wage",
       "confidence": "high"
     },
     {
       "id": "F009",
-      "claim": "Neumark and Kala (2025) do not find minimum wage job loss effects for Black females.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
+      "claim": "In a perfectly competitive labor market, workers are paid their marginal revenue product.",
+      "source_url": "https://www.pearson.com/channels/microeconomics/learn/brian/ch-15-markets-for-the-factors-of-production/monopsony",
       "confidence": "high"
     },
     {
       "id": "F010",
-      "claim": "Cengiz et al. (2019) found that minimum wage increases lead to a reduction in jobs paying below the new minimum.",
-      "source_url": "https://assets.publishing.service.gov.uk/media/6960e4e656321405090869aa/impacts_of_minimum_wages_review_of_the_international_evidence_Arindrajit_Dube_web.pdf",
+      "claim": "The competitive labor market model predicts that a minimum wage above the equilibrium wage reduces employment.",
+      "source_url": "https://courses.lumenlearning.com/suny-microeconomics/chapter/monopsony-and-the-minimum-wage",
       "confidence": "high"
     },
     {
       "id": "F011",
-      "claim": "Cengiz et al. (2019) found that job reductions below the new minimum wage are balanced by increases in jobs at higher wage levels.",
-      "source_url": "https://assets.publishing.service.gov.uk/media/6960e4e656321405090869aa/impacts_of_minimum_wages_review_of_the_international_evidence_Arindrajit_Dube_web.pdf",
+      "claim": "The competitive labor market model predicts that a minimum wage above the equilibrium wage increases unemployment.",
+      "source_url": "https://maxkasy.github.io/home/files/teaching/Labor_Oxford_2021/4-Labor-Demand.pdf",
       "confidence": "high"
     },
     {
       "id": "F012",
-      "claim": "Doucouliagos and Stanley (2009) investigated publication selection bias in minimum wage research.",
-      "source_url": "https://www.frbsf.org/research-and-insights/publications/economic-letter/2015/12/effects-of-minimum-wage-on-employment",
-      "confidence": "high"
+      "claim": "The competitive labor market model predicts that minimum wage increases result in positive price passthrough.",
+      "source_url": "https://cream-migration.org/publ_uploads/25036.pdf",
+      "confidence": "medium"
     },
     {
       "id": "F013",
-      "claim": "Traditional minimum wage studies use national-level panel data with state and period fixed effects.",
-      "source_url": "https://onlabor.org/wp-content/uploads/2017/05/Spatial-Heterogeneity-and-Minimum-Wages.pdf",
+      "claim": "In a monopsony labor market, employers pay workers less than their marginal revenue product.",
+      "source_url": "https://www.annualreviews.org/content/journals/10.1146/annurev-economics-072823-030431",
       "confidence": "high"
     },
     {
       "id": "F014",
-      "claim": "Traditional models often yield a negative employment elasticity of -0.165 for teenagers.",
-      "source_url": "https://sites.socsci.uci.edu/~dneumark/Neumark%20et%20al%20MW%20evaluation%20May%202013%20ILRR%20final%20rev.pdf",
+      "claim": "In a monopsony labor market, the marginal cost of labor exceeds the wage because firms must increase wages for all existing employees to hire an additional worker.",
+      "source_url": "https://www.pearson.com/channels/microeconomics/learn/brian/ch-15-markets-for-the-factors-of-production/monopsony",
       "confidence": "high"
     },
     {
       "id": "F015",
-      "claim": "Newer research methods include using census division-specific time effects to control for regional economic shocks.",
-      "source_url": "https://onlabor.org/wp-content/uploads/2017/05/Spatial-Heterogeneity-and-Minimum-Wages.pdf",
+      "claim": "The monopsony model predicts that a minimum wage set above the equilibrium wage can increase both wages and employment simultaneously.",
+      "source_url": "https://courses.lumenlearning.com/suny-microeconomics/chapter/monopsony-and-the-minimum-wage",
       "confidence": "high"
     },
     {
       "id": "F016",
-      "claim": "Newer research methods include comparing contiguous counties that straddle state borders.",
-      "source_url": "https://escholarship.org/content/qt86w5m90m/qt86w5m90m_noSplash_477de9e826d71c581169a0c3c81f2040.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F017",
-      "claim": "Newer research methods include using commuting zones to define local labor markets.",
-      "source_url": "https://escholarship.org/content/qt86w5m90m/qt86w5m90m_noSplash_477de9e826d71c581169a0c3c81f2040.pdf",
-      "confidence": "high"
-    },
-    {
-      "id": "F018",
-      "claim": "Estimated employment effects often move toward zero or become positive when spatial heterogeneity controls are applied.",
-      "source_url": "https://onlabor.org/wp-content/uploads/2017/05/Spatial-Heterogeneity-and-Minimum-Wages.pdf",
+      "claim": "The relationship between minimum wages and employment in the monopsony model is non-monotonic.",
+      "source_url": "https://cream-migration.org/publ_uploads/25036.pdf",
       "confidence": "medium"
     },
     {
+      "id": "F017",
+      "claim": "The monopsony model can yield negative price passthrough.",
+      "source_url": "https://cream-migration.org/publ_uploads/25036.pdf",
+      "confidence": "medium"
+    },
+    {
+      "id": "F018",
+      "claim": "Oligopsony is a theoretical framework for monopsony power involving strategic interactions among a limited number of firms.",
+      "source_url": "https://www.annualreviews.org/content/journals/10.1146/annurev-economics-072823-030431",
+      "confidence": "high"
+    },
+    {
       "id": "F019",
-      "claim": "A 1982 review by Brown et al. established a consensus range for the elasticity of teenage employment with respect to the minimum wage of -0.1 to -0.3.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "claim": "Job differentiation is a theoretical framework for monopsony power involving imperfect job substitution and heterogeneous worker preferences.",
+      "source_url": "https://www.annualreviews.org/content/journals/10.1146/annurev-economics-072823-030431",
       "confidence": "high"
     },
     {
       "id": "F020",
-      "claim": "Sabia, Burkhauser, and Hansen (2012) found a median elasticity of approximately -0.7 in New York.",
-      "source_url": "https://issuelab.org/resources/14701/14701.pdf",
+      "claim": "Search-and-matching is a theoretical framework for monopsony power involving frictions that prevent instantaneous access to all available jobs.",
+      "source_url": "https://www.annualreviews.org/content/journals/10.1146/annurev-economics-072823-030431",
       "confidence": "high"
     },
     {
       "id": "F021",
-      "claim": "Some studies report an elasticity of -4.6 for men aged 25\u201329 caught by the minimum wage.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w12663/w12663.pdf",
+      "claim": "An employer has monopsony power if their labor supply is not infinitely elastic.",
+      "source_url": "https://maxkasy.github.io/home/files/teaching/Labor_Oxford_2021/4-Labor-Demand.pdf",
       "confidence": "high"
     },
     {
       "id": "F022",
-      "claim": "A survey of U.S. economists found that 74% oppose a $15 federal minimum wage.",
-      "source_url": "https://epionline.org/studies/survey-of-us-economists-on-a-15-federal-minimum-wage-2",
+      "claim": "Many empirical studies using difference-in-differences designs across U.S. states find little to no effect on employment from minimum wage increases.",
+      "source_url": "https://maxkasy.github.io/home/files/teaching/Labor_Oxford_2021/4-Labor-Demand.pdf",
       "confidence": "high"
     },
     {
       "id": "F023",
-      "claim": "A survey of U.S. economists found that 84% believe a $15 federal minimum wage would have negative effects on youth employment.",
-      "source_url": "https://epionline.org/studies/survey-of-us-economists-on-a-15-federal-minimum-wage-2",
+      "claim": "Researchers quantify monopsony power by measuring how firm-level labor supply reacts to exogenous wage changes.",
+      "source_url": "https://www.nber.org/reporter/2024number1/monopsony-power-labor-markets",
       "confidence": "high"
     },
     {
       "id": "F024",
-      "claim": "Researchers sometimes conflate the employment elasticity with respect to the minimum wage with the own-wage elasticity.",
-      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/10/24025.pdf",
+      "claim": "Most economists maintain that a nationwide increase in the minimum wage would reduce employment among low-wage workers.",
+      "source_url": "https://courses.lumenlearning.com/suny-microeconomics/chapter/monopsony-and-the-minimum-wage",
       "confidence": "medium"
     },
     {
       "id": "F025",
-      "claim": "Focusing on teenagers for minimum wage studies reduces external validity.",
-      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/10/24025.pdf",
-      "confidence": "low"
-    },
-    {
-      "id": "F026",
-      "claim": "Firms may respond to wage floors through automation, price increases, or other operational changes.",
-      "source_url": "https://issuelab.org/resources/14701/14701.pdf",
-      "confidence": "medium"
-    },
-    {
-      "id": "F027",
-      "claim": "Some researchers argue that the size and frequency of wage jumps influence whether employment reductions are observed.",
-      "source_url": "https://aier.org/article/the-economics-of-the-minimum-wage-myths-facts-and-consequences",
-      "confidence": "medium"
-    },
-    {
-      "id": "F028",
-      "claim": "Minimum wage effect findings vary based on the analysis sample and the magnitude of the minimum wage changes considered.",
-      "source_url": "https://www.nber.org/system/files/working_papers/w30668/w30668.pdf",
+      "claim": "Traditional panel data methods fail to account for differential geographic trends in employment patterns.",
+      "source_url": "https://www.aeaweb.org/conference/2016/retrieve.php?pdfid=13434&tk=6kRDZNss",
       "confidence": "high"
     },
     {
-      "id": "F029",
-      "claim": "Commuting spillovers suggest larger minimum wage effects in narrow bands near state borders.",
-      "source_url": "https://jorgeperezperez.com/files/Jorge_Perez_JMP.pdf",
+      "id": "F026",
+      "claim": "Traditional OLS and difference-in-differences designs typically yield employment elasticities between -0.1 and -0.3.",
+      "source_url": "https://www.aeaweb.org/conference/2016/retrieve.php?pdfid=13434&tk=6kRDZNss",
+      "confidence": "high"
+    },
+    {
+      "id": "F027",
+      "claim": "Factor model estimators frequently produce employment elasticities that are not statistically different from zero.",
+      "source_url": "https://www.aeaweb.org/conference/2016/retrieve.php?pdfid=13434&tk=6kRDZNss",
+      "confidence": "high"
+    },
+    {
+      "id": "F028",
+      "claim": "Researchers suggest publication bias may favor studies showing significant disemployment effects.",
+      "source_url": "https://econbrowser.com/archives/2015/03/23316",
       "confidence": "medium"
     },
     {
+      "id": "F029",
+      "claim": "Newer reviews use own-wage elasticity to standardize findings by accounting for the magnitude of actual wage increases.",
+      "source_url": "https://www.epi.org/blog/most-minimum-wage-studies-have-found-little-or-no-job-loss",
+      "confidence": "high"
+    },
+    {
       "id": "F030",
-      "claim": "Dube et al. (2010) did not find significant county spillover effects using their methods.",
-      "source_url": "https://jorgeperezperez.com/files/Jorge_Perez_JMP.pdf",
+      "claim": "Variation in firm compliance with minimum wage laws is proposed as an alternative to traditional panel data methods for estimating employment effects.",
+      "source_url": "https://researchonline.lse.ac.uk/id/eprint/121277/1/Gmeiner_estimating_the_employment_effect_published.pdf",
       "confidence": "high"
     },
     {
       "id": "F031",
-      "claim": "Spatial equilibrium models suggest that commuting and migration responses to relative minimum wage changes are significant.",
-      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
+      "claim": "Reduced-form estimates of employment elasticities can be biased downward if they do not account for the difference between short-run and long-run firm adjustments.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4415654",
       "confidence": "high"
     },
     {
       "id": "F032",
-      "claim": "State-level panel regressions report employment effect coefficients for teens and all workers with p-values ranging from .343 to .758.",
-      "source_url": "https://irle.berkeley.edu/wp-content/uploads/2019/07/Minimum-Wage-Effects-in-Low-Wage-Areas.pdf",
+      "claim": "Employment elasticity estimates vary based on the inclusion or exclusion of state-specific time trends.",
+      "source_url": "https://www.nber.org/system/files/working_papers/w32925/w32925.pdf",
       "confidence": "high"
     },
     {
       "id": "F033",
-      "claim": "Models incorporating spatial equilibrium factors report implied local labor demand elasticities ranging from -1.138 to -1.471.",
-      "source_url": "https://crei.cat/wp-content/uploads/2020/06/11-minimum-w-1.pdf",
+      "claim": "Employment elasticity estimates vary based on the choice of control industries.",
+      "source_url": "https://researchonline.lse.ac.uk/id/eprint/121277/1/Gmeiner_estimating_the_employment_effect_published.pdf",
       "confidence": "high"
     },
     {
       "id": "F034",
-      "claim": "Standard state-level panel regressions yield a teen employment elasticity of -0.3 when state-specific year trends are excluded.",
-      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
+      "claim": "A meta-analysis of 1,320 estimates from 53 studies on labor market monopsony power finds that estimates vary based on methodology and industry sector.",
+      "source_url": "https://equitablegrowth.org/working-papers/monopsony-in-labor-markets-a-meta-analysis",
       "confidence": "high"
     },
     {
       "id": "F035",
-      "claim": "Standard state-level panel regressions yield an employment elasticity of 0 for older low-skilled workers when state-specific year trends are excluded.",
-      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
+      "claim": "Meta-regression coefficients for labor supply elasticity in the nursing sector are -2.968.",
+      "source_url": "https://docs.iza.org/dp11966.pdf",
       "confidence": "high"
     },
     {
       "id": "F036",
-      "claim": "Joan Monras's spatial equilibrium model reports implied local labor demand elasticities ranging from -1.138 to -1.471 in one model version.",
-      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
+      "claim": "Meta-regression coefficients for labor supply elasticity in the teaching sector are -1.239.",
+      "source_url": "https://docs.iza.org/dp11966.pdf",
       "confidence": "high"
     },
     {
       "id": "F037",
-      "claim": "Joan Monras's spatial equilibrium model reports implied local labor demand elasticities ranging from 2.582 to 2.873 in an alternative model version.",
-      "source_url": "https://sciencespo.hal.science/hal-03459328/file/2016-monras-minimum-wage-and-space.pdf",
+      "claim": "Rising market power explains approximately half of the decline in the labor share in the German manufacturing sector.",
+      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/12/24031.pdf",
       "confidence": "high"
     },
     {
       "id": "F038",
-      "claim": "The employment elasticity for male teens is -0.398 in heavily black areas.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
+      "claim": "Almost all of the increase in market power in the German manufacturing sector is attributed to labor market power rather than product market power.",
+      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/12/24031.pdf",
       "confidence": "high"
     },
     {
       "id": "F039",
-      "claim": "The employment elasticity for male teens is -0.116 in white areas.",
-      "source_url": "https://www.aeaweb.org/conference/2026/program/paper/erD6YH2h",
+      "claim": "The firm-specific labor supply elasticity in the U.S. construction industry from 2001 to 2015 is approximately 4.1.",
+      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/12/24031.pdf",
       "confidence": "high"
     },
     {
       "id": "F040",
-      "claim": "A 10% minimum wage increase is associated with a 0.3% to 1.1% increase in prices.",
-      "source_url": "https://jorgeperezperez.com/sitemap",
-      "confidence": "medium"
+      "claim": "Wages in the U.S. construction industry are marked down 25% to 29% relative to the marginal revenue product of labor.",
+      "source_url": "https://www.rfberlin.com/wp-content/uploads/2024/12/24031.pdf",
+      "confidence": "high"
     },
     {
       "id": "F041",
-      "claim": "There is no observable difference in employment effects between federal and state-level minimum wage increases in the spatial equilibrium framework.",
-      "source_url": "https://crei.cat/wp-content/uploads/2020/06/11-minimum-w-1.pdf",
+      "claim": "Direct estimates of labor supply elasticity are smaller than estimates converted from inverse elasticities.",
+      "source_url": "https://equitablegrowth.org/working-papers/monopsony-in-labor-markets-a-meta-analysis",
       "confidence": "high"
+    },
+    {
+      "id": "F042",
+      "claim": "The literature on direct estimates of labor supply elasticity is prone to selective reporting where negative estimates are frequently discarded.",
+      "source_url": "https://equitablegrowth.org/working-papers/monopsony-in-labor-markets-a-meta-analysis",
+      "confidence": "medium"
+    },
+    {
+      "id": "F043",
+      "claim": "Monopsony power is attributed to market concentration, search frictions, and job differentiation.",
+      "source_url": "https://www.nber.org/reporter/2024number1/monopsony-power-labor-markets",
+      "confidence": "high"
+    },
+    {
+      "id": "F044",
+      "claim": "Researchers produce contradictory findings on whether minimum wage increases reduce employment when analyzing the same data sets.",
+      "source_url": "https://qz.com/work/1415401/why-minimum-wage-research-is-full-of-conflicting-studies",
+      "confidence": "medium"
+    },
+    {
+      "id": "F045",
+      "claim": "The University of Washington and the University of California Berkeley produced studies on Seattle\u2019s minimum wage with polar opposite effects.",
+      "source_url": "https://qz.com/work/1415401/why-minimum-wage-research-is-full-of-conflicting-studies",
+      "confidence": "high"
+    },
+    {
+      "id": "F046",
+      "claim": "A study on the German minimum wage calculated a labor demand elasticity of approximately -0.4.",
+      "source_url": "https://journals.sagepub.com/doi/suppl/10.1177/0019793919889635",
+      "confidence": "high"
+    },
+    {
+      "id": "F047",
+      "claim": "A study estimated a general employment elasticity between 0.03 and 0.04 for minimum wage policies.",
+      "source_url": "https://iaes.uah.es/export/sites/iaes/es/.galleries/Documentos-de-trabajo/DT_10_22_.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F048",
+      "claim": "Difference-in-Differences estimators rely on the parallel trends assumption that treatment and control groups exhibit similar trajectories prior to policy intervention.",
+      "source_url": "https://www.minneapolisfed.org/-/media/assets/mea/2019/paper-contest/winning-papers/minnesota-minimum-wage.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F049",
+      "claim": "The Synthetic Control Method constructs a synthetic control group to relax the parallel trends assumption required by traditional Difference-in-Differences models.",
+      "source_url": "https://www.minneapolisfed.org/-/media/assets/mea/2019/paper-contest/winning-papers/minnesota-minimum-wage.pdf",
+      "confidence": "high"
+    },
+    {
+      "id": "F050",
+      "claim": "Researchers may implement treatment-group-specific trends to account for regional variations in the fraction of employees affected by the minimum wage.",
+      "source_url": "https://journals.sagepub.com/doi/suppl/10.1177/0019793919889635",
+      "confidence": "high"
+    },
+    {
+      "id": "F051",
+      "claim": "Monopsony is a theoretical concept where employers have market power to keep wages lower than they would be in a perfectly mobile labor market.",
+      "source_url": "https://qz.com/work/1415401/why-minimum-wage-research-is-full-of-conflicting-studies",
+      "confidence": "medium"
     }
   ],
   "revisions": 0,
-  "research_loops": 2,
+  "research_loops": 1,
   "searches_used": 5,
   "write_attempts": 1,
-  "unclosed_gaps": [],
+  "unclosed_gaps": [
+    "A comprehensive meta-analysis or systematic review that reconciles the conflicting elasticity estimates by standardizing for specific methodological choices across the cited studies."
+  ],
   "final_critique": {
     "scores": {
-      "factual_grounding": 5,
+      "factual_grounding": 4,
       "structural_coherence": 5,
-      "depth_of_analysis": 5,
-      "citation_integrity": 5,
+      "depth_of_analysis": 4,
+      "citation_integrity": 4,
       "absence_of_filler": 4
     },
     "verdict": "pass",
-    "target": "writer",
+    "target": "researcher",
     "issues": [
       {
-        "span": "While the textbook model of supply and demand suggests that price floors must inevitably reduce the quantity of labor demanded, empirical research has struggled to provide a unified estimate of this effect.",
+        "span": "Currently, there is no comprehensive meta-analysis that successfully reconciles these conflicting elasticity estimates by standardizing for these specific methodological choices across the literature.",
+        "criterion": "factual_grounding",
+        "problem": "The evidence provided does not support the claim that no such meta-analysis exists; it only provides evidence that estimates vary based on methodology.",
+        "fix": "Remove the claim regarding the non-existence of a comprehensive meta-analysis."
+      },
+      {
+        "span": "The disagreement persists because the observed employment outcomes are highly sensitive to how researchers account for regional trends and how they model the underlying, and often invisible, market power that firms exert over their workers.",
         "criterion": "absence_of_filler",
-        "problem": "This sentence provides general economic context not supported by the provided evidence, serving as introductory filler.",
-        "fix": "Remove the sentence and begin the paragraph with the thesis statement."
+        "problem": "This sentence is a summary of the preceding sections and adds no new information or synthesis.",
+        "fix": "Remove the sentence or replace it with a specific synthesis of the tension between competitive and monopsony models."
       }
     ],
-    "summary": "The report is exceptionally well-grounded and synthesizes the provided evidence with high structural integrity, though it includes a brief introductory sentence that lacks specific evidentiary support.",
+    "summary": "The report is well-structured and generally accurate, though it occasionally makes broad claims about the state of the literature that are not explicitly supported by the provided evidence.",
     "broken_citations": [],
     "citation_cap_applied": false,
     "citation_cap_reason": ""
@@ -521,37 +621,37 @@
       "action": "searched",
       "mode": "cold-start",
       "queries": 3,
-      "found": 27,
-      "kept": 27,
+      "found": 33,
+      "kept": 33,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h21/m5/l1",
+      "confidence": "h28/m5/l0",
       "budget": "3/5",
-      "tokens": 16130,
+      "tokens": 16164,
       "sent": [
-        "meta-analysis of minimum wage employment effects Dube Neumark",
-        "methodological differences in minimum wage research spatial heterogene",
-        "economist consensus surveys minimum wage employment elasticity"
+        "meta-analysis of minimum wage employment effects Dube Allegretto Reich",
+        "theoretical models of monopsony vs competitive labor markets minimum w",
+        "methodological challenges in estimating minimum wage employment elasti"
       ]
     },
     {
       "node": "analyst",
       "action": "outlined",
       "sections": 3,
-      "tensions": 1,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
+      "tensions": 2,
+      "gaps_raw": 2,
+      "gaps_kept": 2,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 2844
+      "tokens": 3168
     },
     {
       "node": "supervisor",
       "action": "route",
       "to": "researcher",
       "why": "evidence gaps",
-      "gaps": 1,
+      "gaps": 2,
       "loop": "1/2",
       "searches": "3/5"
     },
@@ -559,66 +659,38 @@
       "node": "researcher",
       "action": "searched",
       "mode": "gap-driven",
-      "queries": 1,
-      "found": 6,
-      "kept": 6,
+      "queries": 2,
+      "found": 18,
+      "kept": 18,
       "dropped_dupes": 0,
       "unaddressed": 0,
-      "confidence": "h5/m1/l0",
-      "budget": "4/5",
-      "tokens": 6049,
-      "sent": [
-        "meta-analysis minimum wage employment effects spatial controls versus "
-      ]
-    },
-    {
-      "node": "analyst",
-      "action": "outlined",
-      "sections": 3,
-      "tensions": 1,
-      "gaps_raw": 1,
-      "gaps_kept": 1,
-      "dropped_unblocking": 0,
-      "dropped_repeat": 0,
-      "revision": false,
-      "tokens": 3300
-    },
-    {
-      "node": "supervisor",
-      "action": "route",
-      "to": "researcher",
-      "why": "evidence gaps",
-      "gaps": 1,
-      "loop": "2/2",
-      "searches": "4/5"
-    },
-    {
-      "node": "researcher",
-      "action": "searched",
-      "mode": "gap-driven",
-      "queries": 1,
-      "found": 8,
-      "kept": 8,
-      "dropped_dupes": 0,
-      "unaddressed": 0,
-      "confidence": "h7/m1/l0",
+      "confidence": "h15/m3/l0",
       "budget": "5/5",
-      "tokens": 5144,
+      "tokens": 11766,
       "sent": [
-        "meta-analysis employment elasticity difference state-level panel model"
+        "meta-analysis of labor market monopsony power prevalence by industry s",
+        "comparative study of minimum wage elasticity methodological difference"
       ]
     },
     {
       "node": "analyst",
       "action": "outlined",
       "sections": 4,
-      "tensions": 3,
-      "gaps_raw": 0,
-      "gaps_kept": 0,
+      "tensions": 2,
+      "gaps_raw": 1,
+      "gaps_kept": 1,
       "dropped_unblocking": 0,
       "dropped_repeat": 0,
       "revision": false,
-      "tokens": 3881
+      "tokens": 4385
+    },
+    {
+      "node": "supervisor",
+      "action": "retire_gaps",
+      "count": 1,
+      "why": "search budget spent",
+      "loops": "1/2",
+      "searches": "5/5"
     },
     {
       "node": "supervisor",
@@ -631,27 +703,27 @@
       "node": "writer",
       "action": "drafted",
       "revision": 0,
-      "words": 1035,
+      "words": 1027,
       "in_range": true,
-      "cited": 35,
+      "cited": 41,
       "broken_cites": 0,
       "cite_repair": false,
-      "tokens": 3539
+      "tokens": 3872
     },
     {
       "node": "critic",
       "action": "scored",
       "verdict": "pass",
       "target": "-",
-      "worst": "absence_of_filler=4",
-      "mean": 4.8,
-      "issues_raw": 1,
-      "issues_kept": 1,
+      "worst": "factual_grounding=4",
+      "mean": 4.2,
+      "issues_raw": 2,
+      "issues_kept": 2,
       "dropped_ungrounded": 0,
       "broken_cites": 0,
-      "cites": 35,
+      "cites": 41,
       "cite_cap": false,
-      "tokens": 4136
+      "tokens": 4521
     },
     {
       "node": "supervisor",
@@ -664,8 +736,10 @@
       "node": "finalize",
       "action": "shipped",
       "degraded": false,
-      "unclosed_gaps": 0,
-      "words": 1035
+      "why": "-",
+      "node_failures": 0,
+      "unclosed_gaps": 1,
+      "words": 1108
     }
   ]
 }
