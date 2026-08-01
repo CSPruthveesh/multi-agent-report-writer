@@ -6,112 +6,124 @@ the same task: research a topic from the live web and write a cited report.
 Both systems get the same six topics, the same model, the same search backend and the same
 frozen rubric. The question is whether the coordination buys anything.
 
-**On this evidence, it does not.**
+**The two instruments that measure it disagree, and the disagreement is the finding.**
 
 ---
 
 ## The result
 
-Six topics, judged blind by `gemini-3.5-flash` in both presentation orders.
+Six topics, judged blind by `gemini-3.5-flash` in both presentation orders. Three of them
+also scored blind by hand.
 
-| Criterion | Single agent | Multi-agent | Delta |
-|---|---:|---:|---:|
-| Factual grounding | 4.67 | 4.42 | −0.25 |
-| Structural coherence | 5.00 | 4.83 | −0.17 |
-| Depth of analysis | 4.83 | 4.50 | −0.33 |
-| Citation integrity | 4.67 | 4.42 | −0.25 |
-| Absence of filler | 5.00 | 4.67 | −0.33 |
-| **Mean** | **4.83** | **4.57** | **−0.27** |
-| Broken citations | 0 | 0 | — |
+| Criterion | Judge: single / multi | Hand: single / multi |
+|---|---:|---:|
+| Factual grounding | 4.67 / 4.42 | 4.00 / 4.33 |
+| Structural coherence | 5.00 / 4.83 | 4.00 / 4.67 |
+| Depth of analysis | 5.00 / 4.50 | 4.67 / 4.33 |
+| Citation integrity | 4.75 / 4.33 | 4.00 / 4.33 |
+| Absence of filler | 5.00 / 4.75 | 4.00 / 4.00 |
+| **Mean** | **4.88 / 4.57** | **4.13 / 4.33** |
+| **Delta** | **−0.32** | **+0.20** |
 
 | Cost | Single agent | Multi-agent | Multiple |
 |---|---:|---:|---:|
-| Total tokens | 194,618 | 246,023 | 1.26× |
-| Model calls | 78 | 94 | 1.21× |
-| Wall clock | 535s | 410s | 0.77× |
+| Total tokens | 194,618 | 249,968 | 1.28× |
+| Model calls | 78 | 96 | 1.23× |
+| Wall clock | 535s | 401s | 0.75× |
+| Broken citations | 0 | 0 | — |
 
-The multi-agent system costs 26% more tokens and scores lower on all five criteria. It is
-*faster*, because the graph stops searching when the Analyst judges the evidence
-sufficient while the single agent runs its full ladder every time. Neither system produced
-a single broken citation.
+The multi-agent system costs 28% more tokens. It is *faster*, because the graph stops
+searching when the Analyst judges the evidence sufficient while the single agent runs its
+full ladder every time. Neither system has ever produced a broken citation.
 
-Both write good reports. This is not a broken system — it is a more expensive one that is
-not buying quality.
+The judge says it is slightly worse. A human reading the same reports blind says it is
+slightly better. Section below explains why, and which one to believe on which criterion.
 
 ### Where it does pay
 
+Judge scores, by topic shape:
+
 | Shape | n | Grounding delta | Mean delta |
 |---|---:|---:|---:|
-| abundant-sources | 2 | +0.00 | −0.05 |
-| contested | 1 | **+1.50** | **+0.80** |
-| cross-domain | 2 | −0.50 | −0.55 |
-| thin-evidence | 1 | −2.00 | −1.20 |
+| abundant-sources | 2 | +0.00 | −0.20 |
+| contested | 1 | **+1.00** | **+0.30** |
+| cross-domain | 2 | −1.00 | −0.65 |
+| thin-evidence | 1 | −0.50 | −0.50 |
 
-The one clear win is the contested topic — the shape where holding two sides apart instead
-of averaging them is the whole job. Contested and thin-evidence are **n=1 each**, so those
-are single topics, not estimates.
+The one positive shape is contested — where holding two sides apart instead of averaging
+them is the whole job. Contested and thin-evidence are **n=1 each**, so those are single
+topics, not estimates.
 
-### Why it loses, from three topics scored by hand
+### The defect that was found, and fixed
 
-Three topics were scored blind against the same rubric, with the report-to-system mapping
-hidden until all three were done.
+An earlier evaluation had the graph losing on **structural coherence and nothing else** —
+drop that criterion and the other four favoured it. Two blind comments, written on opposite
+labels, independently said the same thing: *"no argument being created, just facts bundled
+up in paragraphs."*
 
-| Criterion | Single agent | Multi-agent | Hand delta | Judge delta |
-|---|---:|---:|---:|---:|
-| Factual grounding | 4.00 | 4.33 | **+0.33** | −0.25 |
-| Structural coherence | 3.33 | 2.33 | **−1.00** | −0.17 |
-| Depth of analysis | 3.33 | 3.33 | +0.00 | −0.33 |
-| Citation integrity | 4.33 | 4.00 | −0.33 | −0.25 |
-| Absence of filler | 3.67 | 4.00 | **+0.33** | −0.33 |
+The mechanism was visible in the table of contents. Six of six single-agent reports ended
+on a synthesis — Conclusion, Policy Implications, Acknowledged Gaps. **Zero of six** graph
+reports did. Three ended on `## Known limitations`, which the judge strips before scoring,
+so as judged all six ended mid-list on another topic bucket.
 
-Judge and human agree on direction — −0.27 against −0.13 — and every per-criterion gap is
-under 1.0. But the composition differs. **Drop structural coherence and the other four
-criteria come out at +0.09 in favour of the multi-agent.** The entire negative hand verdict
-rests on one criterion.
+The cause was two rules fighting in `writer.py`. *"Follow the outline's sections"* is
+concrete; *"build an argument"* is abstract. The concrete one won. The Analyst's outline is
+a partition of the evidence — the right job for an Analyst — and a Writer following it
+faithfully renders a partition.
 
-Both free-text comments, written blind on opposite labels, independently described that
-same criterion:
+The outline is now what must be **covered**, not the table of contents, and the closing
+section is the Writer's to add. After the fix:
 
-> *"there was no argument being created up in report 2, it was basically just facts bundled
-> up in paragraphs"* — t3, `report_2` was the multi-agent
+| Structural coherence, by hand | Delta | Per topic |
+|---|---:|---|
+| Before the fix | **−1.00** | 0, −2, −1 |
+| After the fix | **+0.67** | +1, 0, +1 |
 
-> *"report 2 was in order somewhat but report 1 was just mix of paragraphs of facts"* — t5,
-> `report_1` was the multi-agent
+Every topic improved or held, none went backwards, and the criterion went from the graph's
+worst to its best — for **1.6% more tokens** and nine seconds less wall clock.
 
-Two topics, independent shuffles, opposite positions, the same complaint. So the finding is
-narrower and more useful than "the multi-agent writes worse reports":
+### Why the judge cannot see that
 
-> **Its reports are better grounded and less padded, and they do not build an argument.
-> Findings in paragraph form.**
+The judge's structural coherence delta is −0.17 before the fix and −0.17 after. Unchanged
+to two decimals, while the proportion of reports closing on an argument went from none to
+all.
 
-That is consistent with the architecture — parallel researchers produce findings and the
-synthesis step stacks them rather than reasoning over them — and it localises the problem
-to the Writer node rather than indicting the graph.
+It was already scoring the argument-less reports **4.83 out of 5** on that criterion. There
+was no room left to show an improvement. The human scored the same reports 2.33.
+
+> **A judge that scores a pile of disconnected topic buckets 4.83/5 on structural coherence
+> is not measuring whether a report builds an argument.**
+
+That is a finding about the instrument, not the system, and it is why the hand scores are
+not a second opinion here — they are the only opinion.
 
 ### The gap loop does not pay for itself
 
-35.2% of the multi-agent run goes to the Analyst→Researcher gap loop.
+32.6% of the multi-agent run goes to the Analyst→Researcher gap loop.
 
 | Topic | Shape | Gap loops | Calls | Judge delta |
 |---|---|---:|---:|---:|
 | t2 | abundant-sources | 0 | 10 | −0.5 |
-| t4 | contested | 1 | 16 | **+4.0** |
-| t5 | cross-domain | 1 | 16 | −3.0 |
-| t6 | cross-domain | 1 | 16 | −2.5 |
-| t1 | abundant-sources | 2 | 18 | +0.0 |
-| t3 | thin-evidence | 2 | 18 | **−6.0** |
+| t3 | thin-evidence | 1 | 16 | −2.5 |
+| t4 | contested | 1 | 16 | **+1.5** |
+| t5 | cross-domain | 1 | 16 | −1.0 |
+| t1 | abundant-sources | 2 | 18 | −1.5 |
+| t6 | cross-domain | 2 | 20 | **−5.5** |
 
-The two topics that ran the loop hardest scored +0.0 and −6.0. The topic that never ran it
-at all, on 10 calls instead of 18, scored −0.5. The loop was designed to fire where
-evidence is thin; it did exactly that on t3, which is the worst result in the set. **It
-fired most where it helped least.**
+The topic that never ran the loop at all, on 10 calls against 16 to 20, scored −0.5 —
+better than four of the five that did. The two that ran it hardest scored −1.5 and −5.5.
+**On this evidence the third of the run it consumes buys nothing measurable.**
 
-Loop count is confounded with topic shape across six topics, so this is a strong hint
-rather than a settled result. A `--max-research-loops 0` flag would turn it into six
-matched pairs and settle it.
+That held across both runs, with different topics doing the looping each time. Loop count
+is still confounded with topic shape across six topics, so it is a strong hint rather than
+a settled result — a `--max-research-loops 0` flag would turn it into six matched pairs and
+settle it. Given the noise floor below, it is the only version of this question worth
+asking.
 
-The revision loop (Critic→Writer) is at **0% of run cost**. It has never fired at threshold
-3 across three separate six-topic runs, and it did not terminate at threshold 4.
+The revision loop (Critic→Writer) sat at **0% of run cost** for three consecutive six-topic
+runs at threshold 3, and did not terminate at threshold 4. After the Writer change it fired
+once, on t6, and resolved — 2 calls, 3.0% of the run. The Critic did not change; the Writer
+did. One data point, but the row had never carried a number before.
 
 ---
 
@@ -120,23 +132,34 @@ The revision loop (Critic→Writer) is at **0% of run cost**. It has never fired
 This section is load-bearing. The numbers above are weak evidence, and the honest reading
 matters more than the headline.
 
-- **The baseline sits at the ceiling.** 27 of its 30 criterion-scores are exactly 5.0 — the
-  entire shortfall is one topic. The judge discriminates almost entirely by *penalising the
-  multi-agent*, so −0.27 reads as "the multi-agent lost points the baseline did not", not
-  as a symmetric comparison.
+- **Both instruments drift on identical input.** The single agent was not re-run between
+  the two evaluations, so its six reports are byte-identical files that got scored twice.
+  The judge moved one topic by **2.0 points out of 25**; the human moved one by **5**. Only
+  gaps measured *within* a single sitting are comparable. `max spread = 1` measures
+  position bias between the two orderings inside one run — it says nothing about
+  repetition, and reading it as stability is a mistake this project made twice.
+- **The +0.20 hand result is carried by one topic.** Per-topic gaps are t1 0, t3 −1, t5
+  **+4**. Drop t5 and it goes slightly negative. The structural coherence result is the
+  robust one: +1, 0, +1 — positive on two topics, negative on none.
+- **The judge sits near its ceiling.** In the first evaluation, 27 of the single agent's 30
+  criterion-scores were exactly 5.0. It discriminates mostly by *penalising* the graph, so
+  a negative mean reads as "the graph lost points the control did not", not as a symmetric
+  comparison — and on structural coherence it had no room to register the fix at all.
 - **Per-shape numbers are n=1** for contested and thin-evidence.
-- **One judge, six topics, three hand-scored, one human.** The direction is consistent
-  across two independent instruments, which is the strongest available claim.
+- **One judge, six topics, three hand-scored, one human.**
 - **No dollar figures anywhere.** The price constants were never verified, and the cost
   *multiple* moves with the price ratio because the two systems have different input:output
   mixes. Only token multiples are rate-free.
-- **The graph's limitations sections were stripped before judging.** 3 of 6 multi-agent
-  reports declare unclosed evidence gaps; no baseline report ever does, because it has no
-  mechanism to. That asymmetry is a format tell strong enough to defeat blinding, so it is
-  removed before scoring — but criterion 1 explicitly rewards admitting missing evidence.
-  The evaluation therefore removes the graph's distinguishing feature before scoring it on
-  the criterion that feature exists to satisfy. Stated here as a categorical fact rather
-  than folded into a score.
+- **Declared limitations are stripped before scoring, by both instruments** — 4 of 6
+  multi-agent reports declare unclosed evidence gaps and no single-agent report ever does,
+  because it has no mechanism to. That asymmetry identifies the system on sight. But
+  criterion 1 explicitly rewards admitting missing evidence, so stripping removes something
+  the graph genuinely earns. It is counted and reported instead of scored — see
+  `docs/comparison.md`.
+- **Hand scoring was not blind until recently.** The judge stripped that section from the
+  start; the hand-scoring harness copied reports verbatim. On one round the scorer
+  recognised it and identified the system, which cost two of three topics. Those two were
+  re-scored under a fixed preparation; the numbers above are from the clean pass.
 
 ---
 
@@ -212,8 +235,15 @@ fails this gate makes every downstream number worthless.
 `judge.json` records `pipeline_model` and a `self_judged` boolean, so a reader can tell from
 the file alone.
 
-**Blinding.** System names, and the "Known limitations" section, are stripped before the
-judge reads anything.
+**Blinding, for both instruments.** System names and the "Known limitations" section are
+stripped before *either* the judge or the human reads anything — `handscore.py` imports the
+same `_body` the judge uses, so the two cannot drift on what blinding means. The
+declaration is counted and reported separately, because criterion 1 rewards it.
+
+**Staleness refusal.** A re-run overwrites the reports but not the copies sitting under
+`results/handscore/`. Scoring those, or joining them to fresh judge numbers, would put a
+human column and a judge column in one table describing different documents. Each copy is
+digested against the report it came from, and the harness refuses rather than proceeding.
 
 **Separate evidence namespaces.** Both systems number findings from `F001` independently
 and they collide completely — 67 of 67 on t1. Each report is scored against *its own*
