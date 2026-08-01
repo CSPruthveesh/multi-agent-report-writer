@@ -21,6 +21,7 @@ from src.analysis.cost import (
     by_call_type,
     by_node,
     by_phase,
+    code_versions,
     load_runs,
     retry_overhead,
     tagged_share,
@@ -101,6 +102,75 @@ def table_phases(runs, md: bool) -> None:
         print(f"\n  !! {note}" if not md else f"\n> **Caveat:** {note}")
 
 
+def provenance(sets: dict[str, list], md: bool) -> None:
+    """Which code produced each set, and whether the comparison is safe to read.
+
+    Printed above the tables rather than below them. A reader who scrolls to the
+    numbers first should have already passed the reason not to trust them.
+    """
+    rows, warnings = [], []
+    for name, runs in sets.items():
+        if not runs:
+            continue
+        cv = code_versions(runs)
+        commits = ", ".join(cv["commits"]) or "unknown"
+
+        # Each condition is reported on its own. An earlier version branched on the
+        # single `consistent` flag, which folds "more than one commit" together with
+        # "some records have none" — a set that was dirty and partly unlabelled printed
+        # "MIXED, 6 runs span 1 commits" and dropped the dirty warning entirely. A
+        # validity check that garbles which invalidation occurred is worse than none,
+        # because it is still read as authoritative.
+        if len(cv["commits"]) > 1:
+            state = "MIXED — not comparable"
+            warnings.append(
+                f"{name}: {cv['runs']} runs span {len(cv['commits'])} commits "
+                f"({commits}). A set built from more than one code version cannot be "
+                f"read as one measurement — re-run it."
+            )
+        elif cv["missing"] == cv["runs"]:
+            state = "predates this check"
+        elif cv["dirty"]:
+            state = "dirty tree"
+        elif cv["inferred"] == cv["runs"]:
+            state = "inferred, not observed"
+        elif cv["inferred"]:
+            state = f"{cv['inferred']}/{cv['runs']} inferred"
+        else:
+            state = "clean"
+
+        if cv["dirty"]:
+            warnings.append(
+                f"{name}: produced from a modified working tree, so it is not "
+                f"reproducible from commit {commits}."
+            )
+        if cv["missing"] and cv["missing"] != cv["runs"]:
+            warnings.append(
+                f"{name}: {cv['missing']} of {cv['runs']} runs carry no code version, "
+                f"so the set is only partly verifiable."
+            )
+        rows.append((name, str(cv["runs"]), commits, state))
+
+    if not rows:
+        return
+    if md:
+        print("\n### Provenance\n")
+        print("| system | runs | commit | state |")
+        print("|---|---:|---|---|")
+        for r in rows:
+            print(f"| {r[0]} | {r[1]} | `{r[2]}` | {r[3]} |")
+        for w in warnings:
+            print(f"\n> **Warning:** {w}")
+    else:
+        print("\nProvenance")
+        print(f"  {'system':<12}{'runs':>5}  {'commit':<22}state")
+        print("  " + "-" * 62)
+        for r in rows:
+            print(f"  {r[0]:<12}{r[1]:>5}  {r[2]:<22}{r[3]}")
+        for w in warnings:
+            print(f"\n  !! {w}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--markdown", action="store_true")
@@ -117,6 +187,8 @@ def main() -> None:
         print("=" * 74)
         print("COST BREAKDOWN")
         print("=" * 74)
+
+    provenance({"baseline": bl, "multiagent": ma}, md)
 
     if bl:
         table_nodes(bl, f"Baseline ({len(bl)} reports)", md)

@@ -2,6 +2,12 @@
   "system": "baseline",
   "topic_id": "t4",
   "generated_at": "2026-07-31T08:35:22.770974+00:00",
+  "code_version": {
+    "commit": "9e6844cc5f2cc90e5f0af01399b847da0e6a0b1b",
+    "commit_short": "9e6844c",
+    "dirty": null,
+    "inferred": true
+  },
   "word_count": 1040,
   "findings_count": 57,
   "citations": {

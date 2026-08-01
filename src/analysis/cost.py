@@ -122,6 +122,45 @@ def by_call_type(runs: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
     return dict(agg)
 
 
+def code_versions(runs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Which commits produced this set of runs, and whether that invalidates it.
+
+    A per-system comparison assumes every run in the set came from the same code. That
+    assumption held for the runs this project has made, but proving it took reading the
+    commits between two evaluations and diffing the shared modules by hand. Recorded at
+    write time it is one comparison instead.
+
+    Three ways a set is not trustworthy, kept distinct because they need different
+    responses: more than one commit means the set is internally inconsistent and must be
+    re-run; a dirty tree means the run is not reproducible from any commit; a missing
+    field means the record predates this check, which is unknown rather than bad.
+    """
+    commits: set[str] = set()
+    dirty = False
+    missing = inferred = 0
+    for r in runs:
+        cv = r.get("code_version")
+        if not isinstance(cv, dict) or not cv.get("commit"):
+            missing += 1
+            continue
+        commits.add(str(cv["commit"])[:7])
+        if cv.get("dirty"):
+            dirty = True
+        if cv.get("inferred"):
+            inferred += 1
+    return {
+        "commits": sorted(commits),
+        "consistent": len(commits) <= 1 and missing == 0,
+        "dirty": dirty,
+        "missing": missing,
+        # Reconstructed after the fact by scripts/backfill_code_version.py. Consistent
+        # and inferred is a weaker claim than consistent and observed, and reporting
+        # them the same way would launder the difference.
+        "inferred": inferred,
+        "runs": len(runs),
+    }
+
+
 def retry_overhead(runs: list[dict[str, Any]]) -> dict[str, Any]:
     """What the three failure classes actually cost.
 
@@ -179,10 +218,15 @@ def write_json(path: Path | None = None) -> Path:
         "prices_supplied": PRICES_SET,
         "price_in_per_m": PRICE_IN_PER_M if PRICES_SET else None,
         "price_out_per_m": PRICE_OUT_PER_M if PRICES_SET else None,
-        "baseline": {"totals": totals(bl), "by_node": by_node(bl)},
+        "baseline": {
+            "totals": totals(bl),
+            "by_node": by_node(bl),
+            "code_versions": code_versions(bl),
+        },
         "multiagent": {
             "totals": totals(ma),
             "by_node": by_node(ma),
+            "code_versions": code_versions(ma),
             "by_phase": by_phase(ma),
             "phase_tagged_share": tagged_share(ma),
             "by_call_type": by_call_type(ma),

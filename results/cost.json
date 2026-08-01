@@ -23,6 +23,16 @@
         "total": 194618,
         "ms": 421637
       }
+    },
+    "code_versions": {
+      "commits": [
+        "9e6844c"
+      ],
+      "consistent": true,
+      "dirty": false,
+      "missing": 0,
+      "inferred": 6,
+      "runs": 6
     }
   },
   "multiagent": {
@@ -66,6 +76,16 @@
         "total": 25839,
         "ms": 15726
       }
+    },
+    "code_versions": {
+      "commits": [
+        "626098d"
+      ],
+      "consistent": true,
+      "dirty": false,
+      "missing": 0,
+      "inferred": 6,
+      "runs": 6
     },
     "by_phase": {
       "first_pass": {

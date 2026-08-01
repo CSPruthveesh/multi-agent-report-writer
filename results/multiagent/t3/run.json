@@ -2,6 +2,12 @@
   "system": "multiagent",
   "topic_id": "t3",
   "generated_at": "2026-08-01T06:49:56.027213+00:00",
+  "code_version": {
+    "commit": "626098ddabd188450bcbca601ae4c7c6dfb319de",
+    "commit_short": "626098d",
+    "dirty": null,
+    "inferred": true
+  },
   "word_count": 1054,
   "findings_count": 45,
   "citations": {

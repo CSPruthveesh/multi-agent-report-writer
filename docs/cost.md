@@ -1,5 +1,12 @@
 # Cost breakdown
 
+### Provenance
+
+| system | runs | commit | state |
+|---|---:|---|---|
+| baseline | 6 | `9e6844c` | inferred, not observed |
+| multiagent | 6 | `626098d` | inferred, not observed |
+
 ### Baseline (6 reports)
 
 | node | calls | in | out | total | % |
