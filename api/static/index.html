@@ -83,6 +83,13 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--signal);outlin
 .chip.hot{border-color:var(--alarm);color:var(--alarm)}
 .chip.warn{border-color:var(--amber);color:var(--amber)}
 
+/* queries the researcher actually sent — too long for a chip, and the most
+   legible evidence in the trace that this thing is really searching */
+.queries{margin:8px 0 0;padding:0 0 0 11px;list-style:none;
+  border-left:2px solid var(--rule-soft)}
+.queries li{font:400 11px/1.65 'JetBrains Mono',monospace;color:var(--muted)}
+.queries li::before{content:"⌕";color:var(--signal);margin-right:6px}
+
 /* return-edge bracket: encodes that this event is a loop re-entry */
 .ev[data-loop="1"]{background:linear-gradient(90deg,transparent 0,rgba(15,110,107,.05) 0)}
 .ev[data-loop="1"] .body::before{content:"↩ loop";float:right;
@@ -220,9 +227,14 @@ function drawGauges(b){
   }).join('');
 }
 
-function chip(label,val,cls=''){ return `<span class="chip ${cls}">${label} <b>${val}</b></span>`; }
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function chip(label,val,cls=''){ return `<span class="chip ${cls}">${label} <b>${esc(val)}</b></span>`; }
 
-const HIDE = new Set(['node','action','why','to','tokens']);
+// budget: addEvent injects its own chip with threshold styling, so the raw field
+//   would draw the same "3/5" twice.
+// sent:   a list of search queries. Rendered below the chips instead — it is the
+//   longest field in the trace and the only one worth reading in full.
+const HIDE = new Set(['node','action','why','to','tokens','budget','sent']);
 
 function addEvent(d){
   const e = d.event, isLoop = (e.why||'').includes('gap') || e.action==='retire_gaps' ||
@@ -240,13 +252,17 @@ function addEvent(d){
     chips.unshift(chip('budget', `${d.budgets.searches}/${BUDGETS.searches}`,
       d.budgets.searches>=BUDGETS.searches ? 'warn' : ''));
 
+  const queries = Array.isArray(e.sent) && e.sent.length
+    ? `<ul class="queries">${e.sent.map(q=>`<li>${esc(q)}</li>`).join('')}</ul>` : '';
+
   const row = document.createElement('div');
   row.className='ev'; row.dataset.loop = isLoop?'1':'0'; row.dataset.alarm = alarm?'1':'0';
-  row.innerHTML = `<div class="node">${e.node}<div class="dot"></div></div>
+  row.innerHTML = `<div class="node">${esc(e.node)}<div class="dot"></div></div>
     <div class="body">
-      <div class="action">${e.action}${e.to?` → ${e.to}`:''}
-        ${e.why?`<span class="why"> — ${e.why}</span>`:''}</div>
+      <div class="action">${esc(e.action)}${e.to?` → ${esc(e.to)}`:''}
+        ${e.why?`<span class="why"> — ${esc(e.why)}</span>`:''}</div>
       ${chips.length?`<div class="chips">${chips.join('')}</div>`:''}
+      ${queries}
     </div>`;
   $('#trace').appendChild(row);
 
