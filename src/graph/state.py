@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import operator
+import re
 from typing import Annotated, Any, TypedDict
+
+SUFFIX_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 MAX_RESEARCH_LOOPS = 2
 MAX_REVISIONS = 2
@@ -29,6 +32,11 @@ class ReportState(TypedDict, total=False):
     # An experimental condition that is not in the artifact is one nobody can verify
     # afterwards — the same argument as code_version, one level up.
     max_research_loops: int
+    # Where this arm's output lands: results/multiagent_<suffix>/. In state rather than
+    # threaded as an argument because a resumed run persists through the same path as a
+    # fresh one, and a thread parked before its arm was recorded would otherwise come
+    # back into the wrong directory and overwrite the control.
+    out_suffix: str
     write_attempts: int
     # Off by default so Phase 9 can batch six topics unattended. An approval gate
     # that cannot be turned off is an approval gate that blocks the evaluation.
@@ -58,8 +66,19 @@ class ReportState(TypedDict, total=False):
 
 
 def initial_state(
-    topic: str, *, hitl: bool = False, max_research_loops: int = MAX_RESEARCH_LOOPS
+    topic: str,
+    *,
+    hitl: bool = False,
+    max_research_loops: int = MAX_RESEARCH_LOOPS,
+    out_suffix: str = "",
 ) -> ReportState:
+    # Validated at the single choke point rather than at the CLI, so a programmatic
+    # caller cannot get a directory name past it. This becomes a path segment; anything
+    # with a separator or a dot in it would write outside results/<system>/.
+    if out_suffix and not SUFFIX_RE.match(out_suffix):
+        raise ValueError(
+            f"out_suffix must match {SUFFIX_RE.pattern} — got {out_suffix!r}"
+        )
     return ReportState(
         topic=topic,
         hitl=hitl,
@@ -67,6 +86,7 @@ def initial_state(
         searches_used=0,
         research_loops=0,
         max_research_loops=max_research_loops,
+        out_suffix=out_suffix,
         write_attempts=0,
         unaddressed_gaps=[],
         unclosed_gaps=[],

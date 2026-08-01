@@ -152,8 +152,13 @@ def _print_trace(events: list[dict[str, Any]], seen: int = 0) -> int:
 
 def _persist(topic_id: str, final: ReportState, wall_ms: int) -> Path:
     findings = [Finding(**f) for f in (final.get("findings") or [])]
+    # The label matches the directory rather than staying "multiagent" for every arm.
+    # Existing tooling reads results/ by directory name, so a second arm is invisible to
+    # it either way — but a record whose system field disagrees with the directory it
+    # sits in is a merge waiting to happen the first time anyone groups by that field.
+    suffix = final.get("out_suffix") or ""
     return save_run(
-        system="multiagent",
+        system=f"multiagent_{suffix}" if suffix else "multiagent",
         topic_id=topic_id,
         report=final.get("draft") or "",
         findings=findings,
@@ -197,6 +202,7 @@ def run(
     thread_id: str | None = None,
     checkpoint: bool = True,
     max_research_loops: int = MAX_RESEARCH_LOOPS,
+    out_suffix: str = "",
 ) -> dict[str, Any]:
     """Same signature as baseline.agent.run, plus persistence options.
 
@@ -213,7 +219,10 @@ def run(
     cfg = thread_config(tid) if cp else {"recursion_limit": 40}
 
     t0 = time.perf_counter()
-    start = initial_state(topic, hitl=hitl, max_research_loops=max_research_loops)
+    start = initial_state(
+        topic, hitl=hitl, max_research_loops=max_research_loops,
+        out_suffix=out_suffix,
+    )
     final = cast(ReportState, graph.invoke(start, config=cfg))
     wall_ms = int((time.perf_counter() - t0) * 1000)
 

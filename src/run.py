@@ -70,6 +70,11 @@ def main() -> int:
     ap.add_argument("--max-research-loops", type=int, default=MAX_RESEARCH_LOOPS,
                     metavar="N", help=f"gap-loop cap (default {MAX_RESEARCH_LOOPS}; "
                                       f"0 disables the loop)")
+    # A second arm has to land somewhere else or it overwrites the control it is being
+    # compared against — which is the one file the experiment cannot afford to lose.
+    ap.add_argument("--out-suffix", metavar="NAME", default="",
+                    help="write to results/multiagent_NAME/ instead of "
+                         "results/multiagent/, for a matched-pair arm")
     ap.add_argument("--resume", metavar="THREAD_ID")
     ap.add_argument("--approve", action="store_true", help="with --resume: auto-approve")
     ap.add_argument("--status", metavar="THREAD_ID")
@@ -99,6 +104,11 @@ def main() -> int:
 
     topics = load_topics() if args.all else [get_topic(args.topic_id)]
 
+    # Refused rather than ignored. The baseline has no gap loop, so there is no arm to
+    # separate, and silently dropping the flag would write over results/baseline/.
+    if args.out_suffix and args.system != "multiagent":
+        ap.error("--out-suffix applies to --system multiagent")
+
     if args.system == "baseline":
         from src.baseline.agent import run as baseline_run
 
@@ -115,6 +125,7 @@ def main() -> int:
                 t["id"], t["topic"], verbose=not args.quiet,
                 hitl=args.hitl, checkpoint=not args.no_checkpoint,
                 max_research_loops=args.max_research_loops,
+                out_suffix=args.out_suffix,
             )
 
     for t in topics:
