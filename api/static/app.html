@@ -7,44 +7,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/trace.css">
 <style>
-/* Same instrument styling as /dev. The differences are deliberate and few: no cost
-   meter, because the baseline is the mean of six runs on six fixed topics and means
-   nothing against a question someone just typed; and one column instead of two,
-   because removing the meter leaves nothing for the second one to hold. */
-:root{
-  --paper:#E7EBEC; --panel:#F8F9F9; --ink:#14181B; --muted:#6B7478;
-  --rule:#C3CACC; --rule-soft:#D8DEDF;
-  --signal:#0F6E6B;
-  --alarm:#C43B21;
-  --amber:#9A6B00;
-  --lane:88px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  background:var(--paper);
-  background-image:
-    linear-gradient(var(--rule-soft) 1px,transparent 1px),
-    linear-gradient(90deg,var(--rule-soft) 1px,transparent 1px);
-  background-size:100% 28px,28px 100%;
-  color:var(--ink);
-  font:400 15px/1.5 Archivo,system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
+/* Only what / has and /dev does not: the question box, and a token line where the
+   cost meter would be. No meter here — the multiple is the run over the mean of six
+   single-agent runs on six fixed topics, and against a question typed into this box
+   that denominator is the cost of a different task. */
 .wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px}
-
-/* ---------- masthead ---------- */
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
-  border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px;flex-wrap:wrap}
-.eyebrow{font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-h1{font:700 30px/1 Archivo,sans-serif;letter-spacing:-.02em;margin:0}
-.sub{font-size:13px;color:var(--muted);margin-top:6px;max-width:52ch}
 .devlink{font:400 11px/1.7 'JetBrains Mono',monospace;color:var(--muted);text-align:right}
 .devlink a{color:var(--signal)}
 
-/* ---------- controls ---------- */
 .controls{margin-bottom:26px}
 textarea{
   width:100%;min-height:76px;resize:vertical;background:var(--panel);
@@ -53,13 +25,6 @@ textarea{
 textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:12px;
   margin-top:11px;flex-wrap:wrap}
-button{
-  background:var(--ink);color:var(--panel);border:none;padding:11px 26px;
-  font:600 13px/1 Archivo,sans-serif;letter-spacing:.04em;text-transform:uppercase;
-  cursor:pointer;border-radius:2px}
-button:hover:not(:disabled){background:var(--signal)}
-button:disabled{opacity:.4;cursor:default}
-button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .count{font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
 .count.bad{color:var(--alarm)}
 .examples{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
@@ -68,70 +33,10 @@ button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
   font:400 12px/1 Archivo,sans-serif;text-transform:none;letter-spacing:0}
 .eg:hover{border-color:var(--signal);color:var(--signal);background:none}
 
-/* ---------- trace lane ---------- */
-.trace{position:relative;min-height:120px}
-.trace::before{content:"";position:absolute;left:calc(var(--lane) - 1px);top:6px;bottom:6px;
-  width:2px;background:var(--rule)}
 .trace:empty::after{content:"Ask a question above to start.";
   display:block;padding:26px 0 26px var(--lane);color:var(--muted);font-size:14px}
-
-.ev{position:relative;display:grid;grid-template-columns:var(--lane) 1fr;
-  gap:14px;padding:9px 0;animation:in .22s ease-out}
-@keyframes in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
-.dot{position:absolute;left:calc(var(--lane) - 6.5px);top:12px;
-  width:9px;height:9px;border-radius:50%;
-  background:var(--signal);border:2px solid var(--paper)}
-.ev[data-loop="1"] .dot{background:var(--panel);border-color:var(--signal)}
-.ev[data-alarm="1"] .dot{background:var(--alarm)}
-.node{font:700 11px/22px 'JetBrains Mono',monospace;letter-spacing:.06em;
-  text-transform:uppercase;text-align:right;color:var(--ink);white-space:nowrap}
-.body{padding-top:1px}
-.action{font:600 14px/1.3 Archivo,sans-serif}
-.action .why{font-weight:400;color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.chip{font:400 11px/1 'JetBrains Mono',monospace;color:var(--muted);
-  background:var(--panel);border:1px solid var(--rule-soft);padding:4px 7px;border-radius:2px}
-.chip b{font-weight:700;color:var(--ink)}
-.chip.hot{border-color:var(--alarm);color:var(--alarm)}
-.chip.warn{border-color:var(--amber);color:var(--amber)}
-
-.queries{margin:8px 0 0;padding:0 0 0 11px;list-style:none;
-  border-left:2px solid var(--rule-soft)}
-.queries li{font:400 11px/1.65 'JetBrains Mono',monospace;color:var(--muted)}
-.queries li::before{content:"⌕";color:var(--signal);margin-right:6px}
-
-.ev[data-loop="1"]{background:linear-gradient(90deg,transparent 0,rgba(15,110,107,.05) 0)}
-.ev[data-loop="1"] .body::before{content:"↩ loop";position:absolute;right:0;top:11px;
-  font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--signal)}
-.ev[data-loop="1"] .action{padding-right:58px}
-
 .spent{margin-top:16px;padding-top:12px;border-top:1px solid var(--rule-soft);
   font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
-
-/* ---------- report ---------- */
-.report{margin-top:34px;background:var(--panel);border:1px solid var(--rule);
-  border-radius:2px;padding:30px 34px}
-.report h2{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 18px;
-  padding-bottom:12px;border-bottom:1px solid var(--rule-soft)}
-.md{font-size:15px;line-height:1.65;max-width:70ch}
-.md h1{font:700 25px/1.2 Archivo,sans-serif;margin:0 0 16px}
-.md h2{font:600 16px/1.3 Archivo,sans-serif;margin:26px 0 9px;
-  letter-spacing:0;text-transform:none;color:var(--ink);border:0;padding:0}
-.md p{margin:0 0 14px}
-.md strong{font-weight:600}
-.md cite{font:500 11px 'JetBrains Mono',monospace;font-style:normal;
-  color:var(--signal);background:rgba(15,110,107,.08);padding:1px 4px;border-radius:2px}
-.md hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
-.gaps{margin-top:24px;padding:14px 16px;background:var(--paper);
-  border-left:3px solid var(--signal);border-radius:2px;max-width:70ch}
-.gaps h3{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 9px}
-.gaps ul{margin:0;padding-left:17px}
-.gaps li{font-size:14px;color:var(--muted);margin-bottom:5px}
-.err{border-color:var(--alarm);color:var(--alarm)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -172,63 +77,13 @@ button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 </div>
 
+<script src="/static/trace.js"></script>
 <script>
 const $ = s => document.querySelector(s);
-const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const MIN = 15, MAX = 300;
 let BUDGETS = {searches:5, research_loops:1, revisions:2};
 
 fetch('/api/topics').then(r=>r.json()).then(d=>{ BUDGETS = d.budgets; });
-
-function chip(label,val,cls=''){ return `<span class="chip ${cls}">${label} <b>${esc(val)}</b></span>`; }
-
-// budget: addEvent injects its own chip with threshold styling.
-// sent:   rendered below the chips as its own list.
-const HIDE = new Set(['node','action','why','to','tokens','budget','sent']);
-
-function addEvent(d){
-  const e = d.event, isLoop = (e.why||'').includes('gap') || e.action==='retire_gaps' ||
-        (d.budgets.revisions>0 && e.node==='writer');
-  const alarm = ['degraded','parse_failed','skipped'].includes(e.action);
-  const chips = Object.entries(e)
-    .filter(([k,v]) => !HIDE.has(k) && v !== undefined && v !== '' && v !== false)
-    .map(([k,v]) => {
-      const hot = (k==='degraded' && v) || (k==='broken_cites' && v>0) ||
-                  (k==='fallback' && v) || (k==='dropped_ungrounded' && v>0);
-      return chip(k.replace(/_/g,' '), v, hot ? 'hot' : '');
-    });
-
-  if (e.node==='researcher' && d.budgets.searches)
-    chips.unshift(chip('budget', `${d.budgets.searches}/${BUDGETS.searches}`,
-      d.budgets.searches>=BUDGETS.searches ? 'warn' : ''));
-
-  const queries = Array.isArray(e.sent) && e.sent.length
-    ? `<ul class="queries">${e.sent.map(q=>`<li>${esc(q)}</li>`).join('')}</ul>` : '';
-
-  const row = document.createElement('div');
-  row.className='ev'; row.dataset.loop = isLoop?'1':'0'; row.dataset.alarm = alarm?'1':'0';
-  row.innerHTML = `<div class="node">${esc(e.node)}<div class="dot"></div></div>
-    <div class="body">
-      <div class="action">${esc(e.action)}${e.to?` → ${esc(e.to)}`:''}
-        ${e.why?`<span class="why"> — ${esc(e.why)}</span>`:''}</div>
-      ${chips.length?`<div class="chips">${chips.join('')}</div>`:''}
-      ${queries}
-    </div>`;
-  $('#trace').appendChild(row);
-
-  // Tokens only. No multiple: the baseline is the mean of six runs on six fixed
-  // topics, so against a question typed here it is the cost of a different task.
-  $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used so far`;
-}
-
-function render(md){
-  return esc(md)
-    .replace(/\[((?:F\d{3})(?:,\s*F\d{3})*)\]/g,'<cite>$1</cite>')
-    .replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/^## (.+)$/gm,'<h2>$1</h2>')
-    .replace(/^---$/gm,'<hr>')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .split(/\n{2,}/).map(b=>/^<(h1|h2|hr)/.test(b)?b:`<p>${b.replace(/\n/g,' ')}</p>`).join('');
-}
 
 const ta = $('#topic');
 function validate(){
@@ -242,6 +97,14 @@ document.querySelectorAll('.eg').forEach(b=>b.onclick=()=>{
   ta.value = b.textContent.trim(); validate(); ta.focus();
 });
 validate();
+
+function fail(title, detail){
+  $('#report').hidden=false; $('#report').classList.add('err');
+  $('#reportHead').textContent='Run failed';
+  $('#md').innerHTML = `<p><strong>${esc(title)}</strong></p><p>${esc(detail)}</p>`;
+  $('#gaps').innerHTML='';
+  $('#go').disabled=false; $('#go').textContent='Write the report';
+}
 
 $('#go').onclick = async () => {
   const topic = ta.value.trim();
@@ -258,46 +121,27 @@ $('#go').onclick = async () => {
   if(!res.ok) return fail(`Request rejected (${res.status})`,
     'The question needs to be between 15 and 300 characters.');
 
-  const reader = res.body.getReader(), dec = new TextDecoder();
-  let buf='';
-  while(true){
-    const {done,value} = await reader.read();
-    if(done) break;
-    buf += dec.decode(value,{stream:true});
-    const frames = buf.split('\n\n'); buf = frames.pop();
-    for(const f of frames){
-      const ev = (f.match(/^event: (.+)$/m)||[])[1];
-      const dm = f.match(/^data: (.+)$/m); if(!dm) continue;
-      const d = JSON.parse(dm[1]);
-      if(ev==='node') addEvent(d);
-      else if(ev==='done') finish(d);
-      else if(ev==='error') fail(d.error, d.detail);
-    }
-  }
+  await readSSE(res, {
+    node: d => {
+      $('#trace').appendChild(traceRow(d, BUDGETS));
+      // Tokens only. No multiple: see the note at the top of the stylesheet.
+      $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used so far`;
+    },
+    done: d => {
+      $('#report').hidden=false; $('#report').classList.remove('err');
+      const words = d.report.trim().split(/\s+/).length;
+      const cites = new Set(d.report.match(/F\d{3}/g)||[]).size;
+      $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used`;
+      $('#reportHead').textContent =
+        `Report · ${words} words · ${cites} sources cited · ${d.findings.length} findings gathered`;
+      $('#md').innerHTML = renderMarkdown(d.report);
+      $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
+    },
+    error: d => fail(d.error, d.detail),
+  });
+
   $('#go').disabled=false; $('#go').textContent='Write the report';
 };
-
-function finish(d){
-  $('#report').hidden=false; $('#report').classList.remove('err');
-  const words = d.report.trim().split(/\s+/).length;
-  const cites = new Set(d.report.match(/F\d{3}/g)||[]).size;
-  $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used`;
-  $('#reportHead').textContent =
-    `Report · ${words} words · ${cites} sources cited · ${d.findings.length} findings gathered`;
-  $('#md').innerHTML = render(d.report);
-  const gaps = d.unclosed_gaps || [];
-  $('#gaps').innerHTML = gaps.length
-    ? `<div class="gaps"><h3>Looked for and not found</h3><ul>${
-        gaps.map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>` : '';
-}
-
-function fail(title, detail){
-  $('#report').hidden=false; $('#report').classList.add('err');
-  $('#reportHead').textContent='Run failed';
-  $('#md').innerHTML = `<p><strong>${esc(title)}</strong></p><p>${esc(detail)}</p>`;
-  $('#gaps').innerHTML='';
-  $('#go').disabled=false; $('#go').textContent='Write the report';
-}
 </script>
 </body>
 </html>

@@ -49,6 +49,7 @@ from typing import Any
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src.analysis.cost import PRICES_SET, cost_usd
@@ -63,6 +64,11 @@ from src.graph.state import (
 
 app = FastAPI(title="Multi-Agent Report Writer")
 STATIC = Path(__file__).parent / "static"
+
+# Both pages share trace.css and trace.js, so the directory needs serving rather than
+# two hand-written FileResponse routes. / and /dev stay explicit below: they map a
+# reader to a page, which is a routing decision, not a file lookup.
+app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
 
 class RunRequest(BaseModel):
