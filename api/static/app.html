@@ -14,8 +14,10 @@
    single-agent runs on six fixed topics, and against a question typed into this box
    that denominator is the cost of a different task. */
 .wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px}
-.devlink{font:400 11px/1.7 'JetBrains Mono',monospace;color:var(--muted);text-align:right}
-.devlink a{color:var(--signal)}
+/* The masthead is the one grey line. .eyebrow carries an 8px bottom margin for the
+   heading it normally sits above; with nothing under it that margin is just slack
+   before the rule. */
+.head .eyebrow{margin-bottom:0}
 
 .controls{margin-bottom:26px}
 textarea{
@@ -43,13 +45,7 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 <div class="wrap">
 
 <header class="head">
-  <div>
-    <h1>Multi-agent report writer</h1>
-    <p class="sub">Ask a research question. Four agents search the web, judge whether the
-      evidence is enough, write the report and review it. You get a cited briefing and a
-      list of anything they looked for and could not find.</p>
-  </div>
-  <div class="devlink"><a href="/dev">instrument view →</a></div>
+  <div class="eyebrow">Multi-agent report writer</div>
 </header>
 
 <div class="controls">
