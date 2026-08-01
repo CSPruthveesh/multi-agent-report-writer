@@ -14,10 +14,20 @@
    single-agent runs on six fixed topics, and against a question typed into this box
    that denominator is the cost of a different task. */
 .wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px}
-/* The masthead is the one grey line. .eyebrow carries an 8px bottom margin for the
-   heading it normally sits above; with nothing under it that margin is just slack
-   before the rule. */
-.head .eyebrow{margin-bottom:0}
+/* The masthead: the project name as the title, one line under it, and a way across to
+   the instrument view. .eyebrow is 11px/500 in trace.css because on /dev it sits above
+   a heading; here it IS the heading, so it takes the size and weight to match. */
+.head .eyebrow{font-size:19px;font-weight:700;letter-spacing:.1em;
+  line-height:1.15;margin-bottom:7px}
+
+/* Secondary to "Write the report", which is the only button on this page that spends
+   anything. An outline rather than a filled block says so without a label. */
+.devbtn{display:inline-block;text-decoration:none;background:none;
+  border:1px solid var(--rule);color:var(--muted);border-radius:2px;
+  padding:8px 17px;font:600 11px/1 Archivo,sans-serif;
+  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.devbtn:hover{border-color:var(--signal);color:var(--signal)}
+.devbtn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 .controls{margin-bottom:26px}
 textarea{
@@ -45,7 +55,12 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 <div class="wrap">
 
 <header class="head">
-  <div class="eyebrow">Multi-agent report writer</div>
+  <div>
+    <div class="eyebrow">Multi-agent report writer</div>
+    <p class="sub">Ask a research question and get a cited briefing, with a list of
+      anything it looked for and could not find.</p>
+  </div>
+  <a class="devbtn" href="/dev">dev</a>
 </header>
 
 <div class="controls">
