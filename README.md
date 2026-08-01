@@ -97,7 +97,7 @@ was no room left to show an improvement. The human scored the same reports 2.33.
 That is a finding about the instrument, not the system, and it is why the hand scores are
 not a second opinion here — they are the only opinion.
 
-### The gap loop gathers evidence the Writer does not cite
+### The gap loop gathers evidence the report has no room for
 
 The Analyst→Researcher gap loop is **32.6% of the multi-agent run**. It was measured
 directly rather than through a judge: run all six topics with the loop disabled, and count.
@@ -118,12 +118,38 @@ uv run python -m src.run --system multiagent --all --max-research-loops 0 --out-
 | Tokens | 249,968 | 158,113 | **−36.7%** |
 | Model calls | 96 | 60 | −37.5% |
 
-**56 of the 77 extra findings — 73% — were never cited.** The loop gathers faster than the
-Writer can absorb, and the share of gathered evidence that reaches the report *falls* from
-87% to 71% when it runs.
+**77 more findings bought 21 more citations.** But not because the Writer ignores what the
+loop gathers — that was the first reading of this table and it is wrong. Splitting the
+loop-on findings by where they came from:
 
-The unclosed-gaps row is the sharpest. The loop exists to close evidence gaps. Both arms
-declared five. By its own stated purpose it netted nothing.
+| | Findings | Cited | Rate |
+|---|---:|---:|---:|
+| First pass | 197 | 142 | 72% |
+| Gap loop | 86 | 58 | **67%** |
+
+The loop's findings are cited at almost the same rate as the first pass. Five points apart.
+The Writer is not discarding them.
+
+**The report fills up instead.** Across all twelve runs, citations grow far slower than
+evidence — 18 findings yields 17 citations, 62 yields 42, and every report is ~1,000 words:
+
+| Findings available | Coverage |
+|---|---|
+| ≤ 33 | 90–100% |
+| ≥ 41 | 62–80% |
+
+So the loop causes **crowding out**. First-pass findings are cited at 72% when the loop
+adds competition, against 87% in the loop-off arm where nothing competes. The loop's
+findings take slots rather than adding them, and the total barely moves because the report
+was already near full.
+
+The unclosed-gaps row is the sharpest of the lot. The loop exists to close evidence gaps.
+Both arms declared five. By its own stated purpose it netted nothing.
+
+This matters for what to do about it. If the Writer *ignored* the loop's output you would
+fix the Writer. Because the report is *already full*, gathering more cannot help at any
+Writer quality — the only levers are capping the loop or lengthening the report, and the
+report spec is frozen at 800–1,200 words.
 
 **Read the two signals differently.** t2 raised no gaps in either arm, so it ran the same
 configuration twice — an accidental control. It moved by 4 findings and 10 citations on
@@ -132,6 +158,12 @@ citations is not, and should not be quoted as an effect.
 
 That splits the conclusion rather than softening it: **the evidence gain is solid, and the
 part of it that reaches a reader is inside the noise.**
+
+One more count worth having, because it shows the selection is not arbitrary. Pooling both
+arms, the Writer cites **79%** of high-confidence findings, **82%** of medium, and **50%**
+of low. It drops weak evidence at roughly twice the rate of strong. When it has to choose,
+it chooses reasonably — which is why the uncited 29% is a capacity result rather than a
+Writer defect.
 
 This says nothing about prose quality. The loop-off reports run 994–1,142 words and cite
 normally, but nobody has read them. Judging that arm would cost 190k tokens and land inside
