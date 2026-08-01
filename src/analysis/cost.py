@@ -12,16 +12,17 @@ is the difference between having built the thing and having understood it.
 
 PRICING
 -------
-Rates below are per million tokens and MUST be checked against current pricing
-before quoting a dollar figure anywhere. Token counts are measured and exact; dollar
-figures are only as good as these constants. Override with env vars rather than
-editing, so the source of the number stays obvious:
+Token counts are measured and exact. Dollars are not reported at all unless both
+rates are supplied from the environment, per million tokens:
 
-    PRICE_IN_PER_M=0.30  PRICE_OUT_PER_M=2.50
+    $env:PRICE_IN_PER_M="0.30"; $env:PRICE_OUT_PER_M="2.50"
 
-If you are unsure of current rates, report tokens and ratios only. A wrong dollar
-figure is worse than no dollar figure, because the ratio is the real finding and a
-bad absolute number invites doubt about it.
+Default behaviour is tokens and ratios only. A wrong dollar figure is worse than no
+dollar figure, because the ratio is the real finding and a bad absolute number
+invites doubt about it — so the placeholder constants below are never printed. They
+exist to give cost_usd() a shape, not to be quoted.
+
+Check current rates for the model in GEMINI_MODEL before supplying them.
 """
 
 from __future__ import annotations
@@ -37,8 +38,18 @@ from src.common.io import RESULTS
 PRICE_IN_PER_M = float(os.getenv("PRICE_IN_PER_M", "0.30"))
 PRICE_OUT_PER_M = float(os.getenv("PRICE_OUT_PER_M", "2.50"))
 
+# Dollars are reported only when BOTH rates are supplied from the environment. The
+# defaults above are placeholders, and a placeholder that prints looks exactly like a
+# verified rate once it is in a table — so the absence of a dollar column is the
+# signal that nobody has checked. Setting the env vars to the same numbers as the
+# defaults still counts as supplying them: the point is that a person chose them.
+PRICES_SET = "PRICE_IN_PER_M" in os.environ and "PRICE_OUT_PER_M" in os.environ
 
-def cost_usd(in_tok: int, out_tok: int) -> float:
+
+def cost_usd(in_tok: int, out_tok: int) -> float | None:
+    """None when rates were never supplied — see PRICES_SET."""
+    if not PRICES_SET:
+        return None
     return (in_tok / 1e6) * PRICE_IN_PER_M + (out_tok / 1e6) * PRICE_OUT_PER_M
 
 
@@ -146,8 +157,11 @@ def totals(runs: list[dict[str, Any]]) -> dict[str, Any]:
         t["calls"] += tk.get("calls", 0)
         t["ms"] += r.get("wall_ms", 0)
         t["words"] += r.get("word_count", 0)
-    t["usd"] = round(cost_usd(t["in"], t["out"]), 4)
-    t["usd_per_report"] = round(t["usd"] / len(runs), 4) if runs else 0.0
+    usd = cost_usd(t["in"], t["out"])
+    t["usd"] = round(usd, 4) if usd is not None else None
+    t["usd_per_report"] = (
+        round(t["usd"] / len(runs), 4) if usd is not None and runs else None
+    )
     return t
 
 
@@ -156,9 +170,15 @@ def write_json(path: Path | None = None) -> Path:
     ma = load_runs("multiagent")
     bl = load_runs("baseline")
     payload: dict[str, Any] = {
-        "pricing_note": "Verify PRICE_IN_PER_M / PRICE_OUT_PER_M against current rates.",
-        "price_in_per_m": PRICE_IN_PER_M,
-        "price_out_per_m": PRICE_OUT_PER_M,
+        "pricing_note": (
+            "Verified rates supplied via env; dollar figures are only as good as them."
+            if PRICES_SET
+            else "No rates supplied — tokens and ratios only. Set PRICE_IN_PER_M and "
+            "PRICE_OUT_PER_M in the environment to report dollars."
+        ),
+        "prices_supplied": PRICES_SET,
+        "price_in_per_m": PRICE_IN_PER_M if PRICES_SET else None,
+        "price_out_per_m": PRICE_OUT_PER_M if PRICES_SET else None,
         "baseline": {"totals": totals(bl), "by_node": by_node(bl)},
         "multiagent": {
             "totals": totals(ma),
@@ -175,7 +195,7 @@ def write_json(path: Path | None = None) -> Path:
             "tokens": round(mt["total"] / bt["total"], 2),
             "calls": round(mt["calls"] / bt["calls"], 2) if bt["calls"] else None,
             "latency": round(mt["ms"] / bt["ms"], 2) if bt["ms"] else None,
-            "cost": round(mt["usd"] / bt["usd"], 2) if bt["usd"] else None,
+            "cost": round(mt["usd"] / bt["usd"], 2) if bt["usd"] and mt["usd"] else None,
         }
     p = path or (RESULTS / "cost.json")
     p.parent.mkdir(parents=True, exist_ok=True)

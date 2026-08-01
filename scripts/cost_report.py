@@ -14,8 +14,10 @@ better outcome than a clean win.
 from __future__ import annotations
 
 import argparse
+import sys
 
 from src.analysis.cost import (
+    PRICES_SET,
     by_call_type,
     by_node,
     by_phase,
@@ -139,11 +141,23 @@ def main() -> None:
                 print(f"  {k:<22}{v['calls']:>6.0f}{v['total']:>10,.0f}{pct:>6.1f}%")
 
         r = retry_overhead(ma)
-        print("\n### Failure-class overhead\n" if md else "\nFailure-class overhead")
-        print(f"  transport retries (429/500/timeout) : {r['transport_retries']}")
-        print(f"  parse retries (schema mismatch)     : {r['parse_retries']}"
-              f"  ({r['parse_retry_tokens']:,} tokens, {r['parse_retry_pct']}% of run)")
-        print("  semantic retries are the revision loop above — not failures")
+        if md:
+            print("\n### Failure-class overhead\n")
+            print("| failure class | count | tokens |")
+            print("|---|---:|---:|")
+            print(f"| transport retries (429/500/timeout) | {r['transport_retries']} | — |")
+            print(f"| parse retries (schema mismatch) | {r['parse_retries']} | "
+                  f"{r['parse_retry_tokens']:,} ({r['parse_retry_pct']}% of run) |")
+            print("\n> Semantic retries are the revision loop, counted in the phase table"
+                  "\n> above — they are not failures. A run where the Critic never asked for"
+                  "\n> a revision has no revision-loop row at all.")
+        else:
+            print("\nFailure-class overhead")
+            print(f"  transport retries (429/500/timeout) : {r['transport_retries']}")
+            print(f"  parse retries (schema mismatch)     : {r['parse_retries']}"
+                  f"  ({r['parse_retry_tokens']:,} tokens, {r['parse_retry_pct']}% of run)")
+            print("  semantic retries are the revision loop, counted in the phase table"
+                  " above — not failures")
 
     if bl and ma:
         bt, mt = totals(bl), totals(ma)
@@ -171,7 +185,7 @@ def main() -> None:
             print("|---|---:|---:|---:|")
             for n, b, m, x in rows:
                 print(f"| {n} | {b:,.0f} | {m:,.0f} | {f'{x:.2f}x' if x else '—'} |")
-            if bt["usd_per_report"]:
+            if bt.get("usd_per_report") and mt.get("usd_per_report"):
                 print(f"| cost per report (USD) | ${bt['usd_per_report']:.4f} | "
                       f"${mt['usd_per_report']:.4f} | "
                       f"{mt['usd_per_report'] / bt['usd_per_report']:.2f}x |")
@@ -181,15 +195,29 @@ def main() -> None:
             for n, b, m, x in rows:
                 print(f"  {n:<18}{b:>13,.0f}{m:>14,.0f}"
                       f"{(f'{x:.2f}x' if x else '—'):>11}")
-            if bt["usd_per_report"]:
+            if bt.get("usd_per_report") and mt.get("usd_per_report"):
                 mult = mt["usd_per_report"] / bt["usd_per_report"]
                 print(f"  {'USD per report':<18}{bt['usd_per_report']:>13.4f}"
                       f"{mt['usd_per_report']:>14.4f}{f'{mult:.2f}x':>11}")
-        print("\n  (dollar figures depend on PRICE_IN_PER_M / PRICE_OUT_PER_M —"
-              "\n   verify against current rates before quoting them anywhere)")
+        if PRICES_SET and md:
+            print("\n> **Dollar figures use the rates supplied in the environment** —"
+                  "\n> they are only as good as those numbers. Token counts are exact.")
+        elif PRICES_SET:
+            print("\n  (dollar figures use the rates supplied in the environment —"
+                  "\n   they are only as good as those numbers; token counts are exact)")
+        elif md:
+            print("\n> **Tokens and ratios only.** No pricing rates were supplied, so no"
+                  "\n> dollar figures are reported. Check current rates for the model in"
+                  "\n> `GEMINI_MODEL`, then set `PRICE_IN_PER_M` and `PRICE_OUT_PER_M`.")
+        else:
+            print("\n  tokens and ratios only — no pricing rates supplied, so no dollar")
+            print("  figures are reported. Check current rates for the model in")
+            print("  GEMINI_MODEL, then set PRICE_IN_PER_M and PRICE_OUT_PER_M.")
 
     p = write_json()
-    print(f"\nwrote {p}")
+    # stderr, not stdout: --markdown is redirected into docs/cost.md, and a status
+    # line on stdout lands in the committed file along with an absolute local path.
+    print(f"\nwrote {p}", file=sys.stderr)
 
 
 if __name__ == "__main__":
