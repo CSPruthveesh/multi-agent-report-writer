@@ -17,6 +17,11 @@ RESULTS = ROOT / "results"
 CITE_RE = re.compile(r"\bF\d{3}\b")
 
 
+# Tracked paths a run writes or regenerates, excluded from the dirty check as git
+# pathspecs. A run editing its own output must not report itself unreproducible.
+GENERATED = (":(exclude)results", ":(exclude)docs")
+
+
 @lru_cache(maxsize=1)
 def code_version() -> dict[str, Any]:
     """The commit a run was produced at, and whether the tree was dirty.
@@ -29,6 +34,29 @@ def code_version() -> dict[str, Any]:
     dirty matters as much as the commit: a run from a modified tree is not reproducible
     from any commit, so the SHA alone would be a more confident claim than the facts
     support.
+
+    DIRTY MEANS THE CODE, NOT THE TREE
+    ----------------------------------
+    The first version asked git status about the whole working tree, which meant it
+    could never answer False. results/ is tracked, save_run() writes report.md before
+    it stamps run.json, and every topic after the first also sees the previous topic's
+    output — so a run was dirty by the time it recorded its own provenance. Six runs
+    of six recorded dirty=True with no source file modified, and the report told the
+    reader they were not reproducible from a commit that had in fact produced them.
+
+    A field added so that the next run would be the first observed clean one could not
+    report clean. Same shape as check_loop_value in compare.py: an unreachable branch
+    printing a conclusion about the run when the problem was the check.
+
+    Generated output is excluded rather than source enumerated. An allowlist of source
+    paths silently misses a directory added later, and missing one makes this report
+    clean when it is not — the dangerous direction. An excluded output added later
+    over-reports dirty instead, which is merely annoying. Ignored paths need no entry:
+    they never appear in git status at all.
+
+    Records written before this change used whole-tree scope. Nothing has to be
+    corrected, because none of them claimed False — they say True or unknown, and both
+    are still true under the narrower meaning.
 
     Never raises. Outside a repo, or with no git, every field is None and the report
     says the version is unknown — which is the honest reading, and is distinct from a
@@ -45,7 +73,7 @@ def code_version() -> dict[str, Any]:
             return None
 
     commit = git("rev-parse", "HEAD")
-    status = git("status", "--porcelain")
+    status = git("status", "--porcelain", "--", ".", *GENERATED)
     return {
         "commit": commit,
         "commit_short": commit[:7] if commit else None,
