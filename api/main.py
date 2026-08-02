@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 import uuid
 from collections.abc import AsyncIterator
 from pathlib import Path
@@ -144,10 +145,18 @@ def _baseline_reference() -> dict[str, Any]:
     }
 
 
+def _has_replay(topic_id: str) -> bool:
+    d = RESULTS / "multiagent" / topic_id
+    return (d / "run.json").exists() and (d / "report.md").exists()
+
+
 @app.get("/api/topics")
 def topics() -> dict[str, Any]:
     return {
-        "topics": load_topics(),
+        # replay is per topic, not global: results/ is committed but nothing guarantees
+        # every topic in it has been run at the current code version, and offering a
+        # recording that 404s is worse than not offering it.
+        "topics": [{**t, "replay": _has_replay(t["id"])} for t in load_topics()],
         "baseline": _baseline_reference(),
         "budgets": {
             "searches": MAX_SEARCHES,
@@ -172,6 +181,158 @@ async def resume(req: ResumeRequest) -> StreamingResponse:
 def comparison() -> dict[str, Any]:
     p = RESULTS / "comparison.json"
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+# ------------------------------------------------------------------- replay
+#
+# A recorded run, rebuilt into the exact frame shape the live stream sends, so the
+# client can drive it through the same renderer. Nothing here re-runs anything: it
+# reads results/multiagent/<id>/, which is committed.
+#
+# The point is that pressing the button costs 30-50k tokens, and nobody should have to
+# spend that to find out what the button does. This is also the answer if the demo ever
+# faces anyone but its author: show the recording, gate the live run.
+#
+# The whole run is returned at once rather than dribbled out as SSE on a timer. SSE
+# would look more like the real thing and would make pause and scrub impossible —
+# you cannot rewind a stream. Timing lives in the payload and the client owns the clock.
+
+_NUM = re.compile(r"^(\d+)")
+
+
+def _used(value: Any) -> int | None:
+    """The left half of a "3/5" budget string, or None if there is no number in it.
+
+    `if value is None`, not `value or ""`. The short form collapses a legitimate 0 to
+    the empty string and reports it as absent, which is the difference between "this
+    budget is untouched" and "this event says nothing about that budget" — and the
+    caller carries the last known value forward, so the second one is not harmless.
+    """
+    if value is None:
+        return None
+    m = _NUM.match(str(value))
+    return int(m.group(1)) if m else None
+
+
+def _event_calls(trace: list[dict], records: list[dict]) -> dict[int, dict[str, int]]:
+    """Real milliseconds and the in/out token split per trace event, from the ledger.
+
+    A trace event records the tokens its node spent producing it, and the ledger
+    records every call in order. So the calls behind one event are the run of records
+    whose totals sum to that event's figure — for t1 that consumes all 18 records
+    against all 8 model-calling events, exactly.
+
+    Worth the trouble rather than replaying on a fixed cadence: the researcher's first
+    pass took 24 seconds and the critic took 2, and a replay that gives them equal
+    weight misrepresents where a run actually spends its time.
+
+    The in/out split comes from here too. Only the total is on the trace event, and a
+    dollar figure needs the two sides separately because they are priced differently —
+    assuming a ratio would be the placeholder-price mistake in a new costume.
+    """
+    out: dict[int, dict[str, int]] = {}
+    i = 0
+    for pos, ev in enumerate(trace):
+        want = ev.get("tokens")
+        if not want:
+            continue
+        acc = ms = tin = tout = 0
+        while i < len(records) and acc < want:
+            r = records[i]
+            acc += r.get("total_tokens", 0)
+            ms += r.get("latency_ms", 0)
+            tin += r.get("in_tokens", 0)
+            tout += r.get("out_tokens", 0)
+            i += 1
+        # Only trust an exact match. A partial one means the assumption above is wrong
+        # for this record, and inventing a duration is worse than falling back to one.
+        if acc == want:
+            out[pos] = {"ms": ms, "in": tin, "out": tout}
+    return out
+
+
+@app.get("/api/replay/{topic_id}")
+def replay(topic_id: str) -> dict[str, Any]:
+    d = RESULTS / "multiagent" / topic_id
+    run_p, rep_p = d / "run.json", d / "report.md"
+    if not (run_p.exists() and rep_p.exists()):
+        return {"error": "no recorded run", "topic_id": topic_id}
+
+    run = json.loads(run_p.read_text(encoding="utf-8"))
+    trace = run.get("trace") or []
+    calls = _event_calls(trace, (run.get("tokens") or {}).get("records") or [])
+    baseline = _baseline_reference()
+
+    spent = spent_in = spent_out = findings = words = 0
+    searches = loops = revisions = 0
+    outlined = False
+    frames = []
+
+    for pos, ev in enumerate(trace):
+        spent += ev.get("tokens") or 0
+        spent_in += calls.get(pos, {}).get("in", 0)
+        spent_out += calls.get(pos, {}).get("out", 0)
+        # Budgets are not stored per step; they are read back off the events that
+        # announce them. The researcher prints "3/5", the supervisor prints its loop
+        # and search counters, and the writer prints which revision it is on.
+        for key in ("budget", "searches"):
+            got = _used(ev.get(key))
+            if got is not None:
+                searches = got
+        for key in ("loop", "loops"):
+            got = _used(ev.get(key))
+            if got is not None:
+                loops = got
+        if ev.get("node") == "writer":
+            revisions = max(revisions, int(ev.get("revision") or 0))
+            words = ev.get("words") or words
+        if ev.get("node") == "researcher":
+            findings += ev.get("kept") or 0
+        if ev.get("node") == "analyst" and ev.get("action") == "outlined":
+            outlined = True
+
+        frames.append({
+            "event": ev,
+            "ms": calls.get(pos, {}).get("ms", 0),
+            "cost": {
+                "tokens": spent,
+                "usd": _usd(spent_in, spent_out),
+                "multiple": round(spent / baseline["tokens"], 2)
+                if baseline["tokens"] else None,
+            },
+            "budgets": {
+                "searches": searches,
+                "research_loops": loops,
+                "revisions": revisions,
+            },
+            "counts": {
+                "findings": findings,
+                "has_outline": outlined,
+                "draft_words": words,
+            },
+        })
+
+    crit = run.get("final_critique") or {}
+    return {
+        "topic_id": topic_id,
+        "recorded_at": run.get("generated_at"),
+        "wall_ms": run.get("wall_ms"),
+        # The cap this run was made under, which is not always the cap in force now —
+        # these recordings predate f553c09 lowering it from 2 to 1, and their traces say
+        # "loop 1/2" with nothing on the page to explain the 2. A replay that quietly
+        # shows an old condition as if it were current is the provenance problem the
+        # backfill script exists to prevent, one layer up.
+        "max_research_loops": run.get("max_research_loops"),
+        "code_version": (run.get("code_version") or {}).get("commit"),
+        "frames": frames,
+        "done": {
+            "report": rep_p.read_text(encoding="utf-8"),
+            "findings": run.get("findings") or [],
+            "scores": crit.get("scores") or {},
+            "unclosed_gaps": run.get("unclosed_gaps") or [],
+            "cost": frames[-1]["cost"] if frames else {"tokens": 0},
+        },
+    }
 
 
 def _sse(event: str, data: dict[str, Any]) -> str:

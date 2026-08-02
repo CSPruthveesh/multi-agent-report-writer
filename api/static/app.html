@@ -47,6 +47,32 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 .eg:last-child{margin-bottom:0}
 .eg:hover{border-color:var(--signal);color:var(--signal);background:none}
 
+/* ---------- the replay ----------
+   Pressing the button costs 30-50k tokens. Nobody should have to spend that to find out
+   what the button does, so a recorded run plays through the same renderer. It is the
+   same lane, the same rows, the same report block — the only thing that differs is where
+   the frames come from, which is the point: a replay that used its own renderer would
+   prove nothing about the live one. */
+.replay{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule-soft)}
+.rphead{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  flex-wrap:wrap;margin-bottom:11px}
+.rphead > span{font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
+.rpc{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rpc select{background:var(--panel);border:1px solid var(--rule);border-radius:2px;
+  padding:7px 9px;color:var(--ink);font:400 12px Archivo,sans-serif;max-width:330px}
+.rpc select:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
+.rpc button{padding:8px 18px;font-size:12px}
+/* The scrubber. A range input is the whole feature — an index into the frames, which is
+   why the replay is a payload and not a stream. You cannot rewind an SSE connection. */
+#rpScrub{width:100%;accent-color:var(--signal);cursor:pointer;margin:0}
+#rpScrub:disabled{opacity:.4;cursor:default}
+.rpmeta{display:flex;justify-content:space-between;gap:12px;margin-top:7px;
+  font:400 10.5px/1.5 'JetBrains Mono',monospace;color:var(--muted)}
+.rpmeta b{color:var(--ink);font-weight:500}
+.tag{display:inline-block;border:1px solid var(--signal);color:var(--signal);
+  border-radius:2px;padding:1px 5px;margin-right:7px;
+  font:700 9px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em}
+
 /* Before a run this page says nothing. Removing the placeholder text alone would have
    left the scaffolding behind it: .trace holds a 120px min-height and draws the lane
    rule, so an untouched page would show an empty ruled box. It collapses until there
@@ -142,6 +168,24 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
     <span>try:</span>
     <div id="egs"></div>
   </div>
+
+  <div class="replay" id="replay" hidden>
+    <div class="rphead">
+      <span>or watch a recorded run — free, and the same trace:</span>
+      <div class="rpc">
+        <select id="rpTopic" aria-label="Recorded run"></select>
+        <select id="rpSpeed" aria-label="Playback speed">
+          <option value="1">1×</option>
+          <option value="2" selected>2×</option>
+          <option value="4">4×</option>
+        </select>
+        <button id="rpPlay">play</button>
+      </div>
+    </div>
+    <input type="range" id="rpScrub" min="0" max="0" value="0" step="1" disabled
+           aria-label="Scrub through the recorded run">
+    <div class="rpmeta"><span id="rpPos"></span><span id="rpRec"></span></div>
+  </div>
 </div>
 
 <section class="trace" id="trace" aria-live="polite" aria-label="Node events"></section>
@@ -168,7 +212,13 @@ const $ = s => document.querySelector(s);
 const MIN = 15, MAX = 300;
 let BUDGETS = {searches:5, research_loops:1, revisions:2};
 
-fetch('/api/topics').then(r=>r.json()).then(d=>{ BUDGETS = d.budgets; });
+/* One call, not two. The replay needs the topic list and the trace renderer needs
+   BUDGETS, and fetching twice raced: whichever landed second decided whether the first
+   replay frame drew its budget against the real cap or the fallback. */
+fetch('/api/topics').then(r=>r.json()).then(d=>{
+  BUDGETS = d.budgets;
+  setupReplay(d.topics);
+});
 
 /* Twelve, three shown. Every one is a question with a measurable answer that the
    evidence might not settle — the shape the six frozen evaluation topics have, because
@@ -342,8 +392,117 @@ function showStats(d){
   $('#stats').hidden = false;
 }
 
+/* ------------------------------------------------------------------ the replay
+ *
+ * A recorded run driven through traceView — the same object the live stream drives, so
+ * the rows, the pending placeholders and the loop markers are not a second
+ * implementation that can drift from the first.
+ *
+ * The whole run arrives as one payload rather than as SSE on a timer. Streaming it would
+ * look more like the real thing and would make this feature impossible: you cannot rewind
+ * a stream, and a scrubber is just an index into an array. So the server ships the frames
+ * with their real recorded durations and the client owns the clock.
+ *
+ * Rendering is a rebuild from frame 0 every time rather than an append. Scrubbing
+ * backwards has no other honest implementation, and at fourteen frames the cost of
+ * redrawing is not worth a second code path to avoid.
+ */
+let RP = null, rpAt = -1, rpTimer = null, rpPlaying = false;
+
+function rpStop(){
+  clearTimeout(rpTimer); rpTimer = null; rpPlaying = false;
+  $('#rpPlay').textContent = 'play';
+}
+
+function rpRender(i){
+  rpAt = i;
+  const view = traceView($('#trace'), BUDGETS);
+  view.reset();
+  if (i >= 0){
+    view.start();
+    for (let k = 0; k <= i; k++) view.push(RP.frames[k]);
+  }
+  const last = i >= RP.frames.length - 1;
+  if (last) view.finish();
+
+  $('#rpScrub').value = i + 1;
+  $('#rpPos').innerHTML = i < 0
+    ? `<span class="tag">replay</span>not started`
+    : `<span class="tag">replay</span>event <b>${i + 1}</b> of ${RP.frames.length}` +
+      ` · <b>${RP.frames[i].cost.tokens.toLocaleString()}</b> tokens`;
+
+  // The report only exists once the run finished, so it appears only at the end —
+  // the same order a live run reveals it in.
+  $('#report').hidden = !last;
+  if (last){
+    $('#report').classList.remove('err');
+    $('#reportHead').textContent = 'Report';
+    $('#md').innerHTML = renderMarkdown(RP.done.report);
+    $('#gaps').innerHTML = gapsBlock(RP.done.unclosed_gaps);
+    showStats(RP.done);
+  } else {
+    $('#stats').hidden = true; $('#srcs').innerHTML = ''; $('#md').classList.remove('hl');
+  }
+}
+
+function rpStep(){
+  if (rpAt >= RP.frames.length - 1) return rpStop();
+  rpRender(rpAt + 1);
+  if (rpAt >= RP.frames.length - 1) return rpStop();
+  const speed = +$('#rpSpeed').value;
+  // Recorded model time, scaled. Floored at 180ms because the supervisor makes no model
+  // call and genuinely took 0ms — honest, and invisible. A routing decision the eye
+  // cannot catch is a routing decision the demo did not show.
+  const ms = Math.max(180, (RP.frames[rpAt + 1].ms || 0) / speed);
+  rpTimer = setTimeout(rpStep, ms);
+}
+
+async function rpLoad(id){
+  rpStop();
+  const r = await fetch(`/api/replay/${encodeURIComponent(id)}`).then(x => x.json());
+  if (r.error){ $('#rpRec').textContent = 'no recording for this topic'; RP = null; return; }
+  RP = r;
+  $('#rpScrub').max = r.frames.length; $('#rpScrub').disabled = false;
+  const secs = Math.round((r.wall_ms || 0) / 1000);
+  // Say so when the recording was made under a different gap-loop cap. Its trace reads
+  // "loop 1/2" and the cap is 1 now; without this the page shows an old experimental
+  // condition as though it were the current one.
+  const cap = r.max_research_loops;
+  const capNote = (cap != null && cap !== BUDGETS.research_loops)
+    ? ` · <b>${cap}</b>-loop cap, now ${BUDGETS.research_loops}` : '';
+  $('#rpRec').innerHTML =
+    `recorded ${esc((r.recorded_at || '').slice(0, 10))} · ${r.frames.length} events · ` +
+    `<b>${secs}s</b> live${capNote}`;
+  rpRender(-1);
+}
+
+/* Called from the one /api/topics fetch above. The panel stays hidden when nothing is
+   recorded rather than offering a control that cannot do anything. */
+function setupReplay(topics){
+  const have = (topics || []).filter(t => t.replay);
+  if (!have.length) return;
+  $('#replay').hidden = false;
+  $('#rpTopic').innerHTML = have.map(t =>
+    `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.shape)} · ${esc(t.topic.slice(0,58))}…</option>`
+  ).join('');
+  rpLoad(have[0].id);
+}
+
+$('#rpTopic').onchange = () => rpLoad($('#rpTopic').value);
+$('#rpScrub').oninput  = () => { if (RP){ rpStop(); rpRender(+$('#rpScrub').value - 1); } };
+$('#rpSpeed').onchange = () => { if (rpPlaying){ rpStop(); $('#rpPlay').onclick(); } };
+
+$('#rpPlay').onclick = () => {
+  if (!RP) return;
+  if (rpPlaying) return rpStop();
+  if (rpAt >= RP.frames.length - 1) rpRender(-1);   // finished — start over
+  rpPlaying = true; $('#rpPlay').textContent = 'pause';
+  rpStep();
+};
+
 $('#go').onclick = async () => {
   const topic = ta.value.trim();
+  rpStop();                       // a live run takes the lane over from any replay
   const view = traceView($('#trace'), BUDGETS);
   view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
   $('#stats').hidden=true; $('#md').classList.remove('hl'); $('#srcs').innerHTML='';
