@@ -57,20 +57,24 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 /* ---------- the report, and the summary box beside it ----------
    The numbers used to run along the report's own header — REPORT · 1067 WORDS ·
    34 SOURCES CITED · 41 FINDINGS GATHERED — four figures in the position a title goes,
-   directly above the report's actual title. They move into the right-hand third of the
-   panel, which held nothing but whitespace.
-   1fr auto, not 1fr 208px: on a failed run the box is display:none and the auto column
-   collapses to zero, instead of leaving a 208px hole beside the error. The gap survives
-   an empty track though — grid draws it between the columns either way — so the failed
-   state drops to one column outright. */
-.report{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:start}
-.report.err{grid-template-columns:1fr}
-.rmain{min-width:0}
-/* .md caps itself at 70ch for a readable measure, which inside a 790px panel is where
-   the whitespace came from. The column is now the measure, so the text fills it. */
-.rmain .md{max-width:none}
+   directly above the report's actual title. They move out to their own card on the
+   right, a sibling of the report rather than something inside it.
+   Both children carry their own 34px top margin (the report's comes from trace.css),
+   which with align-items:start lines their tops up without .results owning a margin
+   that would show before a run, while both are hidden. */
+.results{display:grid;grid-template-columns:1fr auto;gap:26px;align-items:start}
+/* An empty track still gets a gap drawn beside it, so a failed run — where the box is
+   display:none — drops to a single column outright rather than losing 26px. */
+.results:has(.stats[hidden]){grid-template-columns:1fr}
+.report{min-width:0}
+/* .md caps itself at 70ch for a readable measure, which inside the panel is where the
+   whitespace came from. The column is now the measure, so the text fills it. */
+.report .md{max-width:none}
 
-.stats{position:sticky;top:20px;width:208px;background:var(--paper);
+/* On the gridded paper rather than inside the report panel, so it takes the panel's own
+   fill — the same card treatment /dev gives the cost meter. Not sticky: it is a summary
+   of a finished run, not a readout that tracks anything as you scroll. */
+.stats{margin-top:34px;width:208px;background:var(--panel);
   border:1px solid var(--rule);border-radius:2px;padding:15px 16px 14px}
 .stats h3{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted);margin:0 0 12px}
@@ -93,9 +97,11 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 /* the citation marks, while "sources cited" is pressed */
 .md.hl cite{background:var(--signal);color:var(--panel)}
 
+/* Stacked, with the summary first: on a phone the report is several screens long, and
+   a box underneath it is a box nobody reaches. */
 @media(max-width:720px){
-  .report{grid-template-columns:1fr}
-  .stats{position:static;width:auto}
+  .results{grid-template-columns:1fr}
+  .stats{width:auto;order:-1;margin-bottom:-10px}
 }
 </style>
 </head>
@@ -125,18 +131,18 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 
 <section class="trace" id="trace" aria-live="polite" aria-label="Node events"></section>
 
-<section class="report" id="report" hidden>
-  <div class="rmain">
+<div class="results">
+  <section class="report" id="report" hidden>
     <h2 id="reportHead">Report</h2>
     <div class="md" id="md"></div>
     <div id="gaps"></div>
-  </div>
+  </section>
   <aside class="stats" id="stats" hidden>
     <h3>This run</h3>
     <div id="statList"></div>
     <div class="note" id="note"></div>
   </aside>
-</section>
+</div>
 
 </div>
 
