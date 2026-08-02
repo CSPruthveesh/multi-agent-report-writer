@@ -115,18 +115,34 @@ function traceRow(d, caps) {
   return row;
 }
 
-/* Enough markdown for what the Writer emits: one H1, H2 sections, bold, rules, and
- * F-number citations. Escaped first, so a model-written report cannot inject markup. */
+/* Enough markdown for what the Writer emits: one H1, H2 sections, bold, rules, bullets,
+ * and F-number citations. Escaped first, so a model-written report cannot inject markup.
+ *
+ * Bullets are the Known limitations section, and until now they had no rule — so the
+ * whole block fell through to the paragraph branch and came out as one run-on line with
+ * hyphens in it: "- thin evidence. - the report conflates ... - evidence gap not closed".
+ * Every limitation in a single sentence is the opposite of a list of them.
+ */
 function renderMarkdown(md) {
-  return esc(md)
+  const inline = esc(md)
     .replace(/\[((?:F\d{3})(?:,\s*F\d{3})*)\]/g, '<cite>$1</cite>')
     .replace(/^# (.+)$/gm, '<h1>$1</h1>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/^---$/gm, '<hr>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .split(/\n{2,}/)
-    .map(b => /^<(h1|h2|hr)/.test(b) ? b : `<p>${b.replace(/\n/g, ' ')}</p>`)
-    .join('');
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  return inline.split(/\n{2,}/).map(b => {
+    if (/^<(h1|h2|hr)/.test(b)) return b;
+    if (!/^\s*[-*]\s/.test(b)) return `<p>${b.replace(/\n/g, ' ')}</p>`;
+    // A wrapped bullet continues the one above it rather than starting an empty item.
+    const items = [];
+    for (const line of b.split('\n')) {
+      const m = line.match(/^\s*[-*]\s+(.*)$/);
+      if (m) items.push(m[1]);
+      else if (items.length && line.trim()) items[items.length - 1] += ' ' + line.trim();
+    }
+    return `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+  }).join('');
 }
 
 /* "Looked for and not found" — or nothing at all when every gap was closed. */

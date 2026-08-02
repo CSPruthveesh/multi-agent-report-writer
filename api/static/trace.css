@@ -131,6 +131,9 @@ button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .md h2{font:600 16px/1.3 Archivo,sans-serif;margin:26px 0 9px;
   letter-spacing:0;text-transform:none;color:var(--ink);border:0;padding:0}
 .md p{margin:0 0 14px}
+.md ul{margin:0 0 14px;padding-left:18px}
+.md li{margin-bottom:7px}
+.md li::marker{color:var(--signal)}
 .md strong{font-weight:600}
 .md cite{font:500 11px 'JetBrains Mono',monospace;font-style:normal;
   color:var(--signal);background:rgba(15,110,107,.08);padding:1px 4px;border-radius:2px}
