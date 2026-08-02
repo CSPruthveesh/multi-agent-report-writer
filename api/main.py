@@ -49,12 +49,13 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi import FastAPI, Response
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from langgraph.types import Command
 from pydantic import BaseModel, Field
 
+from api.export import pdf_family, to_docx, to_pdf
 from src.analysis.cost import PRICES_SET, cost_usd
 from src.common.io import RESULTS, load_topics
 from src.graph.build import build
@@ -182,6 +183,59 @@ async def resume(req: ResumeRequest) -> StreamingResponse:
 def comparison() -> dict[str, Any]:
     p = RESULTS / "comparison.json"
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+# ------------------------------------------------------------------- export
+#
+# The report leaves the page as a file. Generated server-side rather than assembled in
+# the browser, so both formats walk one parser — see api/export.py for why that matters.
+#
+# The report travels in the request body rather than being looked up by id, because the
+# only copy of a live run's report is the one the client is holding. Nothing is stored.
+
+MAX_EXPORT_CHARS = 200_000
+SLUG_RE = re.compile(r"[^a-z0-9]+")
+
+
+class ExportRequest(BaseModel):
+    report: str = Field(min_length=1, max_length=MAX_EXPORT_CHARS)
+    title: str = Field(default="", max_length=300)
+    font: str = Field(default="", max_length=60)
+
+
+def _slug(text: str) -> str:
+    """A filename stem. Bounded and alphanumeric because it lands in a header."""
+    s = SLUG_RE.sub("-", (text or "report").lower()).strip("-")
+    return (s[:48].rstrip("-") or "report")
+
+
+@app.post("/api/export/{fmt}")
+def export(fmt: str, req: ExportRequest) -> Response:
+    if fmt not in ("pdf", "docx"):
+        return JSONResponse({"error": f"unknown format: {fmt}"}, status_code=400)
+
+    if fmt == "docx":
+        body = to_docx(req.report, title=req.title, font=req.font or None)
+        media = ("application/vnd.openxmlformats-officedocument"
+                 ".wordprocessingml.document")
+        # The requested family goes in verbatim; Word resolves it when the file opens.
+        applied = req.font or "default"
+    else:
+        body = to_pdf(req.report, title=req.title, font=req.font or None)
+        media = "application/pdf"
+        # A PDF embeds no fonts here, so say which of the three it actually used
+        # rather than let the caller assume it got what it asked for.
+        applied = pdf_family(req.font or None)
+
+    return Response(
+        content=body,
+        media_type=media,
+        headers={
+            "Content-Disposition":
+                f'attachment; filename="{_slug(req.title)}.{fmt}"',
+            "X-Font-Applied": applied,
+        },
+    )
 
 
 # ------------------------------------------------------------------- replay

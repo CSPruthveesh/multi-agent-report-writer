@@ -61,8 +61,10 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 /* appearance:none and draw the arrow here. The native control paints its arrow inside
    the padding box, so a long option ran underneath it — and no amount of text-overflow
    helps, because that property does nothing on a select. Owning the arrow means owning
-   the space it needs: 28px on the right, which nothing can encroach on. */
-.rpc select{
+   the space it needs: 28px on the right, which nothing can encroach on.
+   Every select on the page, not just the replay's: the font picker is the same control
+   with the same problem, and two copies of this rule is how they drift apart. */
+.wrap select{
   appearance:none;-webkit-appearance:none;
   background:var(--panel) no-repeat right 10px center;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236B7478' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -70,9 +72,10 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   padding:7px 28px 7px 10px;color:var(--ink);
   font:400 12px Archivo,sans-serif;max-width:330px;
   text-overflow:ellipsis}
-.rpc select:hover{border-color:var(--signal)}
-.rpc select:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
-.rpc select#rpSpeed{max-width:none;width:auto}
+.wrap select:hover{border-color:var(--signal)}
+.wrap select:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
+.wrap select:disabled{opacity:.45;cursor:default}
+.wrap select#rpSpeed{max-width:none;width:auto}
 .rpc button{padding:8px 18px;font-size:12px}
 /* Square, outlined, and secondary to play — resetting is not the thing you came to do.
    Sized off the play button's box so the two line up on the same baseline. */
@@ -117,7 +120,29 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 /* An empty track still gets a gap drawn beside it, so a failed run — where the box is
    display:none — drops to a single column outright rather than losing 26px. */
 .results:has(.stats[hidden]){grid-template-columns:1fr}
-.report{min-width:0}
+/* One header row: the label on the left, the controls that act on the report on the
+   right, and the rule that used to belong to the h2 now under both of them. */
+.rtools{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;margin-bottom:18px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule-soft)}
+.rtools h2{margin:0;padding:0;border:0}
+.rt{display:flex;gap:7px;align-items:center}
+.rt select{max-width:190px;padding-top:6px;padding-bottom:6px;font-size:11.5px}
+.rt .mini{background:none;border:1px solid var(--rule);color:var(--muted);
+  padding:7px 11px;border-radius:2px;
+  font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.11em}
+.rt .mini:hover:not(:disabled){background:none;border-color:var(--signal);
+  color:var(--signal)}
+.rt .mini:disabled{opacity:.4}
+
+/* The reader's font choice, applied to the report body only — the page chrome stays in
+   Archivo so the instrument does not change shape when the prose does. A variable
+   rather than a style on .md, because the headings and the gaps list have to follow it
+   and trace.css sets their family inside a font shorthand that would otherwise win. */
+.report{--rfont:Archivo,system-ui,sans-serif;min-width:0}
+.report .md{font-family:var(--rfont)}
+.report .md h1,.report .md h2{font-family:inherit}
+.report .gaps li{font-family:var(--rfont)}
 /* .md caps itself at 70ch for a readable measure, which inside the panel is where the
    whitespace came from. The column is now the measure, so the text fills it. */
 .report .md{max-width:none}
@@ -220,7 +245,15 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 
 <div class="results">
   <section class="report" id="report" hidden>
-    <h2 id="reportHead">Report</h2>
+    <div class="rtools">
+      <h2 id="reportHead">Report</h2>
+      <div class="rt">
+        <select id="fontPick" aria-label="Report font"></select>
+        <button class="mini" id="dlPdf" title="Download as PDF">pdf</button>
+        <button class="mini" id="dlDocx" title="Download as Word">docx</button>
+      </div>
+    </div>
+    <p class="rpnote" id="fontNote" hidden></p>
     <div class="md" id="md"></div>
     <div id="gaps"></div>
   </section>
@@ -306,6 +339,9 @@ function fail(title, detail){
   $('#report').hidden=false; $('#report').classList.add('err');
   $('#stats').hidden=true;
   $('#reportHead').textContent='Run failed';
+  // No report means nothing to export. Leaving the buttons live would offer a file of
+  // the error message.
+  CURRENT = {report:'', title:''}; $('#fontNote').hidden=true;
   $('#md').innerHTML = `<p><strong>${esc(title)}</strong></p><p>${esc(detail)}</p>`;
   $('#gaps').innerHTML='';
   $('#go').disabled=false; $('#go').textContent='Write the report';
@@ -420,6 +456,121 @@ function showStats(d){
   $('#stats').hidden = false;
 }
 
+/* ------------------------------------------------- the report: font, and files
+ *
+ * CURRENT is whatever report is on screen — from a live run or from a replay. The
+ * export posts it back rather than naming a run by id, because a live run's report
+ * exists nowhere but here: nothing on the server stored it.
+ */
+let CURRENT = {report: '', title: ''};
+
+/* Twenty-two families, and the honest part is that this machine may not have them all.
+ * Every one is either already loaded by this page or ships with a common desktop, and
+ * each carries the generic it should degrade to. Ordered by kind — sans, serif, mono —
+ * because that is how somebody choosing one thinks about it. */
+const FONTS = [
+  ['Archivo', 'sans-serif'],           ['Segoe UI', 'sans-serif'],
+  ['Calibri', 'sans-serif'],           ['Candara', 'sans-serif'],
+  ['Corbel', 'sans-serif'],            ['Verdana', 'sans-serif'],
+  ['Tahoma', 'sans-serif'],            ['Trebuchet MS', 'sans-serif'],
+  ['Arial', 'sans-serif'],             ['Franklin Gothic Book', 'sans-serif'],
+  ['Bahnschrift', 'sans-serif'],       ['Optima', 'sans-serif'],
+  ['Georgia', 'serif'],                ['Times New Roman', 'serif'],
+  ['Cambria', 'serif'],                ['Constantia', 'serif'],
+  ['Palatino Linotype', 'serif'],      ['Book Antiqua', 'serif'],
+  ['Garamond', 'serif'],               ['Sylfaen', 'serif'],
+  ['Consolas', 'monospace'],           ['Courier New', 'monospace'],
+  ['JetBrains Mono', 'monospace'],
+];
+
+/* Whether the machine actually has a family, by measuring. Naming a font the browser
+ * does not have is silent — it falls back and the menu goes on claiming the report is
+ * in Garamond. Measuring against all three generics catches the case where a font
+ * happens to match one of them in width. */
+function installed(name){
+  const probe = 'mmmmmmmmmmlliWWWW0O@';
+  const ctx = document.createElement('canvas').getContext('2d');
+  return ['monospace', 'serif', 'sans-serif'].some(base => {
+    ctx.font = `72px ${base}`;
+    const w = ctx.measureText(probe).width;
+    ctx.font = `72px "${name}",${base}`;
+    return ctx.measureText(probe).width !== w;
+  });
+}
+
+function applyFont(name){
+  const f = FONTS.find(x => x[0] === name) || FONTS[0];
+  $('#report').style.setProperty('--rfont', `"${f[0]}",${f[1]}`);
+  $('#fontNote').hidden = true;
+  // Private browsing throws on localStorage rather than returning null.
+  try { localStorage.setItem('reportFont', f[0]); } catch { /* not worth reporting */ }
+}
+
+// After fonts.ready, or the two this page loads over the network measure as missing.
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+  const have = FONTS.filter(([n]) => installed(n));
+  $('#fontPick').innerHTML = FONTS.map(([n]) => {
+    const ok = have.some(([h]) => h === n);
+    return `<option value="${esc(n)}"${ok ? '' : ' disabled'}>${esc(n)}` +
+           `${ok ? '' : ' — not installed'}</option>`;
+  }).join('');
+  let saved = null;
+  try { saved = localStorage.getItem('reportFont'); } catch { /* ignore */ }
+  const pick = have.some(([n]) => n === saved) ? saved : (have[0] || FONTS[0])[0];
+  $('#fontPick').value = pick;
+  applyFont(pick);
+});
+
+$('#fontPick').onchange = () => applyFont($('#fontPick').value);
+
+function filenameFrom(res){
+  const m = /filename="([^"]+)"/.exec(res.headers.get('Content-Disposition') || '');
+  return m ? m[1] : '';
+}
+
+async function download(fmt){
+  const btn = $(fmt === 'pdf' ? '#dlPdf' : '#dlDocx');
+  if (!CURRENT.report) return;
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = '…';
+  try {
+    const res = await fetch(`/api/export/${fmt}`, {method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({report: CURRENT.report, title: CURRENT.title,
+                            font: $('#fontPick').value})});
+    if (!res.ok) throw new Error(String(res.status));
+
+    const url = URL.createObjectURL(await res.blob());
+    const a = document.createElement('a');
+    a.href = url; a.download = filenameFrom(res) || `report.${fmt}`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+
+    // A PDF embeds no fonts here, so it can only be set in Times, Helvetica or
+    // Courier. Say which one was used when it is not what the menu says — finding out
+    // by opening the file and squinting is not finding out.
+    const used = res.headers.get('X-Font-Applied') || '';
+    const want = $('#fontPick').value;
+    if (fmt === 'pdf' && used && used.toLowerCase().replace('-roman', '')
+        !== want.toLowerCase()){
+      $('#fontNote').hidden = false;
+      $('#fontNote').innerHTML =
+        `A PDF carries no fonts with it, so this one is set in <b>${esc(used)}</b> — ` +
+        `the nearest of the three a PDF can assume. The .docx keeps ` +
+        `<b>${esc(want)}</b> by name and resolves it wherever it is opened.`;
+    }
+    btn.textContent = label;
+  } catch {
+    btn.textContent = 'failed';
+    setTimeout(() => { btn.textContent = label; }, 1800);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+$('#dlPdf').onclick  = () => download('pdf');
+$('#dlDocx').onclick = () => download('docx');
+
 /* ------------------------------------------------------------------ the replay
  *
  * A recorded run driven through traceView — the same object the live stream drives, so
@@ -468,6 +619,8 @@ function rpRender(i){
   if (last){
     $('#report').classList.remove('err');
     $('#reportHead').textContent = 'Report';
+    CURRENT = {report: RP.done.report,
+               title: `${RP.topic_id} recorded run`};
     $('#md').innerHTML = renderMarkdown(RP.done.report);
     $('#gaps').innerHTML = gapsBlock(RP.done.unclosed_gaps);
     showStats(RP.done);
@@ -571,6 +724,7 @@ $('#go').onclick = async () => {
       view.finish();
       $('#report').hidden=false; $('#report').classList.remove('err');
       $('#reportHead').textContent = 'Report';
+      CURRENT = {report: d.report, title: topic};
       $('#md').innerHTML = renderMarkdown(d.report);
       $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
       showStats(d);
