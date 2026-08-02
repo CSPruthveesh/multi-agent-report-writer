@@ -1,0 +1,4 @@
+# .docx is a zip. Git would otherwise try to diff it, produce noise, and attempt line
+# ending conversion on compressed bytes — which corrupts the file.
+*.docx binary
+*.pdf  binary

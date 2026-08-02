@@ -7,11 +7,20 @@ __pycache__/
 *.sqlite
 *.db
 checkpoints/
-# Leading slash: the phase write-ups at the repo root, and nothing else. Without it
-# this pattern matches any directory named analysis at any depth, which silently
-# excluded src/analysis/ — the cost module would never have been committed and a
-# fresh clone could not have run the report.
-/analysis/
+# /analysis/ used to be listed here — the phase write-ups, ignored as local artifacts.
+# They are not artifacts. They are the reasoning behind every decision in this
+# repository, and the code they describe is meaningless without them: a reader can see
+# that MAX_RESEARCH_LOOPS is 1 and not that it was 2 until a matched-pair experiment
+# said the loop bought 77 findings nobody cited.
+#
+# Twelve files, 680 KB, on one machine with no history. The code was backed up and the
+# thinking was not. They are tracked now. Binary, so the diffs are useless — the commit
+# messages carry what changed, and the generators are alongside them.
+#
+# The leading-slash lesson still applies to anything added below: without it, a pattern
+# matches any directory of that name at any depth. `analysis` once silently excluded
+# src/analysis/, so the cost module would never have been committed and a fresh clone
+# could not have run the report.
 # Superseded hand-score directories, archived when a re-run or a change to the
 # blinding invalidates them. Every version is already reachable in history, so a
 # second copy under a new name only confuses which one is canonical. Ignored rather
