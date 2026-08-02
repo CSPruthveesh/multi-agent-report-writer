@@ -101,6 +101,49 @@ def test_finalize_declares_unclosed_gaps_and_ignores_stale_ones():
     assert "stale" not in draft
 
 
+def test_the_report_carries_one_limitations_section_not_two():
+    """The Writer is told to write this section; finalize used to append a second.
+
+    Every frozen topic whose run declared a gap shipped with the header twice — t1,
+    t3, t4, t6 — and the gap itself stated twice in different words. Nothing broke,
+    because judge.py and handscore.py both match the first occurrence. It was only
+    ever wrong to read, which is why it lasted.
+    """
+    gap = "Standardized third-party cycle life data."
+    state = initial_state("t")
+    state.update(
+        draft=f"# R\n\nbody.\n\n## Closing\n\nposition.\n\n---\n\n"
+              f"## Known limitations\n\n- {gap}\n",
+        unclosed_gaps=[gap],
+        critique={"verdict": "revise", "issues": [
+            {"criterion": "factual_grounding", "problem": "conflates two claims"},
+        ]},
+    )
+    draft = nodes.finalize(state)["draft"]
+
+    assert draft.count("## Known limitations") == 1, "two sections with one name"
+    assert draft.count(gap) == 1, "the same gap declared twice in different words"
+    assert "conflates two claims" in draft, "the criticism was dropped, not merged"
+    # order matters: the merged bullet belongs under the header, not after the report
+    assert draft.index(gap) < draft.index("conflates two claims")
+
+
+def test_limitations_merge_lands_inside_the_section_not_at_the_end():
+    """The Writer is told to put this section last. Told to is not did."""
+    state = initial_state("t")
+    state.update(
+        draft="# R\n\n## Known limitations\n\n- thin evidence.\n\n## Afterword\n\ntail.",
+        unclosed_gaps=["a gap nobody closed"],
+        critique=PASSED,
+    )
+    draft = nodes.finalize(state)["draft"]
+
+    assert draft.count("## Known limitations") == 1
+    assert draft.index("a gap nobody closed") < draft.index("## Afterword"), \
+        "the bullet landed outside the section it belongs to"
+    assert draft.rstrip().endswith("tail."), "the trailing section was clobbered"
+
+
 def test_a_run_that_produced_nothing_cannot_report_clean():
     """The catastrophic case was the one that recorded itself as healthy.
 

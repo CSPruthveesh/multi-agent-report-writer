@@ -15,8 +15,10 @@ this docstring.
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
+from src.graph.nodes.writer import LIMITS_HEADER
 from src.graph.state import (
     CRITIC_TARGETS,
     MAX_RESEARCH_LOOPS,
@@ -28,6 +30,72 @@ from src.graph.state import (
 )
 
 NODE = "supervisor"
+
+# Any heading, to find where the limitations section ends. The Writer is told to put
+# that section last, but "told to" is not "did" — a block appended past a heading the
+# model added afterwards would sit outside the section it belongs to.
+HEADING_RE = re.compile(r"^#{1,6}\s", re.MULTILINE)
+
+
+def _norm(s: str) -> str:
+    return " ".join(s.split()).lower()
+
+
+def _merge_limitations(draft: str, bullets: list[str]) -> str:
+    """Put `bullets` in the report's Known limitations section, making one if needed.
+
+    finalize used to append its own section unconditionally, and the Writer is
+    separately instructed to write one whenever the run has unclosed gaps. So a
+    report that had any gap shipped with the header twice:
+
+        ## Known limitations
+        - Standardized, third-party verified cycle life testing data ...
+        ---
+        ## Known limitations
+        - The report conflates the cost projection range ...
+        - Evidence gap not closed within the search budget: Standardized, third-party
+          verified cycle life testing data ...
+
+    Two sections with one name, and the gap stated twice in different words. Observed
+    on t1, t3, t4 and t6 — every frozen topic whose run declared a gap.
+
+    Nothing downstream broke, which is why it survived: judge.py, evals/judge.py and
+    handscore.py all match the FIRST occurrence or merely test `in`, so blinding and
+    scoring were right the whole time. It was only ever wrong to read.
+    """
+    if not bullets:
+        return draft
+
+    cut = draft.find(LIMITS_HEADER)
+    if cut == -1:
+        return draft + "\n".join(["", "", "---", "", LIMITS_HEADER, "", *bullets])
+
+    # The section runs from its header to the next heading, or to the end.
+    start = cut + len(LIMITS_HEADER)
+    nxt = HEADING_RE.search(draft, start)
+    end = nxt.start() if nxt else len(draft)
+    block = draft[start:end]
+
+    # The Writer lists the unclosed gaps because it is told to, so finalize's own
+    # "Evidence gap not closed…" line for the same gap is the same fact twice.
+    fresh = [b for b in bullets if _norm(_payload(b)) not in _norm(block)]
+    if not fresh:
+        return draft
+
+    merged = block.rstrip() + "\n" + "\n".join(fresh)
+    tail = draft[end:]
+    return draft[:start] + merged + ("\n\n" + tail.lstrip("\n") if tail else "")
+
+
+def _payload(bullet: str) -> str:
+    """The part of a bullet that identifies the fact, minus the wrapper prose.
+
+    "- Evidence gap not closed within the search budget: X" is the same limitation as
+    a Writer bullet reading "- X", and only the X can tell you that.
+    """
+    body = bullet.lstrip("- ").strip()
+    _, sep, after = body.partition("search budget: ")
+    return after if sep else body
 
 
 def supervisor(state: ReportState) -> dict[str, Any]:
@@ -247,14 +315,14 @@ def finalize(state: ReportState) -> dict[str, Any]:
     degraded = unresolved or empty or bool(failures)
 
     if degraded or unclosed:
-        lines = ["", "", "---", "", "## Known limitations", ""]
+        bullets = []
         if empty:
-            lines.append(
+            bullets.append(
                 "- This run produced no report. The nodes below failed and the run was "
                 "stopped rather than retried indefinitely."
             )
         for f in failures:
-            lines.append(
+            bullets.append(
                 f"- The {f.get('node')} node failed and was degraded "
                 f"({f.get('error', 'unknown error')})."
             )
@@ -262,10 +330,11 @@ def finalize(state: ReportState) -> dict[str, Any]:
             problem = (issue.get("problem") or "").strip()
             name = (issue.get("criterion") or "").replace("_", " ")
             if problem:
-                lines.append(f"- {problem} ({name})")
+                bullets.append(f"- {problem} ({name})")
         for g in unclosed:
-            lines.append(f"- Evidence gap not closed within the search budget: {g}")
-        draft = draft + "\n".join(lines)
+            bullets.append(f"- Evidence gap not closed within the search budget: {g}")
+        # Into the Writer's section when it wrote one, rather than beside it.
+        draft = _merge_limitations(draft, bullets)
 
     return {
         "draft": draft,
