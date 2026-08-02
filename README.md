@@ -287,9 +287,15 @@ finishes, then the report. Two pages, because they answer different questions.
 
 **`/` — the report writer.** A question box. Type any research question and get a cited
 briefing, plus a list of what the system looked for and could not find. Beside the report
-is a card carrying the run's numbers; press one and it says what it counts, or press the
-citation count to mark every reference in the text. `34 sources cited` means nothing until
-you know 41 were gathered and the writer cites only what the argument needs.
+is a card carrying the run's numbers, and every figure on it can be pressed: it says what
+it counts, and two of them do something as well. **Findings cited** marks every reference
+in the text; **sources** lists the pages behind those citations, each linking out, with
+the finding IDs it supplied. `42 findings cited` means nothing until you know 62 were
+gathered and the writer cites only what the argument needs.
+
+That row used to read `42 sources cited`, which counted distinct finding IDs — on t1
+those 42 findings come from 15 pages, so the figure was wrong by 3× in the flattering
+direction. Grouping the list by page is what caught it.
 
 **`/dev` — the instrument.** The same trace, restricted to the six frozen topics, plus a
 cost meter reading the run against the mean of six single-agent runs, budget gauges, and
@@ -301,6 +307,12 @@ real and means nothing. Same argument as the absent dollar figures.
 
 Pressing the button runs the real graph: **30–50k tokens per topic**, and nothing rate
 limits it. Fine on localhost, the first thing to add anywhere else.
+
+`source_url` is untrusted — a web search result passed through a model — and the source
+list puts it in an `href`. Only `http` and `https` render, and the **parsed** URL is
+rendered rather than the raw string: a URL containing a double quote closes the `href`
+early and the rest lands on the anchor as attributes. `?a=" onmouseover="alert(1)` is a
+working handler injection against the raw form.
 
 Building a page for a person to read found a defect nine phases of evaluation had scored
 straight past — see the note under *Blinding* below.
@@ -488,5 +500,5 @@ scores, and the two integrity checks that reported a pass they had not earned.
 Phase 10 covers the demo: the dollar gate inherited from Phase 8 that stopped it starting,
 the two pages, the approval gate made reachable, and what reading the output as a document
 rather than as scoring input turned up — a duplicated section on 4 of 6 topics, bullets
-that rendered as one run-on line, and a live run that verified nothing because the server
-was still holding the code from before the fix.
+that rendered as one run-on line, a citation count that was wrong by 3×, and a live run
+that verified nothing because the server was still holding the code from before the fix.
