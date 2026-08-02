@@ -326,6 +326,13 @@ real and means nothing. Same argument as the absent dollar figures.
 Pressing the button runs the real graph: **30–50k tokens per topic**, and nothing rate
 limits it. Fine on localhost, the first thing to add anywhere else.
 
+A run can be **stopped**. Aborting the stream makes Starlette cancel the generator behind
+it, so the graph stops rather than running on with nobody reading it — but stopping
+cannot refund, so the trace rows that already arrived stay on screen. They are the record
+of what was paid for. While a run is in flight the question box is frozen and both
+suggestion blocks are hidden; the box clears only when a report actually arrives, because
+a failed or stopped run leaves you the text you would want to edit and retry.
+
 `source_url` is untrusted — a web search result passed through a model — and the source
 list puts it in an `href`. Only `http` and `https` render, and the **parsed** URL is
 rendered rather than the raw string: a URL containing a double quote closes the `href`
