@@ -70,6 +70,22 @@ def test_the_replay_ends_on_the_numbers_the_record_states(topic_id):
 
 
 @pytest.mark.skipif(not RECORDED, reason="no recorded runs committed")
+@pytest.mark.parametrize("topic_id", RECORDED)
+def test_the_replay_counts_the_limitations_sections_it_is_about_to_show(topic_id):
+    """The demo shows a defect it has since fixed, and has to say so.
+
+    Every committed recording predates fa7dd08, so the ones that declared a gap carry
+    the section twice. The reports are deliberately not regenerated — they are the
+    evaluation's evidence — which means the page needs the count in order to explain
+    what a viewer is looking at. Asserting it against the file keeps the explanation
+    tied to the artifact instead of to a hardcoded sentence that could outlive it.
+    """
+    out = replay(topic_id)
+    report = (RESULTS / "multiagent" / topic_id / "report.md").read_text(encoding="utf-8")
+    assert out["limitations_sections"] == report.count("## Known limitations")
+
+
+@pytest.mark.skipif(not RECORDED, reason="no recorded runs committed")
 def test_a_replay_frame_is_shaped_like_a_live_one():
     """The client drives both through one renderer. Divergence here is a broken page."""
     f = replay(RECORDED[0])["frames"][0]

@@ -59,6 +59,7 @@ from src.analysis.cost import PRICES_SET, cost_usd
 from src.common.io import RESULTS, load_topics
 from src.graph.build import build
 from src.graph.checkpoint import async_sqlite_checkpointer, thread_config
+from src.graph.nodes.writer import LIMITS_HEADER
 from src.graph.state import (
     MAX_RESEARCH_LOOPS,
     MAX_REVISIONS,
@@ -259,6 +260,7 @@ def replay(topic_id: str) -> dict[str, Any]:
         return {"error": "no recorded run", "topic_id": topic_id}
 
     run = json.loads(run_p.read_text(encoding="utf-8"))
+    report = rep_p.read_text(encoding="utf-8")
     trace = run.get("trace") or []
     calls = _event_calls(trace, (run.get("tokens") or {}).get("records") or [])
     baseline = _baseline_reference()
@@ -324,9 +326,16 @@ def replay(topic_id: str) -> dict[str, Any]:
         # backfill script exists to prevent, one layer up.
         "max_research_loops": run.get("max_research_loops"),
         "code_version": (run.get("code_version") or {}).get("commit"),
+        # An observation, not a verdict. Every recording here was made before fa7dd08
+        # and carries the section twice, because the Writer wrote one and finalize
+        # appended another. The reports are left exactly as recorded — they are the
+        # evaluation's evidence, and regenerating them to look tidier would contaminate
+        # the comparison the whole project rests on. So the demo shows a defect it has
+        # since fixed, and the page has to say so rather than hope nobody counts.
+        "limitations_sections": report.count(LIMITS_HEADER),
         "frames": frames,
         "done": {
-            "report": rep_p.read_text(encoding="utf-8"),
+            "report": report,
             "findings": run.get("findings") or [],
             "scores": crit.get("scores") or {},
             "unclosed_gaps": run.get("unclosed_gaps") or [],

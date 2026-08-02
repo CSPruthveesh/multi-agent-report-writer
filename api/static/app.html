@@ -72,6 +72,12 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 .tag{display:inline-block;border:1px solid var(--signal);color:var(--signal);
   border-radius:2px;padding:1px 5px;margin-right:7px;
   font:700 9px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em}
+/* A defect visible in the recording itself. It needs a sentence, not a chip — the
+   reader has to be told both what they are looking at and why it was not tidied up. */
+.rpnote{margin:9px 0 0;padding:8px 11px;background:var(--panel);
+  border-left:3px solid var(--amber);border-radius:2px;
+  font:400 11px/1.6 'JetBrains Mono',monospace;color:var(--muted)}
+.rpnote b{color:var(--amber);font-weight:700}
 
 /* Before a run this page says nothing. Removing the placeholder text alone would have
    left the scaffolding behind it: .trace holds a 120px min-height and draws the lane
@@ -185,6 +191,7 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
     <input type="range" id="rpScrub" min="0" max="0" value="0" step="1" disabled
            aria-label="Scrub through the recorded run">
     <div class="rpmeta"><span id="rpPos"></span><span id="rpRec"></span></div>
+    <p class="rpnote" id="rpNote" hidden></p>
   </div>
 </div>
 
@@ -473,6 +480,20 @@ async function rpLoad(id){
   $('#rpRec').innerHTML =
     `recorded ${esc((r.recorded_at || '').slice(0, 10))} · ${r.frames.length} events · ` +
     `<b>${secs}s</b> live${capNote}`;
+
+  // The recording carries a defect that has since been fixed. Say so on the page rather
+  // than hope nobody counts the headings — and say why it was not quietly regenerated,
+  // because "we left a known flaw in the demo" and "these files are the evidence" are
+  // the same decision and only one of them is obvious.
+  const dup = (r.limitations_sections || 0) > 1;
+  $('#rpNote').hidden = !dup;
+  if (dup) $('#rpNote').innerHTML =
+    `This report ends with <b>${r.limitations_sections} “Known limitations” sections</b> ` +
+    `where there should be one — a defect fixed after this run was recorded. ` +
+    `The recordings are left exactly as they were made: they are the evaluation's ` +
+    `evidence, and regenerating them to look tidier would contaminate the comparison ` +
+    `the results rest on. A live run does not do this.`;
+
   rpRender(-1);
 }
 
