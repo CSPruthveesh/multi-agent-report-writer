@@ -40,8 +40,10 @@ function summarise(e, d, caps) {
     }
     case 'analyst':
       if (e.sections != null) bits.push(`${n(e.sections)} sections`);
-      if (e.tensions) bits.push(`${n(e.tensions)} tensions held apart`);
-      bits.push(e.gaps_kept ? `${n(e.gaps_kept)} evidence gap to close` : 'no gaps');
+      if (e.tensions) bits.push(`${n(e.tensions)} tension${e.tensions === 1 ? '' : 's'} held apart`);
+      bits.push(e.gaps_kept
+        ? `${n(e.gaps_kept)} evidence gap${e.gaps_kept === 1 ? '' : 's'} to close`
+        : 'no gaps');
       break;
 
     case 'supervisor':
