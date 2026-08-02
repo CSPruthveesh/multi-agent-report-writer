@@ -34,6 +34,15 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   margin-top:11px;flex-wrap:wrap}
 .count{font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
 .count.bad{color:var(--alarm)}
+.acts{display:flex;gap:8px;align-items:center}
+/* Outlined and in the alarm colour, beside a filled button. Stopping is the rarer
+   choice and should not compete with the one that starts a run — but it is the only
+   control on the page that ends something, so it is not grey either. */
+.stop{background:none;border:1px solid var(--alarm);color:var(--alarm);
+  padding:10px 17px;border-radius:2px;
+  font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em}
+.stop:hover:not(:disabled){background:var(--alarm);color:var(--panel)}
+textarea:disabled{opacity:.6;cursor:not-allowed}
 /* One per line. Wrapped inline they broke at different points on every reload, so the
    block changed shape depending on which three came up — and a question that wraps mid
    clause is harder to read than one that owns its own row. */
@@ -45,7 +54,17 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   padding:9px 12px;margin-bottom:6px;
   font:400 13px/1.4 Archivo,sans-serif;text-transform:none;letter-spacing:0}
 .eg:last-child{margin-bottom:0}
-.eg:hover{border-color:var(--signal);color:var(--signal);background:none}
+/* :not(:disabled) is doing real work here, not decoration. `button:hover:not(:disabled)`
+   in trace.css is 0,2,1 and the old `.eg:hover` was 0,2,0, so the global rule won and
+   filled the example with solid teal — muted grey text on a teal block, unreadable.
+   Matching its specificity lets this rule take the hover back.
+   A glow rather than a fill: the example is text to be read, and the thing being
+   signalled is "this is clickable", which a border and a halo say without covering it. */
+.eg{transition:box-shadow .15s ease-out,border-color .15s ease-out,color .15s ease-out}
+.eg:hover:not(:disabled){background:none;border-style:solid;
+  border-color:var(--signal);color:var(--signal);
+  box-shadow:0 0 0 3px rgba(15,110,107,.16)}
+.eg:disabled{opacity:.45}
 
 /* ---------- the replay ----------
    Pressing the button costs 30-50k tokens. Nobody should have to spend that to find out
@@ -212,9 +231,12 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
   <textarea id="topic" maxlength="300" placeholder="e.g. How have battery storage costs changed the economics of rooftop solar in Europe since 2020?"></textarea>
   <div class="row">
     <span class="count" id="count">0 / 300</span>
-    <button id="go" disabled>Write the report</button>
+    <div class="acts">
+      <button class="stop" id="stop" hidden>stop</button>
+      <button id="go" disabled>Write the report</button>
+    </div>
   </div>
-  <div class="examples">
+  <div class="examples" id="examples">
     <span>try:</span>
     <div id="egs"></div>
   </div>
@@ -334,6 +356,34 @@ ta.addEventListener('input', validate);
 validate();
 drawExamples();
 
+/* ------------------------------------------------------------- run/idle state
+ *
+ * Every control that changes while a run is in flight changes here, in one place. The
+ * alternative — flipping each at the call site — leaves the exit paths to remember all
+ * of them, and there are four exits: done, error, stop, and the fetch never connecting.
+ *
+ * REPLAY_READY rather than un-hiding the panel unconditionally: it starts hidden and is
+ * revealed only when at least one recording exists, so restoring it blindly would offer
+ * a replay on a machine with no results/ directory.
+ */
+let RUN = null;              // AbortController while a run is in flight
+let REPLAY_READY = false;
+
+function running(on){
+  ta.disabled = on;
+  $('#stop').hidden = !on;
+  $('#go').textContent = on ? 'Running…' : 'Write the report';
+  // Both suggestion blocks go for the duration. The examples write into a question box
+  // that is now frozen, and the replay drives the same trace lane the live run is
+  // filling — offering to play a recording into it mid-run invites a collision. Neither
+  // is disabled-but-visible: a row of dead controls under a running job reads as broken
+  // rather than as busy.
+  $('#examples').hidden = on;
+  if (REPLAY_READY) $('#replay').hidden = on;
+  if (on) $('#go').disabled = true;
+  else validate();      // not disabled=false — an empty box must leave it disabled
+}
+
 function fail(title, detail){
   $('#report').hidden=false; $('#report').classList.add('err');
   $('#stats').hidden=true;
@@ -343,8 +393,15 @@ function fail(title, detail){
   CURRENT = {report:'', title:''};
   $('#md').innerHTML = `<p><strong>${esc(title)}</strong></p><p>${esc(detail)}</p>`;
   $('#gaps').innerHTML='';
-  $('#go').disabled=false; $('#go').textContent='Write the report';
+  running(false);
 }
+
+/* Aborting the fetch drops the connection, and Starlette cancels the generator behind
+ * the StreamingResponse when the client goes away — so the graph stops rather than
+ * running on invisibly. What stopping cannot do is refund: whatever the nodes already
+ * spent is spent. That is why the trace rows that arrived stay on screen instead of
+ * being cleared. They are the record of what was paid for. */
+$('#stop').onclick = () => { if (RUN) RUN.abort(); };
 
 /* The sources behind the citations, grouped by the page they came from.
  *
@@ -666,7 +723,10 @@ async function rpLoad(id){
 function setupReplay(topics){
   const have = (topics || []).filter(t => t.replay);
   if (!have.length) return;
-  $('#replay').hidden = false;
+  REPLAY_READY = true;
+  // Not if a run started before this fetch landed — running(true) already hid it, and
+  // un-hiding here would put it back mid-run.
+  $('#replay').hidden = !!RUN;
   $('#rpTopic').innerHTML = have.map(t =>
     `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.shape)} · ${esc(t.topic.slice(0,58))}…</option>`
   ).join('');
@@ -693,33 +753,53 @@ $('#go').onclick = async () => {
   const view = traceView($('#trace'), BUDGETS);
   view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
   $('#stats').hidden=true; $('#md').classList.remove('hl'); $('#srcs').innerHTML='';
-  $('#go').disabled=true; $('#go').textContent='Running…';
 
-  let res;
+  RUN = new AbortController();
+  running(true);
+  let delivered = false;          // whether a report actually arrived
+
   try{
-    res = await fetch('/api/run',{method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({topic})});
-  }catch(err){ return fail('Could not reach the server', String(err)); }
-  if(!res.ok) return fail(`Request rejected (${res.status})`,
-    'The question needs to be between 15 and 300 characters.');
+    let res;
+    try{
+      res = await fetch('/api/run',{method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({topic}), signal: RUN.signal});
+    }catch(err){
+      if (RUN.signal.aborted) return;         // stopped before it connected
+      return fail('Could not reach the server', String(err));
+    }
+    if(!res.ok) return fail(`Request rejected (${res.status})`,
+      'The question needs to be between 15 and 300 characters.');
 
-  await readSSE(res, {
-    start: () => view.start(),
-    node: d => view.push(d),
-    done: d => {
-      view.finish();
-      $('#report').hidden=false; $('#report').classList.remove('err');
-      $('#reportHead').textContent = 'Report';
-      CURRENT = {report: d.report, title: topic};
-      $('#md').innerHTML = renderMarkdown(d.report);
-      $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
-      showStats(d);
-    },
-    error: d => { view.finish(); fail(d.error, d.detail); },
-  });
+    await readSSE(res, {
+      start: () => view.start(),
+      node: d => view.push(d),
+      done: d => {
+        view.finish();
+        delivered = true;
+        $('#report').hidden=false; $('#report').classList.remove('err');
+        $('#reportHead').textContent = 'Report';
+        CURRENT = {report: d.report, title: topic};
+        $('#md').innerHTML = renderMarkdown(d.report);
+        $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
+        showStats(d);
+      },
+      error: d => { view.finish(); fail(d.error, d.detail); },
+    });
+  }catch(err){
+    // Aborting mid-stream rejects the pending read. That is this button working, not a
+    // failure, so it must not reach fail() and paint a red "Run failed" panel.
+    if (!RUN.signal.aborted) return fail('The stream broke', String(err));
+    view.finish();                // drop the placeholder for the node that never ran
+  }finally{
+    RUN = null;
+    running(false);
+  }
 
-  $('#go').disabled=false; $('#go').textContent='Write the report';
+  // Cleared only on a delivered report. A run that failed or was stopped leaves the
+  // question where it is — that is the text somebody would want to edit and retry, and
+  // making them retype it to try again would be a strange way to handle an error.
+  if (delivered){ ta.value = ''; validate(); }
 };
 </script>
 </body>
