@@ -297,6 +297,24 @@ That row used to read `42 sources cited`, which counted distinct finding IDs —
 those 42 findings come from 15 pages, so the figure was wrong by 3× in the flattering
 direction. Grouping the list by page is what caught it.
 
+The report can be set in any of **23 fonts** the machine has — the picker measures which
+are actually installed rather than naming them and hoping, and greys out the rest — and
+downloaded as **PDF or DOCX**. Both are generated server-side from one parser, and both
+keep the font: the `.docx` by name, the `.pdf` by embedding the actual font file, so it
+reads the same on a machine that has never heard of Palatino Linotype.
+
+**Replay, for nothing.** Under the question box is a recorded run from each of the six
+frozen topics — play, pause, scrub, at 1×/2×/4×. It drives the same `traceView` the live
+stream drives, so it is not a second renderer that can drift. Per-event timing is
+recovered from the call ledger rather than invented: a trace event names the tokens its
+node spent and the ledger lists every call in order, so the calls behind one event are
+the run of records summing to that figure. It matters — the researcher's first pass took
+24s and the critic took 2.
+
+The panel labels what it is showing: the gap-loop cap the recording was made under when
+it differs from the current one, and the fact that four of the six reports carry the
+duplicated section described below. The recordings are not regenerated to look tidier.
+
 **`/dev` — the instrument.** The same trace, restricted to the six frozen topics, plus a
 cost meter reading the run against the mean of six single-agent runs, budget gauges, and
 the outline approval gate.
@@ -441,11 +459,15 @@ happened after the change.
 Check the machinery without spending anything. These call no model:
 
 ```bash
-uv run pytest -q                        # 43 passing, 1 skipped
+uv run pytest -q                        # 96 passing, 1 skipped
 uv run python -m src.graph.build        # the whole graph, every node faked
 uv run python -m scripts.probe_gate     # the approval gate, end to end
 uv run python -m scripts.chaos          # node failures and containment
 ```
+
+The replay is free too, and it exercises the streaming client end to end without the
+graph running — which is the cheapest way to see what a run looks like before deciding
+to pay for one.
 
 `src.graph.build` runs the real routing with offline doubles, and a test asserts it stays
 free — the command has quietly started spending before, once per node that became real,
@@ -490,6 +512,7 @@ choice of judge visible in the command rather than buried in a file.
 | `src/common/` | Shared LLM, search, schemas and run-record I/O |
 | `src/analysis/` | Cost attribution by node, phase and call type |
 | `api/` | The demo — FastAPI, SSE streaming, and two pages sharing one trace renderer |
+| `api/export.py` | Report to `.docx` or `.pdf`, one markdown parser feeding both |
 | `evals/` | The judge, the comparison, blind hand-scoring, the frozen rubric |
 | `scripts/` | Calibration, pairwise judging, chaos and resume demos, backfills |
 | `data/topics.json` | The six frozen topics, with a pre-registered trap for each |
@@ -517,7 +540,8 @@ the judge, the six defects found in it before it produced a number, the run, the
 scores, and the two integrity checks that reported a pass they had not earned.
 
 Phase 10 covers the demo: the dollar gate inherited from Phase 8 that stopped it starting,
-the two pages, the approval gate made reachable, and what reading the output as a document
-rather than as scoring input turned up — a duplicated section on 4 of 6 topics, bullets
-that rendered as one run-on line, a citation count that was wrong by 3×, and a live run
-that verified nothing because the server was still holding the code from before the fix.
+the two pages, the approval gate made reachable, the replay, the font picker and the
+exporters — and what reading the output as a document rather than as scoring input turned
+up. A duplicated section on 4 of 6 topics, bullets that rendered as one run-on line, a
+citation count that was wrong by 3×, and a live run that verified nothing because the
+server was still holding the code from before the fix.
