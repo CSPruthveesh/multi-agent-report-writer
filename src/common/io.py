@@ -19,7 +19,22 @@ CITE_RE = re.compile(r"\bF\d{3}\b")
 
 # Tracked paths a run writes or regenerates, excluded from the dirty check as git
 # pathspecs. A run editing its own output must not report itself unreproducible.
-GENERATED = (":(exclude)results", ":(exclude)docs")
+#
+# analysis/ joined the list when the phase write-ups stopped being ignored. Until then
+# they never appeared in git status at all, which is why this did not name them — and
+# the moment they became tracked, regenerating one made every later run record
+# dirty=True with no source file touched. Reproduced at 6c5c38e before fixing.
+#
+# The same defect this function was rewritten to remove, arriving through a change
+# nowhere near it. That is the standing cost of an exclude list: it has to be updated
+# when something starts being tracked. Still the right direction — an allowlist of
+# source paths would have missed a directory added later and reported clean when it was
+# not, which is the dangerous way to be wrong.
+GENERATED = (
+    ":(exclude)results",
+    ":(exclude)docs",
+    ":(exclude)analysis",
+)
 
 
 @lru_cache(maxsize=1)
