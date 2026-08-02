@@ -280,6 +280,33 @@ approval gate (`--hitl`).
 
 ---
 
+## The demo
+
+`api/` is a FastAPI app that streams a live run over SSE — the trace as each node
+finishes, then the report. Two pages, because they answer different questions.
+
+**`/` — the report writer.** A question box. Type any research question and get a cited
+briefing, plus a list of what the system looked for and could not find. Beside the report
+is a card carrying the run's numbers; press one and it says what it counts, or press the
+citation count to mark every reference in the text. `34 sources cited` means nothing until
+you know 41 were gathered and the writer cites only what the argument needs.
+
+**`/dev` — the instrument.** The same trace, restricted to the six frozen topics, plus a
+cost meter reading the run against the mean of six single-agent runs, budget gauges, and
+the outline approval gate.
+
+The baseline multiple appears **only on `/dev`**. Against a question somebody just typed,
+the recorded baseline is the cost of a different task — a number that is arithmetically
+real and means nothing. Same argument as the absent dollar figures.
+
+Pressing the button runs the real graph: **30–50k tokens per topic**, and nothing rate
+limits it. Fine on localhost, the first thing to add anywhere else.
+
+Building a page for a person to read found a defect nine phases of evaluation had scored
+straight past — see the note under *Blinding* below.
+
+---
+
 ## The evaluation
 
 The instrument was built before the experiment, and it took three attempts to get one that
@@ -302,6 +329,14 @@ the file alone.
 stripped before *either* the judge or the human reads anything — `handscore.py` imports the
 same `_body` the judge uses, so the two cannot drift on what blinding means. The
 declaration is counted and reported separately, because criterion 1 rewards it.
+
+Reports in `results/` produced before `fa7dd08` carry that section **twice** — the Writer
+wrote one and `finalize` appended another, on 4 of the 6 topics. Every consumer of the
+header matches the first occurrence or tests membership, so blinding, scoring and the
+declared-limitations count are all unaffected; it was only wrong to *read*, which is why
+it survived nine phases of being scored. The frozen results are left as they are rather
+than regenerated, because they are the evidence. Fixed for new runs, and the free routing
+check now reaches the merge that fixes it.
 
 **Staleness refusal.** A re-run overwrites the reports but not the copies sitting under
 `results/handscore/`. Scoring those, or joining them to fresh judge numbers, would put a
@@ -377,6 +412,36 @@ regenerate them in the same commit as any new run; the diagrams only change when
 graph does. The mermaid block above is a manual copy of `docs/graph.mmd` — re-paste it
 when `viz` reports a change.
 
+Serve the demo. Loading either page costs nothing; pressing the button runs the graph:
+
+```bash
+uv run uvicorn api.main:app --reload
+# http://localhost:8000       the report writer, any question
+# http://localhost:8000/dev   the instrument, frozen topics, cost meter, approval gate
+```
+
+`--reload` is not enough to trust a live check. It reliably picks up edits to the static
+files, but a change under `src/` has been observed *not* to take effect in a process
+started with it — and the run then reports the old behaviour with nothing marking it
+stale. Restart before any run meant to verify a code change, and count only a restart that
+happened after the change.
+
+Check the machinery without spending anything. These call no model:
+
+```bash
+uv run pytest -q                        # 43 passing, 1 skipped
+uv run python -m src.graph.build        # the whole graph, every node faked
+uv run python -m scripts.probe_gate     # the approval gate, end to end
+uv run python -m scripts.chaos          # node failures and containment
+```
+
+`src.graph.build` runs the real routing with offline doubles, and a test asserts it stays
+free — the command has quietly started spending before, once per node that became real,
+which is why the guarantee is a test rather than a docstring. It now reaches the gap loop,
+the retirement of a gap nobody could close, and the
+`Known limitations` merge, so the defect above is caught for nothing rather than for the
+30k tokens a live run costs.
+
 **Ordering matters.** `compare.py` prints hand scores mapped to their systems, so it breaks
 the blind for any topic not yet scored. Score first, compare after.
 
@@ -393,6 +458,7 @@ choice of judge visible in the command rather than buried in a file.
 | `src/graph/` | The LangGraph system — nodes, state, checkpointing, retry |
 | `src/common/` | Shared LLM, search, schemas and run-record I/O |
 | `src/analysis/` | Cost attribution by node, phase and call type |
+| `api/` | The demo — FastAPI, SSE streaming, and two pages sharing one trace renderer |
 | `evals/` | The judge, the comparison, blind hand-scoring, the frozen rubric |
 | `scripts/` | Calibration, pairwise judging, chaos and resume demos, backfills |
 | `data/topics.json` | The six frozen topics, with a pre-registered trap for each |
@@ -418,3 +484,9 @@ a flaw.
 Each phase has a walkthrough in `analysis/` (git-ignored local artifacts). Phase 9 covers
 the judge, the six defects found in it before it produced a number, the run, the hand
 scores, and the two integrity checks that reported a pass they had not earned.
+
+Phase 10 covers the demo: the dollar gate inherited from Phase 8 that stopped it starting,
+the two pages, the approval gate made reachable, and what reading the output as a document
+rather than as scoring input turned up — a duplicated section on 4 of 6 topics, bullets
+that rendered as one run-on line, and a live run that verified nothing because the server
+was still holding the code from before the fix.
