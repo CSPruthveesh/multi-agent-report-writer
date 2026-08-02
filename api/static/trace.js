@@ -9,8 +9,16 @@
  * is why the user page could not reuse it and grew a second copy instead.
  */
 
+/* Quotes as well as angle brackets. Text content only needs & < >, and that is all this
+ * escaped for a long time — but the same helper is used inside attributes, where an
+ * unescaped " closes the attribute and everything after it becomes more attributes.
+ * Found on a source_url containing a quote: the href ended early and the rest of the URL
+ * landed on the anchor as an event handler. Escaping here is defence in depth; the URL
+ * is also parsed before it is rendered. In text content &quot; and &#39; display as the
+ * characters themselves, so nothing changes visually. */
 const esc = s => String(s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
 /* One line per event, not a row of boxed fields.
  *

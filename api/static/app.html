@@ -94,6 +94,21 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 .note{margin-top:13px;padding-top:11px;border-top:1px solid var(--rule);
   font:400 11px/1.65 'JetBrains Mono',monospace;color:var(--muted)}
 .note:empty{display:none}
+
+/* The cited sources, listed under the box when "sources" is pressed. Capped and
+   scrollable: fifteen domains is a long column beside a report, and a panel that grows
+   past the report it annotates stops being a summary of it. */
+.srcs{margin-top:11px;max-height:340px;overflow-y:auto}
+.srcs:empty{display:none}
+.srcs ol{margin:0;padding:0;list-style:none;counter-reset:src}
+.srcs li{padding:7px 0;border-top:1px solid var(--rule-soft)}
+.srcs li:first-child{border-top:0}
+.srcs a{display:block;color:var(--signal);text-decoration:none;word-break:break-word;
+  font:500 11px/1.45 'JetBrains Mono',monospace}
+.srcs a:hover{text-decoration:underline}
+.srcs a:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.srcs .ids{display:block;margin-top:3px;
+  font:400 10px/1.5 'JetBrains Mono',monospace;color:var(--muted)}
 /* the citation marks, while "sources cited" is pressed */
 .md.hl cite{background:var(--signal);color:var(--panel)}
 
@@ -141,6 +156,7 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
     <h3>This run</h3>
     <div id="statList"></div>
     <div class="note" id="note"></div>
+    <div class="srcs" id="srcs"></div>
   </aside>
 </div>
 
@@ -217,27 +233,78 @@ function fail(title, detail){
   $('#go').disabled=false; $('#go').textContent='Write the report';
 }
 
+/* The sources behind the citations, grouped by the page they came from.
+ *
+ * Several findings routinely share one URL — on t1, 42 cited findings come from 15
+ * pages — so this groups rather than listing a row per citation. The F-numbers under
+ * each link are what ties a source back to the marks in the report.
+ *
+ * source_url arrives from a web search by way of a model, so it is untrusted input
+ * going into an href. Two rules, and the second is the one that is easy to miss:
+ *
+ *   - Only http and https are rendered. An unchecked scheme is how a javascript: URL
+ *     becomes a click target, and escaping the text does nothing about it.
+ *   - The PARSED url is rendered, never the raw string. A raw URL containing a double
+ *     quote closes the href early and everything after it lands as attributes on the
+ *     anchor — `?a=" onmouseover="alert(1)` is a working handler injection. new URL()
+ *     percent-encodes the quote, so href takes u.href and nothing else.
+ */
+function sourceList(findings, citedIds){
+  const by = new Map();
+  for (const f of findings){
+    if (!citedIds.has(f.id)) continue;
+    let href, host;
+    try {
+      const u = new URL(f.source_url);
+      if (u.protocol !== 'http:' && u.protocol !== 'https:') continue;
+      href = u.href;
+      host = u.hostname.replace(/^www\./, '');
+    } catch { continue; }          // an unparseable URL is not a source
+    if (!by.has(href)) by.set(href, {host, ids: []});
+    by.get(href).ids.push(f.id);
+  }
+  if (!by.size) return '';
+
+  const rows = [...by.entries()]
+    .sort((a, b) => b[1].ids.length - a[1].ids.length || a[1].host.localeCompare(b[1].host));
+
+  return `<ol>${rows.map(([url, s]) =>
+    `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer"
+        >${esc(s.host)}</a><span class="ids">${esc(s.ids.join(' '))}</span></li>`
+  ).join('')}</ol>`;
+}
+
 /* The summary box.
  *
  * Every row is a figure the reader might reasonably distrust, so every row can be
- * pressed for the sentence that says what it counts — "34 sources cited" means nothing
- * until you know 41 were gathered and the writer only cites what it uses. Pressing the
- * citation count also marks the references in the text, which is the only claim here
- * that can be checked by looking.
+ * pressed for the sentence that says what it counts — "42 findings cited" means nothing
+ * until you know 62 were gathered and the writer only cites what it uses. Two rows do
+ * something as well as say something: the citation count marks the references in the
+ * text, and the source count lists the pages they came from.
  *
  * One row open at a time. Two notes stacked would push the box taller than the first
  * screen of the report it is annotating. */
 function showStats(d){
   const words = d.report.trim().split(/\s+/).length;
-  const cited = new Set(d.report.match(/F\d{3}/g) || []).size;
+  const citedIds = new Set(d.report.match(/F\d{3}/g) || []);
+  const cited = citedIds.size;
   const found = (d.findings || []).length;
   const gaps  = (d.unclosed_gaps || []).length;
+  const srcs  = sourceList(d.findings || [], citedIds);
+  // Distinct pages, counted the same way the list groups them, so the number and the
+  // list under it can never disagree.
+  const nsrc  = (srcs.match(/<li>/g) || []).length;
 
   const rows = [
     {v: words.toLocaleString(), k: 'words',
      note: 'Length of the finished report, after the critic’s pass.'},
-    {v: cited, k: 'sources cited', hl: true,
-     note: `Distinct findings quoted in the text — marked in green while this is pressed.`},
+    // "sources cited" was wrong, and wrong in the flattering direction: it counted
+    // distinct finding IDs, and on t1 those 42 findings come from 15 pages.
+    {v: cited, k: 'findings cited', hl: true,
+     note: 'Distinct findings quoted in the text — marked in green while this is pressed.'},
+    {v: nsrc, k: nsrc === 1 ? 'source' : 'sources', panel: srcs,
+     note: 'The pages behind those citations, listed below with the findings each one '
+           + 'supplied. Several findings usually share a page.'},
     // max(0, …): a broken citation puts an F-number in the text that no finding backs,
     // which would make the subtraction negative.
     {v: found, k: 'findings gathered',
@@ -263,11 +330,14 @@ function showStats(d){
     btns.forEach(o => { o.classList.remove('on'); o.setAttribute('aria-pressed','false'); });
     b.classList.toggle('on', open);
     b.setAttribute('aria-pressed', String(open));
-    $('#note').textContent = open ? rows[b.dataset.i].note.replace(/\s+/g,' ') : '';
-    $('#md').classList.toggle('hl', open && !!rows[b.dataset.i].hl);
+    const r = rows[b.dataset.i];
+    $('#note').textContent = open ? r.note.replace(/\s+/g,' ') : '';
+    $('#srcs').innerHTML = open ? (r.panel || '') : '';
+    $('#md').classList.toggle('hl', open && !!r.hl);
   });
 
   $('#note').textContent = '';
+  $('#srcs').innerHTML = '';
   $('#md').classList.remove('hl');
   $('#stats').hidden = false;
 }
@@ -276,7 +346,7 @@ $('#go').onclick = async () => {
   const topic = ta.value.trim();
   const view = traceView($('#trace'), BUDGETS);
   view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
-  $('#stats').hidden=true; $('#md').classList.remove('hl');
+  $('#stats').hidden=true; $('#md').classList.remove('hl'); $('#srcs').innerHTML='';
   $('#go').disabled=true; $('#go').textContent='Running…';
 
   let res;
