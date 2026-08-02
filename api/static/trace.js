@@ -124,7 +124,11 @@ function traceRow(d, caps) {
  * Every limitation in a single sentence is the opposite of a list of them.
  */
 function renderMarkdown(md) {
-  const inline = esc(md)
+  // CRLF first. Every block rule here splits on \n{2,}, which does not match \r\n\r\n —
+  // one stray carriage return and the whole report collapses into a single block that
+  // renders as raw text with hyphens in it. The SSE payload is JSON and carries \n, so
+  // this is insurance against a model that emits Windows endings, not a live bug.
+  const inline = esc(md.replace(/\r\n?/g, '\n'))
     .replace(/\[((?:F\d{3})(?:,\s*F\d{3})*)\]/g, '<cite>$1</cite>')
     .replace(/^# (.+)$/gm, '<h1>$1</h1>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
