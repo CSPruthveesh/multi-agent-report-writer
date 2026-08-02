@@ -347,8 +347,8 @@ wrote one and `finalize` appended another, on 4 of the 6 topics. Every consumer 
 header matches the first occurrence or tests membership, so blinding, scoring and the
 declared-limitations count are all unaffected; it was only wrong to *read*, which is why
 it survived nine phases of being scored. The frozen results are left as they are rather
-than regenerated, because they are the evidence. Fixed for new runs, and the free routing
-check now reaches the merge that fixes it.
+than regenerated, because they are the evidence. Fixed for new runs, and verified end to
+end by the free routing check under *Running it* — no live run has ever reached it.
 
 **Staleness refusal.** A re-run overwrites the reports but not the copies sitting under
 `results/handscore/`. Scoring those, or joining them to fresh judge numbers, would put a
@@ -449,10 +449,29 @@ uv run python -m scripts.chaos          # node failures and containment
 
 `src.graph.build` runs the real routing with offline doubles, and a test asserts it stays
 free — the command has quietly started spending before, once per node that became real,
-which is why the guarantee is a test rather than a docstring. It now reaches the gap loop,
-the retirement of a gap nobody could close, and the
-`Known limitations` merge, so the defect above is caught for nothing rather than for the
-30k tokens a live run costs.
+which is why the guarantee is a test rather than a docstring. It reaches both loops in one
+run:
+
+```
+supervisor  retire_gaps  count=1  why=research loop budget spent
+writer      drafted      has_limits=True
+critic      scored       verdict=revise
+writer      revised      has_limits=True     <- section survives the revision
+finalize    shipped      unclosed_gaps=1
+
+Known limitations headers  1     (2 before the fix)
+the retired gap, stated    once  (finalize's restatement deduped)
+models called              {'fake'}  —  0 tokens
+```
+
+**This is the only thing that checks the duplicate-section fix.** Two live runs were made
+against it and neither reached it: the first hit a server still holding pre-fix code, the
+second closed every gap it opened so had nothing to declare. About 63k tokens between
+them, and the mechanism was untouched by both.
+
+Nor is that fixable by retrying with a better topic — whether a run ends with a gap it
+could not close depends on what the searches return, which is the one thing the caller
+does not control. A check that only fires when the weather is right is not a check.
 
 **Ordering matters.** `compare.py` prints hand scores mapped to their systems, so it breaks
 the blind for any topic not yet scored. Score first, compare after.
