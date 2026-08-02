@@ -367,6 +367,34 @@ def test_the_free_routing_check_is_actually_free():
                for e in final["trace"]), "a real node ran on the free path"
 
 
+def test_the_free_path_reaches_the_limitations_merge():
+    """The whole graph, end to end, for nothing — including the section it duplicated.
+
+    The unit tests above hand finalize a draft directly. This is the only check that
+    the run ARRIVES at the merge: Analyst raises a gap on both passes, the supervisor
+    spends the loop budget and retires it into unclosed_gaps, the Writer reads that
+    field and closes with the section, and finalize merges into it rather than beside
+    it. Four nodes have to agree on which field carries a gap for this to pass.
+
+    None of that was reachable offline until now. The doubles closed the gap on the
+    second pass, so unclosed_gaps stayed empty for the entire free run and the only
+    way to exercise this was a live one — which is how the duplicate header survived
+    to ship on four of the six frozen topics. Checked against the pre-fix supervisor:
+    this run produces two headers there, one here.
+    """
+    final = build(overrides=FREE_OVERRIDES).invoke(
+        initial_state("t"), config={"recursion_limit": 40})
+    draft = final["draft"]
+
+    assert final["unclosed_gaps"], "no gap survived to the Writer — the merge is untested"
+    assert draft.count("## Known limitations") == 1, "two sections with one name"
+    assert "\r" not in draft, "CRLF in the draft collapses renderMarkdown's block split"
+    # The gap is stated once, by the Writer. finalize's restatement of the same gap is
+    # the duplicate the merge exists to drop.
+    assert draft.count(final["unclosed_gaps"][0]) == 1
+    assert "Evidence gap not closed" not in draft, "finalize restated a gap already listed"
+
+
 def test_an_empty_draft_is_reported_as_no_draft():
     """`"" or None` is about the record, not about termination.
 

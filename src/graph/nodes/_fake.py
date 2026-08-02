@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from src.graph.nodes.writer import LIMITS_HEADER
 from src.graph.state import MAX_SEARCHES, ReportState, trace_event
 
 NODE = "researcher"
@@ -82,10 +83,21 @@ def researcher(state: ReportState) -> dict[str, Any]:
 
 
 def analyst(state: ReportState) -> dict[str, Any]:
-    """Offline double for the real Analyst. Raises one gap on the first pass so the
-    routing check still exercises the research loop, then none, so it terminates."""
+    """Offline double for the real Analyst. Raises one gap on every pass, so the routing
+    check exercises the research loop and then the retirement at the end of it.
+
+    It used to go quiet after the first loop, and termination rested on that. It now
+    rests on the supervisor's loop cap instead, which is where it rests in the real
+    graph: pass two raises the gap again, the cap is spent, and the supervisor retires
+    it into unclosed_gaps rather than chasing it.
+
+    That retirement is the point. unclosed_gaps is the field the Writer reads to decide
+    whether the report needs a Known limitations section, and while this node went
+    silent the field stayed empty for the entire free run — so the section, and the
+    merge in finalize that deduplicates it, could only ever be exercised by paying for
+    a live run. One did, on 2026-08-02, and shipped two sections with one name.
+    """
     findings = list(state.get("findings") or [])
-    loops = state.get("research_loops", 0)
 
     if not findings:
         return {
@@ -96,7 +108,7 @@ def analyst(state: ReportState) -> dict[str, Any]:
         }
 
     ids = [f["id"] for f in findings[:6]]
-    gaps = ["fake gap: evidence missing for the second section"] if loops == 0 else []
+    gaps = ["fake gap: evidence missing for the second section"]
     outline = "\n".join(
         [
             "THESIS: a fake thesis the fake evidence supports",
@@ -132,9 +144,17 @@ def analyst(state: ReportState) -> dict[str, Any]:
 def writer(state: ReportState) -> dict[str, Any]:
     """Offline double for the real Writer. Echoes the outline it was handed, so the
     routing check still shows what the node upstream produced, and reports the same
-    trace fields as the real one."""
+    trace fields as the real one.
+
+    unclosed_gaps, not gaps. By the time the Writer runs, gaps is always empty — the
+    Researcher clears it on the way past and the supervisor clears it when retiring —
+    so a double keyed on gaps would silently never emit the section. unclosed_gaps is
+    what the real Writer reads (writer.py, _write_fresh's `unclosed`), and it is the
+    field the supervisor writes when it gives up chasing one.
+    """
     outline = state.get("outline") or ""
     findings = list(state.get("findings") or [])
+    unclosed = list(state.get("unclosed_gaps") or [])
     revising = state.get("critique") is not None
     rev = state.get("revision_count", 0)
 
@@ -149,6 +169,21 @@ def writer(state: ReportState) -> dict[str, Any]:
     draft = f"# Fake Report\n\n(outline received)\n\n{outline}\n\nFake prose citing [{cites}]."
     if revising:
         draft += f"\n\n(revision {rev})"
+
+    # The real Writer is instructed to close with this block when the run has gaps it
+    # could not close, and to use the header verbatim because downstream tooling matches
+    # on it. Imported rather than restated: a second copy of the literal is how judge.py
+    # ended up blinding on a string the Writer had never been told to produce.
+    #
+    # Last, after the revision marker, because the instruction is "at the very end,
+    # AFTER the closing section" — and because finalize merges into this block by
+    # scanning forward from the header to the next heading.
+    #
+    # \n throughout. renderMarkdown splits blocks on \n{2,} and a \r\n\r\n does not
+    # match it, which collapses the whole report into one unparsed block.
+    if unclosed:
+        bullets = "\n".join(f"- {g}" for g in unclosed)
+        draft += f"\n\n{LIMITS_HEADER}\n\n{bullets}"
 
     words = len(draft.split())
     extra = {"edits_returned": 1, "edits_applied": 1, "fallback": False,
@@ -171,7 +206,7 @@ def writer(state: ReportState) -> dict[str, Any]:
             trace_event(WRITER, "revised" if revising else "drafted", fake=True,
                         revision=rev, words=words, in_range=False,
                         cited=len(findings[:4]), broken_cites=0, cite_repair=False,
-                        tokens=0, **extra)
+                        has_limits=LIMITS_HEADER in draft, tokens=0, **extra)
         ],
     }
 
