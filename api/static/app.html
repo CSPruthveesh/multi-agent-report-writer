@@ -9,11 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/static/trace.css">
 <style>
-/* Only what / has and /dev does not: the question box, and a token line where the
-   cost meter would be. No meter here — the multiple is the run over the mean of six
-   single-agent runs on six fixed topics, and against a question typed into this box
-   that denominator is the cost of a different task. */
-.wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px}
+/* Only what / has and /dev does not: the question box, and the summary box beside the
+   report. No cost meter here — the multiple is the run over the mean of six single-agent
+   runs on six fixed topics, and against a question typed into this box that denominator
+   is the cost of a different task. */
+/* 980, not 900. The report panel now has to carry a 208px box beside the prose, and at
+   900 the text column came out at 552px — narrower than the 70ch it had before, which
+   would have moved the whitespace rather than removed it. At 980 the prose sits at
+   ~632px (~76ch, still a readable measure) and the box fills what is left. */
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 80px}
 /* The masthead: the project name as the title, one line under it, and a way across to
    the instrument view. .eyebrow is 11px/500 in trace.css because on /dev it sits above
    a heading; here it IS the heading, so it takes the size and weight to match. */
@@ -45,13 +49,54 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 
 /* Before a run this page says nothing. Removing the placeholder text alone would have
    left the scaffolding behind it: .trace holds a 120px min-height and draws the lane
-   rule, and .spent draws a divider, so an untouched page would show an empty ruled box
-   above a stray horizontal line. Both collapse until there is something to put in them. */
+   rule, so an untouched page would show an empty ruled box. It collapses until there
+   is something to put in it. */
 .trace:empty{min-height:0}
 .trace:empty::before{display:none}
-.spent{margin-top:16px;padding-top:12px;border-top:1px solid var(--rule-soft);
-  font:400 11px 'JetBrains Mono',monospace;color:var(--muted)}
-.spent:empty{display:none}
+
+/* ---------- the report, and the summary box beside it ----------
+   The numbers used to run along the report's own header — REPORT · 1067 WORDS ·
+   34 SOURCES CITED · 41 FINDINGS GATHERED — four figures in the position a title goes,
+   directly above the report's actual title. They move into the right-hand third of the
+   panel, which held nothing but whitespace.
+   1fr auto, not 1fr 208px: on a failed run the box is display:none and the auto column
+   collapses to zero, instead of leaving a 208px hole beside the error. The gap survives
+   an empty track though — grid draws it between the columns either way — so the failed
+   state drops to one column outright. */
+.report{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:start}
+.report.err{grid-template-columns:1fr}
+.rmain{min-width:0}
+/* .md caps itself at 70ch for a readable measure, which inside a 790px panel is where
+   the whitespace came from. The column is now the measure, so the text fills it. */
+.rmain .md{max-width:none}
+
+.stats{position:sticky;top:20px;width:208px;background:var(--paper);
+  border:1px solid var(--rule);border-radius:2px;padding:15px 16px 14px}
+.stats h3{font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+/* Each figure is a button: pressing it says what it counts, and the citation count
+   marks every reference in the text while it is held down. */
+.stat{display:block;width:100%;background:none;border:0;border-radius:0;
+  border-top:1px solid var(--rule-soft);padding:10px 0 9px;
+  text-align:left;text-transform:none;letter-spacing:0;cursor:pointer}
+.stat:first-child{border-top:0;padding-top:0}
+.stat .v{display:block;font:700 22px/1 Archivo,sans-serif;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.stat .k{display:block;margin-top:6px;font:500 9.5px/1.3 'JetBrains Mono',monospace;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.stat:hover:not(:disabled){background:none}
+.stat:hover .v,.stat:hover .k,.stat.on .v,.stat.on .k{color:var(--signal)}
+.stat.bad .v{color:var(--alarm)}
+.note{margin-top:13px;padding-top:11px;border-top:1px solid var(--rule);
+  font:400 11px/1.65 'JetBrains Mono',monospace;color:var(--muted)}
+.note:empty{display:none}
+/* the citation marks, while "sources cited" is pressed */
+.md.hl cite{background:var(--signal);color:var(--panel)}
+
+@media(max-width:720px){
+  .report{grid-template-columns:1fr}
+  .stats{position:static;width:auto}
+}
 </style>
 </head>
 <body>
@@ -79,12 +124,18 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 </div>
 
 <section class="trace" id="trace" aria-live="polite" aria-label="Node events"></section>
-<div class="spent" id="spent"></div>
 
 <section class="report" id="report" hidden>
-  <h2 id="reportHead">Report</h2>
-  <div class="md" id="md"></div>
-  <div id="gaps"></div>
+  <div class="rmain">
+    <h2 id="reportHead">Report</h2>
+    <div class="md" id="md"></div>
+    <div id="gaps"></div>
+  </div>
+  <aside class="stats" id="stats" hidden>
+    <h3>This run</h3>
+    <div id="statList"></div>
+    <div class="note" id="note"></div>
+  </aside>
 </section>
 
 </div>
@@ -153,21 +204,74 @@ drawExamples();
 
 function fail(title, detail){
   $('#report').hidden=false; $('#report').classList.add('err');
+  $('#stats').hidden=true;
   $('#reportHead').textContent='Run failed';
   $('#md').innerHTML = `<p><strong>${esc(title)}</strong></p><p>${esc(detail)}</p>`;
   $('#gaps').innerHTML='';
   $('#go').disabled=false; $('#go').textContent='Write the report';
 }
 
+/* The summary box.
+ *
+ * Every row is a figure the reader might reasonably distrust, so every row can be
+ * pressed for the sentence that says what it counts — "34 sources cited" means nothing
+ * until you know 41 were gathered and the writer only cites what it uses. Pressing the
+ * citation count also marks the references in the text, which is the only claim here
+ * that can be checked by looking.
+ *
+ * One row open at a time. Two notes stacked would push the box taller than the first
+ * screen of the report it is annotating. */
+function showStats(d){
+  const words = d.report.trim().split(/\s+/).length;
+  const cited = new Set(d.report.match(/F\d{3}/g) || []).size;
+  const found = (d.findings || []).length;
+  const gaps  = (d.unclosed_gaps || []).length;
+
+  const rows = [
+    {v: words.toLocaleString(), k: 'words',
+     note: 'Length of the finished report, after the critic’s pass.'},
+    {v: cited, k: 'sources cited', hl: true,
+     note: `Distinct findings quoted in the text — marked in green while this is pressed.`},
+    // max(0, …): a broken citation puts an F-number in the text that no finding backs,
+    // which would make the subtraction negative.
+    {v: found, k: 'findings gathered',
+     note: (unused => unused
+       ? `Everything the researcher collected. ${unused} ${unused === 1 ? 'was' : 'were'}
+          not used — the writer cites what the argument needs, not all of it.`
+       : 'Everything the researcher collected, all of it cited.'
+     )(Math.max(0, found - cited))},
+  ];
+  if (gaps) rows.push({v: gaps, k: gaps === 1 ? 'gap unclosed' : 'gaps unclosed', bad: true,
+     note: 'Evidence it went looking for and could not find. Listed under the report.'});
+  rows.push({v: d.cost.tokens.toLocaleString(), k: 'tokens',
+     note: 'Model tokens across all four agents, prompts and replies together.'});
+
+  const list = $('#statList');
+  list.innerHTML = rows.map((r, i) =>
+    `<button class="stat${r.bad ? ' bad' : ''}" data-i="${i}" aria-pressed="false">
+       <span class="v">${esc(r.v)}</span><span class="k">${esc(r.k)}</span></button>`).join('');
+
+  const btns = [...list.querySelectorAll('.stat')];
+  btns.forEach(b => b.onclick = () => {
+    const open = !b.classList.contains('on');
+    btns.forEach(o => { o.classList.remove('on'); o.setAttribute('aria-pressed','false'); });
+    b.classList.toggle('on', open);
+    b.setAttribute('aria-pressed', String(open));
+    $('#note').textContent = open ? rows[b.dataset.i].note.replace(/\s+/g,' ') : '';
+    $('#md').classList.toggle('hl', open && !!rows[b.dataset.i].hl);
+  });
+
+  $('#note').textContent = '';
+  $('#md').classList.remove('hl');
+  $('#stats').hidden = false;
+}
+
 $('#go').onclick = async () => {
   const topic = ta.value.trim();
   const view = traceView($('#trace'), BUDGETS);
   view.reset(); $('#report').hidden=true; $('#report').classList.remove('err');
+  $('#stats').hidden=true; $('#md').classList.remove('hl');
   $('#go').disabled=true; $('#go').textContent='Running…';
-  // Cleared, not set to a placeholder. "Starting…" sat directly under the researcher's
-  // own "searching…" row and said the same thing in a smaller font. Empty means
-  // .spent:empty hides it until there is a token count worth printing.
-  $('#spent').textContent='';
 
   let res;
   try{
@@ -180,21 +284,14 @@ $('#go').onclick = async () => {
 
   await readSSE(res, {
     start: () => view.start(),
-    node: d => {
-      view.push(d);
-      // Tokens only. No multiple: see the note at the top of the stylesheet.
-      $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used so far`;
-    },
+    node: d => view.push(d),
     done: d => {
       view.finish();
       $('#report').hidden=false; $('#report').classList.remove('err');
-      const words = d.report.trim().split(/\s+/).length;
-      const cites = new Set(d.report.match(/F\d{3}/g)||[]).size;
-      $('#spent').textContent = `${d.cost.tokens.toLocaleString()} tokens used`;
-      $('#reportHead').textContent =
-        `Report · ${words} words · ${cites} sources cited · ${d.findings.length} findings gathered`;
+      $('#reportHead').textContent = 'Report';
       $('#md').innerHTML = renderMarkdown(d.report);
       $('#gaps').innerHTML = gapsBlock(d.unclosed_gaps);
+      showStats(d);
     },
     error: d => { view.finish(); fail(d.error, d.detail); },
   });
