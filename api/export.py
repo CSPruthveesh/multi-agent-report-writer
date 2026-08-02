@@ -188,8 +188,12 @@ def to_pdf(md: str, *, title: str = "", font: str | None = None) -> bytes:
 
     def flush() -> None:
         if bullets:
+            # bulletFontName as well: it defaults to Helvetica whatever the body is set
+            # in, so the dots beside a Times list were drawn in a different face from
+            # the text beside them.
             flow.append(ListFlowable(list(bullets), bulletType="bullet",
-                                     leftIndent=14, bulletFontSize=7))
+                                     leftIndent=14, bulletFontSize=7,
+                                     bulletFontName=fam))
             flow.append(Spacer(1, 7))
             bullets.clear()
 

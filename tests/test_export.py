@@ -7,8 +7,11 @@ markdown readers, and it is worth having on purpose rather than by accident.
 
 from __future__ import annotations
 
+import io
+
 import pytest
 from fastapi.testclient import TestClient
+from pypdf import PdfReader
 
 from api.export import blocks, pdf_family, to_docx, to_pdf
 from api.main import app
@@ -76,6 +79,49 @@ def test_both_formats_produce_a_file_that_opens():
     assert docx[:2] == b"PK", "not a zip, so not a .docx"
     assert pdf[:5] == b"%PDF-"
     assert len(docx) > 5_000 and len(pdf) > 1_000
+
+
+def test_the_pdf_says_what_the_report_says():
+    """Magic bytes prove a PDF exists, not that the report is in it.
+
+    A renderer that dropped every paragraph would still emit a valid three-page file
+    starting %PDF-, which is what the check above was really asserting.
+    """
+    reader = PdfReader(io.BytesIO(to_pdf(SAMPLE, title="t")))
+    text = "\n".join(p.extract_text() for p in reader.pages)
+    assert "A title" in text
+    assert "Known limitations" in text
+    assert "[F004]" in text, "the citation was lost, which is the only reason to trust it"
+    assert "A second one that wraps onto a continuation line." in text.replace("\n", " ")
+
+
+# reportlab's canvas registers Helvetica as its initial font on every page, used or
+# not — a Times-only document still lists it as a resource. Verified by generating a
+# report with no bullets and no bold: it is there either way. So it is excluded here
+# rather than asserted against, which is the difference between a test that describes
+# the library and one that describes this code.
+CANVAS_DEFAULT = {"Helvetica"}
+
+
+@pytest.mark.parametrize(
+    ("font", "expected"),
+    [
+        ("Georgia", {"Times-Roman", "Times-Bold"}),
+        ("Consolas", {"Courier", "Courier-Bold"}),
+        ("Segoe UI", {"Helvetica", "Helvetica-Bold"}),
+    ],
+)
+def test_the_pdf_sets_the_family_it_reported_and_no_other(font, expected):
+    """Catches a family leaking across the mapping — Times inside a Courier document."""
+    reader = PdfReader(io.BytesIO(to_pdf(SAMPLE, font=font)))
+    used = set()
+    for page in reader.pages:
+        for res in (page.get("/Resources", {}).get("/Font", {}) or {}).values():
+            used.add(str(res.get_object()["/BaseFont"]).lstrip("/"))
+
+    assert expected <= used, f"the requested family is missing: {expected - used}"
+    stray = used - expected - CANVAS_DEFAULT
+    assert not stray, f"a family nobody asked for: {stray}"
 
 
 @pytest.mark.skipif(not REPORT.exists(), reason="no recorded report")
