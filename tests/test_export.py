@@ -8,12 +8,13 @@ markdown readers, and it is worth having on purpose rather than by accident.
 from __future__ import annotations
 
 import io
+import re
 
 import pytest
 from fastapi.testclient import TestClient
 from pypdf import PdfReader
 
-from api.export import blocks, pdf_family, to_docx, to_pdf
+from api.export import blocks, font_index, pdf_family, resolve_pdf_font, to_docx, to_pdf
 from api.main import app
 from src.common.io import RESULTS
 
@@ -69,7 +70,11 @@ def test_crlf_does_not_collapse_the_report_into_one_block():
     ],
 )
 def test_a_requested_font_maps_onto_one_a_pdf_can_assume(font, family):
-    """A PDF embeds nothing here, so it gets the nearest of three — never a guess."""
+    """The fallback mapping, used only when the font file cannot be found.
+
+    Embedding made this the exception rather than the rule, but it still has to be a
+    near match: a serif must not fall back to a sans.
+    """
     assert pdf_family(font) == family
 
 
@@ -101,27 +106,55 @@ def test_the_pdf_says_what_the_report_says():
 # rather than asserted against, which is the difference between a test that describes
 # the library and one that describes this code.
 CANVAS_DEFAULT = {"Helvetica"}
+SUBSET_PREFIX = re.compile(r"^[A-Z]{6}\+")
 
 
-@pytest.mark.parametrize(
-    ("font", "expected"),
-    [
-        ("Georgia", {"Times-Roman", "Times-Bold"}),
-        ("Consolas", {"Courier", "Courier-Bold"}),
-        ("Segoe UI", {"Helvetica", "Helvetica-Bold"}),
-    ],
-)
-def test_the_pdf_sets_the_family_it_reported_and_no_other(font, expected):
-    """Catches a family leaking across the mapping — Times inside a Courier document."""
-    reader = PdfReader(io.BytesIO(to_pdf(SAMPLE, font=font)))
+def _fonts_in(pdf: bytes) -> set[str]:
+    """Every font resource named in the file, with subset prefixes stripped."""
     used = set()
-    for page in reader.pages:
+    for page in PdfReader(io.BytesIO(pdf)).pages:
         for res in (page.get("/Resources", {}).get("/Font", {}) or {}).values():
-            used.add(str(res.get_object()["/BaseFont"]).lstrip("/"))
+            name = str(res.get_object()["/BaseFont"]).lstrip("/")
+            used.add(SUBSET_PREFIX.sub("", name))
+    return used
 
-    assert expected <= used, f"the requested family is missing: {expected - used}"
-    stray = used - expected - CANVAS_DEFAULT
-    assert not stray, f"a family nobody asked for: {stray}"
+
+def _installed(family: str) -> bool:
+    return family.lower() in font_index()
+
+
+@pytest.mark.parametrize("family", ["Georgia", "Consolas", "Palatino Linotype"])
+def test_an_installed_font_is_embedded_rather_than_substituted(family):
+    """The glyphs travel inside the file, so it reads the same on any machine.
+
+    Skipped where the family is not on this one — asserting that a CI box has Georgia
+    would be testing the box.
+    """
+    if not _installed(family):
+        pytest.skip(f"{family} is not installed here")
+
+    assert resolve_pdf_font(family)[2] == family, "reported as substituted"
+    pdf = to_pdf(SAMPLE, font=family)
+    flat = family.replace(" ", "")
+    assert any(flat.lower() in f.lower() for f in _fonts_in(pdf)), (
+        f"{family} is not among the file's font resources: {_fonts_in(pdf)}"
+    )
+    assert len(pdf) > 20_000, "no font data in the file — nothing was embedded"
+
+
+def test_a_font_this_machine_lacks_falls_back_to_a_near_match():
+    """Archivo and JetBrains Mono are webfonts. The browser has them; the OS does not."""
+    for family, expected in [("Archivo", "Helvetica"), ("JetBrains Mono", "Courier")]:
+        if _installed(family):
+            continue
+        assert resolve_pdf_font(family)[2] == expected
+        assert expected in _fonts_in(to_pdf(SAMPLE, font=family))
+
+
+def test_no_family_leaks_across_the_fallback_mapping():
+    """A Courier request must not produce Times, embedded or otherwise."""
+    used = _fonts_in(to_pdf(SAMPLE, font="Nonesuch Font"))
+    assert used <= {"Helvetica", "Helvetica-Bold"} | CANVAS_DEFAULT, used
 
 
 @pytest.mark.skipif(not REPORT.exists(), reason="no recorded report")
@@ -147,10 +180,17 @@ class TestEndpoint:
         assert r.headers["X-Font-Applied"] == "Georgia"
 
     def test_pdf_reports_the_family_it_actually_used(self):
+        """Whatever happened, the header says which family the file is set in."""
         r = self.client.post("/api/export/pdf",
                              json={"report": SAMPLE, "font": "Candara"})
         assert r.status_code == 200
         assert r.content[:5] == b"%PDF-"
+        expected = "Candara" if _installed("Candara") else "Helvetica"
+        assert r.headers["X-Font-Applied"] == expected
+
+    def test_a_font_nothing_can_supply_is_reported_as_the_substitute(self):
+        r = self.client.post("/api/export/pdf",
+                             json={"report": SAMPLE, "font": "Nonesuch Font"})
         assert r.headers["X-Font-Applied"] == "Helvetica", (
             "the caller must be told it did not get the font it asked for"
         )

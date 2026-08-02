@@ -55,7 +55,7 @@ from fastapi.staticfiles import StaticFiles
 from langgraph.types import Command
 from pydantic import BaseModel, Field
 
-from api.export import pdf_family, to_docx, to_pdf
+from api.export import resolve_pdf_font, to_docx, to_pdf
 from src.analysis.cost import PRICES_SET, cost_usd
 from src.common.io import RESULTS, load_topics
 from src.graph.build import build
@@ -223,9 +223,9 @@ def export(fmt: str, req: ExportRequest) -> Response:
     else:
         body = to_pdf(req.report, title=req.title, font=req.font or None)
         media = "application/pdf"
-        # A PDF embeds no fonts here, so say which of the three it actually used
-        # rather than let the caller assume it got what it asked for.
-        applied = pdf_family(req.font or None)
+        # The family the file actually ends up in: the requested one when its font
+        # file was found and embedded, reportlab's substitute when it was not.
+        applied = resolve_pdf_font(req.font or None)[2]
 
     return Response(
         content=body,

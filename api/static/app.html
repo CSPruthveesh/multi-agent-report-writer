@@ -253,7 +253,6 @@ textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
         <button class="mini" id="dlDocx" title="Download as Word">docx</button>
       </div>
     </div>
-    <p class="rpnote" id="fontNote" hidden></p>
     <div class="md" id="md"></div>
     <div id="gaps"></div>
   </section>
@@ -341,7 +340,7 @@ function fail(title, detail){
   $('#reportHead').textContent='Run failed';
   // No report means nothing to export. Leaving the buttons live would offer a file of
   // the error message.
-  CURRENT = {report:'', title:''}; $('#fontNote').hidden=true;
+  CURRENT = {report:'', title:''};
   $('#md').innerHTML = `<p><strong>${esc(title)}</strong></p><p>${esc(detail)}</p>`;
   $('#gaps').innerHTML='';
   $('#go').disabled=false; $('#go').textContent='Write the report';
@@ -501,7 +500,6 @@ function installed(name){
 function applyFont(name){
   const f = FONTS.find(x => x[0] === name) || FONTS[0];
   $('#report').style.setProperty('--rfont', `"${f[0]}",${f[1]}`);
-  $('#fontNote').hidden = true;
   // Private browsing throws on localStorage rather than returning null.
   try { localStorage.setItem('reportFont', f[0]); } catch { /* not worth reporting */ }
 }
@@ -545,20 +543,9 @@ async function download(fmt){
     a.href = url; a.download = filenameFrom(res) || `report.${fmt}`;
     document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
-
-    // A PDF embeds no fonts here, so it can only be set in Times, Helvetica or
-    // Courier. Say which one was used when it is not what the menu says — finding out
-    // by opening the file and squinting is not finding out.
-    const used = res.headers.get('X-Font-Applied') || '';
-    const want = $('#fontPick').value;
-    if (fmt === 'pdf' && used && used.toLowerCase().replace('-roman', '')
-        !== want.toLowerCase()){
-      $('#fontNote').hidden = false;
-      $('#fontNote').innerHTML =
-        `A PDF carries no fonts with it, so this one is set in <b>${esc(used)}</b> — ` +
-        `the nearest of the three a PDF can assume. The .docx keeps ` +
-        `<b>${esc(want)}</b> by name and resolves it wherever it is opened.`;
-    }
+    // No note about substituted fonts any more: the PDF embeds the real font file, so
+    // there is nothing to explain. X-Font-Applied still says what the document was set
+    // in, for anyone calling the endpoint directly.
     btn.textContent = label;
   } catch {
     btn.textContent = 'failed';

@@ -14,24 +14,37 @@ feedback loop.
 
 FONTS
 -----
-The page lets a reader put the report in any font their machine has, and the export
-honours that as far as each format honestly can.
+The page lets a reader put the report in any font their machine has, and both formats
+keep it.
 
-  .docx  carries the family by name. Word resolves it on whatever machine opens the
-         file, which is exactly the right behaviour for a document that travels.
-  .pdf   embeds nothing, so it is limited to the three families reportlab ships:
-         Times, Helvetica and Courier. A requested font is mapped onto the nearest of
-         those and the mapping is reported back to the caller in a header, rather than
-         silently producing a document in a font nobody asked for.
+  .docx  carries the family by name. Word resolves it wherever the file opens, which is
+         the right behaviour for a document that travels.
+  .pdf   embeds the actual font file. The machine's font directory is indexed once, the
+         requested family's regular and bold faces are registered with reportlab, and
+         the glyphs travel inside the PDF — so it looks the same on a machine that has
+         never heard of Palatino Linotype.
 
-Registering the machine's TTFs with reportlab would remove that limit and tie the
-server to a Windows font directory. Not worth it for a demo that has to run anywhere.
+Converting the .docx through Word or LibreOffice would also preserve the font and was
+the obvious first idea. Embedding is better on every axis that matters here: no second
+program to install, nothing to shell out to, no temp files, no Windows-only COM
+automation, and it takes about a tenth of a second rather than several.
+
+A family the server cannot find falls back to the nearest of reportlab's three built-in
+families. That is not hypothetical — Archivo and JetBrains Mono are webfonts this page
+loads over the network, so the browser can offer them while the operating system has
+never installed them. The fallback is a near match by design: a grotesque sans becomes
+Helvetica, a monospace becomes Courier.
 """
 
 from __future__ import annotations
 
 import io
+import logging
+import os
 import re
+import sys
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 from docx import Document
@@ -41,6 +54,8 @@ from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont, TTFontFile
 from reportlab.platypus import (
     HRFlowable,
     ListFlowable,
@@ -49,6 +64,8 @@ from reportlab.platypus import (
     Spacer,
 )
 from reportlab.platypus import Paragraph as RLParagraph
+
+log = logging.getLogger(__name__)
 
 BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 CITE_RE = re.compile(r"\[((?:F\d{3})(?:,\s*F\d{3})*)\]")
@@ -63,13 +80,98 @@ _MONO = {"consolas", "courier new", "jetbrains mono", "monospace"}
 
 
 def pdf_family(font: str | None) -> str:
-    """The reportlab family a requested font maps onto."""
+    """The built-in reportlab family a requested font falls back to."""
     name = (font or "").strip().lower()
     if name in _MONO:
         return "Courier"
     if name in _SERIF:
         return "Times-Roman"
     return "Helvetica"
+
+
+def _font_dirs() -> list[Path]:
+    """Where this operating system keeps its fonts."""
+    if sys.platform == "win32":
+        win = Path(os.environ.get("WINDIR", r"C:\Windows"))
+        local = os.environ.get("LOCALAPPDATA")
+        dirs = [win / "Fonts"]
+        if local:  # per-user installs, which is where a font added today lands
+            dirs.append(Path(local) / "Microsoft" / "Windows" / "Fonts")
+        return dirs
+    if sys.platform == "darwin":
+        return [Path("/System/Library/Fonts"), Path("/Library/Fonts"),
+                Path.home() / "Library" / "Fonts"]
+    return [Path("/usr/share/fonts"), Path("/usr/local/share/fonts"),
+            Path.home() / ".fonts", Path.home() / ".local/share/fonts"]
+
+
+@lru_cache(maxsize=1)
+def font_index() -> dict[str, dict[str, str]]:
+    """family (lowercased) -> {"regular": path, "bold": path}.
+
+    Built by reading each file's name table rather than by guessing from filenames,
+    because they do not correspond: Book Antiqua lives in BKANT.TTF and Palatino
+    Linotype in pala.ttf. reportlab already has the parser, so this needs no new
+    dependency.
+
+    Cached for the life of the process. Reading ~320 files costs about 1.3 seconds and
+    a font is not installed halfway through a session — but the cost lands on whoever
+    exports first, so it is deliberately not done at import time.
+    """
+    out: dict[str, dict[str, str]] = {}
+    for d in _font_dirs():
+        if not d.is_dir():
+            continue
+        for p in sorted(d.glob("*.ttf")):
+            try:
+                f = TTFontFile(str(p))
+            except Exception as e:  # noqa: BLE001
+                # A font directory holds bitmap fonts, broken files and formats
+                # reportlab does not read. Skipping is right; skipping silently is
+                # not — a family missing from the picker's PDF should be findable.
+                log.debug("skipping font %s: %s", p.name, e)
+                continue
+            fam = _text(f.familyName).lower()
+            style = _text(f.styleName).lower()
+            if "italic" in style or "oblique" in style:
+                continue          # nothing here sets italics
+            slot = "bold" if "bold" in style else "regular"
+            out.setdefault(fam, {}).setdefault(slot, str(p))
+    return out
+
+
+def _text(v: bytes | str) -> str:
+    return v.decode("latin-1", "replace") if isinstance(v, bytes) else str(v)
+
+
+_registered: set[str] = set()
+
+
+def resolve_pdf_font(font: str | None) -> tuple[str, str, str]:
+    """(regular, bold, applied) — embedding the real font where it can be found.
+
+    `applied` is the family the document actually ends up in, which is what the caller
+    reports back. It is the requested name when the font was embedded and reportlab's
+    substitute when it was not, so the two cases are distinguishable by the answer
+    rather than only by the outcome.
+    """
+    name = (font or "").strip()
+    entry = font_index().get(name.lower()) if name else None
+    if not entry or "regular" not in entry:
+        fam = pdf_family(name)
+        bold = "Times-Bold" if fam == "Times-Roman" else f"{fam}-Bold"
+        return fam, bold, fam
+
+    reg, bld = f"emb-{name}", f"emb-{name}-bold"
+    if reg not in _registered:
+        pdfmetrics.registerFont(TTFont(reg, entry["regular"]))
+        pdfmetrics.registerFont(TTFont(bld, entry.get("bold", entry["regular"])))
+        # So <b> inside a paragraph resolves to the bold face rather than being
+        # synthesised — reportlab looks the family up, it does not embolden.
+        pdfmetrics.registerFontFamily(reg, normal=reg, bold=bld,
+                                      italic=reg, boldItalic=bld)
+        _registered.add(reg)
+    return reg, bld, name
 
 
 def blocks(md: str) -> list[tuple[str, str]]:
@@ -168,19 +270,19 @@ def _xml(text: str) -> str:
 
 
 def to_pdf(md: str, *, title: str = "", font: str | None = None) -> bytes:
-    fam = pdf_family(font)
+    fam, bold, _ = resolve_pdf_font(font)
     base = getSampleStyleSheet()
     body = ParagraphStyle(
         "body", parent=base["BodyText"], fontName=fam, fontSize=10.5, leading=15.5,
         alignment=TA_JUSTIFY, spaceAfter=9,
     )
     h1 = ParagraphStyle(
-        "h1", parent=base["Title"], fontName=f"{fam}-Bold" if fam != "Times-Roman"
-        else "Times-Bold", fontSize=19, leading=23, spaceAfter=14, alignment=0,
+        "h1", parent=base["Title"], fontName=bold,
+        fontSize=19, leading=23, spaceAfter=14, alignment=0,
     )
     h2 = ParagraphStyle(
-        "h2", parent=base["Heading2"], fontName=f"{fam}-Bold" if fam != "Times-Roman"
-        else "Times-Bold", fontSize=12.5, leading=16, spaceBefore=13, spaceAfter=5,
+        "h2", parent=base["Heading2"], fontName=bold,
+        fontSize=12.5, leading=16, spaceBefore=13, spaceAfter=5,
     )
 
     flow: list[Any] = []
